@@ -22,6 +22,7 @@ interface FormSubmission {
   budget?: string
   details?: string
   preselect?: string    // SALE | RENT | LAND
+  imageUrls?: string[]  // uploaded property image URLs
 }
 
 // ─── Validation ──────────────────────────────────────────────────────────
@@ -67,6 +68,7 @@ function validateSubmission(data: unknown): { valid: true; parsed: FormSubmissio
       budget: d.budget ? String(d.budget) : undefined,
       details: d.details ? String(d.details) : undefined,
       preselect: d.preselect ? String(d.preselect) : undefined,
+      imageUrls: Array.isArray(d.imageUrls) ? (d.imageUrls as string[]).filter(u => typeof u === "string") : undefined,
     },
   }
 }
@@ -113,6 +115,7 @@ export async function POST(request: NextRequest) {
         budget: data.budget,
         details: data.details,
         preselect: data.preselect,
+        image_urls: data.imageUrls ?? [],
       })
 
       if (dbError) {
@@ -141,6 +144,7 @@ export async function POST(request: NextRequest) {
           ...(data.requirement ? { ความต้องการ: data.requirement } : {}),
           ...(data.purpose ? { วัตถุประสงค์: data.purpose } : {}),
           ...(data.details ? { รายละเอียดเพิ่มเติม: data.details } : {}),
+          ...(data.imageUrls?.length ? { รูปภาพ: `${data.imageUrls.length} รูป` } : {}),
         },
       })
     } catch (err) {

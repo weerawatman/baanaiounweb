@@ -14,6 +14,7 @@ import {
   REGION_OPTIONS,
 } from "@/lib/page-content"
 import { validateForm, type FieldErrors } from "@/lib/form-validation"
+import ImageUpload, { type UploadedImage } from "./ImageUpload"
 
 // ─── Types ───────────────────────────────────────────────────────────────
 
@@ -174,12 +175,70 @@ function useFormState(initial: FormData = {}) {
   }
 }
 
+// ─── Upload images helper ────────────────────────────────────────────────
+
+async function uploadImages(
+  images: UploadedImage[],
+  setImages: (imgs: UploadedImage[]) => void
+): Promise<string[]> {
+  // Filter out images with validation errors and already-uploaded ones
+  const toUpload = images.filter((img) => !img.error && !img.url)
+  const alreadyUploaded = images.filter((img) => img.url).map((img) => img.url!)
+
+  if (toUpload.length === 0) return alreadyUploaded
+
+  // Mark all as uploading
+  setImages(
+    images.map((img) =>
+      !img.error && !img.url ? { ...img, uploading: true } : img
+    )
+  )
+
+  const formData = new FormData()
+  for (const img of toUpload) {
+    formData.append("images", img.file)
+  }
+
+  const res = await fetch("/api/upload-images", {
+    method: "POST",
+    body: formData,
+  })
+
+  const body = await res.json()
+
+  if (!res.ok || !body.success) {
+    // Mark upload failed
+    setImages(
+      images.map((img) =>
+        img.uploading ? { ...img, uploading: false, error: "อัปโหลดไม่สำเร็จ" } : img
+      )
+    )
+    throw new Error(body.error ?? "Upload failed")
+  }
+
+  // Merge URLs back into images
+  const uploadedUrls: string[] = body.images.map((r: { url: string }) => r.url)
+  let uploadIdx = 0
+  setImages(
+    images.map((img) => {
+      if (!img.error && !img.url && uploadIdx < uploadedUrls.length) {
+        return { ...img, uploading: false, url: uploadedUrls[uploadIdx++] }
+      }
+      return img
+    })
+  )
+
+  return [...alreadyUploaded, ...uploadedUrls]
+}
+
 // ─── Submit handler with validation ─────────────────────────────────────
 
 async function submitFormWithValidation(
   formTag: string,
   form: ReturnType<typeof useFormState>,
-  scrollRef: React.RefObject<HTMLFormElement | null>
+  scrollRef: React.RefObject<HTMLFormElement | null>,
+  images?: UploadedImage[],
+  setImages?: (imgs: UploadedImage[]) => void
 ) {
   const result = validateForm(formTag, form.data)
 
@@ -199,10 +258,23 @@ async function submitFormWithValidation(
   form.setFieldErrors({})
 
   try {
+    // Upload images first (owner forms only)
+    let imageUrls: string[] = []
+    if (images && setImages && images.length > 0) {
+      const validImages = images.filter((img) => !img.error)
+      if (validImages.length > 0) {
+        imageUrls = await uploadImages(images, setImages)
+      }
+    }
+
     const res = await fetch("/api/submit-form", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ formTag, ...form.data }),
+      body: JSON.stringify({
+        formTag,
+        ...form.data,
+        ...(imageUrls.length > 0 ? { imageUrls } : {}),
+      }),
     })
 
     const body = await res.json()
@@ -213,8 +285,13 @@ async function submitFormWithValidation(
     }
 
     form.setSubmitted(true)
-  } catch {
-    form.setError("ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต")
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : ""
+    if (msg.includes("Upload failed") || msg.includes("อัปโหลด")) {
+      form.setError("อัปโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง")
+    } else {
+      form.setError("ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต")
+    }
   } finally {
     form.setSubmitting(false)
   }
@@ -222,7 +299,7 @@ async function submitFormWithValidation(
 
 // ─── Owner Form (Thai) ───────────────────────────────────────────────────
 
-function OwnerFormThai({ form }: { form: ReturnType<typeof useFormState> }) {
+function OwnerFormThai({ form, images, onImagesChange }: { form: ReturnType<typeof useFormState>; images: UploadedImage[]; onImagesChange: (imgs: UploadedImage[]) => void }) {
   const e = form.fieldErrors
   return (
     <div className="flex flex-col gap-4">
@@ -262,13 +339,16 @@ function OwnerFormThai({ form }: { form: ReturnType<typeof useFormState> }) {
       <FormField label="ราคาที่คิดว่าจะขาย / ปล่อยเช่า (บาท)">
         <Input type="number" placeholder="เช่น 2500000" {...form.inputProps("price")} />
       </FormField>
+      <FormField label="รูปภาพทรัพย์ (ไม่บังคับ)">
+        <ImageUpload images={images} onChange={onImagesChange} disabled={form.submitting} />
+      </FormField>
     </div>
   )
 }
 
 // ─── Owner Form (Foreign) ────────────────────────────────────────────────
 
-function OwnerFormForeign({ form }: { form: ReturnType<typeof useFormState> }) {
+function OwnerFormForeign({ form, images, onImagesChange }: { form: ReturnType<typeof useFormState>; images: UploadedImage[]; onImagesChange: (imgs: UploadedImage[]) => void }) {
   const e = form.fieldErrors
   return (
     <div className="flex flex-col gap-4">
@@ -304,6 +384,9 @@ function OwnerFormForeign({ form }: { form: ReturnType<typeof useFormState> }) {
       />
       <FormField label="Asking Price / ราคา (THB)">
         <Input type="number" placeholder="e.g. 2500000" {...form.inputProps("price")} />
+      </FormField>
+      <FormField label="Property Images / รูปภาพทรัพย์ (Optional)">
+        <ImageUpload images={images} onChange={onImagesChange} disabled={form.submitting} />
       </FormField>
     </div>
   )
@@ -540,6 +623,9 @@ export default function PropertyForm({ variant, preselect, className }: Property
   const form = useFormState(preselect ? { preselect } : {})
   const [activeTab, setActiveTab] = useState("thai")
   const formRef = useRef<HTMLFormElement>(null)
+  const [images, setImages] = useState<UploadedImage[]>([])
+
+  const isOwner = variant === "owner"
 
   const getFormTag = () => {
     if (variant === "co-agent") return "co-agent"
@@ -550,7 +636,13 @@ export default function PropertyForm({ variant, preselect, className }: Property
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    submitFormWithValidation(getFormTag(), form, formRef)
+    submitFormWithValidation(
+      getFormTag(),
+      form,
+      formRef,
+      isOwner ? images : undefined,
+      isOwner ? setImages : undefined
+    )
   }
 
   if (form.submitted) {
@@ -626,7 +718,6 @@ export default function PropertyForm({ variant, preselect, className }: Property
     )
   }
 
-  const isOwner = variant === "owner"
   const title = isOwner ? "กรอกข้อมูลฝากขาย / ปล่อยเช่า" : "กรอกสเปกให้เราช่วยหาบ้าน"
 
   return (
@@ -653,10 +744,10 @@ export default function PropertyForm({ variant, preselect, className }: Property
         </TabsList>
 
         <TabsContent value="thai">
-          {isOwner ? <OwnerFormThai form={form} /> : <BuyerFormThai form={form} preselect={preselect} />}
+          {isOwner ? <OwnerFormThai form={form} images={images} onImagesChange={setImages} /> : <BuyerFormThai form={form} preselect={preselect} />}
         </TabsContent>
         <TabsContent value="foreign">
-          {isOwner ? <OwnerFormForeign form={form} /> : <BuyerFormForeign form={form} preselect={preselect} />}
+          {isOwner ? <OwnerFormForeign form={form} images={images} onImagesChange={setImages} /> : <BuyerFormForeign form={form} preselect={preselect} />}
         </TabsContent>
       </Tabs>
 
