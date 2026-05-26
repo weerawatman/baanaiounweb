@@ -58,6 +58,10 @@ const SCHEMAS: Record<string, ValidationSchema> = {
     name: { required: true, minLength: 2 },
     phone: { required: true, pattern: THAI_PHONE, patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)" },
   },
+  // Contact page
+  contact: {
+    name: { required: true, minLength: 2 },
+  },
 }
 
 // ─── Field labels (for error messages) ───────────────────────────────────

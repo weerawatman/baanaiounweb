@@ -21,6 +21,7 @@ const TAG_LABELS: Record<string, string> = {
   "buyer-foreign": "Foreign Buyer/Renter",
   "co-agent": "Co-Agent เครือข่ายนายหน้า",
   academy: "สนใจคอร์สนายหน้า",
+  contact: "ข้อความจากหน้าติดต่อ",
 }
 
 export async function sendLineNotify(payload: NotifyPayload): Promise<boolean> {

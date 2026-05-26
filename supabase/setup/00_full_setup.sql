@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS form_submissions (
   form_tag        TEXT NOT NULL CHECK (form_tag IN (
                     'owner', 'owner-foreign',
                     'buyer', 'buyer-foreign',
-                    'co-agent', 'academy'
+                    'co-agent', 'academy',
+                    'contact'
                   )),
 
   -- ข้อมูลติดต่อ (อย่างน้อย 1 ช่อง — enforce ที่ API level)

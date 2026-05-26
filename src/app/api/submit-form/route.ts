@@ -5,7 +5,7 @@ import { sendLineNotify } from "@/lib/line-notify"
 // ─── Types ───────────────────────────────────────────────────────────────
 
 interface FormSubmission {
-  formTag: string       // owner | owner-foreign | buyer | buyer-foreign | co-agent | academy
+  formTag: string       // owner | owner-foreign | buyer | buyer-foreign | co-agent | academy | contact
   name: string
   phone?: string
   lineId?: string

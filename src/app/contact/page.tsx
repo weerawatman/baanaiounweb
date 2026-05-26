@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Phone, MessageCircle, Mail, MapPin } from "lucide-react"
+import { Phone, MessageCircle, Mail, MapPin, Loader2, CheckCircle, AlertTriangle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Breadcrumb from "@/components/layout/Breadcrumb"
@@ -64,18 +64,48 @@ export default function ContactPage() {
     email: "",
     message: "",
   })
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    if (error) setError(null)
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log("Contact form submitted:", form)
-    alert("ส่งข้อความเรียบร้อยแล้ว พิมจะติดต่อกลับโดยเร็วที่สุดค่ะ!")
-    setForm({ name: "", phone: "", email: "", message: "" })
+    setSubmitting(true)
+    setError(null)
+
+    try {
+      const res = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formTag: "contact",
+          name: form.name,
+          phone: form.phone || undefined,
+          email: form.email || undefined,
+          details: form.message,
+        }),
+      })
+
+      const body = await res.json()
+
+      if (!res.ok || !body.success) {
+        setError(body.error ?? "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง")
+        return
+      }
+
+      setSubmitted(true)
+    } catch {
+      setError("ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -123,7 +153,29 @@ export default function ContactPage() {
                 <h2 className="mb-6 text-xl font-semibold text-foreground">
                   ส่งข้อความหาพิม
                 </h2>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+
+                {submitted ? (
+                  <motion.div
+                    className="rounded-2xl bg-white p-8 text-center shadow-lg ring-1 ring-foreground/5"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                  >
+                    <CheckCircle className="mx-auto size-12 text-green-500" />
+                    <h3 className="mt-4 text-xl font-bold text-[#1B4D3E]">ส่งข้อความเรียบร้อยแล้ว!</h3>
+                    <p className="mt-2 text-gray-600">พิมจะติดต่อกลับโดยเร็วที่สุดค่ะ</p>
+                    <Button
+                      className="mt-6"
+                      variant="outline"
+                      onClick={() => {
+                        setSubmitted(false)
+                        setForm({ name: "", phone: "", email: "", message: "" })
+                      }}
+                    >
+                      ส่งข้อความอีกครั้ง
+                    </Button>
+                  </motion.div>
+                ) : (
+                <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
                   <div className="flex flex-col gap-1.5">
                     <label
                       htmlFor="name"
@@ -139,6 +191,7 @@ export default function ContactPage() {
                       required
                       value={form.name}
                       onChange={handleChange}
+                      disabled={submitting}
                       className="h-10"
                     />
                   </div>
@@ -158,6 +211,7 @@ export default function ContactPage() {
                       required
                       value={form.phone}
                       onChange={handleChange}
+                      disabled={submitting}
                       className="h-10"
                     />
                   </div>
@@ -176,6 +230,7 @@ export default function ContactPage() {
                       placeholder="your@email.com"
                       value={form.email}
                       onChange={handleChange}
+                      disabled={submitting}
                       className="h-10"
                     />
                   </div>
@@ -195,19 +250,38 @@ export default function ContactPage() {
                       required
                       value={form.message}
                       onChange={handleChange}
+                      disabled={submitting}
                       className="w-full rounded-lg border border-input bg-transparent px-3 py-2.5 text-sm leading-relaxed placeholder:text-muted-foreground focus-visible:border-ring focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 resize-none"
                     />
                   </div>
 
+                  {error && (
+                    <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                      <AlertTriangle className="size-4 shrink-0" />
+                      {error}
+                    </div>
+                  )}
+
                   <Button
                     type="submit"
                     size="lg"
-                    className="mt-2 gap-2 bg-primary text-white hover:bg-primary/90"
+                    disabled={submitting}
+                    className="mt-2 gap-2 bg-primary text-white hover:bg-primary/90 disabled:opacity-50"
                   >
-                    <Mail className="size-4" />
-                    ส่งข้อความ
+                    {submitting ? (
+                      <>
+                        <Loader2 className="size-4 animate-spin" />
+                        กำลังส่ง...
+                      </>
+                    ) : (
+                      <>
+                        <Mail className="size-4" />
+                        ส่งข้อความ
+                      </>
+                    )}
                   </Button>
                 </form>
+                )}
               </motion.div>
 
               {/* Right: Contact Info + Map */}
