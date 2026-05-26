@@ -1,0 +1,6 @@
+export { default as PainPointsHero } from "./PainPointsHero"
+export { default as SolutionsSection } from "./SolutionsSection"
+export { default as EmotionalHook } from "./EmotionalHook"
+export { default as CTAWithForm } from "./CTAWithForm"
+export { default as PropertyForm } from "./PropertyForm"
+export { default as PrivacyNotice } from "./PrivacyNotice"
