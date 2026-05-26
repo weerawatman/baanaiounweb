@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { motion } from "framer-motion"
-import { Send, User, Globe } from "lucide-react"
+import { Send, User, Globe, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
@@ -20,17 +20,21 @@ type FormVariant = "owner" | "buyer" | "co-agent" | "academy"
 
 interface PropertyFormProps {
   variant: FormVariant
-  /** Pre-select property type in dropdown (for /buy, /rent, /land) */
   preselect?: "SALE" | "RENT" | "LAND"
   className?: string
 }
 
+type FormData = Record<string, string>
+
 // ─── Reusable form elements ──────────────────────────────────────────────
 
-function FormField({ label, children }: { label: string; children: React.ReactNode }) {
+function FormField({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-gray-700">{label}</label>
+      <label className="text-sm font-medium text-gray-700">
+        {label}
+        {required && <span className="ml-0.5 text-red-500">*</span>}
+      </label>
       {children}
     </div>
   )
@@ -38,23 +42,29 @@ function FormField({ label, children }: { label: string; children: React.ReactNo
 
 function SelectField({
   label,
+  name,
   options,
   value,
   onChange,
   placeholder,
+  required,
 }: {
   label: string
+  name: string
   options: { value: string; label: string }[]
   value: string
-  onChange: (v: string) => void
+  onChange: (name: string, value: string) => void
   placeholder?: string
+  required?: boolean
 }) {
   return (
-    <FormField label={label}>
+    <FormField label={label} required={required}>
       <select
+        name={name}
         className="h-9 w-full rounded-lg border border-input bg-white px-3 text-sm text-gray-700 outline-none focus:border-ring focus:ring-2 focus:ring-ring/50"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange(name, e.target.value)}
+        required={required}
       >
         <option value="">{placeholder ?? "กรุณาเลือก"}</option>
         {options.map((opt) => (
@@ -69,68 +79,129 @@ function SelectField({
 
 function TextAreaField({
   label,
+  name,
   placeholder,
   value,
   onChange,
 }: {
   label: string
+  name: string
   placeholder?: string
   value: string
-  onChange: (v: string) => void
+  onChange: (name: string, value: string) => void
 }) {
   return (
     <FormField label={label}>
       <textarea
+        name={name}
         className="min-h-[80px] w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-gray-700 outline-none focus:border-ring focus:ring-2 focus:ring-ring/50 resize-y"
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange(name, e.target.value)}
       />
     </FormField>
   )
 }
 
+// ─── useFormState hook ───────────────────────────────────────────────────
+
+function useFormState(initial: FormData = {}) {
+  const [data, setData] = useState<FormData>(initial)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const update = useCallback((name: string, value: string) => {
+    setData((prev) => ({ ...prev, [name]: value }))
+  }, [])
+
+  const inputProps = useCallback(
+    (name: string, opts?: { required?: boolean }) => ({
+      value: data[name] ?? "",
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => update(name, e.target.value),
+      required: opts?.required,
+    }),
+    [data, update]
+  )
+
+  return { data, update, inputProps, submitting, setSubmitting, submitted, setSubmitted, error, setError }
+}
+
+// ─── Submit handler ─────────────────────────────────────────────────────
+
+async function submitForm(
+  formTag: string,
+  data: FormData,
+  setSubmitting: (v: boolean) => void,
+  setSubmitted: (v: boolean) => void,
+  setError: (v: string | null) => void
+) {
+  setSubmitting(true)
+  setError(null)
+
+  try {
+    const res = await fetch("/api/submit-form", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ formTag, ...data }),
+    })
+
+    const result = await res.json()
+
+    if (!res.ok || !result.success) {
+      setError(result.error ?? "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง")
+      return
+    }
+
+    setSubmitted(true)
+  } catch {
+    setError("ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต")
+  } finally {
+    setSubmitting(false)
+  }
+}
+
 // ─── Owner Form (Thai) ───────────────────────────────────────────────────
 
-function OwnerFormThai() {
-  const [propertyType, setPropertyType] = useState("")
+function OwnerFormThai({ form }: { form: ReturnType<typeof useFormState> }) {
   return (
     <div className="flex flex-col gap-4">
-      <FormField label="ชื่อ-นามสกุล">
-        <Input placeholder="ชื่อ-นามสกุลของคุณ" />
+      <FormField label="ชื่อ-นามสกุล" required>
+        <Input placeholder="ชื่อ-นามสกุลของคุณ" {...form.inputProps("name", { required: true })} />
       </FormField>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <FormField label="เบอร์โทรศัพท์">
-          <Input type="tel" placeholder="08x-xxx-xxxx" />
+        <FormField label="เบอร์โทรศัพท์" required>
+          <Input type="tel" placeholder="08x-xxx-xxxx" {...form.inputProps("phone", { required: true })} />
         </FormField>
         <FormField label="ไอดีไลน์">
-          <Input placeholder="LINE ID" />
+          <Input placeholder="LINE ID" {...form.inputProps("lineId")} />
         </FormField>
       </div>
       <SelectField
-        label="ประเภททรัพย์"
+        label="ประเภททรัพย์" name="propertyType"
         options={PROPERTY_TYPE_OPTIONS}
-        value={propertyType}
-        onChange={setPropertyType}
+        value={form.data.propertyType ?? ""}
+        onChange={form.update}
+        required
       />
       <FormField label="ขนาดพื้นที่ (ตร.ว. / ตร.ม.)">
-        <Input placeholder="เช่น 50 ตร.ว. หรือ 120 ตร.ม." />
+        <Input placeholder="เช่น 50 ตร.ว. หรือ 120 ตร.ม." {...form.inputProps("propertySize")} />
       </FormField>
       <SelectField
-        label="ที่ตั้งทรัพย์"
+        label="ที่ตั้งทรัพย์" name="location"
         options={LOCATION_OPTIONS}
-        value=""
-        onChange={() => {}}
+        value={form.data.location ?? ""}
+        onChange={form.update}
         placeholder="เลือกพื้นที่"
       />
       <TextAreaField
-        label="รายละเอียดทรัพย์เพิ่มเติม"
+        label="รายละเอียดทรัพย์เพิ่มเติม" name="details"
         placeholder="จุดเด่น, สภาพบ้าน, สิ่งอำนวยความสะดวก..."
-        value=""
-        onChange={() => {}}
+        value={form.data.details ?? ""}
+        onChange={form.update}
       />
       <FormField label="ราคาที่คิดว่าจะขาย / ปล่อยเช่า (บาท)">
-        <Input type="number" placeholder="เช่น 2500000" />
+        <Input type="number" placeholder="เช่น 2500000" {...form.inputProps("price")} />
       </FormField>
     </div>
   )
@@ -138,41 +209,41 @@ function OwnerFormThai() {
 
 // ─── Owner Form (Foreign) ────────────────────────────────────────────────
 
-function OwnerFormForeign() {
+function OwnerFormForeign({ form }: { form: ReturnType<typeof useFormState> }) {
   return (
     <div className="flex flex-col gap-4">
-      <FormField label="Full Name / ชื่อ-นามสกุล">
-        <Input placeholder="Your full name" />
+      <FormField label="Full Name / ชื่อ-นามสกุล" required>
+        <Input placeholder="Your full name" {...form.inputProps("name", { required: true })} />
       </FormField>
       <FormField label="Nationality / สัญชาติ">
-        <Input placeholder="e.g. Japanese, Chinese, American" />
+        <Input placeholder="e.g. Japanese, Chinese, American" {...form.inputProps("nationality")} />
       </FormField>
-      <FormField label="Contact Information / ช่องทางติดต่อ">
-        <Input placeholder="WhatsApp, WeChat, Email, or Phone" />
+      <FormField label="Contact Information / ช่องทางติดต่อ" required>
+        <Input placeholder="WhatsApp, WeChat, Email, or Phone" {...form.inputProps("contact", { required: true })} />
       </FormField>
       <SelectField
-        label="Objective / วัตถุประสงค์การซื้อทรัพย์นี้ในอดีต"
+        label="Objective / วัตถุประสงค์" name="purpose"
         options={BUYER_PURPOSE_OPTIONS.map(o => ({ value: o.value, label: `${o.label} / ${o.value === "living" ? "For Living" : "For Investment"}` }))}
-        value=""
-        onChange={() => {}}
+        value={form.data.purpose ?? ""}
+        onChange={form.update}
       />
       <SelectField
-        label="Property Type / ประเภททรัพย์"
+        label="Property Type / ประเภททรัพย์" name="propertyType"
         options={PROPERTY_TYPE_OPTIONS}
-        value=""
-        onChange={() => {}}
+        value={form.data.propertyType ?? ""}
+        onChange={form.update}
       />
       <FormField label="Property Size / ขนาดพื้นที่ (Sq.m. / Sq.w.)">
-        <Input placeholder="e.g. 50 Sq.w. or 120 Sq.m." />
+        <Input placeholder="e.g. 50 Sq.w. or 120 Sq.m." {...form.inputProps("propertySize")} />
       </FormField>
       <TextAreaField
-        label="Property Location / ที่ตั้งทรัพย์"
+        label="Property Location / ที่ตั้งทรัพย์" name="location"
         placeholder="Address or area description"
-        value=""
-        onChange={() => {}}
+        value={form.data.location ?? ""}
+        onChange={form.update}
       />
-      <FormField label="Asking Price / ราคาที่ต้องการขายหรือปล่อยเช่า (THB)">
-        <Input type="number" placeholder="e.g. 2500000" />
+      <FormField label="Asking Price / ราคา (THB)">
+        <Input type="number" placeholder="e.g. 2500000" {...form.inputProps("price")} />
       </FormField>
     </div>
   )
@@ -180,7 +251,7 @@ function OwnerFormForeign() {
 
 // ─── Buyer Form (Thai) ───────────────────────────────────────────────────
 
-function BuyerFormThai({ preselect }: { preselect?: string }) {
+function BuyerFormThai({ form, preselect }: { form: ReturnType<typeof useFormState>; preselect?: string }) {
   const requirementOptions = [
     { value: "buy-house", label: "ซื้อบ้าน" },
     { value: "rent-condo", label: "เช่าคอนโด" },
@@ -189,47 +260,50 @@ function BuyerFormThai({ preselect }: { preselect?: string }) {
     { value: "other", label: "อื่นๆ" },
   ]
 
-  const defaultReq = preselect === "SALE" ? "buy-house" : preselect === "RENT" ? "rent-house" : preselect === "LAND" ? "buy-land" : ""
-
-  const [requirement, setRequirement] = useState(defaultReq)
+  // Set default requirement based on preselect (only once)
+  if (preselect && !form.data.requirement) {
+    const defaultReq = preselect === "SALE" ? "buy-house" : preselect === "RENT" ? "rent-house" : preselect === "LAND" ? "buy-land" : ""
+    if (defaultReq) form.update("requirement", defaultReq)
+  }
 
   return (
     <div className="flex flex-col gap-4">
-      <FormField label="ชื่อ-นามสกุล">
-        <Input placeholder="ชื่อ-นามสกุลของคุณ" />
+      <FormField label="ชื่อ-นามสกุล" required>
+        <Input placeholder="ชื่อ-นามสกุลของคุณ" {...form.inputProps("name", { required: true })} />
       </FormField>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <FormField label="เบอร์โทรศัพท์">
-          <Input type="tel" placeholder="08x-xxx-xxxx" />
+        <FormField label="เบอร์โทรศัพท์" required>
+          <Input type="tel" placeholder="08x-xxx-xxxx" {...form.inputProps("phone", { required: true })} />
         </FormField>
         <FormField label="ไอดีไลน์">
-          <Input placeholder="LINE ID" />
+          <Input placeholder="LINE ID" {...form.inputProps("lineId")} />
         </FormField>
       </div>
       <SelectField
-        label="ประเภททรัพย์ที่ต้องการ"
+        label="ประเภททรัพย์ที่ต้องการ" name="requirement"
         options={requirementOptions}
-        value={requirement}
-        onChange={setRequirement}
+        value={form.data.requirement ?? ""}
+        onChange={form.update}
+        required
       />
       <FormField label="ขนาดที่ต้องการเบื้องต้น">
-        <Input placeholder="เช่น 2 ห้องนอน หรือ 50 ตร.ว." />
+        <Input placeholder="เช่น 2 ห้องนอน หรือ 50 ตร.ว." {...form.inputProps("preferredSize")} />
       </FormField>
       <SelectField
-        label="ทำเล / ที่ตั้งที่สนใจ"
+        label="ทำเล / ที่ตั้งที่สนใจ" name="location"
         options={LOCATION_OPTIONS}
-        value=""
-        onChange={() => {}}
+        value={form.data.location ?? ""}
+        onChange={form.update}
         placeholder="เลือกพื้นที่"
       />
       <FormField label="งบประมาณที่ตั้งไว้ (บาท)">
-        <Input type="number" placeholder="เช่น 2000000" />
+        <Input type="number" placeholder="เช่น 2000000" {...form.inputProps("budget")} />
       </FormField>
       <TextAreaField
-        label="รายละเอียดเพิ่มเติมที่ต้องการ"
+        label="รายละเอียดเพิ่มเติมที่ต้องการ" name="details"
         placeholder="สเปกเบื้องต้น เช่น อยากได้บ้านมุม, เลี้ยงสัตว์ได้, ใกล้นิคมฯ..."
-        value=""
-        onChange={() => {}}
+        value={form.data.details ?? ""}
+        onChange={form.update}
       />
     </div>
   )
@@ -237,7 +311,7 @@ function BuyerFormThai({ preselect }: { preselect?: string }) {
 
 // ─── Buyer Form (Foreign) ────────────────────────────────────────────────
 
-function BuyerFormForeign({ preselect }: { preselect?: string }) {
+function BuyerFormForeign({ form, preselect }: { form: ReturnType<typeof useFormState>; preselect?: string }) {
   const requirementOptions = [
     { value: "buy-house", label: "Buy House / ซื้อบ้าน" },
     { value: "rent-condo", label: "Rent Condo / เช่าคอนโด" },
@@ -246,51 +320,52 @@ function BuyerFormForeign({ preselect }: { preselect?: string }) {
     { value: "other", label: "Other / อื่นๆ" },
   ]
 
-  const defaultReq = preselect === "SALE" ? "buy-house" : preselect === "RENT" ? "rent-house" : preselect === "LAND" ? "buy-land" : ""
-
-  const [requirement, setRequirement] = useState(defaultReq)
+  if (preselect && !form.data.requirement) {
+    const defaultReq = preselect === "SALE" ? "buy-house" : preselect === "RENT" ? "rent-house" : preselect === "LAND" ? "buy-land" : ""
+    if (defaultReq) form.update("requirement", defaultReq)
+  }
 
   return (
     <div className="flex flex-col gap-4">
-      <FormField label="Full Name / ชื่อ-นามสกุล">
-        <Input placeholder="Your full name" />
+      <FormField label="Full Name / ชื่อ-นามสกุล" required>
+        <Input placeholder="Your full name" {...form.inputProps("name", { required: true })} />
       </FormField>
       <FormField label="Nationality / สัญชาติ">
-        <Input placeholder="e.g. Japanese, Chinese, American" />
+        <Input placeholder="e.g. Japanese, Chinese, American" {...form.inputProps("nationality")} />
       </FormField>
-      <FormField label="Contact Information / ช่องทางติดต่อ">
-        <Input placeholder="WhatsApp, Email, WeChat, or Phone" />
+      <FormField label="Contact Information / ช่องทางติดต่อ" required>
+        <Input placeholder="WhatsApp, Email, WeChat, or Phone" {...form.inputProps("contact", { required: true })} />
       </FormField>
       <SelectField
-        label="Purpose / วัตถุประสงค์การซื้อ-เช่า"
+        label="Purpose / วัตถุประสงค์" name="purpose"
         options={BUYER_PURPOSE_OPTIONS.map(o => ({ value: o.value, label: `${o.value === "living" ? "For Living" : "For Investment"} / ${o.label}` }))}
-        value=""
-        onChange={() => {}}
+        value={form.data.purpose ?? ""}
+        onChange={form.update}
       />
       <SelectField
-        label="Requirement / ประเภททรัพย์ที่กำลังมองหา"
+        label="Requirement / ประเภททรัพย์" name="requirement"
         options={requirementOptions}
-        value={requirement}
-        onChange={setRequirement}
+        value={form.data.requirement ?? ""}
+        onChange={form.update}
       />
-      <FormField label="Preferred Size & Functions / ขนาดและฟังก์ชันที่ต้องการ">
-        <Input placeholder="e.g. 2 Bedrooms, Pet-friendly" />
+      <FormField label="Preferred Size & Functions / ขนาดและฟังก์ชัน">
+        <Input placeholder="e.g. 2 Bedrooms, Pet-friendly" {...form.inputProps("preferredSize")} />
       </FormField>
       <SelectField
-        label="Preferred Location / ทำเลที่สนใจ"
+        label="Preferred Location / ทำเลที่สนใจ" name="location"
         options={LOCATION_OPTIONS}
-        value=""
-        onChange={() => {}}
+        value={form.data.location ?? ""}
+        onChange={form.update}
         placeholder="Select area"
       />
       <FormField label="Target Budget / งบประมาณ (THB)">
-        <Input type="number" placeholder="e.g. 2000000" />
+        <Input type="number" placeholder="e.g. 2000000" {...form.inputProps("budget")} />
       </FormField>
       <TextAreaField
-        label="Additional Details / รายละเอียดเพิ่มเติม"
+        label="Additional Details / รายละเอียดเพิ่มเติม" name="details"
         placeholder="Any specific requirements..."
-        value=""
-        onChange={() => {}}
+        value={form.data.details ?? ""}
+        onChange={form.update}
       />
     </div>
   )
@@ -298,53 +373,53 @@ function BuyerFormForeign({ preselect }: { preselect?: string }) {
 
 // ─── Co-Agent Form ───────────────────────────────────────────────────────
 
-function CoAgentForm() {
+function CoAgentForm({ form }: { form: ReturnType<typeof useFormState> }) {
   return (
     <div className="flex flex-col gap-4">
-      <FormField label="ชื่อ-นามสกุล">
-        <Input placeholder="ชื่อ-นามสกุลของคุณ" />
+      <FormField label="ชื่อ-นามสกุล" required>
+        <Input placeholder="ชื่อ-นามสกุลของคุณ" {...form.inputProps("name", { required: true })} />
       </FormField>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <FormField label="เบอร์โทรศัพท์">
-          <Input type="tel" placeholder="08x-xxx-xxxx" />
+        <FormField label="เบอร์โทรศัพท์" required>
+          <Input type="tel" placeholder="08x-xxx-xxxx" {...form.inputProps("phone", { required: true })} />
         </FormField>
         <FormField label="ไอดีไลน์">
-          <Input placeholder="LINE ID" />
+          <Input placeholder="LINE ID" {...form.inputProps("lineId")} />
         </FormField>
       </div>
       <TextAreaField
-        label="รายละเอียดทรัพย์"
+        label="รายละเอียดทรัพย์" name="details"
         placeholder="อธิบายจุดเด่นทรัพย์ที่ต้องการให้ช่วยขาย..."
-        value=""
-        onChange={() => {}}
+        value={form.data.details ?? ""}
+        onChange={form.update}
       />
       <SelectField
-        label="ประเภททรัพย์"
+        label="ประเภททรัพย์" name="propertyType"
         options={PROPERTY_TYPE_OPTIONS}
-        value=""
-        onChange={() => {}}
+        value={form.data.propertyType ?? ""}
+        onChange={form.update}
       />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <SelectField
-          label="ภาค"
+          label="ภาค" name="region"
           options={REGION_OPTIONS}
-          value=""
-          onChange={() => {}}
+          value={form.data.region ?? ""}
+          onChange={form.update}
           placeholder="เลือกภาค"
         />
         <SelectField
-          label="จังหวัด / ทำเลที่ตั้ง"
+          label="จังหวัด / ทำเลที่ตั้ง" name="location"
           options={LOCATION_OPTIONS}
-          value=""
-          onChange={() => {}}
+          value={form.data.location ?? ""}
+          onChange={form.update}
           placeholder="เลือกจังหวัด"
         />
       </div>
       <FormField label="ขนาดพื้นที่ (ตร.ว. / ตร.ม.)">
-        <Input placeholder="เช่น 50 ตร.ว. หรือ 120 ตร.ม." />
+        <Input placeholder="เช่น 50 ตร.ว. หรือ 120 ตร.ม." {...form.inputProps("propertySize")} />
       </FormField>
       <FormField label="ราคาขาย / ราคาเช่า (บาท)">
-        <Input type="number" placeholder="เช่น 2500000" />
+        <Input type="number" placeholder="เช่น 2500000" {...form.inputProps("price")} />
       </FormField>
     </div>
   )
@@ -352,23 +427,23 @@ function CoAgentForm() {
 
 // ─── Academy Form ────────────────────────────────────────────────────────
 
-function AcademyForm() {
+function AcademyForm({ form }: { form: ReturnType<typeof useFormState> }) {
   return (
     <div className="flex flex-col gap-4">
-      <FormField label="ชื่อ-นามสกุล">
-        <Input placeholder="ชื่อ-นามสกุลของคุณ" />
+      <FormField label="ชื่อ-นามสกุล" required>
+        <Input placeholder="ชื่อ-นามสกุลของคุณ" {...form.inputProps("name", { required: true })} />
       </FormField>
-      <FormField label="เบอร์โทรศัพท์">
-        <Input type="tel" placeholder="08x-xxx-xxxx" />
+      <FormField label="เบอร์โทรศัพท์" required>
+        <Input type="tel" placeholder="08x-xxx-xxxx" {...form.inputProps("phone", { required: true })} />
       </FormField>
       <FormField label="ไอดีไลน์">
-        <Input placeholder="LINE ID" />
+        <Input placeholder="LINE ID" {...form.inputProps("lineId")} />
       </FormField>
       <TextAreaField
-        label="สิ่งที่สนใจ / คำถามเพิ่มเติม"
+        label="สิ่งที่สนใจ / คำถามเพิ่มเติม" name="details"
         placeholder="เช่น อยากรู้รายละเอียดคอร์ส, ค่าใช้จ่าย, ระยะเวลาเรียน..."
-        value=""
-        onChange={() => {}}
+        value={form.data.details ?? ""}
+        onChange={form.update}
       />
     </div>
   )
@@ -377,15 +452,24 @@ function AcademyForm() {
 // ─── Main PropertyForm ───────────────────────────────────────────────────
 
 export default function PropertyForm({ variant, preselect, className }: PropertyFormProps) {
-  const [submitted, setSubmitted] = useState(false)
+  const form = useFormState(
+    preselect ? { preselect } : {}
+  )
+  const [activeTab, setActiveTab] = useState("thai")
+
+  const getFormTag = () => {
+    if (variant === "co-agent") return "co-agent"
+    if (variant === "academy") return "academy"
+    if (variant === "owner") return activeTab === "foreign" ? "owner-foreign" : "owner"
+    return activeTab === "foreign" ? "buyer-foreign" : "buyer"
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Phase 2 — connect to Supabase + LINE Notify
-    setSubmitted(true)
+    submitForm(getFormTag(), form.data, form.setSubmitting, form.setSubmitted, form.setError)
   }
 
-  if (submitted) {
+  if (form.submitted) {
     return (
       <motion.div
         className={`mx-auto max-w-2xl rounded-2xl bg-white p-8 text-center shadow-lg ring-1 ring-foreground/5 ${className ?? ""}`}
@@ -401,13 +485,45 @@ export default function PropertyForm({ variant, preselect, className }: Property
         <Button
           className="mt-6"
           variant="outline"
-          onClick={() => setSubmitted(false)}
+          onClick={() => {
+            form.setSubmitted(false)
+            form.setError(null)
+          }}
         >
           กรอกฟอร์มใหม่
         </Button>
       </motion.div>
     )
   }
+
+  const submitButton = (
+    <>
+      {form.error && (
+        <p className="mt-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">
+          {form.error}
+        </p>
+      )}
+      <Button
+        type="submit"
+        disabled={form.submitting}
+        className="mt-6 w-full gap-2 bg-[#1B4D3E] py-2.5 text-white hover:bg-[#2A6B56] disabled:opacity-50"
+        size="lg"
+      >
+        {form.submitting ? (
+          <>
+            <Loader2 className="size-4 animate-spin" />
+            กำลังส่งข้อมูล...
+          </>
+        ) : (
+          <>
+            <Send className="size-4" />
+            ส่งข้อมูล
+          </>
+        )}
+      </Button>
+      <PrivacyNotice />
+    </>
+  )
 
   // Academy and Co-Agent don't need Thai/Foreign tabs
   if (variant === "academy") {
@@ -419,12 +535,8 @@ export default function PropertyForm({ variant, preselect, className }: Property
         <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">
           ลงทะเบียนสนใจคอร์สนายหน้าอสังหาฯ
         </h3>
-        <AcademyForm />
-        <Button type="submit" className="mt-6 w-full gap-2 bg-[#1B4D3E] py-2.5 text-white hover:bg-[#2A6B56]" size="lg">
-          <Send className="size-4" />
-          ส่งข้อมูล
-        </Button>
-        <PrivacyNotice />
+        <AcademyForm form={form} />
+        {submitButton}
       </form>
     )
   }
@@ -438,12 +550,8 @@ export default function PropertyForm({ variant, preselect, className }: Property
         <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">
           ส่งทรัพย์เข้าระบบ / เสนอ Co-Broker
         </h3>
-        <CoAgentForm />
-        <Button type="submit" className="mt-6 w-full gap-2 bg-[#1B4D3E] py-2.5 text-white hover:bg-[#2A6B56]" size="lg">
-          <Send className="size-4" />
-          ส่งข้อมูล
-        </Button>
-        <PrivacyNotice />
+        <CoAgentForm form={form} />
+        {submitButton}
       </form>
     )
   }
@@ -459,7 +567,7 @@ export default function PropertyForm({ variant, preselect, className }: Property
     >
       <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">{title}</h3>
 
-      <Tabs defaultValue="thai">
+      <Tabs defaultValue="thai" onValueChange={setActiveTab}>
         <TabsList className="mb-6 w-full">
           <TabsTrigger value="thai" className="flex-1 gap-1.5">
             <User className="size-4" />
@@ -472,18 +580,14 @@ export default function PropertyForm({ variant, preselect, className }: Property
         </TabsList>
 
         <TabsContent value="thai">
-          {isOwner ? <OwnerFormThai /> : <BuyerFormThai preselect={preselect} />}
+          {isOwner ? <OwnerFormThai form={form} /> : <BuyerFormThai form={form} preselect={preselect} />}
         </TabsContent>
         <TabsContent value="foreign">
-          {isOwner ? <OwnerFormForeign /> : <BuyerFormForeign preselect={preselect} />}
+          {isOwner ? <OwnerFormForeign form={form} /> : <BuyerFormForeign form={form} preselect={preselect} />}
         </TabsContent>
       </Tabs>
 
-      <Button type="submit" className="mt-6 w-full gap-2 bg-[#1B4D3E] py-2.5 text-white hover:bg-[#2A6B56]" size="lg">
-        <Send className="size-4" />
-        ส่งข้อมูล
-      </Button>
-      <PrivacyNotice />
+      {submitButton}
     </form>
   )
 }
