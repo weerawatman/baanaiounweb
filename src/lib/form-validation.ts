@@ -21,7 +21,7 @@ type ValidationSchema = Record<string, ValidationRule>
 // ─── Thai phone number ───────────────────────────────────────────────────
 
 const THAI_PHONE = /^0[1-9]\d{7,8}$/          // 09xxxxxxxx or 0xxxxxxxxX
-const PHONE_LOOSE = /^[\d+\-\s()]{8,15}$/     // international / any format
+const _PHONE_LOOSE = /^[\d+\-\s()]{8,15}$/     // international / any format (reserved)
 
 // ─── Schemas per form variant + tab ─────────────────────────────────────
 

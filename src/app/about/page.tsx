@@ -8,7 +8,6 @@ import {
   MessageCircle,
   ExternalLink,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import SectionTitle from "@/components/layout/SectionTitle"
 import { SITE_CONFIG } from "@/lib/mock-data"
