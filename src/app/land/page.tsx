@@ -23,6 +23,8 @@ export default function LandPage() {
     <>
       <title>{LAND_CONTENT.seo.title}</title>
       <meta name="description" content={LAND_CONTENT.seo.description} />
+      <meta property="og:title" content={LAND_CONTENT.seo.title} />
+      <meta property="og:description" content={LAND_CONTENT.seo.description} />
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">

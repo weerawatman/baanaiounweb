@@ -93,6 +93,11 @@ const SOCIAL_LINKS = [
 export default function AboutPage() {
   return (
     <>
+        <title>เกี่ยวกับพิม — นายหน้าอสังหาฯ บ้านบึง ชลบุรี</title>
+        <meta name="description" content="รู้จักพิม นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี จากคนเช่าห้องแถว สู่เจ้าของ บ้านไออุ่น พร็อพเพอร์ตี้ ดูแลทุกเคสด้วยหัวใจ" />
+        <meta property="og:title" content="เกี่ยวกับพิม — นายหน้าอสังหาฯ บ้านบึง ชลบุรี" />
+        <meta property="og:description" content="รู้จักพิม นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี จากคนเช่าห้องแถว สู่เจ้าของ บ้านไออุ่น พร็อพเพอร์ตี้ ดูแลทุกเคสด้วยหัวใจ" />
+
         {/* Breadcrumb */}
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb

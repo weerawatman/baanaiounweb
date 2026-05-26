@@ -24,6 +24,8 @@ export default function OwnersPage() {
     <>
       <title>{OWNERS_CONTENT.seo.title}</title>
       <meta name="description" content={OWNERS_CONTENT.seo.description} />
+      <meta property="og:title" content={OWNERS_CONTENT.seo.title} />
+      <meta property="og:description" content={OWNERS_CONTENT.seo.description} />
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">

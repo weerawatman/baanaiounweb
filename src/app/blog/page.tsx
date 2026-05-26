@@ -17,7 +17,10 @@ export default function BlogPage() {
 
   return (
     <>
-      <title>บทความ — บ้านไออุ่น</title>
+      <title>บทความ — บ้านไออุ่น พร็อพเพอร์ตี้</title>
+      <meta name="description" content="บทความน่าอ่านจากบ้านไออุ่น เรื่องกู้บ้าน วางแผนการเงิน เจาะลึกทำเล และเทคนิคชีวิตคนไกลบ้าน" />
+      <meta property="og:title" content="บทความ — บ้านไออุ่น พร็อพเพอร์ตี้" />
+      <meta property="og:description" content="บทความน่าอ่านจากบ้านไออุ่น เรื่องกู้บ้าน วางแผนการเงิน เจาะลึกทำเล และเทคนิคชีวิตคนไกลบ้าน" />
       <main className="container mx-auto max-w-6xl px-4 py-10 space-y-8">
         {/* Breadcrumb */}
         <Breadcrumb

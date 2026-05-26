@@ -110,6 +110,11 @@ export default function ContactPage() {
 
   return (
     <>
+        <title>ติดต่อเรา — บ้านไออุ่น พร็อพเพอร์ตี้</title>
+        <meta name="description" content="ติดต่อบ้านไออุ่น พร็อพเพอร์ตี้ โทร แอดไลน์ หรือส่งข้อความหาพิมได้เลย ปรึกษาเรื่องซื้อ ขาย เช่าบ้านฟรี!" />
+        <meta property="og:title" content="ติดต่อเรา — บ้านไออุ่น พร็อพเพอร์ตี้" />
+        <meta property="og:description" content="ติดต่อบ้านไออุ่น พร็อพเพอร์ตี้ โทร แอดไลน์ หรือส่งข้อความหาพิมได้เลย ปรึกษาเรื่องซื้อ ขาย เช่าบ้านฟรี!" />
+
         {/* Breadcrumb */}
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb
