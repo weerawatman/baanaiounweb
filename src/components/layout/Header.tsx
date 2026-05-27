@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
-import { Menu, X, Phone, MessageCircle } from "lucide-react"
+import { Menu, X, ChevronDown } from "lucide-react"
 import {
   Sheet,
   SheetContent,
@@ -10,55 +10,110 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { NAV_ITEMS } from "@/config/navigation"
+import { NAV_ENTRIES, NAV_ITEMS, isNavGroup, type NavGroup } from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
+
+// ─── Dropdown component ─────────────────────────────────────────────────
+
+function NavDropdown({ group }: { group: NavGroup }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const timeout = useRef<ReturnType<typeof setTimeout>>(null)
+
+  // Close on click outside
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClick)
+    return () => document.removeEventListener("mousedown", handleClick)
+  }, [])
+
+  function handleEnter() {
+    if (timeout.current) clearTimeout(timeout.current)
+    setOpen(true)
+  }
+
+  function handleLeave() {
+    timeout.current = setTimeout(() => setOpen(false), 150)
+  }
+
+  return (
+    <div
+      ref={ref}
+      className="relative"
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground hover:text-primary rounded-md transition-colors"
+      >
+        {group.label}
+        <ChevronDown
+          className={`size-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {/* Dropdown panel */}
+      <div
+        className={`absolute left-0 top-full pt-1 transition-all duration-200 ${
+          open
+            ? "visible translate-y-0 opacity-100"
+            : "invisible -translate-y-1 opacity-0"
+        }`}
+      >
+        <div className="min-w-48 rounded-lg border bg-white py-1 shadow-lg">
+          {group.children.map((child) => (
+            <Link
+              key={child.href}
+              href={child.href}
+              onClick={() => setOpen(false)}
+              className="block px-4 py-2.5 text-sm text-foreground hover:bg-primary/5 hover:text-primary transition-colors"
+            >
+              {child.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Header ─────────────────────────────────────────────────────────────
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white shadow-sm">
+    <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link
           href="/"
-          className="text-xl font-bold text-primary hover:opacity-80 transition-opacity"
+          className="shrink-0 text-lg font-bold text-primary hover:opacity-80 transition-opacity"
         >
           {SITE_CONFIG.name}
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-md transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+        {/* Desktop Nav — grouped with dropdowns */}
+        <nav className="hidden lg:flex items-center">
+          {NAV_ENTRIES.map((entry) =>
+            isNavGroup(entry) ? (
+              <NavDropdown key={entry.label} group={entry} />
+            ) : (
+              <Link
+                key={entry.href}
+                href={entry.href}
+                className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary rounded-md transition-colors"
+              >
+                {entry.label}
+              </Link>
+            ),
+          )}
         </nav>
-
-        {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center gap-2">
-          <a
-            href={`tel:${SITE_CONFIG.phone}`}
-            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
-          >
-            <Phone className="size-4" />
-            <span>{SITE_CONFIG.phone}</span>
-          </a>
-          <a
-            href={SITE_CONFIG.lineUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-white hover:bg-primary/90 transition-colors"
-          >
-            <MessageCircle className="size-4" />
-            ปรึกษาพิมฟรี
-          </a>
-        </div>
 
         {/* Mobile Hamburger */}
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -86,25 +141,6 @@ export default function Header() {
                 </Link>
               ))}
             </nav>
-            <div className="border-t px-4 py-4 flex flex-col gap-3">
-              <a
-                href={`tel:${SITE_CONFIG.phone}`}
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Phone className="size-4" />
-                {SITE_CONFIG.phone}
-              </a>
-              <a
-                href={SITE_CONFIG.lineUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileOpen(false)}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 transition-colors"
-              >
-                <MessageCircle className="size-4" />
-                ปรึกษาพิมฟรี
-              </a>
-            </div>
           </SheetContent>
         </Sheet>
       </div>
