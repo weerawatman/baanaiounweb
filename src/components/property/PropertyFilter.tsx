@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { type Property } from "@/lib/mock-data"
+import { type Property } from "@/types"
 
 interface PropertyFilterProps {
   properties: Property[]

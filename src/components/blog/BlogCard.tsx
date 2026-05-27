@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { Clock } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { type BlogPost } from "@/lib/mock-data"
+import { type BlogPost } from "@/types"
 
 interface BlogCardProps {
   post: BlogPost

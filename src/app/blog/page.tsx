@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MOCK_BLOG_POSTS, BLOG_CATEGORIES } from "@/lib/mock-data"
+import { MOCK_BLOG_POSTS, BLOG_CATEGORIES } from "@/data/blog-posts"
 import BlogCard from "@/components/blog/BlogCard"
 import BlogCategoryFilter from "@/components/blog/BlogCategoryFilter"
 import Breadcrumb from "@/components/layout/Breadcrumb"

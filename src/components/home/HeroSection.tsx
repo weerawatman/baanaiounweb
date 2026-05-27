@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { SITE_CONFIG } from "@/lib/mock-data";
+import { SITE_CONFIG } from "@/config/site";
 
 export default function HeroSection() {
   return (

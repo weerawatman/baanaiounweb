@@ -1,5 +1,5 @@
 import { Quote } from "lucide-react"
-import { SITE_CONFIG } from "@/lib/mock-data"
+import { SITE_CONFIG } from "@/config/site"
 
 interface PimInsightProps {
   insight: string

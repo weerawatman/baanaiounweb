@@ -7,7 +7,7 @@ import {
   EmotionalHook,
   CTAWithForm,
 } from "@/components/shared"
-import { ACADEMY_CONTENT } from "@/lib/page-content"
+import { ACADEMY_CONTENT } from "@/content/academy"
 
 export default function AcademyPage() {
   return (

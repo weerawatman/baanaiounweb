@@ -1,5 +1,5 @@
 import { Shield } from "lucide-react"
-import { FORM_PRIVACY_NOTICE } from "@/lib/page-content"
+import { FORM_PRIVACY_NOTICE } from "@/content/form-options"
 
 export default function PrivacyNotice() {
   return (

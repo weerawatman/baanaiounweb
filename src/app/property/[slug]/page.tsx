@@ -1,4 +1,4 @@
-import { MOCK_PROPERTIES } from "@/lib/mock-data"
+import { MOCK_PROPERTIES } from "@/data/properties"
 import PropertyDetailClient from "./PropertyDetailClient"
 
 export default async function PropertyPage({

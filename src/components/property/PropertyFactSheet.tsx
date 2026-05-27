@@ -1,6 +1,6 @@
 import { Maximize, Bed, Bath, CheckCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { type Property } from "@/lib/mock-data"
+import { type Property } from "@/types"
 
 interface PropertyFactSheetProps {
   property: Property

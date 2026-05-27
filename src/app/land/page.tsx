@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { MOCK_PROPERTIES, type Property } from "@/lib/mock-data"
+import { MOCK_PROPERTIES } from "@/data/properties"
+import { type Property } from "@/types"
 import PropertyCard from "@/components/property/PropertyCard"
 import PropertyFilter from "@/components/property/PropertyFilter"
 import SectionTitle from "@/components/layout/SectionTitle"
@@ -12,7 +13,7 @@ import {
   EmotionalHook,
   CTAWithForm,
 } from "@/components/shared"
-import { LAND_CONTENT } from "@/lib/page-content"
+import { LAND_CONTENT } from "@/content/land"
 
 const BASE_PROPERTIES = MOCK_PROPERTIES.filter((p) => p.type === "LAND")
 

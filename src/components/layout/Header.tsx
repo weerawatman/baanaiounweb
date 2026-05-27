@@ -10,7 +10,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { NAV_ITEMS, SITE_CONFIG } from "@/lib/mock-data"
+import { NAV_ITEMS } from "@/config/navigation"
+import { SITE_CONFIG } from "@/config/site"
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)

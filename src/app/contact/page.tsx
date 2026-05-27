@@ -6,7 +6,7 @@ import { Phone, MessageCircle, Mail, MapPin, Loader2, CheckCircle, AlertTriangle
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Breadcrumb from "@/components/layout/Breadcrumb"
-import { SITE_CONFIG } from "@/lib/mock-data"
+import { SITE_CONFIG } from "@/config/site"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },

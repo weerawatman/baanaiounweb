@@ -6,7 +6,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { MOCK_FAQS } from "@/lib/mock-data";
+import { MOCK_FAQS } from "@/data/faqs";
 
 const homeFaqs = MOCK_FAQS.filter((faq) => faq.pageSlug === "home");
 

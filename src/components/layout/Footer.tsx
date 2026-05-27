@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Phone, Mail, MapPin } from "lucide-react"
-import { SITE_CONFIG, NAV_ITEMS } from "@/lib/mock-data"
+import { SITE_CONFIG } from "@/config/site"
+import { NAV_ITEMS } from "@/config/navigation"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()

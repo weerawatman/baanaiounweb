@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import SectionTitle from "@/components/layout/SectionTitle"
 import PropertyCard from "@/components/property/PropertyCard"
-import { MOCK_BLOG_POSTS, MOCK_PROPERTIES } from "@/lib/mock-data"
+import { MOCK_PROPERTIES } from "@/data/properties"
+import { MOCK_BLOG_POSTS } from "@/data/blog-posts"
 
 interface BlogPostClientProps {
   slug: string

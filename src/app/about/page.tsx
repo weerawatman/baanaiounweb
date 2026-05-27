@@ -10,7 +10,7 @@ import {
 } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import SectionTitle from "@/components/layout/SectionTitle"
-import { SITE_CONFIG } from "@/lib/mock-data"
+import { SITE_CONFIG } from "@/config/site"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },

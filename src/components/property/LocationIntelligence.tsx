@@ -1,6 +1,6 @@
 import { MapPin, Building2, Heart, ShoppingBag } from "lucide-react"
-import { type Property } from "@/lib/mock-data"
-import { SITE_CONFIG } from "@/lib/mock-data"
+import { type Property } from "@/types"
+import { SITE_CONFIG } from "@/config/site"
 
 interface LocationIntelligenceProps {
   property: Property

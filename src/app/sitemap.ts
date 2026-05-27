@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
-import { MOCK_PROPERTIES, MOCK_BLOG_POSTS } from "@/lib/mock-data"
+import { MOCK_PROPERTIES } from "@/data/properties"
+import { MOCK_BLOG_POSTS } from "@/data/blog-posts"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 

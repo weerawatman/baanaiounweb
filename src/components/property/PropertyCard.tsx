@@ -4,7 +4,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Bed, Bath, Maximize, MapPin } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
-import { type Property } from "@/lib/mock-data"
+import { type Property } from "@/types"
 
 interface PropertyCardProps {
   property: Property

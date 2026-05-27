@@ -5,7 +5,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Star } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { MOCK_TESTIMONIALS } from "@/lib/mock-data";
+import { MOCK_TESTIMONIALS } from "@/data/testimonials";
 
 export default function TestimonialSlider() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [

@@ -7,8 +7,8 @@ import {
   EmotionalHook,
   CTAWithForm,
 } from "@/components/shared"
-import { OWNERS_CONTENT } from "@/lib/page-content"
-import { MOCK_FAQS } from "@/lib/mock-data"
+import { OWNERS_CONTENT } from "@/content/owners"
+import { MOCK_FAQS } from "@/data/faqs"
 import SectionTitle from "@/components/layout/SectionTitle"
 import {
   Accordion,

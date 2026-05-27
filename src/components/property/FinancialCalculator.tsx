@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react"
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts"
 import { Input } from "@/components/ui/input"
-import { type Property } from "@/lib/mock-data"
+import { type Property } from "@/types"
 
 interface FinancialCalculatorProps {
   property: Property

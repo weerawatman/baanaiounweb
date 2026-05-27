@@ -1,9 +1,9 @@
 "use client"
 
-import { type BLOG_CATEGORIES } from "@/lib/mock-data"
+import { type BlogCategory } from "@/types"
 
 interface BlogCategoryFilterProps {
-  categories: typeof BLOG_CATEGORIES
+  categories: BlogCategory[]
   activeCategory: string
   onSelect: (slug: string) => void
 }

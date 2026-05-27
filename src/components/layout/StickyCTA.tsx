@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { MessageCircle } from "lucide-react"
-import { SITE_CONFIG } from "@/lib/mock-data"
+import { SITE_CONFIG } from "@/config/site"
 
 export default function StickyCTA() {
   return (

@@ -12,7 +12,7 @@ import {
   BUYER_PURPOSE_OPTIONS,
   LOCATION_OPTIONS,
   REGION_OPTIONS,
-} from "@/lib/page-content"
+} from "@/content/form-options"
 import { validateForm, type FieldErrors } from "@/lib/form-validation"
 import ImageUpload, { type UploadedImage } from "./ImageUpload"
 

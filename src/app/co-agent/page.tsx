@@ -7,7 +7,7 @@ import {
   EmotionalHook,
   CTAWithForm,
 } from "@/components/shared"
-import { COAGENT_CONTENT } from "@/lib/page-content"
+import { COAGENT_CONTENT } from "@/content/co-agent"
 
 export default function CoAgentPage() {
   return (
