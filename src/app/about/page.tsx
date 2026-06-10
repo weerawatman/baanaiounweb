@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { motion } from "framer-motion"
 import {
   Heart,
@@ -148,9 +149,12 @@ export default function AboutPage() {
                 transition={{ duration: 0.6 }}
               >
                 <div className="overflow-hidden rounded-2xl shadow-xl">
-                  <img
+                  <Image
                     src={SITE_CONFIG.pim.heroImage}
                     alt={SITE_CONFIG.pim.fullName}
+                    width={800}
+                    height={600}
+                    priority
                     className="h-80 w-full max-w-md object-cover sm:h-96"
                   />
                 </div>

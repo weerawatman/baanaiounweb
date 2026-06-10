@@ -3,8 +3,41 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyCTA from "@/components/layout/StickyCTA";
+import { SITE_CONFIG } from "@/config/site";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  name: SITE_CONFIG.name,
+  alternateName: SITE_CONFIG.nameEn,
+  description: "นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี คัดสรรบ้านขาย บ้านเช่า ที่ดิน ใกล้นิคมอมตะ เหมราช",
+  url: BASE_URL,
+  telephone: SITE_CONFIG.phone,
+  email: SITE_CONFIG.email,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "บ้านบึง",
+    addressRegion: "ชลบุรี",
+    addressCountry: "TH",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 13.31,
+    longitude: 101.11,
+  },
+  sameAs: [
+    SITE_CONFIG.facebook,
+    SITE_CONFIG.tiktok,
+    SITE_CONFIG.youtube,
+    SITE_CONFIG.lineUrl,
+  ],
+  areaServed: {
+    "@type": "City",
+    name: "บ้านบึง ชลบุรี",
+  },
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -38,6 +71,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th" className="h-full antialiased">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <Header />
         <main className="flex-1">{children}</main>

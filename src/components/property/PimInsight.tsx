@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Quote } from "lucide-react"
 import { SITE_CONFIG } from "@/config/site"
 
@@ -13,9 +14,11 @@ export default function PimInsight({ insight }: PimInsightProps) {
 
       <div className="flex items-start gap-4">
         {/* Avatar */}
-        <img
+        <Image
           src={SITE_CONFIG.pim.avatar}
           alt={SITE_CONFIG.pim.name}
+          width={48}
+          height={48}
           className="h-12 w-12 shrink-0 rounded-full object-cover ring-2 ring-green-300"
         />
 

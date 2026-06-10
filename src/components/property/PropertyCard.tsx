@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { Bed, Bath, Maximize, MapPin } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
@@ -43,11 +44,13 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       <Link href={`/property/${property.slug}`} className="block h-full group">
         <Card className="h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl group-hover:ring-foreground/20">
           {/* Image */}
-          <div className="relative overflow-hidden">
-            <img
+          <div className="relative h-52 overflow-hidden">
+            <Image
               src={property.imagePrimary}
               alt={property.title}
-              className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
             {/* Type badge overlay */}
             <span

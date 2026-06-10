@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { Clock, CalendarDays, MessageCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -99,11 +100,14 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
         className="space-y-6"
       >
         {/* Featured image */}
-        <div className="overflow-hidden rounded-xl">
-          <img
+        <div className="relative h-64 overflow-hidden rounded-xl sm:h-80">
+          <Image
             src={post.featuredImage}
             alt={post.title}
-            className="w-full h-64 sm:h-80 object-cover"
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 768px"
+            className="object-cover"
           />
         </div>
 

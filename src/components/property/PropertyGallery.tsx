@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import {
   Dialog,
   DialogContent,
@@ -29,22 +30,31 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
             />
           }
         >
-          <img
-            src={selectedImage}
-            alt={`${title} — ภาพหลัก`}
-            className="w-full h-72 sm:h-96 object-cover transition-transform duration-300 hover:scale-[1.02] cursor-zoom-in"
-          />
+          <div className="relative h-72 w-full sm:h-96">
+            <Image
+              src={selectedImage}
+              alt={`${title} — ภาพหลัก`}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 672px"
+              className="object-cover transition-transform duration-300 hover:scale-[1.02] cursor-zoom-in"
+            />
+          </div>
         </DialogTrigger>
 
         <DialogContent
           className="max-w-3xl w-full p-2"
           showCloseButton
         >
-          <img
-            src={selectedImage}
-            alt={`${title} — ดูภาพเต็ม`}
-            className="w-full max-h-[80vh] object-contain rounded-lg"
-          />
+          <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
+            <Image
+              src={selectedImage}
+              alt={`${title} — ดูภาพเต็ม`}
+              fill
+              sizes="(max-width: 1024px) 100vw, 768px"
+              className="object-contain rounded-lg"
+            />
+          </div>
           <p className="text-center text-sm text-muted-foreground mt-2">
             {title} — ภาพ {selectedIndex + 1} / {images.length}
           </p>
@@ -65,9 +75,11 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
               }`}
               aria-label={`ดูภาพที่ ${idx + 1}`}
             >
-              <img
+              <Image
                 src={src}
                 alt={`${title} — ภาพที่ ${idx + 1}`}
+                width={96}
+                height={64}
                 className="h-16 w-24 object-cover"
               />
             </button>

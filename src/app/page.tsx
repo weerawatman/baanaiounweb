@@ -11,7 +11,6 @@ import FAQSection from "@/components/home/FAQSection"
 import SectionTitle from "@/components/layout/SectionTitle"
 import { MOCK_PROPERTIES } from "@/data/properties"
 import { SITE_CONFIG } from "@/config/site"
-import { HOMEPAGE_PAIN_POINTS } from "@/content/homepage"
 import PropertyCard from "@/components/property/PropertyCard"
 import { Button } from "@/components/ui/button"
 
@@ -29,51 +28,12 @@ export default function HomePage() {
 
   return (
     <>
-      <title>บ้านไออุ่น พร็อพเพอร์ตี้ — มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ</title>
+      <title>บ้านไออุ่น พร็อพเพอร์ตี้ — จบทุกความต้องการเรื่องอสังหาฯ บ้านบึง ชลบุรี</title>
       <meta name="description" content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ" />
-      <meta property="og:title" content="บ้านไออุ่น พร็อพเพอร์ตี้ — มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ" />
+      <meta property="og:title" content="บ้านไออุ่น พร็อพเพอร์ตี้ — จบทุกความต้องการเรื่องอสังหาฯ" />
       <meta property="og:description" content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ" />
 
       <HeroSection />
-
-      {/* Pain Points overview — ขยี้ปัญหา 4 กลุ่ม */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <SectionTitle
-            title="คุณกำลังเจอปัญหาเหล่านี้อยู่หรือเปล่า?"
-            subtitle="ไม่ว่าคุณจะเป็นใคร บ้านไออุ่นช่วยได้"
-          />
-          <motion.div
-            className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {HOMEPAGE_PAIN_POINTS.map((item, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                custom={i}
-              >
-                <Link href={item.href} className="group block">
-                  <div className="h-full rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition hover:shadow-md hover:border-[#1B4D3E]/20">
-                    <span className="inline-block rounded-full bg-[#1B4D3E]/10 px-3 py-1 text-xs font-semibold text-[#1B4D3E]">
-                      {item.target}
-                    </span>
-                    <p className="mt-3 text-sm font-medium text-gray-800 leading-relaxed">
-                      {item.pain}
-                    </p>
-                    <p className="mt-2 text-xs text-[#D4A843] font-medium flex items-center gap-1">
-                      {item.solution}
-                      <ArrowRight className="size-3" />
-                    </p>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
       {/* Services — 4 กลุ่มบริการ */}
       <section className="py-12 px-4 max-w-6xl mx-auto">
@@ -123,7 +83,7 @@ export default function HomePage() {
         <FAQSection />
       </section>
 
-      {/* Homepage CTA — 3 ปุ่มแยกทาง */}
+      {/* Homepage CTA */}
       <section className="bg-[#1B4D3E] py-16 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <motion.div
