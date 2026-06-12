@@ -1,22 +1,22 @@
 # TODO — Baan Ai Oun Property
 รายการที่ยังเหลือก่อนขึ้น Production (ข้าม Supabase & External Integrations ไปก่อน)
 
-อัปเดตล่าสุด: 2026-06-10
+อัปเดตล่าสุด: 2026-06-12
 
 ---
 
 ## 🔴 ต้องทำก่อน Deploy (Blockers)
 
 ### ข้อมูลจริงใน `src/config/site.ts`
-ปัจจุบันทุก field ยังเป็น placeholder — ต้องได้จากเจ้าของธุรกิจ
 
-- [ ] `phone` → เบอร์โทรจริง (ปัจจุบัน: 098-765-4321)
-- [ ] `lineId` / `lineUrl` → LINE Official Account จริง (ปัจจุบัน: @baanaioun)
-- [ ] `email` → อีเมลจริง (ปัจจุบัน: pim@baanaioun.com)
-- [ ] `facebook` → URL Facebook Page จริง
-- [ ] `tiktok` → URL TikTok จริง
-- [ ] `youtube` → URL YouTube จริง
-- [ ] `googleMapsEmbed` → Google Maps Embed URL จริง (ที่อยู่จริงของธุรกิจ)
+- [x] `phone` → 086-4149960
+- [x] `lineId` / `lineUrl` → @baan-ai-oun
+- [x] `email` → supansa.m@baanaioun.com
+- [x] `facebook` → https://www.facebook.com/share/18EEmsWiKy/ (มีหน้าที่ 2 ด้วย: /share/1GgLj8c2AX/)
+- [x] `tiktok` → tiktok.com/@baan_ai_oun
+- [x] `address` → 107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540
+- [ ] `youtube` → URL YouTube จริง (ยังไม่ได้รับ)
+- [ ] `googleMapsEmbed` → ต้องไปที่ Google Maps → Share → Embed a map → copy src URL
 - [ ] `pim.avatar` → รูป avatar พิมจริง (ปัจจุบัน: placehold.co)
 - [ ] `pim.heroImage` → รูป hero พิมจริง (ปัจจุบัน: placehold.co)
 
@@ -79,16 +79,25 @@
 
 ---
 
-## ⏭ Skip ไว้ก่อน (Supabase & External Integrations)
+## 🟡 Supabase — เชื่อมต่อแล้ว รอ SQL Setup
 
-> ข้ามไปก่อนตามที่ตกลงกัน — ทำเมื่อพร้อม setup backend
+- [x] สร้าง Supabase project (`ubbuniyssfmtpiwlxnxz`)
+- [x] ใส่ API keys ใน `.env.local` ครบ (URL, anon key, service role key)
+- [ ] **รัน `supabase/setup/00_full_setup.sql`** ใน Supabase SQL Editor (ยังไม่ได้ทำ)
+  - สร้างตาราง `form_submissions` + indexes + RLS policies
+  - สร้าง storage bucket `property-images` + policies
+- [ ] ทดสอบ: ส่งฟอร์มบนเว็บ → ตรวจ Table Editor ว่ามี row ใหม่
+- [ ] LINE Notify: สร้าง token ที่ notify-bot.line.me → ใส่ใน `.env.local`
+- [ ] ทดสอบ: ส่งฟอร์ม → ได้รับ notification ใน LINE Group
 
-- Supabase: สร้าง project, รัน SQL setup, ตั้ง RLS policies
-- LINE Notify: สร้าง token, ทดสอบ notification
-- Vercel: เชื่อม repo, ตั้ง env vars, deploy
-- Admin Dashboard (CRUD ทรัพย์, ดู leads)
+---
+
+## ⏭ Skip ไว้ก่อน (ทำหลัง Supabase พร้อม)
+
+- Vercel: เชื่อม repo, ตั้ง env vars, deploy + custom domain
+- Admin Dashboard (CRUD ทรัพย์, ดู leads, Supabase Auth)
 - Blog CMS (Supabase / Notion / Sanity)
-- ย้าย mock data → Supabase tables
+- ย้าย mock data → Supabase tables (`properties`, `blog_posts`, `testimonials`, `faqs`)
 
 ---
 
@@ -102,3 +111,5 @@
 - [x] แทนที่ `<img>` → `next/image` ครบทุกจุด (10 spots, 7 files)
 - [x] Redesign `HeroSection` — bilingual (TH/EN) + language toggle + 3 tabs (pain→solution→CTA)
 - [x] ตัด redundant pain points section ออกจาก homepage
+- [x] สร้าง `.env.local` พร้อม env vars ทั้งปัจจุบันและอนาคต
+- [x] เชื่อม Supabase project (`ubbuniyssfmtpiwlxnxz`) — URL + keys ถูกต้อง ทดสอบแล้ว

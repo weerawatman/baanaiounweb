@@ -12,20 +12,17 @@ const jsonLd = {
   "@type": "RealEstateAgent",
   name: SITE_CONFIG.name,
   alternateName: SITE_CONFIG.nameEn,
-  description: "นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี คัดสรรบ้านขาย บ้านเช่า ที่ดิน ใกล้นิคมอมตะ เหมราช",
+  description: "นายหน้าอสังหาริมทรัพย์ จ.สมุทรปราการ ให้บริการซื้อ-ขาย-เช่า บ้าน คอนโด ที่ดิน บ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช",
   url: BASE_URL,
   telephone: SITE_CONFIG.phone,
   email: SITE_CONFIG.email,
   address: {
     "@type": "PostalAddress",
-    addressLocality: "บ้านบึง",
-    addressRegion: "ชลบุรี",
+    streetAddress: "107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13",
+    addressLocality: "บางพลีใหญ่",
+    addressRegion: "สมุทรปราการ",
+    postalCode: "10540",
     addressCountry: "TH",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 13.31,
-    longitude: 101.11,
   },
   sameAs: [
     SITE_CONFIG.facebook,
@@ -35,7 +32,7 @@ const jsonLd = {
   ],
   areaServed: {
     "@type": "City",
-    name: "บ้านบึง ชลบุรี",
+    name: SITE_CONFIG.areaServed,
   },
 };
 
