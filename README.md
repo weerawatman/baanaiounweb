@@ -46,6 +46,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `npm run format` | Format code with Prettier |
 | `npm run typecheck` | TypeScript type check |
 | `npm run validate` | Run typecheck + lint + build (CI) |
+| `npm run check:supabase` | Verify Supabase connection & schema |
 
 ## Project Structure
 
@@ -68,7 +69,11 @@ src/
 supabase/
   setup/            # SQL files for initial database setup
   migrations/       # Incremental database migrations
+
+scripts/            # Dev/ops utility scripts (e.g. Supabase connection check)
 ```
+
+> **Production roadmap:** see [`TODO.md`](TODO.md) — phased checklist with Definition of Done per phase.
 
 ## Supabase Setup
 
