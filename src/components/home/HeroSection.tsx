@@ -57,7 +57,7 @@ export default function HeroSection() {
           >
             {/* Headline */}
             <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1B4D3E] leading-normal max-w-2xl">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1B4D3E] leading-normal max-w-2xl whitespace-pre-line">
                 {content.headline}
               </h1>
               <p className="mt-3 text-base md:text-lg text-gray-600 leading-relaxed">
