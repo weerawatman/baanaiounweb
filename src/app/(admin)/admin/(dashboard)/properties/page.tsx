@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Plus } from "lucide-react"
-import { buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/lib/button-variants"
 import { getProperties } from "@/lib/queries/properties"
 import { PropertiesTable } from "./PropertiesTable"
 import { cn } from "@/lib/utils"

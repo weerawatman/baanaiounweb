@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Plus } from "lucide-react"
-import { buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/lib/button-variants"
 import { getBlogPosts } from "@/lib/queries/blog"
 import { BlogTable } from "./BlogTable"
 import { cn } from "@/lib/utils"
