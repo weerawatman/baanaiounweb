@@ -8,132 +8,137 @@
 
 ---
 
+## 👉 เริ่มงานครั้งถัดไปที่นี่
+
+โค้ดฝั่ง dev เสร็จเป็นส่วนใหญ่แล้ว (public wired ถึง DB, admin CRUD ครบ, security upload, profile แก้ได้ครบ).
+งานที่เหลือเรียงตามความคุ้มค่า:
+
+1. **Phase D — SEO** (งานโค้ดล้วน ทำได้เลย ไม่ต้องรอ asset) → dynamic meta หน้า property + `RealEstateListing` JSON-LD + meta description หน้า contact/blog
+2. **Phase C — Content จริง** (คุณทำผ่าน `/admin/profile` + admin เอง) → รูป avatar/hero, YouTube, favicon, OG image, LINE token
+3. **Phase E — Security ที่เหลือ** → rate limit `submit-form`, ตรวจ RLS, double-submit
+4. **Phase F — Deploy** → Vercel env + custom domain
+
+---
+
 ## สถานะปัจจุบัน (อ่านก่อนเริ่มงาน)
 
-| ส่วน                   | สถานะ                                                                                            |
-| ---------------------- | ------------------------------------------------------------------------------------------------ |
-| โครงสร้างโค้ด          | ✅ `types/` `config/` `content/` `data/` `lib/` จัดแล้ว                                          |
-| Supabase project       | ✅ `ubbuniyssfmtpiwlxnxz` + keys ใน `.env.local`                                                 |
-| Supabase schema        | ✅ ตาราง `form_submissions`, `properties`, `blog_posts`, `testimonials`, `faqs` + RLS + triggers |
-| Supabase Auth          | ✅ Users: kanokpat/napat/supansa/weerawat @baanaioun.com (password: 1234 ชั่วคราว)               |
-| Admin Dashboard        | ✅ `/admin` — Properties CRUD, Leads, Blog (Tiptap), Testimonials, FAQs                          |
-| Public site ↔ Supabase | ❌ **ยังอ่านจาก `src/data/` (static)** — ยังไม่ wired ถึง DB                                     |
-| รูปภาพ                 | ❌ ยังเป็น placeholder                                                                           |
-| Deploy                 | ⏳ Vercel preview: baanaiounweb.vercel.app (ยังไม่ custom domain)                                |
-| CI                     | ✅ GitHub Actions: lint + typecheck + build ทุก push                                             |
+| ส่วน                   | สถานะ                                                                                                                                         |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| โครงสร้างโค้ด          | ✅ `types/` `config/` `content/` `lib/` จัดแล้ว                                                                                               |
+| Supabase project       | ✅ ตั้งบน account **weerawat.m@baanaioun.com** (ref ดู `.env.local`)                                                                          |
+| Supabase schema        | ✅ migrations 001–009: `form_submissions`, `properties`, `blog_posts`, `testimonials`, `faqs`, `agent_profile` (+ `address`) + RLS + triggers |
+| Supabase Auth          | ⏳ Users สร้างแล้ว (kanokpat/napat/supansa/weerawat) — **password ยัง `1234` ชั่วคราว**                                                       |
+| Admin Dashboard        | ✅ `/admin` — Properties CRUD, Leads, Blog (Tiptap), Testimonials, FAQs, **Profile**                                                          |
+| Public site ↔ Supabase | ✅ **wired ครบทุกหน้า** ผ่าน `src/lib/queries/` (`src/data/` เหลือแค่ `BLOG_CATEGORIES` config)                                               |
+| Profile/ติดต่อ         | ✅ เบอร์/LINE/social/hero/avatar/ที่อยู่+แผนที่ ดึงจาก DB แก้ได้ที่ `/admin/profile`                                                          |
+| Security (upload)      | ✅ `/api/upload-images` origin check + rate limit + sanitize ext                                                                              |
+| รูปภาพ                 | ⏳ ทรัพย์อัปผ่าน admin ได้แล้ว — แต่ avatar/hero ยัง fallback `placehold.co` จนกว่าจะอัปจริง                                                  |
+| SEO/meta               | ❌ ยังไม่มี dynamic meta + `RealEstateListing` JSON-LD (Phase D)                                                                              |
+| Deploy                 | ⏳ Vercel preview: baanaiounweb.vercel.app (ยังไม่ custom domain)                                                                             |
+| CI / Quality gate      | ✅ GitHub Actions + `npm run validate` เขียว (0 error / 0 warning) + Prettier formatted                                                       |
+
+> ⚠️ **หมายเหตุ Supabase MCP:** MCP บน Claude ผูกกับ account อื่น (weerawatman@gmail.com) ไม่ใช่ DB จริง — **อย่าใช้ MCP ตรวจสถานะ DB ของโปรเจกต์นี้** ให้ดูจาก dashboard จริงหรือไฟล์ migration แทน
 
 **คำสั่งตรวจสุขภาพ:**
 
 ```bash
-npm run validate        # typecheck + lint + build
+npm run validate        # typecheck + lint + build  (ต้องผ่านก่อน commit ใหญ่)
 npm run check:supabase  # ทดสอบ Supabase connection
 npm run dev             # http://localhost:3000
 ```
 
 ---
 
-## Phase A — Admin Foundation Testing 🔴 (ทำก่อนทุกอย่าง)
+## Phase A — Admin Foundation Testing 🔴 (ทดสอบ manual)
 
-> 🎯 **เป้าหมาย:** ทดสอบ Admin Dashboard ที่สร้างไปให้ทำงานได้ end-to-end จริง
+> 🎯 **เป้าหมาย:** ยืนยัน Admin Dashboard ทำงาน end-to-end จริงบน DB
 
 ### งาน
 
-- [ ] เปิด `http://localhost:3000/admin/login` → login ด้วย `weerawat.m@baanaioun.com` / `1234` → ผ่าน
-- [ ] เปลี่ยน password ทุกคนจาก `1234` เป็นรหัสจริง (Supabase → Authentication → Users → Send password recovery)
-- [ ] Admin → Properties → กดปุ่ม "เพิ่มทรัพย์" → กรอกข้อมูล → Save → เห็น row ใน Supabase Table Editor
-- [ ] Admin → Properties → Archive ทรัพย์ → ย้ายไปแท็บ "เก็บถาวร" → Restore กลับได้
-- [ ] Admin → Leads → ดูรายการ leads จาก form_submissions → เปลี่ยน status ได้
-- [ ] Admin → Blog → เพิ่มบทความด้วย Tiptap editor → Publish → ข้อมูลเข้า DB
-- [ ] Admin → Testimonials → เพิ่มรีวิว → ปรากฏใน list
-- [ ] Admin → FAQs → เพิ่ม/แก้ไข/ลบ FAQ inline → บันทึกได้
-- [ ] สร้าง Supabase Storage bucket `property-images` (Dashboard → Storage → New bucket → Public)
-- [ ] ทดสอบ image upload ในฟอร์ม properties → รูปขึ้น storage
+- [ ] Login `http://localhost:3000/admin/login` ด้วย `weerawat.m@baanaioun.com` / `1234` → ผ่าน
+- [ ] เปลี่ยน password ทุกคนจาก `1234` เป็นรหัสจริง (Supabase → Authentication → Users)
+- [ ] Properties → เพิ่ม/แก้/Archive/Restore → เห็นผลใน Supabase Table Editor
+- [ ] Leads → ดูจาก `form_submissions` → เปลี่ยน status + เพิ่ม notes ได้
+- [ ] Blog (Tiptap) → เพิ่ม/Publish → ข้อมูลเข้า DB
+- [ ] Testimonials → เพิ่ม/แก้ → ปรากฏใน list
+- [ ] FAQs → เพิ่ม/แก้/ลบ inline → บันทึกได้
+- [ ] Profile → แก้ข้อมูลพิม/ติดต่อ/ที่อยู่ → กดบันทึก → public อัปเดต
+- [ ] สร้าง Storage bucket `property-images` (Public) แล้วทดสอบอัปโหลดรูปในฟอร์ม
 
 ### ✅ Definition of Done
 
-- [ ] Login/logout ทำงานได้ปกติ ไม่มี infinite redirect
-- [ ] CRUD ทุก entity ทำงานได้ ข้อมูลขึ้นใน Supabase จริง
+- [ ] Login/logout ปกติ ไม่มี infinite redirect
+- [ ] CRUD ทุก entity เข้า DB จริง
 - [ ] `npm run validate` ผ่าน
 
 ---
 
-## Phase B — Data Cutover (Public Site → Supabase) 🔴
+## Phase B — Data Cutover (Public Site → Supabase) ✅ เสร็จแล้ว
 
-> 🎯 **เป้าหมาย:** Public site อ่านข้อมูลจาก DB แทน `src/data/` static files — เจ้าของแก้ข้อมูลผ่าน Admin ได้เลย
+> 🎯 Public site อ่านจาก DB แทน static files — **ยืนยันแล้วว่าเสร็จ**
 
-### งาน
-
-- [ ] Seed ข้อมูลจาก `src/data/` เข้า Supabase ผ่าน Admin Dashboard (properties, testimonials, faqs, blog)
-- [ ] แก้ `src/app/(public)/page.tsx` ให้ดึง properties จาก `src/lib/queries/properties.ts` แทน `src/data/`
-- [ ] แก้ `src/app/(public)/property/[slug]/page.tsx` ให้ดึงจาก DB
-- [ ] แก้ `src/app/(public)/buy/page.tsx`, `rent/page.tsx`, `land/page.tsx` ให้ดึงจาก DB
-- [ ] แก้ `src/app/(public)/blog/page.tsx` + `blog/[slug]/page.tsx` ให้ดึงจาก DB
-- [ ] แก้ testimonials และ FAQs ในหน้าต่างๆ ให้ดึงจาก DB
-- [ ] ลบ `src/data/` เมื่อไม่มี import เหลือแล้ว
-- [ ] อัปเดต `src/app/sitemap.ts` ให้ดึง slug จาก DB
-
-### ✅ Definition of Done
-
-- [ ] `grep -r "src/data/" src/app/` → 0 รายการ
-- [ ] หน้าแรก, /buy, /rent, /land, /property/[slug], /blog, /blog/[slug] โหลดข้อมูลจาก DB
-- [ ] แก้ข้อมูลใน Admin → refresh หน้า public → เห็นผลทันที (ไม่ต้อง redeploy)
-- [ ] `npm run validate` ผ่าน
+- [x] หน้าแรก, /buy, /rent, /land, /property/[slug], /blog, /blog/[slug], /about, /contact, /owners ดึงจาก `src/lib/queries/`
+- [x] `src/app/sitemap.ts` ดึง slug ทรัพย์ + บทความจาก DB
+- [x] แก้ข้อมูลใน Admin → refresh หน้า public → เห็นผลทันที (ไม่ต้อง redeploy)
+- [x] `src/data/` เหลือเฉพาะ `blog-posts.ts` → `BLOG_CATEGORIES` (config คงที่ ไม่ใช่ mock data, เก็บไว้ตั้งใจ)
+- [x] `npm run validate` ผ่าน
 
 ---
 
 ## Phase C — Real Content & Assets 🔴 (Blocker ก่อน Go-Live)
 
-> 🎯 **เป้าหมาย:** ไม่มี placeholder เหลือบนเว็บ — ทุกรูป ทุกลิงก์ เป็นของจริง
+> 🎯 ไม่มี placeholder เหลือบนเว็บ — ทุกรูป ทุกลิงก์ เป็นของจริง
+> 📌 ข้อ 3.1 ตอนนี้แก้ได้จาก `/admin/profile` แล้ว (DB override `site.ts`) — ไม่ต้องแก้โค้ด
 
-### 3.1 Config ที่ยังขาด (`src/config/site.ts`)
+### 3.1 ข้อมูล Profile (แก้ที่ `/admin/profile`)
 
-- [ ] `youtube` → URL YouTube Channel จริง
-- [ ] `googleMapsEmbed` → Google Maps → Share → Embed a map → copy `src` URL
-- [ ] `pim.avatar` → รูป avatar พิมจริง (แนะนำ: 400×400px)
-- [ ] `pim.heroImage` → รูป hero พิมจริง (แนะนำ: 1200×800px)
+- [ ] อัปโหลดรูป avatar พิมจริง (แทน `placehold.co`)
+- [ ] อัปโหลดรูป hero พิมจริง (แทน `placehold.co`)
+- [ ] ใส่ YouTube URL จริง
+- [ ] ตรวจที่อยู่ + แผนที่ (map derive จากที่อยู่อัตโนมัติ)
 
-### 3.2 Brand Assets
+### 3.2 Brand Assets (งานไฟล์ + โค้ดเล็กน้อย)
 
-- [ ] `src/app/favicon.ico` → favicon จริงของแบรนด์
-- [ ] `public/og-image.jpg` → OG image 1200×630px สำหรับ share บน social
+- [ ] `src/app/favicon.ico` → favicon จริง
+- [ ] `public/og-image.jpg` → OG image 1200×630px
 - [ ] เพิ่ม `openGraph.images` ใน `src/app/layout.tsx` หลังมีไฟล์ OG
 
-### 3.3 Content จริง
+### 3.3 Content จริง (ผ่าน Admin)
 
-- [ ] รูปทรัพย์จริง ≥ 5 รูป/หลัง → อัปโหลดผ่าน Admin → กรอกข้อมูลให้ครบ
-- [ ] บทความจริง ≥ 3 เรื่อง → เขียนผ่าน Admin Blog editor
-- [ ] Testimonials จากลูกค้าจริง → เพิ่มผ่าน Admin
+- [ ] รูปทรัพย์จริง ≥ 5 รูป/หลัง + ข้อมูลครบ
+- [ ] บทความจริง ≥ 3 เรื่อง
+- [ ] Testimonials จากลูกค้าจริง
 
 ### 3.4 LINE Notify
 
-- [ ] ขอ token ที่ [notify-bot.line.me/my](https://notify-bot.line.me/my/) → ใส่ `LINE_NOTIFY_TOKEN` ใน `.env.local`
-- [ ] ทดสอบ: ส่งฟอร์มหน้า `/contact` → LINE Group ได้รับแจ้งเตือน
+- [ ] ขอ token → ใส่ `LINE_NOTIFY_TOKEN` (.env.local + Vercel)
+- [ ] ทดสอบ: ส่งฟอร์ม `/contact` → LINE ได้รับแจ้งเตือน
 
 ### ✅ Definition of Done
 
-- [ ] `grep -r "placehold.co" src/` → 0 รายการ
-- [ ] เปิดทุกหน้า → ไม่มีรูปแตก ไม่มี placeholder
-- [ ] LINE แจ้งเตือนเมื่อมี lead ส่งเข้ามา
+- [ ] เปิดทุกหน้า → ไม่มีรูปแตก/placeholder (avatar+hero เป็นรูปจริง)
+- [ ] LINE แจ้งเตือนเมื่อมี lead เข้ามา
 
 ---
 
-## Phase D — SEO Completion 🟡
+## Phase D — SEO Completion 🟡 (งานโค้ด — แนะนำทำก่อน)
 
-> 🎯 **เป้าหมาย:** ทุกหน้ามี meta ครบ + structured data + พร้อมให้ Google index
+> 🎯 ทุกหน้ามี meta ครบ + structured data
+> 📌 ปัจจุบันยังไม่มี `generateMetadata` เลย; หน้าแรกมี `<title>/<meta>` แบบ inline ใน JSX เท่านั้น
 
 ### งาน
 
-- [ ] `/contact` → เพิ่ม `<meta name="description">`
-- [ ] `/blog` → เพิ่ม meta description
-- [ ] `/property/[slug]` → dynamic meta description ต่อทรัพย์ (title, price, location)
-- [ ] JSON-LD `RealEstateListing` schema ใน property detail page
-- [ ] ตรวจ OG tags ทุกหน้า ด้วย [opengraph.xyz](https://www.opengraph.xyz/)
+- [ ] `/property/[slug]` → `generateMetadata` dynamic (title, price, location, รูปแรกเป็น OG image)
+- [ ] `/property/[slug]` → JSON-LD `RealEstateListing` schema
+- [ ] `/blog/[slug]` → `generateMetadata` จากบทความ (title, excerpt, featured image)
+- [ ] `/contact`, `/blog`, `/buy`, `/rent`, `/land` → เพิ่ม metadata (title + description)
+- [ ] ย้าย `<title>/<meta>` inline ในหน้าแรกไปเป็น `metadata`/`generateMetadata` ให้สม่ำเสมอ
 
 ### หลัง Deploy
 
 - [ ] Submit `sitemap.xml` ที่ Google Search Console
 - [ ] ตั้ง Google Analytics 4 (`NEXT_PUBLIC_GA_MEASUREMENT_ID`)
-- [ ] ทดสอบ share preview บน LINE + Facebook
+- [ ] ทดสอบ share preview บน LINE + Facebook (opengraph.xyz)
 
 ### ✅ Definition of Done
 
@@ -145,18 +150,18 @@ npm run dev             # http://localhost:3000
 
 ## Phase E — Security Hardening 🟡
 
-> 🎯 **เป้าหมาย:** API ทนต่อ spam/abuse
+> 🎯 API ทนต่อ spam/abuse
 
 ### งาน
 
-- [ ] Rate limiting ใน `src/app/api/submit-form/route.ts` (≤ 5 req/นาที/IP)
-- [x] Rate limiting ใน `src/app/api/upload-images/route.ts` (origin check + 20 req/นาที/IP + sanitize นามสกุลจาก MIME)
-- [ ] ตรวจ RLS: anon INSERT ได้, SELECT ข้อมูลลูกค้าไม่ได้
-- [ ] ตรวจ double-submit: ทุกฟอร์มมี disabled state ระหว่าง submit
+- [x] Rate limit `/api/upload-images` (origin check + 20 req/นาที/IP + sanitize นามสกุลจาก MIME)
+- [ ] Rate limit `/api/submit-form` (≤ 5 req/นาที/IP) — ใช้แพทเทิร์นเดียวกับ upload-images
+- [ ] ตรวจ RLS: anon INSERT ได้, SELECT ข้อมูลลูกค้า (leads) ไม่ได้
+- [ ] ตรวจ double-submit: ทุกฟอร์มมี disabled state ระหว่าง submit (profile/contact/property มีแล้ว — ตรวจที่เหลือ)
 
 ### ✅ Definition of Done
 
-- [ ] ยิง API 20 ครั้งติดกัน → โดน 429 หลังครั้งที่กำหนด
+- [ ] ยิง API ติดกัน → โดน 429 หลังครั้งที่กำหนด
 - [ ] `SUPABASE_SERVICE_ROLE_KEY` ไม่ปรากฏใน client bundle
 - [ ] `npm run validate` ผ่าน
 
@@ -164,15 +169,16 @@ npm run dev             # http://localhost:3000
 
 ## Phase F — Production Deploy 🔴
 
-> 🎯 **เป้าหมาย:** เว็บออนไลน์บน domain จริง
+> 🎯 เว็บออนไลน์บน domain จริง
 
 ### งาน
 
-- [ ] ตั้ง Environment Variables ใน Vercel Project Settings:
+- [ ] ตั้ง Environment Variables ใน Vercel:
   - `NEXT_PUBLIC_SITE_URL` (domain จริง)
   - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`
   - `SUPABASE_SERVICE_ROLE_KEY`
   - `LINE_NOTIFY_TOKEN`
+- [ ] **Apply migrations 001–009 บน Supabase production** (ถ้ายังไม่ครบ)
 - [ ] ซื้อ/ตั้ง custom domain → ชี้ DNS เข้า Vercel
 - [ ] อัปเดต `NEXT_PUBLIC_SITE_URL` ให้ตรง domain จริง
 
@@ -180,22 +186,18 @@ npm run dev             # http://localhost:3000
 
 - [ ] เปิด domain จริง → ทุกหน้าโหลดได้ ไม่มี console error
 - [ ] ส่งฟอร์มจาก production → ข้อมูลเข้า Supabase + LINE แจ้งเตือน
-- [ ] `https://domain/sitemap.xml` และ `/robots.txt` ตอบ 200
-- [ ] SSL ทำงาน (https ไม่มี warning)
+- [ ] `/sitemap.xml` และ `/robots.txt` ตอบ 200, SSL ใช้งานได้
 
 ---
 
 ## Phase G — QA & Performance 🟢 (หลัง Deploy)
 
-> 🎯 **เป้าหมาย:** ใช้งานได้ดีบนทุก device ที่ลูกค้าจริงใช้
-
 ### Cross-browser / Device
 
 - [ ] Chrome desktop + Android
-- [ ] Safari (iPhone)
+- [ ] Safari (iPhone) + iPhone SE (จอเล็ก)
 - [ ] **LINE in-app browser** (สำคัญสุด — ลูกค้าส่วนใหญ่มาจาก LINE)
 - [ ] Facebook in-app browser
-- [ ] iPhone SE (จอเล็ก) — ทุกหน้า
 
 ### Performance
 
@@ -205,7 +207,6 @@ npm run dev             # http://localhost:3000
 ### End-to-End
 
 - [ ] หน้าแรก → ดูทรัพย์ → กรอกฟอร์ม → ข้อมูลเข้า Supabase → LINE แจ้ง
-- [ ] `/contact` → ส่งข้อความ → สำเร็จ
 - [ ] Admin login → เพิ่มทรัพย์ → ปรากฏบน public site
 
 ---
@@ -214,30 +215,31 @@ npm run dev             # http://localhost:3000
 
 - **ก่อน commit ใหญ่:** `npm run validate` ต้องผ่าน
 - **Commit message:** Conventional Commits (`feat:` / `fix:` / `chore:` / `docs:`)
-- **DB changes:** เพิ่มไฟล์ใหม่ใน `supabase/migrations/` (ห้ามแก้ไฟล์เก่า) เลขรันต่อเนื่อง
-- **ห้าม commit:** `.env.local`, secrets
-- **Branch:** งานใหญ่แตก branch → PR → merge เข้า `master`
+- **DB changes:** เพิ่มไฟล์ใหม่ใน `supabase/migrations/` (ห้ามแก้ไฟล์เก่า) เลขรันต่อเนื่อง — ปัจจุบันถึง `009`
+- **ห้าม commit:** `.env.local`, secrets, `.venv/`
+- **Supabase:** ใช้ dashboard จริง (account baanaioun) — ไม่ใช่ MCP บน Claude
 
 ---
 
 ## Key Files Reference
 
-| ต้องการแก้                            | ไฟล์                                 |
-| ------------------------------------- | ------------------------------------ |
-| ข้อมูลติดต่อ, social links, ข้อมูลพิม | `src/config/site.ts`                 |
-| Admin navigation                      | `src/config/admin-nav.ts`            |
-| Public data (mock — ชั่วคราว)         | `src/data/`                          |
-| Supabase queries (server)             | `src/lib/queries/`                   |
-| Server Actions (admin)                | `src/actions/`                       |
-| Zod validation schemas                | `src/lib/validations/`               |
-| TypeScript interfaces                 | `src/lib/types/property.ts`          |
-| Supabase client                       | `src/lib/supabase/`                  |
-| Admin auth guard                      | `src/lib/auth/require-admin.ts`      |
-| Admin layout + sidebar                | `src/app/(admin)/admin/layout.tsx`   |
-| Public layout                         | `src/app/(public)/layout.tsx`        |
-| API: form submit                      | `src/app/api/submit-form/route.ts`   |
-| API: image upload                     | `src/app/api/upload-images/route.ts` |
-| SQL migrations                        | `supabase/migrations/`               |
+| ต้องการแก้                            | ไฟล์                                                                                 |
+| ------------------------------------- | ------------------------------------------------------------------------------------ |
+| ข้อมูลติดต่อ/social/พิม (ค่า default) | `src/config/site.ts` (DB override ทับได้)                                            |
+| Profile editor (admin)                | `src/app/(admin)/admin/(dashboard)/profile/`, `src/components/admin/ProfileForm.tsx` |
+| Admin navigation                      | `src/config/admin-nav.ts`                                                            |
+| หมวดหมู่บทความ (config)               | `src/data/blog-posts.ts`                                                             |
+| Supabase queries (server, public)     | `src/lib/queries/`                                                                   |
+| Server Actions (admin)                | `src/actions/`                                                                       |
+| Zod validation schemas                | `src/lib/validations/`                                                               |
+| snake_case ↔ camelCase mappers        | `src/lib/mappers.ts`                                                                 |
+| TypeScript interfaces                 | `src/types/index.ts`, `src/lib/types/property.ts`                                    |
+| Supabase client (ssr)                 | `src/lib/supabase/`                                                                  |
+| Admin auth guard                      | `src/lib/auth/guard.ts`                                                              |
+| Public layout + JSON-LD               | `src/app/(public)/layout.tsx`                                                        |
+| API: form submit                      | `src/app/api/submit-form/route.ts`                                                   |
+| API: image upload                     | `src/app/api/upload-images/route.ts`                                                 |
+| SQL migrations                        | `supabase/migrations/` (001–009)                                                     |
 
 ---
 
@@ -249,19 +251,15 @@ npm run dev             # http://localhost:3000
 - [x] JSON-LD `RealEstateAgent` ใน layout
 - [x] `<img>` → `next/image` ครบทุกจุด
 - [x] Production tooling: Prettier, EditorConfig, GitHub Actions CI
-- [x] Supabase project (`ubbuniyssfmtpiwlxnxz`) + `.env.local` + connection test
-- [x] ข้อมูลติดต่อจริง: เบอร์ 086-4149960, LINE @baan-ai-oun, ที่อยู่บางพลี
-- [x] ตาราง `form_submissions` + `properties` + `blog_posts` + `testimonials` + `faqs`
+- [x] Supabase project + `.env.local` + connection test
+- [x] ข้อมูลติดต่อจริง: เบอร์ 086-4149960, LINE @baan-ai-oun
+- [x] ตาราง `form_submissions` + `properties` + `blog_posts` + `testimonials` + `faqs` + `agent_profile`
 - [x] RLS policies ทุกตาราง (anon/authenticated/service_role)
-- [x] `updated_at` triggers ทุกตาราง
-- [x] Soft delete (`deleted_at`) บน `properties`
-- [x] Admin layout + sidebar + responsive
-- [x] Admin: Properties CRUD (list/new/edit/archive/restore) + image uploader
-- [x] Admin: Leads (list + detail + status update + notes)
-- [x] Admin: Blog (list/new/edit พร้อม Tiptap rich-text editor)
-- [x] Admin: Testimonials (list/new/edit พร้อม star rating)
-- [x] Admin: FAQs (inline edit จัดกลุ่มตาม page)
-- [x] Supabase Auth users สร้างแล้ว (kanokpat/napat/supansa/weerawat @baanaioun.com)
+- [x] `updated_at` triggers ทุกตาราง + soft delete (`deleted_at`) บน `properties`
+- [x] Admin: layout + sidebar responsive, Properties CRUD + image uploader
+- [x] Admin: Leads (list/detail/status/notes), Blog (Tiptap), Testimonials (star), FAQs (inline)
+- [x] Supabase Auth users สร้างแล้ว
+- [x] **Phase B — Public site wired ถึง DB ครบทุกหน้า + sitemap dynamic**
 
 ### งาน session 2026-06-23 (Phase 1–4 hardening/polish)
 
