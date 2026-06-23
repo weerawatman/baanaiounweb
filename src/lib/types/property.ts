@@ -123,5 +123,6 @@ export interface AgentProfile {
   youtube: string
   site_name: string
   slogan: string
+  address: string
   updated_at: string
 }

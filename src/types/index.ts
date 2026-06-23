@@ -94,4 +94,5 @@ export interface Profile {
   youtube: string;
   siteName: string;
   slogan: string;
+  address: string;
 }

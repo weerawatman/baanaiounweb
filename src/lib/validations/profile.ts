@@ -17,6 +17,7 @@ export const profileSchema = z.object({
   youtube: z.string().default(""),
   site_name: z.string().min(1, "กรุณาระบุชื่อเว็บไซต์"),
   slogan: z.string().default(""),
+  address: z.string().default(""),
 })
 
 export type ProfileFormValues = z.infer<typeof profileSchema>

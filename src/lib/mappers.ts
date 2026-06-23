@@ -110,5 +110,6 @@ export function mapProfile(row: AgentProfileRow): Profile {
     youtube: row.youtube ?? "",
     siteName: row.site_name ?? "",
     slogan: row.slogan ?? "",
+    address: row.address ?? "",
   }
 }

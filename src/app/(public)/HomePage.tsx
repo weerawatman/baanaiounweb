@@ -20,6 +20,7 @@ interface HomePageProps {
   faqs: FAQ[]
   heroImage?: string
   fullName?: string
+  lineUrl?: string
 }
 
 const fadeUp = {
@@ -37,8 +38,10 @@ export default function HomePage({
   faqs,
   heroImage,
   fullName,
+  lineUrl,
 }: HomePageProps) {
   const featuredProperties = properties.filter((p) => p.featured)
+  const lineHref = lineUrl || SITE_CONFIG.lineUrl
 
   return (
     <>
@@ -47,7 +50,7 @@ export default function HomePage({
       <meta property="og:title" content="บ้านไออุ่น พร็อพเพอร์ตี้ — จบทุกความต้องการเรื่องอสังหาฯ" />
       <meta property="og:description" content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ" />
 
-      <HeroSection heroImage={heroImage} fullName={fullName} />
+      <HeroSection heroImage={heroImage} fullName={fullName} lineUrl={lineUrl} />
 
       {/* Services — 4 กลุ่มบริการ */}
       <section className="py-12 px-4 max-w-6xl mx-auto">
@@ -121,7 +124,7 @@ export default function HomePage({
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
-                href={SITE_CONFIG.lineUrl}
+                href={lineHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-2.5 text-sm font-semibold text-[#1B4D3E] hover:bg-white/90 transition-colors"

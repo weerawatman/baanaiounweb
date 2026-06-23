@@ -56,7 +56,7 @@ export default function Footer({ profile }: { profile: Profile }) {
               </li>
               <li className="flex items-start gap-2 text-sm text-white/80">
                 <MapPin className="size-4 shrink-0 mt-0.5" />
-                {SITE_CONFIG.address}
+                {profile.address || SITE_CONFIG.address}
               </li>
               <li>
                 <a

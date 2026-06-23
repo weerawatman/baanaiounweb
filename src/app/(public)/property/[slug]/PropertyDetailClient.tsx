@@ -18,6 +18,8 @@ interface PropertyDetailClientProps {
   property: Property | null
   pimAvatarUrl?: string
   pimName?: string
+  lineUrl?: string
+  phone?: string
 }
 
 const typeLabel: Record<Property["type"], string> = {
@@ -49,7 +51,11 @@ export default function PropertyDetailClient({
   property,
   pimAvatarUrl,
   pimName,
+  lineUrl,
+  phone,
 }: PropertyDetailClientProps) {
+  const lineHref = lineUrl || SITE_CONFIG.lineUrl
+  const phoneNumber = phone || SITE_CONFIG.phone
   if (!property) {
     return (
       <main className="mx-auto flex w-full max-w-3xl flex-col items-center justify-center gap-6 px-4 py-24 text-center sm:px-6 lg:px-8">
@@ -224,7 +230,7 @@ export default function PropertyDetailClient({
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                href={SITE_CONFIG.lineUrl}
+                href={lineHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-green-800 transition-colors hover:bg-green-50"
@@ -233,11 +239,11 @@ export default function PropertyDetailClient({
                 ทักหาพิมทาง LINE
               </Link>
               <a
-                href={`tel:${SITE_CONFIG.phone}`}
+                href={`tel:${phoneNumber}`}
                 className="inline-flex items-center gap-2 rounded-full border-2 border-white px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
               >
                 <Phone className="h-4 w-4" />
-                โทร {SITE_CONFIG.phone}
+                โทร {phoneNumber}
               </a>
             </div>
           </motion.section>

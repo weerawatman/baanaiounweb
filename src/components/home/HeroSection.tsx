@@ -13,14 +13,16 @@ type Lang = "th" | "en"
 interface HeroSectionProps {
   heroImage?: string
   fullName?: string
+  lineUrl?: string
 }
 
-export default function HeroSection({ heroImage, fullName }: HeroSectionProps) {
+export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectionProps) {
   const [lang, setLang] = useState<Lang>("th")
   const [activeTab, setActiveTab] = useState(0)
 
   const content = HERO_CONTENT[lang]
   const tab = content.tabs[activeTab]
+  const lineHref = lineUrl || SITE_CONFIG.lineUrl
 
   function switchLang(newLang: Lang) {
     setLang(newLang)
@@ -150,7 +152,7 @@ export default function HeroSection({ heroImage, fullName }: HeroSectionProps) {
                 <>
                   หรือ{" "}
                   <a
-                    href={SITE_CONFIG.lineUrl}
+                    href={lineHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#1B4D3E] font-medium underline-offset-2 hover:underline"
@@ -162,7 +164,7 @@ export default function HeroSection({ heroImage, fullName }: HeroSectionProps) {
                 <>
                   Or{" "}
                   <a
-                    href={SITE_CONFIG.lineUrl}
+                    href={lineHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#1B4D3E] font-medium underline-offset-2 hover:underline"

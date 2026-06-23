@@ -25,6 +25,7 @@ function defaultProfile(): Profile {
     youtube: SITE_CONFIG.youtube,
     siteName: SITE_CONFIG.name,
     slogan: SITE_CONFIG.slogan,
+    address: SITE_CONFIG.address,
   }
 }
 
@@ -68,5 +69,6 @@ export async function getProfile(): Promise<Profile> {
     youtube: pick(row.youtube, fallback.youtube),
     siteName: pick(row.siteName, fallback.siteName),
     slogan: pick(row.slogan, fallback.slogan),
+    address: pick(row.address, fallback.address),
   }
 }

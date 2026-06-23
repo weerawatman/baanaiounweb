@@ -20,6 +20,8 @@ export default async function PropertyPage({
       property={property}
       pimAvatarUrl={profile.avatarUrl}
       pimName={profile.name}
+      lineUrl={profile.lineUrl}
+      phone={profile.phone}
     />
   )
 }

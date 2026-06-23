@@ -44,6 +44,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       youtube: defaultValues.youtube,
       site_name: defaultValues.siteName,
       slogan: defaultValues.slogan,
+      address: defaultValues.address,
     },
   })
 
@@ -150,6 +151,19 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
             <Input {...register("line_url")} placeholder="https://line.me/ti/p/..." />
           </FormField>
         </div>
+
+        <FormField
+          label="ที่อยู่ (สำหรับแสดง + สร้างแผนที่ Google Map หน้าติดต่อ)"
+          error={errors.address?.message}
+          hint="แก้ที่อยู่นี้แล้วแผนที่หน้า 'ติดต่อ' จะอัปเดตตามอัตโนมัติ"
+        >
+          <textarea
+            {...register("address")}
+            rows={2}
+            placeholder="107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540"
+            className={textareaCls}
+          />
+        </FormField>
       </section>
 
       {/* ─── โซเชียล ────────────────────────────── */}

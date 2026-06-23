@@ -30,12 +30,17 @@ export default function ContactPage({ profile }: { profile: Profile }) {
   const lineId = profile.lineId || SITE_CONFIG.lineId
   const lineUrl = profile.lineUrl || SITE_CONFIG.lineUrl
   const email = profile.email || SITE_CONFIG.email
+  const address = profile.address || SITE_CONFIG.address
+  // แผนที่ derive จากที่อยู่ (แอดมินแก้ address แล้วแผนที่อัปเดตตาม)
+  const mapEmbed = address
+    ? `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed&hl=th`
+    : SITE_CONFIG.googleMapsEmbed
 
   const contactCards = [
     { icon: Phone, label: "โทรศัพท์", value: phone, href: `tel:${phone}`, color: "bg-green-100 text-green-700" },
     { icon: MessageCircle, label: "LINE", value: lineId, href: lineUrl, color: "bg-emerald-100 text-emerald-700", external: true },
     { icon: Mail, label: "อีเมล", value: email, href: `mailto:${email}`, color: "bg-blue-100 text-blue-700" },
-    { icon: MapPin, label: "ที่อยู่", value: SITE_CONFIG.address, href: undefined, color: "bg-rose-100 text-rose-700" },
+    { icon: MapPin, label: "ที่อยู่", value: address, href: undefined, color: "bg-rose-100 text-rose-700" },
   ]
 
   const [form, setForm] = useState<FormState>({
@@ -321,7 +326,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 {/* Google Maps Embed */}
                 <div className="overflow-hidden rounded-2xl shadow-md">
                   <iframe
-                    src={SITE_CONFIG.googleMapsEmbed}
+                    src={mapEmbed}
                     width="100%"
                     height="300"
                     style={{ border: 0 }}
