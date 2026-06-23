@@ -4,7 +4,7 @@
 > ทำทีละ Phase ตามลำดับ — **แต่ละ Phase มี Definition of Done (DoD) ต้องผ่านก่อนไป Phase ถัดไป**
 > เมื่อทำเสร็จให้ติ๊ก `[x]` แล้ว commit พร้อมกัน
 
-อัปเดตล่าสุด: 2026-06-16
+อัปเดตล่าสุด: 2026-06-23
 
 ---
 
@@ -149,7 +149,7 @@ npm run dev             # http://localhost:3000
 ### งาน
 
 - [ ] Rate limiting ใน `src/app/api/submit-form/route.ts` (≤ 5 req/นาที/IP)
-- [ ] Rate limiting ใน `src/app/api/upload-images/route.ts`
+- [x] Rate limiting ใน `src/app/api/upload-images/route.ts` (origin check + 20 req/นาที/IP + sanitize นามสกุลจาก MIME)
 - [ ] ตรวจ RLS: anon INSERT ได้, SELECT ข้อมูลลูกค้าไม่ได้
 - [ ] ตรวจ double-submit: ทุกฟอร์มมี disabled state ระหว่าง submit
 
@@ -261,3 +261,13 @@ npm run dev             # http://localhost:3000
 - [x] Admin: Testimonials (list/new/edit พร้อม star rating)
 - [x] Admin: FAQs (inline edit จัดกลุ่มตาม page)
 - [x] Supabase Auth users สร้างแล้ว (kanokpat/napat/supansa/weerawat @baanaioun.com)
+
+### งาน session 2026-06-23 (Phase 1–4 hardening/polish)
+
+- [x] **Security:** `/api/upload-images` เพิ่ม origin check + rate limit (20/นาที/IP) + sanitize นามสกุลไฟล์จาก MIME
+- [x] **Fix:** owner image upload contract (`PropertyForm` ส่ง field `files` + อ่าน `urls`) — เดิมอัปโหลดฝั่ง owner ไม่ทำงาน
+- [x] **Fix:** ปรับ `MAX_FILES` upload เป็น 10 ให้ตรงกับ admin uploader
+- [x] **Profile DB-driven:** เบอร์โทร/LINE บนหน้า Home, Hero, Property detail ดึงจาก profile (แก้ใน `/admin/profile` แล้วสะท้อนทุกหน้า)
+- [x] **migration 009:** เพิ่มคอลัมน์ `agent_profile.address` → ที่อยู่ + Google Map หน้าติดต่อ แก้ได้จากแอดมิน (แผนที่ derive จากที่อยู่)
+- [x] **Quality gate:** ลบ import ที่ไม่ใช้ → `npm run validate` เขียวสะอาด (0 error / 0 warning)
+- [x] **Housekeeping:** เพิ่ม `.venv/` ใน `.gitignore`, format ทั้ง repo ด้วย Prettier
