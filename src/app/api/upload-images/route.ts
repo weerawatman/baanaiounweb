@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     const formData = await request.formData()
-    const files = formData.getAll("images") as File[]
+    const files = formData.getAll("files") as File[]
 
     if (!files.length) {
       return NextResponse.json(
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      images: uploadResults,
+      urls: uploadResults.map((r) => r.url),
     })
   } catch (err) {
     console.error("[Upload] Error:", err)
