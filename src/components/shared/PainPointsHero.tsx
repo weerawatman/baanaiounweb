@@ -20,15 +20,12 @@ const fadeUp = {
 
 export default function PainPointsHero({ headline, points, className }: PainPointsHeroProps) {
   return (
-    <section className={`bg-gradient-to-b from-[#F5F0E8] to-white py-16 sm:py-24 ${className ?? ""}`}>
+    <section
+      className={`bg-gradient-to-b from-[#F5F0E8] to-white py-16 sm:py-24 ${className ?? ""}`}
+    >
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center"
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-          <h1 className="text-3xl font-bold tracking-tight text-[#1B4D3E] sm:text-4xl lg:text-5xl whitespace-pre-line leading-tight">
+        <motion.div className="text-center" initial="hidden" animate="visible" variants={fadeUp}>
+          <h1 className="text-3xl leading-tight font-bold tracking-tight whitespace-pre-line text-[#1B4D3E] sm:text-4xl lg:text-5xl">
             {headline}
           </h1>
         </motion.div>
@@ -41,7 +38,7 @@ export default function PainPointsHero({ headline, points, className }: PainPoin
           {points.map((point, i) => (
             <motion.div
               key={i}
-              className="flex items-start gap-3 rounded-xl bg-white p-5 shadow-sm ring-1 ring-foreground/5"
+              className="ring-foreground/5 flex items-start gap-3 rounded-xl bg-white p-5 shadow-sm ring-1"
               variants={fadeUp}
               custom={i + 1}
             >

@@ -20,16 +20,16 @@ export default async function EditTestimonialPage({ params }: Props) {
   const action = updateTestimonial.bind(null, id)
 
   return (
-    <div className="flex flex-col gap-6 max-w-2xl">
+    <div className="flex max-w-2xl flex-col gap-6">
       <div>
         <Link
           href="/admin/testimonials"
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-3"
+          className="text-muted-foreground hover:text-foreground mb-3 inline-flex items-center gap-1 text-sm"
         >
           <ChevronLeft className="size-4" />
           กลับ
         </Link>
-        <h1 className="text-2xl font-bold text-foreground">
+        <h1 className="text-foreground text-2xl font-bold">
           แก้ไขรีวิว: {testimonial.client_name}
         </h1>
       </div>

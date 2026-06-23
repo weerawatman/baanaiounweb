@@ -3,13 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { NAV_ENTRIES, NAV_ITEMS, isNavGroup, type NavGroup } from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
 import type { Profile } from "@/types"
@@ -42,15 +36,10 @@ function NavDropdown({ group }: { group: NavGroup }) {
   }
 
   return (
-    <div
-      ref={ref}
-      className="relative"
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-    >
+    <div ref={ref} className="relative" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground hover:text-primary rounded-md transition-colors"
+        className="text-foreground hover:text-primary inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors"
       >
         {group.label}
         <ChevronDown
@@ -60,10 +49,8 @@ function NavDropdown({ group }: { group: NavGroup }) {
 
       {/* Dropdown panel */}
       <div
-        className={`absolute left-0 top-full pt-1 transition-all duration-200 ${
-          open
-            ? "visible translate-y-0 opacity-100"
-            : "invisible -translate-y-1 opacity-0"
+        className={`absolute top-full left-0 pt-1 transition-all duration-200 ${
+          open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
         }`}
       >
         <div className="min-w-48 rounded-lg border bg-white py-1 shadow-lg">
@@ -72,7 +59,7 @@ function NavDropdown({ group }: { group: NavGroup }) {
               key={child.href}
               href={child.href}
               onClick={() => setOpen(false)}
-              className="block px-4 py-2.5 text-sm text-foreground hover:bg-primary/5 hover:text-primary transition-colors"
+              className="text-foreground hover:bg-primary/5 hover:text-primary block px-4 py-2.5 text-sm transition-colors"
             >
               {child.label}
             </Link>
@@ -95,13 +82,13 @@ export default function Header({ profile }: { profile: Profile }) {
         {/* Logo */}
         <Link
           href="/"
-          className="shrink-0 text-lg font-bold text-primary hover:opacity-80 transition-opacity"
+          className="text-primary shrink-0 text-lg font-bold transition-opacity hover:opacity-80"
         >
           {siteName}
         </Link>
 
         {/* Desktop Nav — grouped with dropdowns */}
-        <nav className="hidden lg:flex items-center">
+        <nav className="hidden items-center lg:flex">
           {NAV_ENTRIES.map((entry) =>
             isNavGroup(entry) ? (
               <NavDropdown key={entry.label} group={entry} />
@@ -109,7 +96,7 @@ export default function Header({ profile }: { profile: Profile }) {
               <Link
                 key={entry.href}
                 href={entry.href}
-                className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary rounded-md transition-colors"
+                className="text-foreground hover:text-primary rounded-md px-3 py-2 text-sm font-medium transition-colors"
               >
                 {entry.label}
               </Link>
@@ -119,15 +106,13 @@ export default function Header({ profile }: { profile: Profile }) {
 
         {/* Mobile Hamburger */}
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-          <SheetTrigger
-            className="inline-flex items-center justify-center rounded-lg p-2 text-foreground hover:bg-muted transition-colors lg:hidden"
-          >
+          <SheetTrigger className="text-foreground hover:bg-muted inline-flex items-center justify-center rounded-lg p-2 transition-colors lg:hidden">
             {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
             <span className="sr-only">เปิด/ปิด เมนู</span>
           </SheetTrigger>
           <SheetContent side="right" className="w-72 p-0">
             <SheetHeader className="border-b px-4 py-4">
-              <SheetTitle className="text-left text-primary text-base font-bold">
+              <SheetTitle className="text-primary text-left text-base font-bold">
                 {siteName}
               </SheetTitle>
             </SheetHeader>
@@ -137,7 +122,7 @@ export default function Header({ profile }: { profile: Profile }) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className="px-6 py-3 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/5 transition-colors"
+                  className="text-foreground hover:text-primary hover:bg-primary/5 px-6 py-3 text-sm font-medium transition-colors"
                 >
                   {item.label}
                 </Link>

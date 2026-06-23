@@ -33,7 +33,11 @@ interface BlogEditorProps {
   placeholder?: string
 }
 
-export function BlogEditor({ value, onChange, placeholder = "เริ่มเขียนบทความ..." }: BlogEditorProps) {
+export function BlogEditor({
+  value,
+  onChange,
+  placeholder = "เริ่มเขียนบทความ...",
+}: BlogEditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -60,9 +64,9 @@ export function BlogEditor({ value, onChange, placeholder = "เริ่มเ�
   }
 
   return (
-    <div className="rounded-xl border bg-white overflow-hidden">
+    <div className="overflow-hidden rounded-xl border bg-white">
       {/* Toolbar */}
-      <div className="flex flex-wrap gap-1 border-b bg-muted/30 p-2">
+      <div className="bg-muted/30 flex flex-wrap gap-1 border-b p-2">
         <ToolBtn
           active={editor.isActive("bold")}
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -92,7 +96,7 @@ export function BlogEditor({ value, onChange, placeholder = "เริ่มเ�
           <Strikethrough className="size-4" />
         </ToolBtn>
 
-        <div className="mx-1 w-px bg-border" />
+        <div className="bg-border mx-1 w-px" />
 
         <ToolBtn
           active={editor.isActive("heading", { level: 2 })}
@@ -116,7 +120,7 @@ export function BlogEditor({ value, onChange, placeholder = "เริ่มเ�
           <Quote className="size-4" />
         </ToolBtn>
 
-        <div className="mx-1 w-px bg-border" />
+        <div className="bg-border mx-1 w-px" />
 
         <ToolBtn
           active={editor.isActive("bulletList")}
@@ -133,7 +137,7 @@ export function BlogEditor({ value, onChange, placeholder = "เริ่มเ�
           <ListOrdered className="size-4" />
         </ToolBtn>
 
-        <div className="mx-1 w-px bg-border" />
+        <div className="bg-border mx-1 w-px" />
 
         <ToolBtn
           active={editor.isActive({ textAlign: "left" })}
@@ -157,7 +161,7 @@ export function BlogEditor({ value, onChange, placeholder = "เริ่มเ�
           <AlignRight className="size-4" />
         </ToolBtn>
 
-        <div className="mx-1 w-px bg-border" />
+        <div className="bg-border mx-1 w-px" />
 
         <ToolBtn onClick={addLink} active={editor.isActive("link")} title="ใส่ลิงก์">
           <LinkIcon className="size-4" />
@@ -200,10 +204,7 @@ function ToolBtn({
       variant={active ? "default" : "ghost"}
       onClick={onClick}
       title={title}
-      className={cn(
-        "size-8",
-        active && "bg-primary text-white hover:bg-primary/90",
-      )}
+      className={cn("size-8", active && "bg-primary hover:bg-primary/90 text-white")}
     >
       {children}
     </Button>

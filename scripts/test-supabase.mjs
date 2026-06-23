@@ -8,7 +8,7 @@ const env = Object.fromEntries(
     .filter((l) => l.includes("=") && !l.startsWith("#"))
     .map((l) => l.split("=").map((s) => s.trim()))
     .filter(([k]) => k)
-    .map(([k, ...v]) => [k, v.join("=")])
+    .map(([k, ...v]) => [k, v.join("=")]),
 )
 
 const url = env["NEXT_PUBLIC_SUPABASE_URL"]
@@ -44,10 +44,7 @@ try {
 console.log("🔵 Test 2: Service role client (SUPABASE_SERVICE_ROLE_KEY)")
 try {
   const service = createClient(url, serviceKey, { auth: { persistSession: false } })
-  const { data, error } = await service
-    .from("form_submissions")
-    .select("id")
-    .limit(1)
+  const { data, error } = await service.from("form_submissions").select("id").limit(1)
   if (error) {
     console.log("  ⚠️  Query error:", error.message)
     console.log("  (ตาราง form_submissions ยังไม่ได้สร้าง — ต้องรัน SQL setup)")
@@ -63,7 +60,10 @@ try {
 console.log("🔵 Test 3: ตรวจสอบตารางที่มีอยู่ใน schema public")
 try {
   const service = createClient(url, serviceKey, { auth: { persistSession: false } })
-  const { data, error } = await service.rpc("pg_catalog.pg_tables").select("tablename").eq("schemaname", "public")
+  const { data, error } = await service
+    .rpc("pg_catalog.pg_tables")
+    .select("tablename")
+    .eq("schemaname", "public")
   if (error) {
     // ลอง query information_schema แทน
     const res = await service

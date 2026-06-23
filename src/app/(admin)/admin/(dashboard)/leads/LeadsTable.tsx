@@ -20,10 +20,7 @@ const columns: Column<Lead>[] = [
     key: "name",
     label: "ชื่อ",
     render: (row) => (
-      <Link
-        href={`/admin/leads/${row.id}`}
-        className="font-medium text-primary hover:underline"
-      >
+      <Link href={`/admin/leads/${row.id}`} className="text-primary font-medium hover:underline">
         {row.name}
       </Link>
     ),
@@ -32,7 +29,7 @@ const columns: Column<Lead>[] = [
     key: "form_tag",
     label: "ฟอร์ม",
     render: (row) => (
-      <span className="text-xs text-muted-foreground">
+      <span className="text-muted-foreground text-xs">
         {FORM_TAG_LABEL[row.form_tag] ?? row.form_tag}
       </span>
     ),
@@ -66,7 +63,7 @@ const columns: Column<Lead>[] = [
     render: (row) => (
       <Link
         href={`/admin/leads/${row.id}`}
-        className="text-sm text-muted-foreground hover:text-primary"
+        className="text-muted-foreground hover:text-primary text-sm"
       >
         ดูรายละเอียด →
       </Link>

@@ -42,11 +42,7 @@ export async function getProfile(): Promise<Profile> {
   const fallback = defaultProfile()
 
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("agent_profile")
-    .select("*")
-    .eq("id", 1)
-    .maybeSingle()
+  const { data, error } = await supabase.from("agent_profile").select("*").eq("id", 1).maybeSingle()
 
   if (error || !data) return fallback
 

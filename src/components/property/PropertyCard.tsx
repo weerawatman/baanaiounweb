@@ -12,19 +12,13 @@ interface PropertyCardProps {
   property: Property
 }
 
-const statusConfig: Record<
-  Property["status"],
-  { label: string; className: string }
-> = {
+const statusConfig: Record<Property["status"], { label: string; className: string }> = {
   ACTIVE: { label: "พร้อมขาย/เช่า", className: "bg-green-100 text-green-800 border-green-200" },
   SOLD: { label: "ขายแล้ว", className: "bg-red-100 text-red-800 border-red-200" },
   RENTED: { label: "ปล่อยเช่าแล้ว", className: "bg-blue-100 text-blue-800 border-blue-200" },
 }
 
-const typeConfig: Record<
-  Property["type"],
-  { label: string; className: string }
-> = {
+const typeConfig: Record<Property["type"], { label: string; className: string }> = {
   SALE: { label: "ขาย", className: "bg-green-600 text-white" },
   RENT: { label: "เช่า", className: "bg-blue-600 text-white" },
   LAND: { label: "ที่ดิน", className: "bg-amber-500 text-white" },
@@ -42,8 +36,8 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       whileHover={{ scale: 1.02 }}
       className="h-full"
     >
-      <Link href={`/property/${property.slug}`} className="block h-full group">
-        <Card className="h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl group-hover:ring-foreground/20">
+      <Link href={`/property/${property.slug}`} className="group block h-full">
+        <Card className="group-hover:ring-foreground/20 h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl">
           {/* Image */}
           <div className="relative h-52 overflow-hidden">
             <Image
@@ -77,17 +71,15 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
           <CardContent className="flex flex-col gap-2 pt-3">
             {/* Title */}
-            <h3 className="font-medium text-sm leading-snug line-clamp-2 text-foreground">
+            <h3 className="text-foreground line-clamp-2 text-sm leading-snug font-medium">
               {property.title}
             </h3>
 
             {/* Price */}
-            <p className="text-base font-semibold text-green-700">
-              {formatPrice(property)}
-            </p>
+            <p className="text-base font-semibold text-green-700">{formatPrice(property)}</p>
 
             {/* Stats row */}
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            <div className="text-muted-foreground flex items-center gap-3 text-xs">
               {property.bedrooms > 0 && (
                 <span className="flex items-center gap-1">
                   <Bed className="h-3.5 w-3.5" />
@@ -107,7 +99,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             </div>
 
             {/* Location */}
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <div className="text-muted-foreground flex items-center gap-1 text-xs">
               <MapPin className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">{property.location.district}</span>
             </div>

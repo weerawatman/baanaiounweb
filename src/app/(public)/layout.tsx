@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import StickyCTA from "@/components/layout/StickyCTA";
-import { SITE_CONFIG } from "@/config/site";
-import { getProfile } from "@/lib/queries/profile";
+import type { Metadata } from "next"
+import Header from "@/components/layout/Header"
+import Footer from "@/components/layout/Footer"
+import StickyCTA from "@/components/layout/StickyCTA"
+import { SITE_CONFIG } from "@/config/site"
+import { getProfile } from "@/lib/queries/profile"
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
 export const metadata: Metadata = {
   openGraph: {
@@ -23,14 +23,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BASE_URL,
   },
-};
+}
 
 export default async function PublicLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const profile = await getProfile();
+  const profile = await getProfile()
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -50,17 +50,12 @@ export default async function PublicLayout({
       postalCode: "10540",
       addressCountry: "TH",
     },
-    sameAs: [
-      profile.facebook,
-      profile.tiktok,
-      profile.youtube,
-      profile.lineUrl,
-    ],
+    sameAs: [profile.facebook, profile.tiktok, profile.youtube, profile.lineUrl],
     areaServed: {
       "@type": "City",
       name: SITE_CONFIG.areaServed,
     },
-  };
+  }
 
   return (
     <>
@@ -73,5 +68,5 @@ export default async function PublicLayout({
       <Footer profile={profile} />
       <StickyCTA lineUrl={profile.lineUrl} />
     </>
-  );
+  )
 }

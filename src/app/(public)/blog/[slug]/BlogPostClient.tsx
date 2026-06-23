@@ -15,15 +15,12 @@ interface BlogPostClientProps {
   relatedProperties: Property[]
 }
 
-export default function BlogPostClient({
-  post,
-  relatedProperties,
-}: BlogPostClientProps) {
+export default function BlogPostClient({ post, relatedProperties }: BlogPostClientProps) {
   if (!post) {
     return (
       <main className="container mx-auto max-w-4xl px-4 py-16 text-center">
-        <p className="text-2xl font-semibold text-muted-foreground">ไม่พบบทความ</p>
-        <Link href="/blog" className="mt-4 inline-block text-primary hover:underline">
+        <p className="text-muted-foreground text-2xl font-semibold">ไม่พบบทความ</p>
+        <Link href="/blog" className="text-primary mt-4 inline-block hover:underline">
           กลับไปหน้าบทความทั้งหมด
         </Link>
       </main>
@@ -39,7 +36,7 @@ export default function BlogPostClient({
     : ""
 
   return (
-    <main className="container mx-auto max-w-4xl px-4 py-10 space-y-10">
+    <main className="container mx-auto max-w-4xl space-y-10 px-4 py-10">
       {/* Breadcrumb */}
       <Breadcrumb
         items={[
@@ -72,17 +69,15 @@ export default function BlogPostClient({
 
         {/* Meta row */}
         <div className="flex flex-wrap items-center gap-3">
-          {post.category && (
-            <Badge variant="secondary">{post.category}</Badge>
-          )}
+          {post.category && <Badge variant="secondary">{post.category}</Badge>}
           {formattedDate && (
-            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <span className="text-muted-foreground flex items-center gap-1.5 text-sm">
               <CalendarDays className="h-4 w-4 shrink-0" />
               {formattedDate}
             </span>
           )}
           {post.readingTime && (
-            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <span className="text-muted-foreground flex items-center gap-1.5 text-sm">
               <Clock className="h-4 w-4 shrink-0" />
               อ่าน {post.readingTime}
             </span>
@@ -90,13 +85,13 @@ export default function BlogPostClient({
         </div>
 
         {/* Title */}
-        <h1 className="text-2xl font-bold leading-snug text-foreground sm:text-3xl">
+        <h1 className="text-foreground text-2xl leading-snug font-bold sm:text-3xl">
           {post.title}
         </h1>
 
         {/* Excerpt / lead */}
         {post.excerpt && (
-          <p className="text-base text-muted-foreground leading-relaxed border-l-4 border-primary pl-4 italic">
+          <p className="text-muted-foreground border-primary border-l-4 pl-4 text-base leading-relaxed italic">
             {post.excerpt}
           </p>
         )}
@@ -104,11 +99,11 @@ export default function BlogPostClient({
         {/* Body content (HTML from TipTap editor) */}
         {post.content ? (
           <div
-            className="prose prose-sm sm:prose max-w-none prose-headings:text-foreground prose-p:text-foreground/90 prose-a:text-primary prose-strong:text-foreground"
+            className="prose prose-sm sm:prose prose-headings:text-foreground prose-p:text-foreground/90 prose-a:text-primary prose-strong:text-foreground max-w-none"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         ) : (
-          <p className="text-sm text-muted-foreground">—</p>
+          <p className="text-muted-foreground text-sm">—</p>
         )}
       </motion.article>
 
@@ -125,10 +120,11 @@ export default function BlogPostClient({
       )}
 
       {/* CTA */}
-      <section className="rounded-2xl bg-primary/5 border border-primary/20 px-6 py-8 text-center space-y-4">
-        <h2 className="text-xl font-bold text-foreground">สนใจปรึกษาเรื่องบ้าน?</h2>
-        <p className="text-sm text-muted-foreground max-w-md mx-auto">
-          พิมพร้อมให้คำแนะนำทุกขั้นตอน ตั้งแต่เลือกทำเล วางแผนการเงิน จนถึงวันโอน ไม่มีค่าใช้จ่ายในการปรึกษา
+      <section className="bg-primary/5 border-primary/20 space-y-4 rounded-2xl border px-6 py-8 text-center">
+        <h2 className="text-foreground text-xl font-bold">สนใจปรึกษาเรื่องบ้าน?</h2>
+        <p className="text-muted-foreground mx-auto max-w-md text-sm">
+          พิมพร้อมให้คำแนะนำทุกขั้นตอน ตั้งแต่เลือกทำเล วางแผนการเงิน จนถึงวันโอน
+          ไม่มีค่าใช้จ่ายในการปรึกษา
         </p>
         <Link
           href="https://line.me/ti/p/~@baanaioun"

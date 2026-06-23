@@ -18,23 +18,23 @@ export default function Error({
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">
       <p className="text-6xl">😔</p>
-      <h1 className="mt-4 text-2xl font-bold text-foreground sm:text-3xl">
+      <h1 className="text-foreground mt-4 text-2xl font-bold sm:text-3xl">
         เกิดข้อผิดพลาดบางอย่างค่ะ
       </h1>
-      <p className="mt-3 max-w-md text-base text-muted-foreground leading-relaxed">
+      <p className="text-muted-foreground mt-3 max-w-md text-base leading-relaxed">
         ขอโทษนะคะ ระบบมีปัญหาชั่วคราว ลองโหลดใหม่หรือกลับไปหน้าแรกได้เลย
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
         <button
           onClick={reset}
-          className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-primary/90 transition-colors"
+          className="bg-primary hover:bg-primary/90 inline-flex items-center gap-2 rounded-lg px-6 py-2.5 text-sm font-semibold text-white transition-colors"
         >
           <RefreshCw className="size-4" />
           ลองใหม่อีกครั้ง
         </button>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 rounded-lg border border-primary px-6 py-2.5 text-sm font-semibold text-primary hover:bg-primary/5 transition-colors"
+          className="border-primary text-primary hover:bg-primary/5 inline-flex items-center gap-2 rounded-lg border px-6 py-2.5 text-sm font-semibold transition-colors"
         >
           <Home className="size-4" />
           กลับหน้าแรก

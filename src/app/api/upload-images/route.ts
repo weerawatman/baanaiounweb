@@ -60,43 +60,31 @@ export async function POST(request: NextRequest) {
   try {
     // 1) Reject cross-origin / direct (non-browser) requests
     if (!isAllowedOrigin(request)) {
-      return NextResponse.json(
-        { success: false, error: "Forbidden" },
-        { status: 403 }
-      )
+      return NextResponse.json({ success: false, error: "Forbidden" }, { status: 403 })
     }
 
     // 2) Rate limit per IP
     if (!checkRateLimit(getClientIp(request))) {
-      return NextResponse.json(
-        { success: false, error: "Too many requests" },
-        { status: 429 }
-      )
+      return NextResponse.json({ success: false, error: "Too many requests" }, { status: 429 })
     }
 
     const supabase = createServerSupabase()
 
     if (!supabase) {
-      return NextResponse.json(
-        { success: false, error: "Storage not configured" },
-        { status: 503 }
-      )
+      return NextResponse.json({ success: false, error: "Storage not configured" }, { status: 503 })
     }
 
     const formData = await request.formData()
     const files = formData.getAll("files") as File[]
 
     if (!files.length) {
-      return NextResponse.json(
-        { success: false, error: "No files provided" },
-        { status: 400 }
-      )
+      return NextResponse.json({ success: false, error: "No files provided" }, { status: 400 })
     }
 
     if (files.length > MAX_FILES) {
       return NextResponse.json(
         { success: false, error: `Maximum ${MAX_FILES} files allowed` },
-        { status: 400 }
+        { status: 400 },
       )
     }
 
@@ -105,13 +93,16 @@ export async function POST(request: NextRequest) {
       if (!(file.type in EXT_BY_TYPE)) {
         return NextResponse.json(
           { success: false, error: `Invalid file type: ${file.type}. Accepted: JPG, PNG, WEBP` },
-          { status: 400 }
+          { status: 400 },
         )
       }
       if (file.size > MAX_FILE_SIZE) {
         return NextResponse.json(
-          { success: false, error: `File "${file.name}" exceeds ${MAX_FILE_SIZE / 1024 / 1024} MB limit` },
-          { status: 400 }
+          {
+            success: false,
+            error: `File "${file.name}" exceeds ${MAX_FILE_SIZE / 1024 / 1024} MB limit`,
+          },
+          { status: 400 },
         )
       }
     }
@@ -141,14 +132,12 @@ export async function POST(request: NextRequest) {
         console.error(`[Upload] Failed for ${safeName}:`, uploadError)
         return NextResponse.json(
           { success: false, error: `Upload failed: ${uploadError.message}` },
-          { status: 500 }
+          { status: 500 },
         )
       }
 
       // Get public URL
-      const { data: urlData } = supabase.storage
-        .from(BUCKET)
-        .getPublicUrl(storagePath)
+      const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(storagePath)
 
       uploadResults.push({
         url: urlData.publicUrl,
@@ -162,9 +151,6 @@ export async function POST(request: NextRequest) {
     })
   } catch (err) {
     console.error("[Upload] Error:", err)
-    return NextResponse.json(
-      { success: false, error: "Internal server error" },
-      { status: 500 }
-    )
+    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
   }
 }

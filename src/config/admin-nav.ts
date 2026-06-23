@@ -1,13 +1,5 @@
 import type { LucideIcon } from "lucide-react"
-import {
-  LayoutDashboard,
-  Home,
-  Inbox,
-  Newspaper,
-  Star,
-  HelpCircle,
-  User,
-} from "lucide-react"
+import { LayoutDashboard, Home, Inbox, Newspaper, Star, HelpCircle, User } from "lucide-react"
 
 export interface AdminNavItem {
   label: string

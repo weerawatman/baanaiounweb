@@ -41,9 +41,7 @@ export default function CTAWithForm({
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-bold text-[#1B4D3E] sm:text-3xl">
-              พร้อมเริ่มต้นหรือยัง?
-            </h2>
+            <h2 className="text-2xl font-bold text-[#1B4D3E] sm:text-3xl">พร้อมเริ่มต้นหรือยัง?</h2>
             <p className="max-w-xl text-gray-600">
               คุยง่าย ตรงไปตรงมา พร้อมดูแลทุกเคสด้วยความจริงใจ
             </p>
@@ -59,7 +57,10 @@ export default function CTAWithForm({
                 </Button>
               ) : (
                 <Link href={primary.href ?? "#"}>
-                  <Button className="gap-2 bg-[#1B4D3E] px-8 py-2.5 text-white hover:bg-[#2A6B56]" size="lg">
+                  <Button
+                    className="gap-2 bg-[#1B4D3E] px-8 py-2.5 text-white hover:bg-[#2A6B56]"
+                    size="lg"
+                  >
                     {primary.label}
                   </Button>
                 </Link>
@@ -67,7 +68,11 @@ export default function CTAWithForm({
 
               {secondary.href && (
                 <Link href={secondary.href}>
-                  <Button variant="outline" className="gap-2 border-[#D4A843] px-8 py-2.5 text-[#D4A843] hover:bg-[#D4A843] hover:text-white" size="lg">
+                  <Button
+                    variant="outline"
+                    className="gap-2 border-[#D4A843] px-8 py-2.5 text-[#D4A843] hover:bg-[#D4A843] hover:text-white"
+                    size="lg"
+                  >
                     {secondary.label}
                   </Button>
                 </Link>
@@ -80,10 +85,7 @@ export default function CTAWithForm({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <PropertyForm
-              variant={formVariant}
-              preselect={formPreselect}
-            />
+            <PropertyForm variant={formVariant} preselect={formPreselect} />
             <div className="mt-4 text-center">
               <button
                 type="button"

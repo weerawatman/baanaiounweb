@@ -66,8 +66,8 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       )}
 
       {/* ─── ข้อมูลพิม ───────────────────────────── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">ข้อมูลพิม</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">ข้อมูลพิม</h2>
 
         <FormField label="ชื่อเรียก" hint="เช่น พิม">
           <Input {...register("name")} placeholder="พิม" />
@@ -131,8 +131,8 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       </section>
 
       {/* ─── ช่องทางติดต่อ ───────────────────────── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">ช่องทางติดต่อ</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">ช่องทางติดต่อ</h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <FormField label="เบอร์โทร" error={errors.phone?.message}>
@@ -167,8 +167,8 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       </section>
 
       {/* ─── โซเชียล ────────────────────────────── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">โซเชียลมีเดีย</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">โซเชียลมีเดีย</h2>
 
         <FormField label="Facebook" error={errors.facebook?.message}>
           <Input {...register("facebook")} placeholder="https://www.facebook.com/..." />
@@ -182,8 +182,8 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       </section>
 
       {/* ─── ข้อมูลเว็บ ──────────────────────────── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">ข้อมูลเว็บไซต์</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">ข้อมูลเว็บไซต์</h2>
 
         <FormField label="ชื่อเว็บไซต์" error={errors.site_name?.message} required>
           <Input {...register("site_name")} placeholder="บ้านไออุ่น พร็อพเพอร์ตี้" />
@@ -198,7 +198,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         <Button
           type="submit"
           disabled={isPending}
-          className="gap-2 bg-primary text-white hover:bg-primary/90"
+          className="bg-primary hover:bg-primary/90 gap-2 text-white"
         >
           {isPending && <Loader2 className="size-4 animate-spin" />}
           บันทึกโปรไฟล์
@@ -223,12 +223,12 @@ function FormField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-foreground">
+      <label className="text-foreground text-sm font-medium">
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </label>
       {children}
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+      {hint && <p className="text-muted-foreground text-xs">{hint}</p>}
       {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   )

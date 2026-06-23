@@ -14,14 +14,14 @@ export default async function TestimonialsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">รีวิว</h1>
-          <p className="mt-1 text-sm text-muted-foreground">จัดการรีวิวจากลูกค้า</p>
+          <h1 className="text-foreground text-2xl font-bold">รีวิว</h1>
+          <p className="text-muted-foreground mt-1 text-sm">จัดการรีวิวจากลูกค้า</p>
         </div>
         <Link
           href="/admin/testimonials/new"
           className={cn(
             buttonVariants({ variant: "default" }),
-            "gap-2 bg-primary text-white hover:bg-primary/90",
+            "bg-primary hover:bg-primary/90 gap-2 text-white",
           )}
         >
           <Plus className="size-4" />

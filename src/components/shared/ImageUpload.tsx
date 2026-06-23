@@ -14,9 +14,9 @@ const ACCEPTED_EXT = ".jpg,.jpeg,.png,.webp"
 
 export interface UploadedImage {
   file: File
-  preview: string       // object URL for local preview
+  preview: string // object URL for local preview
   uploading?: boolean
-  url?: string          // remote URL after upload
+  url?: string // remote URL after upload
   error?: string
 }
 
@@ -65,7 +65,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
 
       onChange([...images, ...newImages])
     },
-    [images, onChange]
+    [images, onChange],
   )
 
   const removeImage = useCallback(
@@ -76,7 +76,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
       updated.splice(index, 1)
       onChange(updated)
     },
-    [images, onChange]
+    [images, onChange],
   )
 
   // ─── Drag handlers ────────────────────────────────────────────────
@@ -108,7 +108,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
         addFiles(e.dataTransfer.files)
       }
     },
-    [addFiles, disabled]
+    [addFiles, disabled],
   )
 
   const handleInputChange = useCallback(
@@ -119,7 +119,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
       // Reset input so the same file can be re-selected
       e.target.value = ""
     },
-    [addFiles]
+    [addFiles],
   )
 
   const canAddMore = images.length < MAX_FILES
@@ -130,7 +130,10 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
       {images.length > 0 && (
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
           {images.map((img, i) => (
-            <div key={img.preview} className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
+            <div
+              key={img.preview}
+              className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={img.preview}
@@ -154,7 +157,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
 
               {/* Uploaded checkmark */}
               {img.url && !img.uploading && (
-                <div className="absolute bottom-1 right-1 flex size-5 items-center justify-center rounded-full bg-green-500 text-white text-xs">
+                <div className="absolute right-1 bottom-1 flex size-5 items-center justify-center rounded-full bg-green-500 text-xs text-white">
                   ✓
                 </div>
               )}
@@ -164,7 +167,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
                 <button
                   type="button"
                   onClick={() => removeImage(i)}
-                  className="absolute right-1 top-1 flex size-5 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity hover:bg-black/80 group-hover:opacity-100"
+                  className="absolute top-1 right-1 flex size-5 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-black/80"
                   aria-label={`ลบรูปที่ ${i + 1}`}
                 >
                   <X className="size-3" />
@@ -173,7 +176,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
 
               {/* Error tooltip */}
               {img.error && (
-                <div className="absolute inset-x-0 bottom-0 bg-red-600/90 px-1 py-0.5 text-center text-[10px] text-white leading-tight">
+                <div className="absolute inset-x-0 bottom-0 bg-red-600/90 px-1 py-0.5 text-center text-[10px] leading-tight text-white">
                   {img.error}
                 </div>
               )}

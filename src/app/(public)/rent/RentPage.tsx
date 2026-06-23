@@ -6,12 +6,7 @@ import PropertyCard from "@/components/property/PropertyCard"
 import PropertyFilter from "@/components/property/PropertyFilter"
 import SectionTitle from "@/components/layout/SectionTitle"
 import Breadcrumb from "@/components/layout/Breadcrumb"
-import {
-  PainPointsHero,
-  SolutionsSection,
-  EmotionalHook,
-  CTAWithForm,
-} from "@/components/shared"
+import { PainPointsHero, SolutionsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { RENT_CONTENT } from "@/content/rent"
 
 interface RentPageProps {
@@ -30,12 +25,7 @@ export default function RentPage({ properties }: RentPageProps) {
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <Breadcrumb
-          items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "เช่าบ้าน" },
-          ]}
-        />
+        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "เช่าบ้าน" }]} />
       </div>
 
       {/* Pain Points Hero */}
@@ -53,10 +43,7 @@ export default function RentPage({ properties }: RentPageProps) {
       />
 
       {/* Emotional Hook */}
-      <EmotionalHook
-        quote={RENT_CONTENT.hook.quote}
-        message={RENT_CONTENT.hook.message}
-      />
+      <EmotionalHook quote={RENT_CONTENT.hook.quote} message={RENT_CONTENT.hook.message} />
 
       {/* CTA + Form */}
       <CTAWithForm
@@ -82,9 +69,7 @@ export default function RentPage({ properties }: RentPageProps) {
                 <PropertyFilter properties={properties} onFilter={setFiltered} />
               </div>
 
-              <p className="mb-4 text-sm text-muted-foreground">
-                พบ {filtered.length} รายการ
-              </p>
+              <p className="text-muted-foreground mb-4 text-sm">พบ {filtered.length} รายการ</p>
 
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {filtered.map((property) => (
@@ -94,10 +79,8 @@ export default function RentPage({ properties }: RentPageProps) {
             </>
           ) : (
             <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
-              <p className="text-lg font-medium text-foreground">
-                ยังไม่มีบ้านเช่าในระบบ
-              </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-foreground text-lg font-medium">ยังไม่มีบ้านเช่าในระบบ</p>
+              <p className="text-muted-foreground text-sm">
                 ทรัพย์ใหม่ๆ กำลังจะเข้ามา หรือติดต่อพิมเพื่อแจ้งความต้องการได้เลยค่ะ
               </p>
             </div>

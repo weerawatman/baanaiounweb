@@ -15,7 +15,7 @@ export default function Footer({ profile }: { profile: Profile }) {
           <div className="flex flex-col gap-4">
             <div>
               <h2 className="text-xl font-bold">{profile.siteName || SITE_CONFIG.name}</h2>
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">
+              <p className="mt-2 text-sm leading-relaxed text-white/70">
                 {profile.slogan || SITE_CONFIG.slogan}
               </p>
             </div>
@@ -24,7 +24,7 @@ export default function Footer({ profile }: { profile: Profile }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-sm text-white/80 hover:text-white transition-colors w-fit"
+                  className="w-fit text-sm text-white/80 transition-colors hover:text-white"
                 >
                   {item.label}
                 </Link>
@@ -39,7 +39,7 @@ export default function Footer({ profile }: { profile: Profile }) {
               <li>
                 <a
                   href={`tel:${profile.phone || SITE_CONFIG.phone}`}
-                  className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-white/80 transition-colors hover:text-white"
                 >
                   <Phone className="size-4 shrink-0" />
                   {profile.phone || SITE_CONFIG.phone}
@@ -48,14 +48,14 @@ export default function Footer({ profile }: { profile: Profile }) {
               <li>
                 <a
                   href={`mailto:${profile.email || SITE_CONFIG.email}`}
-                  className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-white/80 transition-colors hover:text-white"
                 >
                   <Mail className="size-4 shrink-0" />
                   {profile.email || SITE_CONFIG.email}
                 </a>
               </li>
               <li className="flex items-start gap-2 text-sm text-white/80">
-                <MapPin className="size-4 shrink-0 mt-0.5" />
+                <MapPin className="mt-0.5 size-4 shrink-0" />
                 {profile.address || SITE_CONFIG.address}
               </li>
               <li>
@@ -63,7 +63,7 @@ export default function Footer({ profile }: { profile: Profile }) {
                   href={profile.lineUrl || SITE_CONFIG.lineUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-white/80 hover:text-white transition-colors"
+                  className="text-sm text-white/80 transition-colors hover:text-white"
                 >
                   LINE: {profile.lineId || SITE_CONFIG.lineId}
                 </a>
@@ -80,9 +80,11 @@ export default function Footer({ profile }: { profile: Profile }) {
                   href={profile.lineUrl || SITE_CONFIG.lineUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-white/80 transition-colors hover:text-white"
                 >
-                  <span className="size-4 flex items-center justify-center text-xs font-bold">LINE</span>
+                  <span className="flex size-4 items-center justify-center text-xs font-bold">
+                    LINE
+                  </span>
                   LINE Official
                 </a>
               </li>
@@ -91,9 +93,11 @@ export default function Footer({ profile }: { profile: Profile }) {
                   href={profile.facebook || SITE_CONFIG.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-white/80 transition-colors hover:text-white"
                 >
-                  <span className="size-4 flex items-center justify-center text-xs font-bold">FB</span>
+                  <span className="flex size-4 items-center justify-center text-xs font-bold">
+                    FB
+                  </span>
                   Facebook
                 </a>
               </li>
@@ -102,9 +106,11 @@ export default function Footer({ profile }: { profile: Profile }) {
                   href={profile.tiktok || SITE_CONFIG.tiktok}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-white/80 transition-colors hover:text-white"
                 >
-                  <span className="size-4 flex items-center justify-center text-xs font-bold">TT</span>
+                  <span className="flex size-4 items-center justify-center text-xs font-bold">
+                    TT
+                  </span>
                   TikTok
                 </a>
               </li>
@@ -113,9 +119,11 @@ export default function Footer({ profile }: { profile: Profile }) {
                   href={profile.youtube || SITE_CONFIG.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-white/80 transition-colors hover:text-white"
                 >
-                  <span className="size-4 flex items-center justify-center text-xs font-bold">YT</span>
+                  <span className="flex size-4 items-center justify-center text-xs font-bold">
+                    YT
+                  </span>
                   YouTube
                 </a>
               </li>
@@ -125,7 +133,8 @@ export default function Footer({ profile }: { profile: Profile }) {
 
         {/* Copyright */}
         <div className="mt-10 border-t border-white/20 pt-6 text-center text-sm text-white/60">
-          © {currentYear} {profile.siteName || SITE_CONFIG.name} · {SITE_CONFIG.nameEn} · สงวนลิขสิทธิ์ทุกประการ
+          © {currentYear} {profile.siteName || SITE_CONFIG.name} · {SITE_CONFIG.nameEn} ·
+          สงวนลิขสิทธิ์ทุกประการ
         </div>
       </div>
     </footer>

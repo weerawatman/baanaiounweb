@@ -23,17 +23,17 @@ export function LeadNotesEditor({ id, initialNotes }: LeadNotesEditorProps) {
   }
 
   return (
-    <section className="rounded-xl border bg-white p-5 flex flex-col gap-3">
+    <section className="flex flex-col gap-3 rounded-xl border bg-white p-5">
       <div className="flex items-center gap-2">
-        <MessageSquare className="size-4 text-muted-foreground" />
-        <p className="text-sm font-semibold text-foreground">โน้ตทีมงาน</p>
+        <MessageSquare className="text-muted-foreground size-4" />
+        <p className="text-foreground text-sm font-semibold">โน้ตทีมงาน</p>
       </div>
       <textarea
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
         rows={4}
         placeholder="บันทึกการติดต่อ, สรุปความต้องการ..."
-        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-y"
+        className="border-input bg-background focus:ring-ring w-full resize-y rounded-md border px-3 py-2 text-sm focus:ring-2 focus:outline-none"
       />
       <div className="flex items-center justify-between">
         {notes !== savedNotes && (
@@ -43,7 +43,7 @@ export function LeadNotesEditor({ id, initialNotes }: LeadNotesEditorProps) {
           size="sm"
           onClick={saveNotes}
           disabled={isPending || notes === savedNotes}
-          className="ml-auto bg-primary text-white hover:bg-primary/90 gap-2"
+          className="bg-primary hover:bg-primary/90 ml-auto gap-2 text-white"
         >
           {isPending && <Loader2 className="size-3 animate-spin" />}
           บันทึกโน้ต

@@ -16,24 +16,23 @@ export default function BlogPage({ posts }: BlogPageProps) {
   const [activeCategory, setActiveCategory] = useState("all")
 
   const filteredPosts =
-    activeCategory === "all"
-      ? posts
-      : posts.filter((post) => post.categorySlug === activeCategory)
+    activeCategory === "all" ? posts : posts.filter((post) => post.categorySlug === activeCategory)
 
   return (
     <>
       <title>บทความ — บ้านไออุ่น พร็อพเพอร์ตี้</title>
-      <meta name="description" content="บทความน่าอ่านจากบ้านไออุ่น เรื่องกู้บ้าน วางแผนการเงิน เจาะลึกทำเล และเทคนิคชีวิตคนไกลบ้าน" />
+      <meta
+        name="description"
+        content="บทความน่าอ่านจากบ้านไออุ่น เรื่องกู้บ้าน วางแผนการเงิน เจาะลึกทำเล และเทคนิคชีวิตคนไกลบ้าน"
+      />
       <meta property="og:title" content="บทความ — บ้านไออุ่น พร็อพเพอร์ตี้" />
-      <meta property="og:description" content="บทความน่าอ่านจากบ้านไออุ่น เรื่องกู้บ้าน วางแผนการเงิน เจาะลึกทำเล และเทคนิคชีวิตคนไกลบ้าน" />
-      <main className="container mx-auto max-w-6xl px-4 py-10 space-y-8">
+      <meta
+        property="og:description"
+        content="บทความน่าอ่านจากบ้านไออุ่น เรื่องกู้บ้าน วางแผนการเงิน เจาะลึกทำเล และเทคนิคชีวิตคนไกลบ้าน"
+      />
+      <main className="container mx-auto max-w-6xl space-y-8 px-4 py-10">
         {/* Breadcrumb */}
-        <Breadcrumb
-          items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "บทความ" },
-          ]}
-        />
+        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "บทความ" }]} />
 
         {/* Section title */}
         <SectionTitle title="บทความน่าอ่าน จากบ้านไออุ่น" />
@@ -53,7 +52,7 @@ export default function BlogPage({ posts }: BlogPageProps) {
             ))}
           </div>
         ) : (
-          <div className="py-16 text-center text-muted-foreground">
+          <div className="text-muted-foreground py-16 text-center">
             {posts.length === 0
               ? "ยังไม่มีบทความในระบบ ติดตามได้เร็วๆ นี้ค่ะ"
               : "ไม่มีบทความในหมวดหมู่นี้"}

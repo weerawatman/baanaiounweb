@@ -29,19 +29,19 @@ export default async function LeadDetailPage({ params }: Props) {
   if (!lead) notFound()
 
   return (
-    <div className="flex flex-col gap-6 max-w-3xl">
+    <div className="flex max-w-3xl flex-col gap-6">
       <div>
         <Link
           href="/admin/leads"
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-3"
+          className="text-muted-foreground hover:text-foreground mb-3 inline-flex items-center gap-1 text-sm"
         >
           <ChevronLeft className="size-4" />
           กลับ
         </Link>
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">{lead.name}</h1>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <h1 className="text-foreground text-2xl font-bold">{lead.name}</h1>
+            <p className="text-muted-foreground mt-1 text-sm">
               {FORM_TAG_LABEL[lead.form_tag] ?? lead.form_tag} ·{" "}
               {new Date(lead.created_at).toLocaleDateString("th-TH", {
                 day: "numeric",
@@ -61,7 +61,7 @@ export default async function LeadDetailPage({ params }: Props) {
 
       {/* Contact */}
       <section className="rounded-xl border bg-white p-5">
-        <p className="text-sm font-semibold text-foreground mb-3">ข้อมูลติดต่อ</p>
+        <p className="text-foreground mb-3 text-sm font-semibold">ข้อมูลติดต่อ</p>
         <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <Row label="เบอร์โทร" value={lead.phone} />
           <Row label="LINE ID" value={lead.line_id} />
@@ -73,7 +73,7 @@ export default async function LeadDetailPage({ params }: Props) {
       {/* Property / Requirement Details */}
       {(lead.property_type || lead.location || lead.price || lead.budget) && (
         <section className="rounded-xl border bg-white p-5">
-          <p className="text-sm font-semibold text-foreground mb-3">
+          <p className="text-foreground mb-3 text-sm font-semibold">
             รายละเอียดทรัพย์ / ความต้องการ
           </p>
           <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -88,13 +88,9 @@ export default async function LeadDetailPage({ params }: Props) {
             <Row label="preselect" value={lead.preselect} />
           </dl>
           {lead.details && (
-            <div className="mt-3 rounded-lg bg-muted/30 p-3">
-              <p className="text-xs font-medium text-muted-foreground mb-1">
-                รายละเอียดเพิ่มเติม
-              </p>
-              <p className="text-sm text-foreground whitespace-pre-line">
-                {lead.details}
-              </p>
+            <div className="bg-muted/30 mt-3 rounded-lg p-3">
+              <p className="text-muted-foreground mb-1 text-xs font-medium">รายละเอียดเพิ่มเติม</p>
+              <p className="text-foreground text-sm whitespace-pre-line">{lead.details}</p>
             </div>
           )}
         </section>
@@ -106,7 +102,7 @@ export default async function LeadDetailPage({ params }: Props) {
       {/* Images */}
       {lead.image_urls?.length > 0 && (
         <section className="rounded-xl border bg-white p-5">
-          <p className="text-sm font-semibold text-foreground mb-3">
+          <p className="text-foreground mb-3 text-sm font-semibold">
             รูปภาพที่แนบมา ({lead.image_urls.length})
           </p>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
@@ -116,7 +112,7 @@ export default async function LeadDetailPage({ params }: Props) {
                 <img
                   src={url}
                   alt="รูปประกอบ"
-                  className="aspect-square rounded-lg object-cover border hover:opacity-90"
+                  className="aspect-square rounded-lg border object-cover hover:opacity-90"
                 />
               </a>
             ))}
@@ -131,8 +127,8 @@ function Row({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null
   return (
     <div className="flex flex-col gap-0.5">
-      <dt className="text-xs text-muted-foreground">{label}</dt>
-      <dd className="text-sm font-medium text-foreground">{value}</dd>
+      <dt className="text-muted-foreground text-xs">{label}</dt>
+      <dd className="text-foreground text-sm font-medium">{value}</dd>
     </div>
   )
 }

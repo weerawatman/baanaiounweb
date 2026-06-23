@@ -12,10 +12,7 @@ export async function updateLeadStatus(
   await requireAdmin()
 
   const supabase = await createClient()
-  const { error } = await supabase
-    .from("form_submissions")
-    .update({ status })
-    .eq("id", id)
+  const { error } = await supabase.from("form_submissions").update({ status }).eq("id", id)
 
   if (error) return { error: error.message }
 
@@ -24,17 +21,11 @@ export async function updateLeadStatus(
   return {}
 }
 
-export async function updateLeadNotes(
-  id: string,
-  notes: string,
-): Promise<{ error?: string }> {
+export async function updateLeadNotes(id: string, notes: string): Promise<{ error?: string }> {
   await requireAdmin()
 
   const supabase = await createClient()
-  const { error } = await supabase
-    .from("form_submissions")
-    .update({ notes })
-    .eq("id", id)
+  const { error } = await supabase.from("form_submissions").update({ notes }).eq("id", id)
 
   if (error) return { error: error.message }
 

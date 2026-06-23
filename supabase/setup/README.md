@@ -15,13 +15,13 @@ SQL Master สำหรับสร้างฐานข้อมูล Supabase
 
 รันตามลำดับ:
 
-| ไฟล์ | รายละเอียด |
-|------|-----------|
-| `01_create_table.sql` | สร้างตาราง `form_submissions` |
-| `02_indexes.sql` | สร้าง indexes สำหรับ query |
-| `03_rls_policies.sql` | ตั้ง Row Level Security |
-| `04_storage_bucket.sql` | สร้าง Storage bucket `property-images` |
-| `05_storage_policies.sql` | ตั้งสิทธิ์อ่าน/อัปโหลดรูปภาพ |
+| ไฟล์                      | รายละเอียด                             |
+| ------------------------- | -------------------------------------- |
+| `01_create_table.sql`     | สร้างตาราง `form_submissions`          |
+| `02_indexes.sql`          | สร้าง indexes สำหรับ query             |
+| `03_rls_policies.sql`     | ตั้ง Row Level Security                |
+| `04_storage_bucket.sql`   | สร้าง Storage bucket `property-images` |
+| `05_storage_policies.sql` | ตั้งสิทธิ์อ่าน/อัปโหลดรูปภาพ           |
 
 ## Environment Variables
 

@@ -11,7 +11,7 @@ export default function AdminSidebar() {
   return (
     <aside className="hidden w-60 shrink-0 flex-col border-r bg-white lg:flex">
       <div className="flex h-16 items-center border-b px-6">
-        <Link href="/admin" className="text-base font-bold text-primary">
+        <Link href="/admin" className="text-primary text-base font-bold">
           {SITE_CONFIG.name}
         </Link>
       </div>
@@ -20,9 +20,7 @@ export default function AdminSidebar() {
         {ADMIN_NAV.map((item) => {
           // Exact match for dashboard root, prefix match for sections
           const active =
-            item.href === "/admin"
-              ? pathname === "/admin"
-              : pathname.startsWith(item.href)
+            item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href)
 
           return (
             <Link

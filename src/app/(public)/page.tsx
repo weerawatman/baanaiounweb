@@ -13,15 +13,9 @@ export default async function HomeRoute() {
     getProfile(),
   ])
 
-  const properties = propertyRows
-    .filter((p) => p.status === "ACTIVE")
-    .map(mapProperty)
-  const testimonials = testimonialRows
-    .filter((t) => t.published)
-    .map(mapTestimonial)
-  const faqs = faqRows
-    .filter((f) => f.page_slug === "home")
-    .map(mapFaq)
+  const properties = propertyRows.filter((p) => p.status === "ACTIVE").map(mapProperty)
+  const testimonials = testimonialRows.filter((t) => t.published).map(mapTestimonial)
+  const faqs = faqRows.filter((f) => f.page_slug === "home").map(mapFaq)
 
   return (
     <HomePage

@@ -13,9 +13,7 @@ export async function getProperties(): Promise<Property[]> {
   return (data as Property[]) ?? []
 }
 
-export async function getPropertyBySlug(
-  slug: string,
-): Promise<Property | null> {
+export async function getPropertyBySlug(slug: string): Promise<Property | null> {
   const supabase = await createClient()
   const { data, error } = await supabase
     .from("properties")

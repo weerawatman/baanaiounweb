@@ -17,10 +17,21 @@ interface TestimonialFormProps {
   submitLabel?: string
 }
 
-export function TestimonialForm({ defaultValues, action, submitLabel = "บันทึก" }: TestimonialFormProps) {
+export function TestimonialForm({
+  defaultValues,
+  action,
+  submitLabel = "บันทึก",
+}: TestimonialFormProps) {
   const [state, formAction, isPending] = useActionState(action, {})
 
-  const { register, control, handleSubmit, watch, setValue, formState: { errors } } = useForm<TestimonialFormValues>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<TestimonialFormValues>({
     resolver: zodResolver(testimonialSchema) as Resolver<TestimonialFormValues>,
     defaultValues: {
       client_name: defaultValues?.client_name ?? "",
@@ -53,12 +64,16 @@ export function TestimonialForm({ defaultValues, action, submitLabel = "บั�
         </div>
       )}
 
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium">ชื่อลูกค้า <span className="text-red-500">*</span></label>
+            <label className="text-sm font-medium">
+              ชื่อลูกค้า <span className="text-red-500">*</span>
+            </label>
             <Input {...register("client_name")} placeholder="คุณสมชาย ใจดี" />
-            {errors.client_name && <p className="text-xs text-red-500">{errors.client_name.message}</p>}
+            {errors.client_name && (
+              <p className="text-xs text-red-500">{errors.client_name.message}</p>
+            )}
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium">ประเภททรัพย์</label>
@@ -67,7 +82,9 @@ export function TestimonialForm({ defaultValues, action, submitLabel = "บั�
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium">คำรีวิว <span className="text-red-500">*</span></label>
+          <label className="text-sm font-medium">
+            คำรีวิว <span className="text-red-500">*</span>
+          </label>
           <textarea
             {...register("quote")}
             rows={4}
@@ -120,11 +137,11 @@ export function TestimonialForm({ defaultValues, action, submitLabel = "บั�
                   id="published"
                   checked={field.value}
                   onChange={(e) => field.onChange(e.target.checked)}
-                  className="size-4 rounded border-border accent-primary"
+                  className="border-border accent-primary size-4 rounded"
                 />
               )}
             />
-            <label htmlFor="published" className="text-sm font-medium cursor-pointer">
+            <label htmlFor="published" className="cursor-pointer text-sm font-medium">
               เผยแพร่
             </label>
           </div>
@@ -135,7 +152,11 @@ export function TestimonialForm({ defaultValues, action, submitLabel = "บั�
         <Button type="button" variant="outline" onClick={() => window.history.back()}>
           ยกเลิก
         </Button>
-        <Button type="submit" disabled={isPending} className="gap-2 bg-primary text-white hover:bg-primary/90">
+        <Button
+          type="submit"
+          disabled={isPending}
+          className="bg-primary hover:bg-primary/90 gap-2 text-white"
+        >
           {isPending && <Loader2 className="size-4 animate-spin" />}
           {submitLabel}
         </Button>

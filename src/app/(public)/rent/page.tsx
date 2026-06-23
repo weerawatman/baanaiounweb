@@ -4,9 +4,7 @@ import RentPage from "./RentPage"
 
 export default async function RentRoute() {
   const rows = await getProperties()
-  const properties = rows
-    .filter((p) => p.type === "RENT" && p.status === "ACTIVE")
-    .map(mapProperty)
+  const properties = rows.filter((p) => p.type === "RENT" && p.status === "ACTIVE").map(mapProperty)
 
   return <RentPage properties={properties} />
 }

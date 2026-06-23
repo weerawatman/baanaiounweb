@@ -7,10 +7,7 @@ export interface LoginState {
   error?: string
 }
 
-export async function login(
-  _prevState: LoginState,
-  formData: FormData,
-): Promise<LoginState> {
+export async function login(_prevState: LoginState, formData: FormData): Promise<LoginState> {
   const email = String(formData.get("email") ?? "").trim()
   const password = String(formData.get("password") ?? "")
   const redirectTo = String(formData.get("redirect") ?? "/admin")

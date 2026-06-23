@@ -5,10 +5,7 @@ export const propertySchema = z.object({
   slug: z
     .string()
     .min(1, "กรุณาระบุ slug")
-    .regex(
-      /^[\p{L}\p{N}-]+$/u,
-      "slug ใช้ได้เฉพาะตัวอักษร ตัวเลข และขีด (-)",
-    ),
+    .regex(/^[\p{L}\p{N}-]+$/u, "slug ใช้ได้เฉพาะตัวอักษร ตัวเลข และขีด (-)"),
   type: z.enum(["SALE", "RENT", "LAND"]),
   sub_type: z.preprocess(
     (v) => (v === "" || v == null ? undefined : v),

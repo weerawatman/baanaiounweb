@@ -5,13 +5,7 @@ import type {
   Faq as FaqRow,
   AgentProfile as AgentProfileRow,
 } from "@/lib/types/property"
-import type {
-  Property,
-  BlogPost,
-  Testimonial,
-  FAQ,
-  Profile,
-} from "@/types"
+import type { Property, BlogPost, Testimonial, FAQ, Profile } from "@/types"
 
 // ──────────────────────────────────────────────────────────────────────────
 //  Mappers: snake_case Supabase rows → camelCase shapes that the public

@@ -20,9 +20,7 @@ const columns: Column<Testimonial>[] = [
     key: "quote",
     label: "รีวิว",
     render: (row) => (
-      <span className="line-clamp-2 text-sm text-muted-foreground max-w-xs">
-        {row.quote}
-      </span>
+      <span className="text-muted-foreground line-clamp-2 max-w-xs text-sm">{row.quote}</span>
     ),
   },
   {
@@ -42,10 +40,7 @@ const columns: Column<Testimonial>[] = [
     searchable: false,
     render: (row) =>
       row.published ? (
-        <Badge
-          className="bg-green-100 text-green-700 border-green-200"
-          variant="outline"
-        >
+        <Badge className="border-green-200 bg-green-100 text-green-700" variant="outline">
           เผยแพร่
         </Badge>
       ) : (
@@ -59,7 +54,7 @@ const columns: Column<Testimonial>[] = [
     label: "",
     searchable: false,
     render: (row) => (
-      <div className="flex items-center gap-2 justify-end">
+      <div className="flex items-center justify-end gap-2">
         <Link
           href={`/admin/testimonials/${row.id}/edit`}
           className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
@@ -71,7 +66,7 @@ const columns: Column<Testimonial>[] = [
             <span
               className={cn(
                 buttonVariants({ variant: "outline", size: "sm" }),
-                "text-red-600 border-red-200 hover:bg-red-50 cursor-pointer",
+                "cursor-pointer border-red-200 text-red-600 hover:bg-red-50",
               )}
             >
               ลบ

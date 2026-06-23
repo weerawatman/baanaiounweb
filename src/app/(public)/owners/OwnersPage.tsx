@@ -1,12 +1,7 @@
 "use client"
 
 import Breadcrumb from "@/components/layout/Breadcrumb"
-import {
-  PainPointsHero,
-  SolutionsSection,
-  EmotionalHook,
-  CTAWithForm,
-} from "@/components/shared"
+import { PainPointsHero, SolutionsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { OWNERS_CONTENT } from "@/content/owners"
 import { type FAQ } from "@/types"
 import SectionTitle from "@/components/layout/SectionTitle"
@@ -31,12 +26,7 @@ export default function OwnersPage({ faqs }: OwnersPageProps) {
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <Breadcrumb
-          items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "ฝากขาย/เช่า" },
-          ]}
-        />
+        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "ฝากขาย/เช่า" }]} />
       </div>
 
       {/* Pain Points Hero */}
@@ -55,10 +45,7 @@ export default function OwnersPage({ faqs }: OwnersPageProps) {
       />
 
       {/* Emotional Hook */}
-      <EmotionalHook
-        quote={OWNERS_CONTENT.hook.quote}
-        message={OWNERS_CONTENT.hook.message}
-      />
+      <EmotionalHook quote={OWNERS_CONTENT.hook.quote} message={OWNERS_CONTENT.hook.message} />
 
       {/* CTA + Form */}
       <CTAWithForm
@@ -71,10 +58,7 @@ export default function OwnersPage({ faqs }: OwnersPageProps) {
       {faqs.length > 0 && (
         <section className="py-16 sm:py-24">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <SectionTitle
-              title="คำถามที่พบบ่อย"
-              subtitle="สงสัยอะไร ถามพิมได้เลยค่ะ"
-            />
+            <SectionTitle title="คำถามที่พบบ่อย" subtitle="สงสัยอะไร ถามพิมได้เลยค่ะ" />
             <div className="mt-10">
               <Accordion>
                 {faqs.map((faq) => (

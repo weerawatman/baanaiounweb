@@ -23,10 +23,7 @@ export async function upsertFaq(
   const supabase = await createClient()
 
   if (id) {
-    const { error } = await supabase
-      .from("faqs")
-      .update(parsed.data)
-      .eq("id", id)
+    const { error } = await supabase.from("faqs").update(parsed.data).eq("id", id)
     if (error) return { error: error.message }
   } else {
     const { error } = await supabase.from("faqs").insert([parsed.data])

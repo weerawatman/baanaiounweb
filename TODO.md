@@ -10,19 +10,20 @@
 
 ## สถานะปัจจุบัน (อ่านก่อนเริ่มงาน)
 
-| ส่วน | สถานะ |
-|------|-------|
-| โครงสร้างโค้ด | ✅ `types/` `config/` `content/` `data/` `lib/` จัดแล้ว |
-| Supabase project | ✅ `ubbuniyssfmtpiwlxnxz` + keys ใน `.env.local` |
-| Supabase schema | ✅ ตาราง `form_submissions`, `properties`, `blog_posts`, `testimonials`, `faqs` + RLS + triggers |
-| Supabase Auth | ✅ Users: kanokpat/napat/supansa/weerawat @baanaioun.com (password: 1234 ชั่วคราว) |
-| Admin Dashboard | ✅ `/admin` — Properties CRUD, Leads, Blog (Tiptap), Testimonials, FAQs |
-| Public site ↔ Supabase | ❌ **ยังอ่านจาก `src/data/` (static)** — ยังไม่ wired ถึง DB |
-| รูปภาพ | ❌ ยังเป็น placeholder |
-| Deploy | ⏳ Vercel preview: baanaiounweb.vercel.app (ยังไม่ custom domain) |
-| CI | ✅ GitHub Actions: lint + typecheck + build ทุก push |
+| ส่วน                   | สถานะ                                                                                            |
+| ---------------------- | ------------------------------------------------------------------------------------------------ |
+| โครงสร้างโค้ด          | ✅ `types/` `config/` `content/` `data/` `lib/` จัดแล้ว                                          |
+| Supabase project       | ✅ `ubbuniyssfmtpiwlxnxz` + keys ใน `.env.local`                                                 |
+| Supabase schema        | ✅ ตาราง `form_submissions`, `properties`, `blog_posts`, `testimonials`, `faqs` + RLS + triggers |
+| Supabase Auth          | ✅ Users: kanokpat/napat/supansa/weerawat @baanaioun.com (password: 1234 ชั่วคราว)               |
+| Admin Dashboard        | ✅ `/admin` — Properties CRUD, Leads, Blog (Tiptap), Testimonials, FAQs                          |
+| Public site ↔ Supabase | ❌ **ยังอ่านจาก `src/data/` (static)** — ยังไม่ wired ถึง DB                                     |
+| รูปภาพ                 | ❌ ยังเป็น placeholder                                                                           |
+| Deploy                 | ⏳ Vercel preview: baanaiounweb.vercel.app (ยังไม่ custom domain)                                |
+| CI                     | ✅ GitHub Actions: lint + typecheck + build ทุก push                                             |
 
 **คำสั่งตรวจสุขภาพ:**
+
 ```bash
 npm run validate        # typecheck + lint + build
 npm run check:supabase  # ทดสอบ Supabase connection
@@ -221,22 +222,22 @@ npm run dev             # http://localhost:3000
 
 ## Key Files Reference
 
-| ต้องการแก้ | ไฟล์ |
-|-----------|------|
-| ข้อมูลติดต่อ, social links, ข้อมูลพิม | `src/config/site.ts` |
-| Admin navigation | `src/config/admin-nav.ts` |
-| Public data (mock — ชั่วคราว) | `src/data/` |
-| Supabase queries (server) | `src/lib/queries/` |
-| Server Actions (admin) | `src/actions/` |
-| Zod validation schemas | `src/lib/validations/` |
-| TypeScript interfaces | `src/lib/types/property.ts` |
-| Supabase client | `src/lib/supabase/` |
-| Admin auth guard | `src/lib/auth/require-admin.ts` |
-| Admin layout + sidebar | `src/app/(admin)/admin/layout.tsx` |
-| Public layout | `src/app/(public)/layout.tsx` |
-| API: form submit | `src/app/api/submit-form/route.ts` |
-| API: image upload | `src/app/api/upload-images/route.ts` |
-| SQL migrations | `supabase/migrations/` |
+| ต้องการแก้                            | ไฟล์                                 |
+| ------------------------------------- | ------------------------------------ |
+| ข้อมูลติดต่อ, social links, ข้อมูลพิม | `src/config/site.ts`                 |
+| Admin navigation                      | `src/config/admin-nav.ts`            |
+| Public data (mock — ชั่วคราว)         | `src/data/`                          |
+| Supabase queries (server)             | `src/lib/queries/`                   |
+| Server Actions (admin)                | `src/actions/`                       |
+| Zod validation schemas                | `src/lib/validations/`               |
+| TypeScript interfaces                 | `src/lib/types/property.ts`          |
+| Supabase client                       | `src/lib/supabase/`                  |
+| Admin auth guard                      | `src/lib/auth/require-admin.ts`      |
+| Admin layout + sidebar                | `src/app/(admin)/admin/layout.tsx`   |
+| Public layout                         | `src/app/(public)/layout.tsx`        |
+| API: form submit                      | `src/app/api/submit-form/route.ts`   |
+| API: image upload                     | `src/app/api/upload-images/route.ts` |
+| SQL migrations                        | `supabase/migrations/`               |
 
 ---
 

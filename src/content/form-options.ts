@@ -34,4 +34,5 @@ export const REGION_OPTIONS = [
   { value: "south", label: "ภาคใต้" },
 ]
 
-export const FORM_PRIVACY_NOTICE = "ข้อมูลของคุณจะถูกเก็บเป็นความลับ ทีมงานบ้านไออุ่นจะรีบติดต่อกลับโดยเร็วที่สุดค่ะ"
+export const FORM_PRIVACY_NOTICE =
+  "ข้อมูลของคุณจะถูกเก็บเป็นความลับ ทีมงานบ้านไออุ่นจะรีบติดต่อกลับโดยเร็วที่สุดค่ะ"

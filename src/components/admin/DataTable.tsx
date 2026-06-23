@@ -32,9 +32,7 @@ export function DataTable<T>({
     ? data.filter((row) =>
         searchableCols.some((col) => {
           const val = (row as Record<string, unknown>)[col.key]
-          return (
-            val != null && String(val).toLowerCase().includes(query.toLowerCase())
-          )
+          return val != null && String(val).toLowerCase().includes(query.toLowerCase())
         }),
       )
     : data
@@ -42,7 +40,7 @@ export function DataTable<T>({
   return (
     <div className="flex flex-col gap-3">
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+        <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -51,15 +49,15 @@ export function DataTable<T>({
         />
       </div>
 
-      <div className="rounded-xl border bg-white overflow-hidden">
+      <div className="overflow-hidden rounded-xl border bg-white">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b bg-muted/30">
+              <tr className="bg-muted/30 border-b">
                 {columns.map((col) => (
                   <th
                     key={col.key}
-                    className="px-4 py-3 text-left font-medium text-muted-foreground"
+                    className="text-muted-foreground px-4 py-3 text-left font-medium"
                   >
                     {col.label}
                   </th>
@@ -69,10 +67,7 @@ export function DataTable<T>({
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={columns.length}
-                    className="py-12 text-center text-muted-foreground"
-                  >
+                  <td colSpan={columns.length} className="text-muted-foreground py-12 text-center">
                     {emptyText}
                   </td>
                 </tr>
@@ -80,15 +75,13 @@ export function DataTable<T>({
                 filtered.map((row, i) => (
                   <tr
                     key={i}
-                    className="border-b last:border-b-0 hover:bg-muted/20 transition-colors"
+                    className="hover:bg-muted/20 border-b transition-colors last:border-b-0"
                   >
                     {columns.map((col) => (
                       <td key={col.key} className="px-4 py-3 align-middle">
                         {col.render
                           ? col.render(row)
-                          : String(
-                              (row as Record<string, unknown>)[col.key] ?? "—",
-                            )}
+                          : String((row as Record<string, unknown>)[col.key] ?? "—")}
                       </td>
                     ))}
                   </tr>
@@ -98,7 +91,7 @@ export function DataTable<T>({
           </table>
         </div>
         {filtered.length > 0 && (
-          <div className="border-t px-4 py-2 text-xs text-muted-foreground">
+          <div className="text-muted-foreground border-t px-4 py-2 text-xs">
             แสดง {filtered.length} จาก {data.length} รายการ
           </div>
         )}

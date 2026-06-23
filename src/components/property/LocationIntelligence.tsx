@@ -13,19 +13,17 @@ interface DistanceCardProps {
 
 function DistanceCard({ icon, label, value }: DistanceCardProps) {
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-border bg-muted/40 p-4">
+    <div className="border-border bg-muted/40 flex items-start gap-3 rounded-xl border p-4">
       <div className="mt-0.5 shrink-0 text-green-700">{icon}</div>
       <div>
-        <p className="text-xs text-muted-foreground">{label}</p>
-        <p className="text-sm font-semibold text-foreground">{value}</p>
+        <p className="text-muted-foreground text-xs">{label}</p>
+        <p className="text-foreground text-sm font-semibold">{value}</p>
       </div>
     </div>
   )
 }
 
-export default function LocationIntelligence({
-  property,
-}: LocationIntelligenceProps) {
+export default function LocationIntelligence({ property }: LocationIntelligenceProps) {
   const { location } = property
 
   // สร้างแผนที่จากพิกัดจริงของทรัพย์; ถ้าไม่มีพิกัดใช้ชื่อตำบล/อำเภอแทน
@@ -33,9 +31,7 @@ export default function LocationIntelligence({
     location.lat != null && location.lng != null && location.lat !== 0 && location.lng !== 0
   const mapQuery = hasCoords
     ? `${location.lat},${location.lng}`
-    : encodeURIComponent(
-        [location.subdistrict, location.district].filter(Boolean).join(" "),
-      )
+    : encodeURIComponent([location.subdistrict, location.district].filter(Boolean).join(" "))
   const mapSrc = mapQuery
     ? `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed&hl=th`
     : null
@@ -44,7 +40,7 @@ export default function LocationIntelligence({
     <div className="flex flex-col gap-4">
       {/* Google Maps embed — ใช้พิกัดของทรัพย์ */}
       {mapSrc && (
-        <div className="overflow-hidden rounded-xl border border-border">
+        <div className="border-border overflow-hidden rounded-xl border">
           <iframe
             src={mapSrc}
             title={`แผนที่ ${property.title}`}
@@ -60,7 +56,7 @@ export default function LocationIntelligence({
       )}
 
       {/* Location label */}
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+      <div className="text-muted-foreground flex items-center gap-2 text-sm">
         <MapPin className="h-4 w-4 shrink-0 text-green-700" />
         <span>
           {location.subdistrict}

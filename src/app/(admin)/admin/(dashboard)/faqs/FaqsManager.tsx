@@ -23,9 +23,7 @@ interface LocalFaq extends Partial<Faq> {
 }
 
 export function FaqsManager({ initialFaqs }: FaqsManagerProps) {
-  const [faqs, setFaqs] = useState<LocalFaq[]>(
-    initialFaqs.map((f) => ({ ...f, localId: f.id })),
-  )
+  const [faqs, setFaqs] = useState<LocalFaq[]>(initialFaqs.map((f) => ({ ...f, localId: f.id })))
   const [isPending, startTransition] = useTransition()
   const [savingId, setSavingId] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
@@ -64,9 +62,7 @@ export function FaqsManager({ initialFaqs }: FaqsManagerProps) {
       const result = await upsertFaq(faq.id ?? null, {}, formData)
       if (!result.error) {
         setFaqs((prev) =>
-          prev.map((f) =>
-            f.localId === faq.localId ? { ...f, dirty: false, isNew: false } : f,
-          ),
+          prev.map((f) => (f.localId === faq.localId ? { ...f, dirty: false, isNew: false } : f)),
         )
       }
       setSavingId(null)
@@ -91,9 +87,9 @@ export function FaqsManager({ initialFaqs }: FaqsManagerProps) {
   return (
     <div className="flex flex-col gap-4">
       {pages.map((page) => (
-        <div key={page} className="rounded-xl border bg-white overflow-hidden">
-          <div className="border-b bg-muted/30 px-4 py-2">
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <div key={page} className="overflow-hidden rounded-xl border bg-white">
+          <div className="bg-muted/30 border-b px-4 py-2">
+            <p className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
               หน้า: {page}
             </p>
           </div>
@@ -102,10 +98,10 @@ export function FaqsManager({ initialFaqs }: FaqsManagerProps) {
               .filter((f) => (f.page_slug ?? "home") === page)
               .map((faq) => (
                 <div key={faq.localId} className="flex items-start gap-3 p-4">
-                  <GripVertical className="mt-2 size-4 shrink-0 text-muted-foreground/40" />
-                  <div className="flex-1 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  <GripVertical className="text-muted-foreground/40 mt-2 size-4 shrink-0" />
+                  <div className="grid flex-1 grid-cols-1 gap-2 sm:grid-cols-2">
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs text-muted-foreground">คำถาม</label>
+                      <label className="text-muted-foreground text-xs">คำถาม</label>
                       <Input
                         value={faq.question}
                         onChange={(e) => update(faq.localId, "question", e.target.value)}
@@ -114,7 +110,7 @@ export function FaqsManager({ initialFaqs }: FaqsManagerProps) {
                       />
                     </div>
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs text-muted-foreground">คำตอบ</label>
+                      <label className="text-muted-foreground text-xs">คำตอบ</label>
                       <Input
                         value={faq.answer}
                         onChange={(e) => update(faq.localId, "answer", e.target.value)}
@@ -123,13 +119,13 @@ export function FaqsManager({ initialFaqs }: FaqsManagerProps) {
                       />
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 mt-5">
+                  <div className="mt-5 flex items-center gap-2">
                     {faq.dirty && (
                       <Button
                         size="sm"
                         onClick={() => save(faq)}
                         disabled={isPending}
-                        className="gap-1 bg-primary text-white hover:bg-primary/90"
+                        className="bg-primary hover:bg-primary/90 gap-1 text-white"
                       >
                         {savingId === faq.localId ? (
                           <Loader2 className="size-3 animate-spin" />
@@ -159,11 +155,7 @@ export function FaqsManager({ initialFaqs }: FaqsManagerProps) {
         </div>
       ))}
 
-      <Button
-        variant="outline"
-        onClick={addNew}
-        className="gap-2 self-start"
-      >
+      <Button variant="outline" onClick={addNew} className="gap-2 self-start">
         <Plus className="size-4" />
         เพิ่มคำถาม
       </Button>

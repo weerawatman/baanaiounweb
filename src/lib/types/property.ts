@@ -1,11 +1,6 @@
 export type PropertyStatus = "ACTIVE" | "SOLD" | "RENTED"
 export type PropertyType = "SALE" | "RENT" | "LAND"
-export type PropertySubType =
-  | "new"
-  | "renovated"
-  | "townhome"
-  | "residential"
-  | "investment"
+export type PropertySubType = "new" | "renovated" | "townhome" | "residential" | "investment"
 
 export interface Property {
   id: string

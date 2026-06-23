@@ -47,11 +47,6 @@ export default tseslint.config(
 
   // Ignore patterns
   {
-    ignores: [
-      ".next/",
-      "node_modules/",
-      "out/",
-      "public/",
-    ],
-  }
+    ignores: [".next/", "node_modules/", "out/", "public/"],
+  },
 )

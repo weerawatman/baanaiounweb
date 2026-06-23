@@ -10,12 +10,12 @@
 
 ## 1. เป้าหมายและขอบเขต
 
-| ด้าน | รายละเอียด |
-|------|-----------|
-| **ผู้ใช้** | ทีมงานบ้านไออุ่น (2–5 คน) — ไม่เปิด public signup |
-| **จัดการ** | Properties · Leads · Blog · Testimonials · FAQ (ครบทุกข้อมูลบนเว็บ) |
-| **Auth** | Supabase Auth (email + password) |
-| **หลักการ** | เจ้าของแก้ข้อมูลเองได้ → เว็บอัปเดตทันทีโดยไม่ต้อง deploy ใหม่ |
+| ด้าน        | รายละเอียด                                                          |
+| ----------- | ------------------------------------------------------------------- |
+| **ผู้ใช้**  | ทีมงานบ้านไออุ่น (2–5 คน) — ไม่เปิด public signup                   |
+| **จัดการ**  | Properties · Leads · Blog · Testimonials · FAQ (ครบทุกข้อมูลบนเว็บ) |
+| **Auth**    | Supabase Auth (email + password)                                    |
+| **หลักการ** | เจ้าของแก้ข้อมูลเองได้ → เว็บอัปเดตทันทีโดยไม่ต้อง deploy ใหม่      |
 
 **ผลลัพธ์ที่ได้:** เลิกใช้ mock data ใน `src/data/` → ทุกข้อมูลมาจาก Supabase
 
@@ -47,6 +47,7 @@
 ```
 
 **หลักการสำคัญ:**
+
 - Admin อยู่ใน app เดียวกัน ที่ route group `(admin)` → แยก layout/middleware แต่ deploy ก้อนเดียว
 - **Mutation ใช้ Next.js Server Actions** (ไม่ต้องสร้าง REST API แยกทุกตัว) — โค้ดน้อย type-safe
 - **Data-access layer** (`src/lib/queries/`) เขียนครั้งเดียว ใช้ทั้งฝั่ง public และ admin
@@ -66,14 +67,14 @@
 
 ### Authorization (RLS) — สรุปนโยบายต่อตาราง
 
-| ตาราง | `anon` (เว็บสาธารณะ) | `authenticated` (admin) |
-|-------|---------------------|------------------------|
-| `properties` | SELECT เฉพาะ `status='ACTIVE'` | ALL |
-| `blog_posts` | SELECT เฉพาะ `published=true` | ALL |
-| `testimonials` | SELECT เฉพาะ `published=true` | ALL |
-| `faqs` | SELECT ทั้งหมด | ALL |
-| `form_submissions` (leads) | **INSERT เท่านั้น** | SELECT + UPDATE |
-| Storage `property-images` | SELECT (อ่านรูป) | INSERT/UPDATE/DELETE |
+| ตาราง                      | `anon` (เว็บสาธารณะ)           | `authenticated` (admin) |
+| -------------------------- | ------------------------------ | ----------------------- |
+| `properties`               | SELECT เฉพาะ `status='ACTIVE'` | ALL                     |
+| `blog_posts`               | SELECT เฉพาะ `published=true`  | ALL                     |
+| `testimonials`             | SELECT เฉพาะ `published=true`  | ALL                     |
+| `faqs`                     | SELECT ทั้งหมด                 | ALL                     |
+| `form_submissions` (leads) | **INSERT เท่านั้น**            | SELECT + UPDATE         |
+| Storage `property-images`  | SELECT (อ่านรูป)               | INSERT/UPDATE/DELETE    |
 
 > RLS เป็น last line of defense — แม้ middleware พลาด ฐานข้อมูลก็ยังกัน anon ไม่ให้เห็น leads/draft
 
@@ -221,14 +222,14 @@ src/
 
 ## 6. Tech Stack ที่ต้องเพิ่ม
 
-| Package | ใช้ทำอะไร | เหตุผล |
-|---------|-----------|--------|
-| `@supabase/ssr` | Cookie-based auth ใน App Router | มาตรฐาน Supabase ปัจจุบัน |
-| `react-hook-form` | จัดการ state ฟอร์ม | ฟอร์มทรัพย์ field เยอะ — performant |
-| `zod` | Validation schema | ใช้ schema เดียว client + server |
-| `@hookform/resolvers` | เชื่อม RHF + Zod | — |
-| `sonner` | Toast notification | feedback หลัง save/delete |
-| shadcn: `table`, `form`, `select`, `dropdown-menu`, `sonner`, `alert-dialog` | UI primitives | ส่วนใหญ่มีในโปรเจกต์แล้ว เพิ่มที่ขาด |
+| Package                                                                      | ใช้ทำอะไร                       | เหตุผล                               |
+| ---------------------------------------------------------------------------- | ------------------------------- | ------------------------------------ |
+| `@supabase/ssr`                                                              | Cookie-based auth ใน App Router | มาตรฐาน Supabase ปัจจุบัน            |
+| `react-hook-form`                                                            | จัดการ state ฟอร์ม              | ฟอร์มทรัพย์ field เยอะ — performant  |
+| `zod`                                                                        | Validation schema               | ใช้ schema เดียว client + server     |
+| `@hookform/resolvers`                                                        | เชื่อม RHF + Zod                | —                                    |
+| `sonner`                                                                     | Toast notification              | feedback หลัง save/delete            |
+| shadcn: `table`, `form`, `select`, `dropdown-menu`, `sonner`, `alert-dialog` | UI primitives                   | ส่วนใหญ่มีในโปรเจกต์แล้ว เพิ่มที่ขาด |
 
 > reuse ของเดิม: storage bucket `property-images`, route `/api/upload-images`, shadcn ที่มีอยู่ (button, card, input, dialog, tabs, badge)
 
@@ -248,13 +249,13 @@ src/
 
 ## 8. Build Phases (เมื่ออนุมัติ design แล้ว)
 
-| Phase | งาน | Definition of Done |
-|-------|-----|--------------------|
-| **A. Foundation** | migrations 004–007, RLS, `@supabase/ssr` clients, middleware, หน้า login, admin shell | login ได้ · เข้า `/admin` โดยไม่ login ถูก redirect · RLS ทดสอบผ่าน |
-| **B. Properties CRUD** | queries + actions + ตาราง + ฟอร์ม + ImageUploader | เพิ่ม/แก้/ลบทรัพย์ได้ · รูปอัปโหลดเข้า storage · เว็บสาธารณะเห็นทรัพย์ใหม่ |
-| **C. Leads** | ตาราง leads + รายละเอียด + เปลี่ยน status + โน้ต | ดู/อัปเดต lead จาก `form_submissions` ได้ |
-| **D. Content** | Blog + Testimonials + FAQ CRUD | จัดการครบ 3 entity · toggle published ได้ |
-| **E. Cutover** | seed mock→DB · เปลี่ยน public site อ่านจาก queries · ลบ `src/data/` | `grep "@/data"` = 0 · เว็บอ่านจาก DB ล้วน |
+| Phase                  | งาน                                                                                   | Definition of Done                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| **A. Foundation**      | migrations 004–007, RLS, `@supabase/ssr` clients, middleware, หน้า login, admin shell | login ได้ · เข้า `/admin` โดยไม่ login ถูก redirect · RLS ทดสอบผ่าน        |
+| **B. Properties CRUD** | queries + actions + ตาราง + ฟอร์ม + ImageUploader                                     | เพิ่ม/แก้/ลบทรัพย์ได้ · รูปอัปโหลดเข้า storage · เว็บสาธารณะเห็นทรัพย์ใหม่ |
+| **C. Leads**           | ตาราง leads + รายละเอียด + เปลี่ยน status + โน้ต                                      | ดู/อัปเดต lead จาก `form_submissions` ได้                                  |
+| **D. Content**         | Blog + Testimonials + FAQ CRUD                                                        | จัดการครบ 3 entity · toggle published ได้                                  |
+| **E. Cutover**         | seed mock→DB · เปลี่ยน public site อ่านจาก queries · ลบ `src/data/`                   | `grep "@/data"` = 0 · เว็บอ่านจาก DB ล้วน                                  |
 
 แต่ละ Phase = 1 PR, CI เขียว, `npm run validate` ผ่าน
 
@@ -277,4 +278,7 @@ src/
 - [ ] Server action ทุกตัวเรียก `requireAdmin()` ก่อน mutate
 - [ ] Validate input ด้วย Zod ทั้ง client และ server (อย่าเชื่อ client)
 - [ ] Rate limit หน้า login (กัน brute force)
+
+```
+
 ```

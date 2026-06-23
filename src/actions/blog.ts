@@ -7,10 +7,7 @@ import { requireAdmin } from "@/lib/auth/guard"
 import { blogSchema } from "@/lib/validations/blog"
 import type { ActionState } from "./properties"
 
-export async function createBlogPost(
-  _prev: ActionState,
-  formData: FormData,
-): Promise<ActionState> {
+export async function createBlogPost(_prev: ActionState, formData: FormData): Promise<ActionState> {
   await requireAdmin()
 
   const raw = Object.fromEntries(formData)
@@ -62,10 +59,7 @@ export async function updateBlogPost(
     published_at: parsed.data.published ? new Date().toISOString() : null,
   }
 
-  const { error } = await supabase
-    .from("blog_posts")
-    .update(updateData)
-    .eq("id", id)
+  const { error } = await supabase.from("blog_posts").update(updateData).eq("id", id)
 
   if (error) return { error: error.message }
 

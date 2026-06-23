@@ -4,9 +4,7 @@ import BlogPage from "./BlogPage"
 
 export default async function BlogRoute() {
   const rows = await getBlogPosts()
-  const posts = rows
-    .filter((p) => p.published)
-    .map(mapBlogPost)
+  const posts = rows.filter((p) => p.published).map(mapBlogPost)
 
   return <BlogPage posts={posts} />
 }

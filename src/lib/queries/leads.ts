@@ -14,11 +14,7 @@ export async function getLeads(): Promise<Lead[]> {
 
 export async function getLeadById(id: string): Promise<Lead | null> {
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("form_submissions")
-    .select("*")
-    .eq("id", id)
-    .single()
+  const { data, error } = await supabase.from("form_submissions").select("*").eq("id", id).single()
 
   if (error) return null
   return data as Lead

@@ -1,12 +1,7 @@
 "use client"
 
 import Breadcrumb from "@/components/layout/Breadcrumb"
-import {
-  PainPointsHero,
-  SolutionsSection,
-  EmotionalHook,
-  CTAWithForm,
-} from "@/components/shared"
+import { PainPointsHero, SolutionsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { ACADEMY_CONTENT } from "@/content/academy"
 
 export default function AcademyPage() {
@@ -19,12 +14,7 @@ export default function AcademyPage() {
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <Breadcrumb
-          items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "สร้างรายได้กับอสังหาฯ" },
-          ]}
-        />
+        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "สร้างรายได้กับอสังหาฯ" }]} />
       </div>
 
       {/* Pain Points Hero */}
@@ -43,10 +33,7 @@ export default function AcademyPage() {
       />
 
       {/* Emotional Hook */}
-      <EmotionalHook
-        quote={ACADEMY_CONTENT.hook.quote}
-        message={ACADEMY_CONTENT.hook.message}
-      />
+      <EmotionalHook quote={ACADEMY_CONTENT.hook.quote} message={ACADEMY_CONTENT.hook.message} />
 
       {/* CTA + Form */}
       <CTAWithForm

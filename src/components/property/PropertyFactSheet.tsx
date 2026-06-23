@@ -27,12 +27,10 @@ interface FactItemProps {
 
 function FactItem({ icon, label, value, valueClassName }: FactItemProps) {
   return (
-    <div className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-muted/40 p-4 text-center">
+    <div className="border-border bg-muted/40 flex flex-col items-center gap-1.5 rounded-xl border p-4 text-center">
       <div className="text-green-700">{icon}</div>
-      <p className="text-xs text-muted-foreground">{label}</p>
-      <p className={`text-sm font-semibold ${valueClassName ?? "text-foreground"}`}>
-        {value}
-      </p>
+      <p className="text-muted-foreground text-xs">{label}</p>
+      <p className={`text-sm font-semibold ${valueClassName ?? "text-foreground"}`}>{value}</p>
     </div>
   )
 }
@@ -72,9 +70,7 @@ export default function PropertyFactSheet({ property }: PropertyFactSheetProps) 
       {/* Amenities */}
       {property.amenities.length > 0 && (
         <div>
-          <p className="mb-2 text-sm font-medium text-foreground">
-            สิ่งอำนวยความสะดวก
-          </p>
+          <p className="text-foreground mb-2 text-sm font-medium">สิ่งอำนวยความสะดวก</p>
           <div className="flex flex-wrap gap-2">
             {property.amenities.map((amenity) => (
               <Badge key={amenity} variant="secondary">

@@ -59,7 +59,7 @@ export default function PropertyDetailClient({
   if (!property) {
     return (
       <main className="mx-auto flex w-full max-w-3xl flex-col items-center justify-center gap-6 px-4 py-24 text-center sm:px-6 lg:px-8">
-        <h1 className="text-2xl font-bold text-foreground">ไม่พบทรัพย์นี้</h1>
+        <h1 className="text-foreground text-2xl font-bold">ไม่พบทรัพย์นี้</h1>
         <p className="text-muted-foreground">
           ทรัพย์ที่คุณค้นหาอาจถูกขายไปแล้ว หรือลิงก์ไม่ถูกต้องค่ะ
         </p>
@@ -132,17 +132,15 @@ export default function PropertyDetailClient({
             </div>
 
             {/* Title */}
-            <h1 className="text-2xl font-bold leading-snug text-foreground sm:text-3xl">
+            <h1 className="text-foreground text-2xl leading-snug font-bold sm:text-3xl">
               {property.title}
             </h1>
 
             {/* Price */}
-            <p className="text-2xl font-bold text-green-700">
-              {formatPrice(property)}
-            </p>
+            <p className="text-2xl font-bold text-green-700">{formatPrice(property)}</p>
 
             {/* Location line */}
-            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
               <MapPin className="h-4 w-4 shrink-0 text-green-700" />
               <span>
                 {property.location.subdistrict}, {property.location.district}
@@ -156,9 +154,9 @@ export default function PropertyDetailClient({
             animate="visible"
             variants={sectionVariants}
             transition={{ ...sectionTransition, delay: 0.15 }}
-            className="rounded-2xl border border-border bg-muted/30 px-6 py-5"
+            className="border-border bg-muted/30 rounded-2xl border px-6 py-5"
           >
-            <p className="text-base leading-relaxed text-foreground italic">
+            <p className="text-foreground text-base leading-relaxed italic">
               &ldquo;{property.emotionalDesc}&rdquo;
             </p>
           </motion.section>
@@ -170,9 +168,7 @@ export default function PropertyDetailClient({
             variants={sectionVariants}
             transition={{ ...sectionTransition, delay: 0.2 }}
           >
-            <h2 className="mb-4 text-lg font-semibold text-foreground">
-              รายละเอียดทรัพย์
-            </h2>
+            <h2 className="text-foreground mb-4 text-lg font-semibold">รายละเอียดทรัพย์</h2>
             <PropertyFactSheet property={property} />
           </motion.section>
 
@@ -183,9 +179,7 @@ export default function PropertyDetailClient({
             variants={sectionVariants}
             transition={{ ...sectionTransition, delay: 0.25 }}
           >
-            <h2 className="mb-4 text-lg font-semibold text-foreground">
-              ทำเลและระยะทาง
-            </h2>
+            <h2 className="text-foreground mb-4 text-lg font-semibold">ทำเลและระยะทาง</h2>
             <LocationIntelligence property={property} />
           </motion.section>
 
@@ -207,9 +201,7 @@ export default function PropertyDetailClient({
               variants={sectionVariants}
               transition={{ ...sectionTransition, delay: 0.35 }}
             >
-              <h2 className="mb-4 text-lg font-semibold text-foreground">
-                คำนวณยอดผ่อน
-              </h2>
+              <h2 className="text-foreground mb-4 text-lg font-semibold">คำนวณยอดผ่อน</h2>
               <FinancialCalculator property={property} />
             </motion.section>
           )}
@@ -222,10 +214,8 @@ export default function PropertyDetailClient({
             transition={{ ...sectionTransition, delay: 0.4 }}
             className="rounded-2xl bg-gradient-to-br from-green-700 to-emerald-800 p-8 text-center text-white"
           >
-            <h2 className="mb-2 text-xl font-bold">
-              สนใจหลังนี้? ปรึกษาพิมเลย
-            </h2>
-            <p className="mb-6 text-sm text-green-100 leading-relaxed">
+            <h2 className="mb-2 text-xl font-bold">สนใจหลังนี้? ปรึกษาพิมเลย</h2>
+            <p className="mb-6 text-sm leading-relaxed text-green-100">
               พิมพร้อมตอบทุกคำถาม นัดดูบ้านได้ทุกวัน ไม่มีค่าใช้จ่ายในการปรึกษาค่ะ
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">

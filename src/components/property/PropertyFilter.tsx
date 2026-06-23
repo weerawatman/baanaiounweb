@@ -46,13 +46,9 @@ function detectListingType(properties: Property[]): "SALE" | "RENT" | "MIXED" {
   return "MIXED"
 }
 
-export default function PropertyFilter({
-  properties,
-  onFilter,
-}: PropertyFilterProps) {
+export default function PropertyFilter({ properties, onFilter }: PropertyFilterProps) {
   const listingType = detectListingType(properties)
-  const priceOptions =
-    listingType === "RENT" ? RENT_PRICE_OPTIONS : SALE_PRICE_OPTIONS
+  const priceOptions = listingType === "RENT" ? RENT_PRICE_OPTIONS : SALE_PRICE_OPTIONS
 
   const [priceIndex, setPriceIndex] = useState(0)
   const [bedrooms, setBedrooms] = useState(0)
@@ -78,10 +74,7 @@ export default function PropertyFilter({
 
     // Sort
     if (sort === "newest") {
-      filtered.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      )
+      filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     } else if (sort === "price-asc") {
       filtered.sort((a, b) => a.price - b.price)
     } else if (sort === "price-desc") {
@@ -93,16 +86,14 @@ export default function PropertyFilter({
   }, [priceIndex, bedrooms, sort, properties])
 
   return (
-    <div className="flex flex-wrap items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 text-sm">
+    <div className="border-border bg-card flex flex-wrap items-center gap-4 rounded-xl border px-4 py-3 text-sm">
       {/* Price range */}
       <div className="flex items-center gap-2">
-        <label className="shrink-0 font-medium text-muted-foreground">
-          ราคา:
-        </label>
+        <label className="text-muted-foreground shrink-0 font-medium">ราคา:</label>
         <select
           value={priceIndex}
           onChange={(e) => setPriceIndex(Number(e.target.value))}
-          className="rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="border-input focus-visible:border-ring focus-visible:ring-ring/50 rounded-lg border bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:ring-2"
         >
           {priceOptions.map((opt, idx) => (
             <option key={idx} value={idx}>
@@ -114,9 +105,7 @@ export default function PropertyFilter({
 
       {/* Bedrooms */}
       <div className="flex items-center gap-2">
-        <span className="shrink-0 font-medium text-muted-foreground">
-          ห้องนอน:
-        </span>
+        <span className="text-muted-foreground shrink-0 font-medium">ห้องนอน:</span>
         <div className="flex gap-1">
           {BEDROOM_OPTIONS.map((opt) => (
             <button
@@ -125,7 +114,7 @@ export default function PropertyFilter({
               className={`min-w-[2rem] rounded-lg border px-2.5 py-1 text-xs font-medium transition-colors ${
                 bedrooms === opt.value
                   ? "border-green-600 bg-green-600 text-white"
-                  : "border-border bg-transparent text-foreground hover:bg-muted"
+                  : "border-border text-foreground hover:bg-muted bg-transparent"
               }`}
             >
               {opt.label}
@@ -135,14 +124,12 @@ export default function PropertyFilter({
       </div>
 
       {/* Sort */}
-      <div className="flex items-center gap-2 ml-auto">
-        <label className="shrink-0 font-medium text-muted-foreground">
-          เรียงตาม:
-        </label>
+      <div className="ml-auto flex items-center gap-2">
+        <label className="text-muted-foreground shrink-0 font-medium">เรียงตาม:</label>
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value)}
-          className="rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="border-input focus-visible:border-ring focus-visible:ring-ring/50 rounded-lg border bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:ring-2"
         >
           {SORT_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>

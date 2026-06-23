@@ -43,16 +43,10 @@ export default function SolutionsSection({
             <h2 className="text-2xl font-bold tracking-tight text-[#1B4D3E] sm:text-3xl">
               {headline}
             </h2>
-            {subtitle && (
-              <p className="mt-2 text-lg font-medium text-[#D4A843]">{subtitle}</p>
-            )}
-            <p className="mt-4 text-base leading-relaxed text-gray-600">
-              {description}
-            </p>
+            {subtitle && <p className="mt-2 text-lg font-medium text-[#D4A843]">{subtitle}</p>}
+            <p className="mt-4 text-base leading-relaxed text-gray-600">{description}</p>
             {highlight && (
-              <p className="mt-3 text-base font-semibold text-[#1B4D3E]">
-                {highlight}
-              </p>
+              <p className="mt-3 text-base font-semibold text-[#1B4D3E]">{highlight}</p>
             )}
           </motion.div>
 

@@ -6,10 +6,7 @@ import { requireAdmin } from "@/lib/auth/guard"
 import { profileSchema } from "@/lib/validations/profile"
 import type { ActionState } from "./properties"
 
-export async function upsertProfile(
-  _prev: ActionState,
-  formData: FormData,
-): Promise<ActionState> {
+export async function upsertProfile(_prev: ActionState, formData: FormData): Promise<ActionState> {
   await requireAdmin()
 
   const raw = Object.fromEntries(formData)
@@ -22,9 +19,7 @@ export async function upsertProfile(
   const supabase = await createClient()
 
   // singleton: always row id=1
-  const { error } = await supabase
-    .from("agent_profile")
-    .upsert({ id: 1, ...parsed.data })
+  const { error } = await supabase.from("agent_profile").upsert({ id: 1, ...parsed.data })
 
   if (error) return { error: error.message }
 

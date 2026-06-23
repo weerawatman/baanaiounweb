@@ -19,11 +19,7 @@ interface PropertyFormProps {
   submitLabel?: string
 }
 
-export function PropertyForm({
-  defaultValues,
-  action,
-  submitLabel = "บันทึก",
-}: PropertyFormProps) {
+export function PropertyForm({ defaultValues, action, submitLabel = "บันทึก" }: PropertyFormProps) {
   const [state, formAction, isPending] = useActionState(action, {})
 
   const {
@@ -112,8 +108,8 @@ export function PropertyForm({
       )}
 
       {/* ─── Section 1: ข้อมูลพื้นฐาน ─────────────── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">ข้อมูลพื้นฐาน</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">ข้อมูลพื้นฐาน</h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <FormField label="ชื่อทรัพย์" error={errors.title?.message} required>
@@ -171,9 +167,12 @@ export function PropertyForm({
           <FormField
             label="ข้อความแสดงราคา (ไม่บังคับ)"
             error={errors.price_label?.message}
-            hint='ปล่อยว่าง = ระบบจัดรูปแบบจาก «ราคา» ให้อัตโนมัติ เช่น 1,990,000 บาท หรือใส่เอง เช่น ตกลงกันได้'
+            hint="ปล่อยว่าง = ระบบจัดรูปแบบจาก «ราคา» ให้อัตโนมัติ เช่น 1,990,000 บาท หรือใส่เอง เช่น ตกลงกันได้"
           >
-            <Input {...register("price_label")} placeholder="ปล่อยว่างหรือพิมพ์เอง เช่น ตกลงกันได้" />
+            <Input
+              {...register("price_label")}
+              placeholder="ปล่อยว่างหรือพิมพ์เอง เช่น ตกลงกันได้"
+            />
           </FormField>
         </div>
 
@@ -199,19 +198,19 @@ export function PropertyForm({
                 id="featured"
                 checked={field.value}
                 onChange={(e) => field.onChange(e.target.checked)}
-                className="size-4 rounded border-border accent-primary"
+                className="border-border accent-primary size-4 rounded"
               />
             )}
           />
-          <label htmlFor="featured" className="text-sm font-medium cursor-pointer">
+          <label htmlFor="featured" className="cursor-pointer text-sm font-medium">
             ทรัพย์แนะนำ (แสดงในหน้าแรก)
           </label>
         </div>
       </section>
 
       {/* ─── Section 2: คำบรรยาย ──────────────────── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">คำบรรยาย</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">คำบรรยาย</h2>
 
         <FormField label="รายละเอียดทั่วไป" error={errors.description?.message}>
           <textarea
@@ -242,8 +241,8 @@ export function PropertyForm({
       </section>
 
       {/* ─── Section 3: ทำเล ─────────────────────── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">ทำเล</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">ทำเล</h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <FormField label="อำเภอ" error={errors.district?.message}>
@@ -280,17 +279,14 @@ export function PropertyForm({
       </section>
 
       {/* ─── Section 4: รูปภาพ ───────────────────── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">รูปภาพ</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">รูปภาพ</h2>
 
         <ImageUploader value={images} onChange={(urls) => setValue("images", urls)} />
 
         {images.length > 0 && (
           <FormField label="รูปหลัก (URL)" error={errors.image_primary?.message}>
-            <select
-              {...register("image_primary")}
-              className={selectCls}
-            >
+            <select {...register("image_primary")} className={selectCls}>
               <option value="">— เลือกรูปหลัก —</option>
               {images.map((url, i) => (
                 <option key={url} value={url}>
@@ -307,20 +303,23 @@ export function PropertyForm({
       </section>
 
       {/* ─── Section 5: Tags & Amenities ─────────── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">Tags และสิ่งอำนวยความสะดวก</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">Tags และสิ่งอำนวยความสะดวก</h2>
 
         <div>
-          <p className="text-sm font-medium mb-2">Tags</p>
-          <div className="flex flex-wrap gap-2 mb-2">
+          <p className="mb-2 text-sm font-medium">Tags</p>
+          <div className="mb-2 flex flex-wrap gap-2">
             {tagFields.map((field, i) => (
-              <div key={field.id} className="flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1">
+              <div
+                key={field.id}
+                className="bg-primary/10 flex items-center gap-1 rounded-full px-3 py-1"
+              >
                 <Input
                   {...register(`tags.${i}` as const)}
-                  className="h-auto border-none bg-transparent p-0 text-sm w-24 focus-visible:ring-0"
+                  className="h-auto w-24 border-none bg-transparent p-0 text-sm focus-visible:ring-0"
                 />
                 <button type="button" onClick={() => removeTag(i)}>
-                  <X className="size-3 text-muted-foreground hover:text-foreground" />
+                  <X className="text-muted-foreground hover:text-foreground size-3" />
                 </button>
               </div>
             ))}
@@ -329,7 +328,7 @@ export function PropertyForm({
               variant="outline"
               size="sm"
               onClick={() => appendTag("" as never)}
-              className="rounded-full gap-1"
+              className="gap-1 rounded-full"
             >
               <Plus className="size-3" />
               เพิ่ม tag
@@ -338,7 +337,7 @@ export function PropertyForm({
         </div>
 
         <div>
-          <p className="text-sm font-medium mb-2">สิ่งอำนวยความสะดวก</p>
+          <p className="mb-2 text-sm font-medium">สิ่งอำนวยความสะดวก</p>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {amenityFields.map((field, i) => (
               <div key={field.id} className="flex items-center gap-2">
@@ -348,7 +347,7 @@ export function PropertyForm({
                   className="text-sm"
                 />
                 <button type="button" onClick={() => removeAmenity(i)}>
-                  <X className="size-4 text-muted-foreground hover:text-foreground" />
+                  <X className="text-muted-foreground hover:text-foreground size-4" />
                 </button>
               </div>
             ))}
@@ -374,7 +373,7 @@ export function PropertyForm({
         <Button
           type="submit"
           disabled={isPending}
-          className="gap-2 bg-primary text-white hover:bg-primary/90"
+          className="bg-primary hover:bg-primary/90 gap-2 text-white"
         >
           {isPending && <Loader2 className="size-4 animate-spin" />}
           {submitLabel}
@@ -399,12 +398,12 @@ function FormField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-foreground">
+      <label className="text-foreground text-sm font-medium">
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </label>
       {children}
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+      {hint && <p className="text-muted-foreground text-xs">{hint}</p>}
       {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   )

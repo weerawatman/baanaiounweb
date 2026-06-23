@@ -21,8 +21,8 @@ export default function BlogCard({ post }: BlogCardProps) {
       whileHover={{ scale: 1.02 }}
       className="h-full"
     >
-      <Link href={`/blog/${post.slug}`} className="block h-full group">
-        <Card className="h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl group-hover:ring-foreground/20">
+      <Link href={`/blog/${post.slug}`} className="group block h-full">
+        <Card className="group-hover:ring-foreground/20 h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl">
           {/* Featured image */}
           <div className="relative h-48 overflow-hidden">
             <Image
@@ -41,17 +41,17 @@ export default function BlogCard({ post }: BlogCardProps) {
             </Badge>
 
             {/* Title */}
-            <h3 className="font-semibold text-sm leading-snug line-clamp-2 text-foreground">
+            <h3 className="text-foreground line-clamp-2 text-sm leading-snug font-semibold">
               {post.title}
             </h3>
 
             {/* Excerpt */}
-            <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+            <p className="text-muted-foreground line-clamp-3 text-xs leading-relaxed">
               {post.excerpt}
             </p>
 
             {/* Reading time */}
-            <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-auto pt-1">
+            <div className="text-muted-foreground mt-auto flex items-center gap-1.5 pt-1 text-xs">
               <Clock className="h-3.5 w-3.5 shrink-0" />
               <span>อ่าน {post.readingTime}</span>
             </div>

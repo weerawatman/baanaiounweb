@@ -21,12 +21,10 @@ export default function EmotionalHook({ quote, message, className }: EmotionalHo
           transition={{ duration: 0.6 }}
         >
           <Heart className="size-8 text-[#D4A843]" />
-          <blockquote className="text-xl font-bold leading-relaxed text-[#1B4D3E] sm:text-2xl">
+          <blockquote className="text-xl leading-relaxed font-bold text-[#1B4D3E] sm:text-2xl">
             &ldquo;{quote}&rdquo;
           </blockquote>
-          <p className="max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
-            {message}
-          </p>
+          <p className="max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">{message}</p>
         </motion.div>
       </div>
     </section>

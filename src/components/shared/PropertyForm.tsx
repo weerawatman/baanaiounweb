@@ -81,7 +81,7 @@ function SelectField({
     <FormField label={label} required={required} error={error}>
       <select
         name={name}
-        className={`h-9 w-full rounded-lg border bg-white px-3 text-sm text-gray-700 outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/50 ${
+        className={`focus:border-ring focus:ring-ring/50 h-9 w-full rounded-lg border bg-white px-3 text-sm text-gray-700 transition-colors outline-none focus:ring-2 ${
           error ? "border-red-400 ring-1 ring-red-200" : "border-input"
         }`}
         value={value}
@@ -117,7 +117,7 @@ function TextAreaField({
     <FormField label={label} error={error}>
       <textarea
         name={name}
-        className={`min-h-[80px] w-full rounded-lg border bg-white px-3 py-2 text-sm text-gray-700 outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/50 resize-y ${
+        className={`focus:border-ring focus:ring-ring/50 min-h-[80px] w-full resize-y rounded-lg border bg-white px-3 py-2 text-sm text-gray-700 transition-colors outline-none focus:ring-2 ${
           error ? "border-red-400 ring-1 ring-red-200" : "border-input"
         }`}
         placeholder={placeholder}
@@ -157,7 +157,7 @@ function useFormState(initial: FormData = {}) {
       onBlur: () => setTouched((prev) => new Set(prev).add(name)),
       "aria-invalid": fieldErrors[name] ? true : undefined,
     }),
-    [data, update, fieldErrors]
+    [data, update, fieldErrors],
   )
 
   const reset = useCallback(() => {
@@ -169,9 +169,19 @@ function useFormState(initial: FormData = {}) {
   }, [initial])
 
   return {
-    data, update, inputProps, fieldErrors, setFieldErrors,
-    submitting, setSubmitting, submitted, setSubmitted,
-    error, setError, touched, reset,
+    data,
+    update,
+    inputProps,
+    fieldErrors,
+    setFieldErrors,
+    submitting,
+    setSubmitting,
+    submitted,
+    setSubmitted,
+    error,
+    setError,
+    touched,
+    reset,
   }
 }
 
@@ -179,7 +189,7 @@ function useFormState(initial: FormData = {}) {
 
 async function uploadImages(
   images: UploadedImage[],
-  setImages: (imgs: UploadedImage[]) => void
+  setImages: (imgs: UploadedImage[]) => void,
 ): Promise<string[]> {
   // Filter out images with validation errors and already-uploaded ones
   const toUpload = images.filter((img) => !img.error && !img.url)
@@ -188,11 +198,7 @@ async function uploadImages(
   if (toUpload.length === 0) return alreadyUploaded
 
   // Mark all as uploading
-  setImages(
-    images.map((img) =>
-      !img.error && !img.url ? { ...img, uploading: true } : img
-    )
-  )
+  setImages(images.map((img) => (!img.error && !img.url ? { ...img, uploading: true } : img)))
 
   const formData = new FormData()
   for (const img of toUpload) {
@@ -210,8 +216,8 @@ async function uploadImages(
     // Mark upload failed
     setImages(
       images.map((img) =>
-        img.uploading ? { ...img, uploading: false, error: "อัปโหลดไม่สำเร็จ" } : img
-      )
+        img.uploading ? { ...img, uploading: false, error: "อัปโหลดไม่สำเร็จ" } : img,
+      ),
     )
     throw new Error(body.error ?? "Upload failed")
   }
@@ -225,7 +231,7 @@ async function uploadImages(
         return { ...img, uploading: false, url: uploadedUrls[uploadIdx++] }
       }
       return img
-    })
+    }),
   )
 
   return [...alreadyUploaded, ...uploadedUrls]
@@ -238,7 +244,7 @@ async function submitFormWithValidation(
   form: ReturnType<typeof useFormState>,
   scrollRef: React.RefObject<HTMLFormElement | null>,
   images?: UploadedImage[],
-  setImages?: (imgs: UploadedImage[]) => void
+  setImages?: (imgs: UploadedImage[]) => void,
 ) {
   const result = validateForm(formTag, form.data)
 
@@ -299,23 +305,43 @@ async function submitFormWithValidation(
 
 // ─── Owner Form (Thai) ───────────────────────────────────────────────────
 
-function OwnerFormThai({ form, images, onImagesChange }: { form: ReturnType<typeof useFormState>; images: UploadedImage[]; onImagesChange: (imgs: UploadedImage[]) => void }) {
+function OwnerFormThai({
+  form,
+  images,
+  onImagesChange,
+}: {
+  form: ReturnType<typeof useFormState>
+  images: UploadedImage[]
+  onImagesChange: (imgs: UploadedImage[]) => void
+}) {
   const e = form.fieldErrors
   return (
     <div className="flex flex-col gap-4">
       <FormField label="ชื่อ-นามสกุล" required error={e.name}>
-        <Input placeholder="ชื่อ-นามสกุลของคุณ" className={e.name ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("name")} />
+        <Input
+          placeholder="ชื่อ-นามสกุลของคุณ"
+          className={e.name ? "border-red-400 ring-1 ring-red-200" : ""}
+          {...form.inputProps("name")}
+        />
       </FormField>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormField label="เบอร์โทรศัพท์" required error={e.phone}>
-          <Input type="tel" placeholder="0812345678" className={e.phone ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("phone")} />
+          <Input
+            type="tel"
+            placeholder="0812345678"
+            className={e.phone ? "border-red-400 ring-1 ring-red-200" : ""}
+            {...form.inputProps("phone")}
+          />
         </FormField>
         <FormField label="ไอดีไลน์">
           <Input placeholder="LINE ID" {...form.inputProps("lineId")} />
         </FormField>
       </div>
       <SelectField
-        label="ประเภททรัพย์" name="propertyType" required error={e.propertyType}
+        label="ประเภททรัพย์"
+        name="propertyType"
+        required
+        error={e.propertyType}
         options={PROPERTY_TYPE_OPTIONS}
         value={form.data.propertyType ?? ""}
         onChange={form.update}
@@ -324,14 +350,16 @@ function OwnerFormThai({ form, images, onImagesChange }: { form: ReturnType<type
         <Input placeholder="เช่น 50 ตร.ว. หรือ 120 ตร.ม." {...form.inputProps("propertySize")} />
       </FormField>
       <SelectField
-        label="ที่ตั้งทรัพย์" name="location"
+        label="ที่ตั้งทรัพย์"
+        name="location"
         options={LOCATION_OPTIONS}
         value={form.data.location ?? ""}
         onChange={form.update}
         placeholder="เลือกพื้นที่"
       />
       <TextAreaField
-        label="รายละเอียดทรัพย์เพิ่มเติม" name="details"
+        label="รายละเอียดทรัพย์เพิ่มเติม"
+        name="details"
         placeholder="จุดเด่น, สภาพบ้าน, สิ่งอำนวยความสะดวก..."
         value={form.data.details ?? ""}
         onChange={form.update}
@@ -348,27 +376,48 @@ function OwnerFormThai({ form, images, onImagesChange }: { form: ReturnType<type
 
 // ─── Owner Form (Foreign) ────────────────────────────────────────────────
 
-function OwnerFormForeign({ form, images, onImagesChange }: { form: ReturnType<typeof useFormState>; images: UploadedImage[]; onImagesChange: (imgs: UploadedImage[]) => void }) {
+function OwnerFormForeign({
+  form,
+  images,
+  onImagesChange,
+}: {
+  form: ReturnType<typeof useFormState>
+  images: UploadedImage[]
+  onImagesChange: (imgs: UploadedImage[]) => void
+}) {
   const e = form.fieldErrors
   return (
     <div className="flex flex-col gap-4">
       <FormField label="Full Name / ชื่อ-นามสกุล" required error={e.name}>
-        <Input placeholder="Your full name" className={e.name ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("name")} />
+        <Input
+          placeholder="Your full name"
+          className={e.name ? "border-red-400 ring-1 ring-red-200" : ""}
+          {...form.inputProps("name")}
+        />
       </FormField>
       <FormField label="Nationality / สัญชาติ">
         <Input placeholder="e.g. Japanese, Chinese, American" {...form.inputProps("nationality")} />
       </FormField>
       <FormField label="Contact Information / ช่องทางติดต่อ" required error={e.contact}>
-        <Input placeholder="WhatsApp, WeChat, Email, or Phone" className={e.contact ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("contact")} />
+        <Input
+          placeholder="WhatsApp, WeChat, Email, or Phone"
+          className={e.contact ? "border-red-400 ring-1 ring-red-200" : ""}
+          {...form.inputProps("contact")}
+        />
       </FormField>
       <SelectField
-        label="Objective / วัตถุประสงค์" name="purpose"
-        options={BUYER_PURPOSE_OPTIONS.map(o => ({ value: o.value, label: `${o.label} / ${o.value === "living" ? "For Living" : "For Investment"}` }))}
+        label="Objective / วัตถุประสงค์"
+        name="purpose"
+        options={BUYER_PURPOSE_OPTIONS.map((o) => ({
+          value: o.value,
+          label: `${o.label} / ${o.value === "living" ? "For Living" : "For Investment"}`,
+        }))}
         value={form.data.purpose ?? ""}
         onChange={form.update}
       />
       <SelectField
-        label="Property Type / ประเภททรัพย์" name="propertyType"
+        label="Property Type / ประเภททรัพย์"
+        name="propertyType"
         options={PROPERTY_TYPE_OPTIONS}
         value={form.data.propertyType ?? ""}
         onChange={form.update}
@@ -377,7 +426,8 @@ function OwnerFormForeign({ form, images, onImagesChange }: { form: ReturnType<t
         <Input placeholder="e.g. 50 Sq.w. or 120 Sq.m." {...form.inputProps("propertySize")} />
       </FormField>
       <TextAreaField
-        label="Property Location / ที่ตั้งทรัพย์" name="location"
+        label="Property Location / ที่ตั้งทรัพย์"
+        name="location"
         placeholder="Address or area description"
         value={form.data.location ?? ""}
         onChange={form.update}
@@ -394,7 +444,13 @@ function OwnerFormForeign({ form, images, onImagesChange }: { form: ReturnType<t
 
 // ─── Buyer Form (Thai) ───────────────────────────────────────────────────
 
-function BuyerFormThai({ form, preselect }: { form: ReturnType<typeof useFormState>; preselect?: string }) {
+function BuyerFormThai({
+  form,
+  preselect,
+}: {
+  form: ReturnType<typeof useFormState>
+  preselect?: string
+}) {
   const requirementOptions = [
     { value: "buy-house", label: "ซื้อบ้าน" },
     { value: "rent-condo", label: "เช่าคอนโด" },
@@ -404,7 +460,14 @@ function BuyerFormThai({ form, preselect }: { form: ReturnType<typeof useFormSta
   ]
 
   if (preselect && !form.data.requirement) {
-    const defaultReq = preselect === "SALE" ? "buy-house" : preselect === "RENT" ? "rent-house" : preselect === "LAND" ? "buy-land" : ""
+    const defaultReq =
+      preselect === "SALE"
+        ? "buy-house"
+        : preselect === "RENT"
+          ? "rent-house"
+          : preselect === "LAND"
+            ? "buy-land"
+            : ""
     if (defaultReq) form.update("requirement", defaultReq)
   }
 
@@ -412,18 +475,30 @@ function BuyerFormThai({ form, preselect }: { form: ReturnType<typeof useFormSta
   return (
     <div className="flex flex-col gap-4">
       <FormField label="ชื่อ-นามสกุล" required error={e.name}>
-        <Input placeholder="ชื่อ-นามสกุลของคุณ" className={e.name ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("name")} />
+        <Input
+          placeholder="ชื่อ-นามสกุลของคุณ"
+          className={e.name ? "border-red-400 ring-1 ring-red-200" : ""}
+          {...form.inputProps("name")}
+        />
       </FormField>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormField label="เบอร์โทรศัพท์" required error={e.phone}>
-          <Input type="tel" placeholder="0812345678" className={e.phone ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("phone")} />
+          <Input
+            type="tel"
+            placeholder="0812345678"
+            className={e.phone ? "border-red-400 ring-1 ring-red-200" : ""}
+            {...form.inputProps("phone")}
+          />
         </FormField>
         <FormField label="ไอดีไลน์">
           <Input placeholder="LINE ID" {...form.inputProps("lineId")} />
         </FormField>
       </div>
       <SelectField
-        label="ประเภททรัพย์ที่ต้องการ" name="requirement" required error={e.requirement}
+        label="ประเภททรัพย์ที่ต้องการ"
+        name="requirement"
+        required
+        error={e.requirement}
         options={requirementOptions}
         value={form.data.requirement ?? ""}
         onChange={form.update}
@@ -432,7 +507,8 @@ function BuyerFormThai({ form, preselect }: { form: ReturnType<typeof useFormSta
         <Input placeholder="เช่น 2 ห้องนอน หรือ 50 ตร.ว." {...form.inputProps("preferredSize")} />
       </FormField>
       <SelectField
-        label="ทำเล / ที่ตั้งที่สนใจ" name="location"
+        label="ทำเล / ที่ตั้งที่สนใจ"
+        name="location"
         options={LOCATION_OPTIONS}
         value={form.data.location ?? ""}
         onChange={form.update}
@@ -442,7 +518,8 @@ function BuyerFormThai({ form, preselect }: { form: ReturnType<typeof useFormSta
         <Input type="number" placeholder="เช่น 2000000" {...form.inputProps("budget")} />
       </FormField>
       <TextAreaField
-        label="รายละเอียดเพิ่มเติมที่ต้องการ" name="details"
+        label="รายละเอียดเพิ่มเติมที่ต้องการ"
+        name="details"
         placeholder="สเปกเบื้องต้น เช่น อยากได้บ้านมุม, เลี้ยงสัตว์ได้, ใกล้นิคมฯ..."
         value={form.data.details ?? ""}
         onChange={form.update}
@@ -453,7 +530,13 @@ function BuyerFormThai({ form, preselect }: { form: ReturnType<typeof useFormSta
 
 // ─── Buyer Form (Foreign) ────────────────────────────────────────────────
 
-function BuyerFormForeign({ form, preselect }: { form: ReturnType<typeof useFormState>; preselect?: string }) {
+function BuyerFormForeign({
+  form,
+  preselect,
+}: {
+  form: ReturnType<typeof useFormState>
+  preselect?: string
+}) {
   const requirementOptions = [
     { value: "buy-house", label: "Buy House / ซื้อบ้าน" },
     { value: "rent-condo", label: "Rent Condo / เช่าคอนโด" },
@@ -463,7 +546,14 @@ function BuyerFormForeign({ form, preselect }: { form: ReturnType<typeof useForm
   ]
 
   if (preselect && !form.data.requirement) {
-    const defaultReq = preselect === "SALE" ? "buy-house" : preselect === "RENT" ? "rent-house" : preselect === "LAND" ? "buy-land" : ""
+    const defaultReq =
+      preselect === "SALE"
+        ? "buy-house"
+        : preselect === "RENT"
+          ? "rent-house"
+          : preselect === "LAND"
+            ? "buy-land"
+            : ""
     if (defaultReq) form.update("requirement", defaultReq)
   }
 
@@ -471,22 +561,35 @@ function BuyerFormForeign({ form, preselect }: { form: ReturnType<typeof useForm
   return (
     <div className="flex flex-col gap-4">
       <FormField label="Full Name / ชื่อ-นามสกุล" required error={e.name}>
-        <Input placeholder="Your full name" className={e.name ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("name")} />
+        <Input
+          placeholder="Your full name"
+          className={e.name ? "border-red-400 ring-1 ring-red-200" : ""}
+          {...form.inputProps("name")}
+        />
       </FormField>
       <FormField label="Nationality / สัญชาติ">
         <Input placeholder="e.g. Japanese, Chinese, American" {...form.inputProps("nationality")} />
       </FormField>
       <FormField label="Contact Information / ช่องทางติดต่อ" required error={e.contact}>
-        <Input placeholder="WhatsApp, Email, WeChat, or Phone" className={e.contact ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("contact")} />
+        <Input
+          placeholder="WhatsApp, Email, WeChat, or Phone"
+          className={e.contact ? "border-red-400 ring-1 ring-red-200" : ""}
+          {...form.inputProps("contact")}
+        />
       </FormField>
       <SelectField
-        label="Purpose / วัตถุประสงค์" name="purpose"
-        options={BUYER_PURPOSE_OPTIONS.map(o => ({ value: o.value, label: `${o.value === "living" ? "For Living" : "For Investment"} / ${o.label}` }))}
+        label="Purpose / วัตถุประสงค์"
+        name="purpose"
+        options={BUYER_PURPOSE_OPTIONS.map((o) => ({
+          value: o.value,
+          label: `${o.value === "living" ? "For Living" : "For Investment"} / ${o.label}`,
+        }))}
         value={form.data.purpose ?? ""}
         onChange={form.update}
       />
       <SelectField
-        label="Requirement / ประเภททรัพย์" name="requirement"
+        label="Requirement / ประเภททรัพย์"
+        name="requirement"
         options={requirementOptions}
         value={form.data.requirement ?? ""}
         onChange={form.update}
@@ -495,7 +598,8 @@ function BuyerFormForeign({ form, preselect }: { form: ReturnType<typeof useForm
         <Input placeholder="e.g. 2 Bedrooms, Pet-friendly" {...form.inputProps("preferredSize")} />
       </FormField>
       <SelectField
-        label="Preferred Location / ทำเลที่สนใจ" name="location"
+        label="Preferred Location / ทำเลที่สนใจ"
+        name="location"
         options={LOCATION_OPTIONS}
         value={form.data.location ?? ""}
         onChange={form.update}
@@ -505,7 +609,8 @@ function BuyerFormForeign({ form, preselect }: { form: ReturnType<typeof useForm
         <Input type="number" placeholder="e.g. 2000000" {...form.inputProps("budget")} />
       </FormField>
       <TextAreaField
-        label="Additional Details / รายละเอียดเพิ่มเติม" name="details"
+        label="Additional Details / รายละเอียดเพิ่มเติม"
+        name="details"
         placeholder="Any specific requirements..."
         value={form.data.details ?? ""}
         onChange={form.update}
@@ -521,38 +626,51 @@ function CoAgentForm({ form }: { form: ReturnType<typeof useFormState> }) {
   return (
     <div className="flex flex-col gap-4">
       <FormField label="ชื่อ-นามสกุล" required error={e.name}>
-        <Input placeholder="ชื่อ-นามสกุลของคุณ" className={e.name ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("name")} />
+        <Input
+          placeholder="ชื่อ-นามสกุลของคุณ"
+          className={e.name ? "border-red-400 ring-1 ring-red-200" : ""}
+          {...form.inputProps("name")}
+        />
       </FormField>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormField label="เบอร์โทรศัพท์" required error={e.phone}>
-          <Input type="tel" placeholder="0812345678" className={e.phone ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("phone")} />
+          <Input
+            type="tel"
+            placeholder="0812345678"
+            className={e.phone ? "border-red-400 ring-1 ring-red-200" : ""}
+            {...form.inputProps("phone")}
+          />
         </FormField>
         <FormField label="ไอดีไลน์">
           <Input placeholder="LINE ID" {...form.inputProps("lineId")} />
         </FormField>
       </div>
       <TextAreaField
-        label="รายละเอียดทรัพย์" name="details"
+        label="รายละเอียดทรัพย์"
+        name="details"
         placeholder="อธิบายจุดเด่นทรัพย์ที่ต้องการให้ช่วยขาย..."
         value={form.data.details ?? ""}
         onChange={form.update}
       />
       <SelectField
-        label="ประเภททรัพย์" name="propertyType"
+        label="ประเภททรัพย์"
+        name="propertyType"
         options={PROPERTY_TYPE_OPTIONS}
         value={form.data.propertyType ?? ""}
         onChange={form.update}
       />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <SelectField
-          label="ภาค" name="region"
+          label="ภาค"
+          name="region"
           options={REGION_OPTIONS}
           value={form.data.region ?? ""}
           onChange={form.update}
           placeholder="เลือกภาค"
         />
         <SelectField
-          label="จังหวัด / ทำเลที่ตั้ง" name="location"
+          label="จังหวัด / ทำเลที่ตั้ง"
+          name="location"
           options={LOCATION_OPTIONS}
           value={form.data.location ?? ""}
           onChange={form.update}
@@ -576,16 +694,26 @@ function AcademyForm({ form }: { form: ReturnType<typeof useFormState> }) {
   return (
     <div className="flex flex-col gap-4">
       <FormField label="ชื่อ-นามสกุล" required error={e.name}>
-        <Input placeholder="ชื่อ-นามสกุลของคุณ" className={e.name ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("name")} />
+        <Input
+          placeholder="ชื่อ-นามสกุลของคุณ"
+          className={e.name ? "border-red-400 ring-1 ring-red-200" : ""}
+          {...form.inputProps("name")}
+        />
       </FormField>
       <FormField label="เบอร์โทรศัพท์" required error={e.phone}>
-        <Input type="tel" placeholder="0812345678" className={e.phone ? "border-red-400 ring-1 ring-red-200" : ""} {...form.inputProps("phone")} />
+        <Input
+          type="tel"
+          placeholder="0812345678"
+          className={e.phone ? "border-red-400 ring-1 ring-red-200" : ""}
+          {...form.inputProps("phone")}
+        />
       </FormField>
       <FormField label="ไอดีไลน์">
         <Input placeholder="LINE ID" {...form.inputProps("lineId")} />
       </FormField>
       <TextAreaField
-        label="สิ่งที่สนใจ / คำถามเพิ่มเติม" name="details"
+        label="สิ่งที่สนใจ / คำถามเพิ่มเติม"
+        name="details"
         placeholder="เช่น อยากรู้รายละเอียดคอร์ส, ค่าใช้จ่าย, ระยะเวลาเรียน..."
         value={form.data.details ?? ""}
         onChange={form.update}
@@ -609,9 +737,7 @@ function ErrorSummary({ error, fieldErrors }: { error: string | null; fieldError
         </p>
       )}
       {errorCount > 0 && (
-        <p className="mt-1 text-xs text-red-500">
-          มี {errorCount} ช่องที่ต้องแก้ไข
-        </p>
+        <p className="mt-1 text-xs text-red-500">มี {errorCount} ช่องที่ต้องแก้ไข</p>
       )}
     </div>
   )
@@ -641,23 +767,21 @@ export default function PropertyForm({ variant, preselect, className }: Property
       form,
       formRef,
       isOwner ? images : undefined,
-      isOwner ? setImages : undefined
+      isOwner ? setImages : undefined,
     )
   }
 
   if (form.submitted) {
     return (
       <motion.div
-        className={`mx-auto max-w-2xl rounded-2xl bg-white p-8 text-center shadow-lg ring-1 ring-foreground/5 ${className ?? ""}`}
+        className={`ring-foreground/5 mx-auto max-w-2xl rounded-2xl bg-white p-8 text-center shadow-lg ring-1 ${className ?? ""}`}
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
       >
         <div className="mb-4 text-4xl">🎉</div>
         <h3 className="text-xl font-bold text-[#1B4D3E]">ส่งข้อมูลเรียบร้อยแล้ว!</h3>
-        <p className="mt-2 text-gray-600">
-          ทีมงานบ้านไออุ่นจะรีบติดต่อกลับโดยเร็วที่สุดค่ะ
-        </p>
+        <p className="mt-2 text-gray-600">ทีมงานบ้านไออุ่นจะรีบติดต่อกลับโดยเร็วที่สุดค่ะ</p>
         <Button className="mt-6" variant="outline" onClick={form.reset}>
           กรอกฟอร์มใหม่
         </Button>
@@ -692,12 +816,13 @@ export default function PropertyForm({ variant, preselect, className }: Property
 
   if (variant === "academy") {
     return (
-      <form ref={formRef} onSubmit={handleSubmit} noValidate
-        className={`mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg ring-1 ring-foreground/5 sm:p-8 ${className ?? ""}`}
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        noValidate
+        className={`ring-foreground/5 mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg ring-1 sm:p-8 ${className ?? ""}`}
       >
-        <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">
-          ลงทะเบียนสนใจคอร์สนายหน้าอสังหาฯ
-        </h3>
+        <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">ลงทะเบียนสนใจคอร์สนายหน้าอสังหาฯ</h3>
         <AcademyForm form={form} />
         {submitSection}
       </form>
@@ -706,8 +831,11 @@ export default function PropertyForm({ variant, preselect, className }: Property
 
   if (variant === "co-agent") {
     return (
-      <form ref={formRef} onSubmit={handleSubmit} noValidate
-        className={`mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg ring-1 ring-foreground/5 sm:p-8 ${className ?? ""}`}
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        noValidate
+        className={`ring-foreground/5 mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg ring-1 sm:p-8 ${className ?? ""}`}
       >
         <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">
           ส่งทรัพย์เข้าระบบ / เสนอ Co-Broker
@@ -721,17 +849,23 @@ export default function PropertyForm({ variant, preselect, className }: Property
   const title = isOwner ? "กรอกข้อมูลฝากขาย / ปล่อยเช่า" : "กรอกสเปกให้เราช่วยหาบ้าน"
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} noValidate
-      className={`mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg ring-1 ring-foreground/5 sm:p-8 ${className ?? ""}`}
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      noValidate
+      className={`ring-foreground/5 mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg ring-1 sm:p-8 ${className ?? ""}`}
     >
       <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">{title}</h3>
 
-      <Tabs defaultValue="thai" onValueChange={(v) => {
-        setActiveTab(v)
-        // Clear errors when switching tabs
-        form.setFieldErrors({})
-        form.setError(null)
-      }}>
+      <Tabs
+        defaultValue="thai"
+        onValueChange={(v) => {
+          setActiveTab(v)
+          // Clear errors when switching tabs
+          form.setFieldErrors({})
+          form.setError(null)
+        }}
+      >
         <TabsList className="mb-6 w-full">
           <TabsTrigger value="thai" className="flex-1 gap-1.5">
             <User className="size-4" />
@@ -744,10 +878,18 @@ export default function PropertyForm({ variant, preselect, className }: Property
         </TabsList>
 
         <TabsContent value="thai">
-          {isOwner ? <OwnerFormThai form={form} images={images} onImagesChange={setImages} /> : <BuyerFormThai form={form} preselect={preselect} />}
+          {isOwner ? (
+            <OwnerFormThai form={form} images={images} onImagesChange={setImages} />
+          ) : (
+            <BuyerFormThai form={form} preselect={preselect} />
+          )}
         </TabsContent>
         <TabsContent value="foreign">
-          {isOwner ? <OwnerFormForeign form={form} images={images} onImagesChange={setImages} /> : <BuyerFormForeign form={form} preselect={preselect} />}
+          {isOwner ? (
+            <OwnerFormForeign form={form} images={images} onImagesChange={setImages} />
+          ) : (
+            <BuyerFormForeign form={form} preselect={preselect} />
+          )}
         </TabsContent>
       </Tabs>
 

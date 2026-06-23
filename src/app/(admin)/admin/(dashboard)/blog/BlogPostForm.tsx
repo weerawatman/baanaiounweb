@@ -18,11 +18,7 @@ interface BlogPostFormProps {
   submitLabel?: string
 }
 
-export function BlogPostForm({
-  defaultValues,
-  action,
-  submitLabel = "บันทึก",
-}: BlogPostFormProps) {
+export function BlogPostForm({ defaultValues, action, submitLabel = "บันทึก" }: BlogPostFormProps) {
   const [state, formAction, isPending] = useActionState(action, {})
 
   const {
@@ -64,8 +60,8 @@ export function BlogPostForm({
       )}
 
       {/* ─── ข้อมูลพื้นฐาน ─── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">ข้อมูลพื้นฐาน</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">ข้อมูลพื้นฐาน</h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <FormField label="ชื่อบทความ" error={errors.title?.message} required>
@@ -103,11 +99,11 @@ export function BlogPostForm({
                   id="published"
                   checked={field.value}
                   onChange={(e) => field.onChange(e.target.checked)}
-                  className="size-4 rounded border-border accent-primary"
+                  className="border-border accent-primary size-4 rounded"
                 />
               )}
             />
-            <label htmlFor="published" className="text-sm font-medium cursor-pointer">
+            <label htmlFor="published" className="cursor-pointer text-sm font-medium">
               เผยแพร่ทันที
             </label>
           </div>
@@ -115,8 +111,8 @@ export function BlogPostForm({
       </section>
 
       {/* ─── คำย่อ ─── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">คำย่อ (Excerpt)</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">คำย่อ (Excerpt)</h2>
         <textarea
           {...register("excerpt")}
           rows={3}
@@ -126,14 +122,12 @@ export function BlogPostForm({
       </section>
 
       {/* ─── เนื้อหา (Tiptap) ─── */}
-      <section className="rounded-xl border bg-white p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-foreground">เนื้อหา</h2>
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">เนื้อหา</h2>
         <Controller
           control={control}
           name="content"
-          render={({ field }) => (
-            <BlogEditor value={field.value} onChange={field.onChange} />
-          )}
+          render={({ field }) => <BlogEditor value={field.value} onChange={field.onChange} />}
         />
       </section>
 
@@ -145,7 +139,7 @@ export function BlogPostForm({
         <Button
           type="submit"
           disabled={isPending}
-          className="gap-2 bg-primary text-white hover:bg-primary/90"
+          className="bg-primary hover:bg-primary/90 gap-2 text-white"
         >
           {isPending && <Loader2 className="size-4 animate-spin" />}
           {submitLabel}
@@ -168,7 +162,7 @@ function FormField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-foreground">
+      <label className="text-foreground text-sm font-medium">
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </label>

@@ -11,10 +11,7 @@ export interface ActionState {
   fieldErrors?: Record<string, string[]>
 }
 
-export async function createProperty(
-  _prev: ActionState,
-  formData: FormData,
-): Promise<ActionState> {
+export async function createProperty(_prev: ActionState, formData: FormData): Promise<ActionState> {
   await requireAdmin()
 
   const raw = Object.fromEntries(formData)
@@ -94,10 +91,7 @@ export async function restoreProperty(id: string): Promise<ActionState> {
   await requireAdmin()
 
   const supabase = await createClient()
-  const { error } = await supabase
-    .from("properties")
-    .update({ deleted_at: null })
-    .eq("id", id)
+  const { error } = await supabase.from("properties").update({ deleted_at: null }).eq("id", id)
 
   if (error) return { error: error.message }
 

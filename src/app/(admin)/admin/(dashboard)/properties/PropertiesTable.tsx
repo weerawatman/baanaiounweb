@@ -22,8 +22,8 @@ const columns: Column<Property>[] = [
     label: "ชื่อทรัพย์",
     render: (row) => (
       <div className="flex flex-col">
-        <span className="font-medium text-foreground">{row.title}</span>
-        <span className="text-xs text-muted-foreground">{row.slug}</span>
+        <span className="text-foreground font-medium">{row.title}</span>
+        <span className="text-muted-foreground text-xs">{row.slug}</span>
       </div>
     ),
   },
@@ -44,7 +44,7 @@ const columns: Column<Property>[] = [
     label: "",
     searchable: false,
     render: (row) => (
-      <div className="flex items-center gap-2 justify-end">
+      <div className="flex items-center justify-end gap-2">
         <Link
           href={`/admin/properties/${row.id}/edit`}
           className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
@@ -57,7 +57,7 @@ const columns: Column<Property>[] = [
               <span
                 className={cn(
                   buttonVariants({ variant: "outline", size: "sm" }),
-                  "gap-1 text-green-700 border-green-200 hover:bg-green-50 cursor-pointer",
+                  "cursor-pointer gap-1 border-green-200 text-green-700 hover:bg-green-50",
                 )}
               >
                 <ArchiveRestore className="size-3.5" />
@@ -76,7 +76,7 @@ const columns: Column<Property>[] = [
               <span
                 className={cn(
                   buttonVariants({ variant: "outline", size: "sm" }),
-                  "text-red-600 border-red-200 hover:bg-red-50 cursor-pointer",
+                  "cursor-pointer border-red-200 text-red-600 hover:bg-red-50",
                 )}
               >
                 ลบ
@@ -111,7 +111,7 @@ export function PropertiesTable({
 
       {archived.length > 0 && (
         <details className="rounded-xl border bg-white">
-          <summary className="cursor-pointer px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground">
+          <summary className="text-muted-foreground hover:text-foreground cursor-pointer px-4 py-3 text-sm font-medium">
             Archived ({archived.length} รายการ)
           </summary>
           <div className="p-4 pt-0">

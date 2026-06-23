@@ -20,8 +20,8 @@ type ValidationSchema = Record<string, ValidationRule>
 
 // ─── Thai phone number ───────────────────────────────────────────────────
 
-const THAI_PHONE = /^0[1-9]\d{7,8}$/          // 09xxxxxxxx or 0xxxxxxxxX
-const _PHONE_LOOSE = /^[\d+\-\s()]{8,15}$/     // international / any format (reserved)
+const THAI_PHONE = /^0[1-9]\d{7,8}$/ // 09xxxxxxxx or 0xxxxxxxxX
+const _PHONE_LOOSE = /^[\d+\-\s()]{8,15}$/ // international / any format (reserved)
 
 // ─── Schemas per form variant + tab ─────────────────────────────────────
 
@@ -29,7 +29,11 @@ const SCHEMAS: Record<string, ValidationSchema> = {
   // Owner — Thai
   owner: {
     name: { required: true, minLength: 2 },
-    phone: { required: true, pattern: THAI_PHONE, patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)" },
+    phone: {
+      required: true,
+      pattern: THAI_PHONE,
+      patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
+    },
     propertyType: { required: true },
   },
   // Owner — Foreign
@@ -40,7 +44,11 @@ const SCHEMAS: Record<string, ValidationSchema> = {
   // Buyer — Thai
   buyer: {
     name: { required: true, minLength: 2 },
-    phone: { required: true, pattern: THAI_PHONE, patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)" },
+    phone: {
+      required: true,
+      pattern: THAI_PHONE,
+      patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
+    },
     requirement: { required: true },
   },
   // Buyer — Foreign
@@ -51,12 +59,20 @@ const SCHEMAS: Record<string, ValidationSchema> = {
   // Co-Agent
   "co-agent": {
     name: { required: true, minLength: 2 },
-    phone: { required: true, pattern: THAI_PHONE, patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)" },
+    phone: {
+      required: true,
+      pattern: THAI_PHONE,
+      patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
+    },
   },
   // Academy
   academy: {
     name: { required: true, minLength: 2 },
-    phone: { required: true, pattern: THAI_PHONE, patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)" },
+    phone: {
+      required: true,
+      pattern: THAI_PHONE,
+      patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
+    },
   },
   // Contact page
   contact: {
@@ -82,7 +98,7 @@ const FIELD_LABELS: Record<string, string> = {
 
 export function validateForm(
   formTag: string,
-  data: Record<string, string>
+  data: Record<string, string>,
 ): { valid: true } | { valid: false; errors: FieldErrors } {
   const schema = SCHEMAS[formTag]
   if (!schema) return { valid: true }
@@ -109,9 +125,7 @@ export function validateForm(
     }
   }
 
-  return Object.keys(errors).length === 0
-    ? { valid: true }
-    : { valid: false, errors }
+  return Object.keys(errors).length === 0 ? { valid: true } : { valid: false, errors }
 }
 
 // ─── Sanitize phone for display ──────────────────────────────────────────

@@ -37,15 +37,15 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server |
-| `npm run build` | Production build |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run format` | Format code with Prettier |
-| `npm run typecheck` | TypeScript type check |
-| `npm run validate` | Run typecheck + lint + build (CI) |
+| Command                  | Description                         |
+| ------------------------ | ----------------------------------- |
+| `npm run dev`            | Start dev server                    |
+| `npm run build`          | Production build                    |
+| `npm run start`          | Start production server             |
+| `npm run lint`           | Run ESLint                          |
+| `npm run format`         | Format code with Prettier           |
+| `npm run typecheck`      | TypeScript type check               |
+| `npm run validate`       | Run typecheck + lint + build (CI)   |
 | `npm run check:supabase` | Verify Supabase connection & schema |
 
 ## Project Structure
@@ -93,13 +93,13 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `NEXT_PUBLIC_SITE_URL` | Yes | Production URL (for sitemap/OG) |
-| `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase anon/public key |
-| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Supabase service role key (server-side only) |
-| `LINE_NOTIFY_TOKEN` | Optional | LINE Notify token for lead notifications |
+| Variable                        | Required | Description                                  |
+| ------------------------------- | -------- | -------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`          | Yes      | Production URL (for sitemap/OG)              |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Yes      | Supabase project URL                         |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes      | Supabase anon/public key                     |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Yes      | Supabase service role key (server-side only) |
+| `LINE_NOTIFY_TOKEN`             | Optional | LINE Notify token for lead notifications     |
 
 ## Deployment
 

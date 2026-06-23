@@ -17,7 +17,7 @@ export default function BlogCategoryFilter({
     <div className="flex flex-wrap items-center gap-2">
       <button
         onClick={() => onSelect("all")}
-        className={`inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+        className={`focus-visible:ring-ring inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none ${
           activeCategory === "all"
             ? "border-primary bg-primary text-primary-foreground"
             : "border-border bg-background text-muted-foreground hover:border-primary/50 hover:text-foreground"
@@ -29,7 +29,7 @@ export default function BlogCategoryFilter({
         <button
           key={cat.slug}
           onClick={() => onSelect(cat.slug)}
-          className={`inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+          className={`focus-visible:ring-ring inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none ${
             activeCategory === cat.slug
               ? "border-primary bg-primary text-primary-foreground"
               : "border-border bg-background text-muted-foreground hover:border-primary/50 hover:text-foreground"

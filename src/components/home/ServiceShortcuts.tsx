@@ -1,14 +1,15 @@
-import Link from "next/link";
-import { Home, Search, Users, GraduationCap } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link"
+import { Home, Search, Users, GraduationCap } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 
-const ICON_MAP = { Home, Search, Users, GraduationCap } as const;
+const ICON_MAP = { Home, Search, Users, GraduationCap } as const
 
 const SERVICES = [
   {
     icon: "Home" as const,
     title: "ฝากขาย / ปล่อยเช่า",
-    description: "หมดกังวลเรื่องหาคนซื้อหรือคนเช่า เราช่วยดูแลตั้งแต่ประเมินราคา ทำการตลาด จนปิดดีล",
+    description:
+      "หมดกังวลเรื่องหาคนซื้อหรือคนเช่า เราช่วยดูแลตั้งแต่ประเมินราคา ทำการตลาด จนปิดดีล",
     href: "/owners",
     color: "#D4A843",
     target: "สำหรับเจ้าของทรัพย์",
@@ -37,21 +38,21 @@ const SERVICES = [
     color: "#E85D75",
     target: "สำหรับผู้สนใจอาชีพ",
   },
-];
+]
 
 export default function ServiceShortcuts() {
   return (
-    <section className="py-14 bg-white">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <section className="bg-white py-14">
+      <div className="container mx-auto max-w-6xl px-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((service) => {
-            const Icon = ICON_MAP[service.icon];
+            const Icon = ICON_MAP[service.icon]
             return (
               <Link key={service.title} href={service.href} className="group block">
-                <Card className="h-full transition-shadow duration-200 hover:shadow-lg hover:ring-2 hover:ring-[#1B4D3E]/20 cursor-pointer">
-                  <CardContent className="flex flex-col items-center text-center gap-3 py-8 px-5">
+                <Card className="h-full cursor-pointer transition-shadow duration-200 hover:shadow-lg hover:ring-2 hover:ring-[#1B4D3E]/20">
+                  <CardContent className="flex flex-col items-center gap-3 px-5 py-8 text-center">
                     <div
-                      className="flex items-center justify-center w-14 h-14 rounded-2xl"
+                      className="flex h-14 w-14 items-center justify-center rounded-2xl"
                       style={{ backgroundColor: `${service.color}18` }}
                     >
                       <Icon size={28} style={{ color: service.color }} />
@@ -62,22 +63,17 @@ export default function ServiceShortcuts() {
                     >
                       {service.target}
                     </span>
-                    <h3
-                      className="text-base font-bold"
-                      style={{ color: service.color }}
-                    >
+                    <h3 className="text-base font-bold" style={{ color: service.color }}>
                       {service.title}
                     </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {service.description}
-                    </p>
+                    <p className="text-sm leading-relaxed text-gray-600">{service.description}</p>
                   </CardContent>
                 </Card>
               </Link>
-            );
+            )
           })}
         </div>
       </div>
     </section>
-  );
+  )
 }

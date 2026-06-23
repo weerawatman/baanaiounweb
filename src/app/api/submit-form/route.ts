@@ -5,12 +5,12 @@ import { sendLineNotify } from "@/lib/line-notify"
 // ─── Types ───────────────────────────────────────────────────────────────
 
 interface FormSubmission {
-  formTag: string       // owner | owner-foreign | buyer | buyer-foreign | co-agent | academy | contact
+  formTag: string // owner | owner-foreign | buyer | buyer-foreign | co-agent | academy | contact
   name: string
   phone?: string
   lineId?: string
   email?: string
-  contact?: string      // for foreign users (WhatsApp, WeChat, etc.)
+  contact?: string // for foreign users (WhatsApp, WeChat, etc.)
   propertyType?: string
   propertySize?: string
   location?: string
@@ -21,13 +21,15 @@ interface FormSubmission {
   preferredSize?: string
   budget?: string
   details?: string
-  preselect?: string    // SALE | RENT | LAND
-  imageUrls?: string[]  // uploaded property image URLs
+  preselect?: string // SALE | RENT | LAND
+  imageUrls?: string[] // uploaded property image URLs
 }
 
 // ─── Validation ──────────────────────────────────────────────────────────
 
-function validateSubmission(data: unknown): { valid: true; parsed: FormSubmission } | { valid: false; error: string } {
+function validateSubmission(
+  data: unknown,
+): { valid: true; parsed: FormSubmission } | { valid: false; error: string } {
   if (!data || typeof data !== "object") {
     return { valid: false, error: "Invalid request body" }
   }
@@ -45,7 +47,10 @@ function validateSubmission(data: unknown): { valid: true; parsed: FormSubmissio
   // Require at least one contact method
   const hasContact = d.phone || d.lineId || d.email || d.contact
   if (!hasContact) {
-    return { valid: false, error: "At least one contact method is required (phone, lineId, email, or contact)" }
+    return {
+      valid: false,
+      error: "At least one contact method is required (phone, lineId, email, or contact)",
+    }
   }
 
   return {
@@ -68,7 +73,9 @@ function validateSubmission(data: unknown): { valid: true; parsed: FormSubmissio
       budget: d.budget ? String(d.budget) : undefined,
       details: d.details ? String(d.details) : undefined,
       preselect: d.preselect ? String(d.preselect) : undefined,
-      imageUrls: Array.isArray(d.imageUrls) ? (d.imageUrls as string[]).filter(u => typeof u === "string") : undefined,
+      imageUrls: Array.isArray(d.imageUrls)
+        ? (d.imageUrls as string[]).filter((u) => typeof u === "string")
+        : undefined,
     },
   }
 }
@@ -81,10 +88,7 @@ export async function POST(request: NextRequest) {
     const validation = validateSubmission(body)
 
     if (!validation.valid) {
-      return NextResponse.json(
-        { success: false, error: validation.error },
-        { status: 400 }
-      )
+      return NextResponse.json({ success: false, error: validation.error }, { status: 400 })
     }
 
     const data = validation.parsed
@@ -97,32 +101,32 @@ export async function POST(request: NextRequest) {
       if (!supabase) {
         console.warn("[API] Supabase not configured — skipping DB insert")
       } else {
-      const { error: dbError } = await supabase.from("form_submissions").insert({
-        form_tag: data.formTag,
-        name: data.name,
-        phone: data.phone,
-        line_id: data.lineId,
-        email: data.email,
-        contact: data.contact,
-        property_type: data.propertyType,
-        property_size: data.propertySize,
-        location: data.location,
-        region: data.region,
-        price: data.price,
-        purpose: data.purpose,
-        requirement: data.requirement,
-        preferred_size: data.preferredSize,
-        budget: data.budget,
-        details: data.details,
-        preselect: data.preselect,
-        image_urls: data.imageUrls ?? [],
-      })
+        const { error: dbError } = await supabase.from("form_submissions").insert({
+          form_tag: data.formTag,
+          name: data.name,
+          phone: data.phone,
+          line_id: data.lineId,
+          email: data.email,
+          contact: data.contact,
+          property_type: data.propertyType,
+          property_size: data.propertySize,
+          location: data.location,
+          region: data.region,
+          price: data.price,
+          purpose: data.purpose,
+          requirement: data.requirement,
+          preferred_size: data.preferredSize,
+          budget: data.budget,
+          details: data.details,
+          preselect: data.preselect,
+          image_urls: data.imageUrls ?? [],
+        })
 
-      if (dbError) {
-        console.error("[Supabase] Insert error:", dbError)
-      } else {
-        dbSuccess = true
-      }
+        if (dbError) {
+          console.error("[Supabase] Insert error:", dbError)
+        } else {
+          dbSuccess = true
+        }
       }
     } catch (err) {
       console.error("[Supabase] Connection error:", err)
@@ -157,9 +161,6 @@ export async function POST(request: NextRequest) {
       notified: lineSuccess,
     })
   } catch {
-    return NextResponse.json(
-      { success: false, error: "Internal server error" },
-      { status: 500 }
-    )
+    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
   }
 }

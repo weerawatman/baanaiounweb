@@ -30,9 +30,9 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
   }
 
   return (
-    <section className="relative bg-[#F5F0E8] py-14 md:py-20 overflow-hidden">
+    <section className="relative overflow-hidden bg-[#F5F0E8] py-14 md:py-20">
       {/* Language Toggle */}
-      <div className="absolute top-4 right-4 sm:top-5 sm:right-6 z-10">
+      <div className="absolute top-4 right-4 z-10 sm:top-5 sm:right-6">
         <div className="flex rounded-full border border-[#1B4D3E]/20 bg-white p-1 shadow-sm">
           {(["th", "en"] as const).map((l) => (
             <button
@@ -40,9 +40,7 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
               onClick={() => switchLang(l)}
               aria-pressed={lang === l}
               className={`rounded-full px-3 py-1 text-xs font-bold tracking-wide transition-all ${
-                lang === l
-                  ? "bg-[#1B4D3E] text-white shadow"
-                  : "text-gray-500 hover:text-[#1B4D3E]"
+                lang === l ? "bg-[#1B4D3E] text-white shadow" : "text-gray-500 hover:text-[#1B4D3E]"
               }`}
             >
               {l.toUpperCase()}
@@ -51,9 +49,8 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
         </div>
       </div>
 
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-
+      <div className="container mx-auto max-w-6xl px-4">
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2">
           {/* ── LEFT: Content ── */}
           <motion.div
             key={lang}
@@ -64,10 +61,10 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
           >
             {/* Headline */}
             <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1B4D3E] leading-normal max-w-2xl whitespace-pre-line">
+              <h1 className="max-w-2xl text-3xl leading-normal font-bold whitespace-pre-line text-[#1B4D3E] md:text-4xl lg:text-5xl">
                 {content.headline}
               </h1>
-              <p className="mt-3 text-base md:text-lg text-gray-600 leading-relaxed">
+              <p className="mt-3 text-base leading-relaxed text-gray-600 md:text-lg">
                 {content.tagline}
               </p>
             </div>
@@ -83,7 +80,7 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
                   className={`flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-all ${
                     activeTab === i
                       ? "bg-[#1B4D3E] text-white shadow-md"
-                      : "bg-white border border-gray-200 text-gray-600 hover:border-[#1B4D3E]/40 hover:text-[#1B4D3E]"
+                      : "border border-gray-200 bg-white text-gray-600 hover:border-[#1B4D3E]/40 hover:text-[#1B4D3E]"
                   }`}
                 >
                   <span aria-hidden="true">{t.icon}</span>
@@ -101,17 +98,17 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.25 }}
-                className="rounded-2xl bg-white border border-gray-100 shadow-sm p-5 flex flex-col gap-4"
+                className="flex flex-col gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"
               >
                 {/* Pain points */}
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-red-500 mb-2">
+                  <p className="mb-2 text-xs font-semibold tracking-wide text-red-500 uppercase">
                     {lang === "th" ? "ปัญหาที่คุณเจออยู่" : "Challenges You Face"}
                   </p>
                   <ul className="flex flex-col gap-2">
                     {tab.pains.map((pain, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                        <AlertCircle className="size-4 shrink-0 text-red-400 mt-0.5" aria-hidden />
+                        <AlertCircle className="mt-0.5 size-4 shrink-0 text-red-400" aria-hidden />
                         {pain}
                       </li>
                     ))}
@@ -122,13 +119,16 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
 
                 {/* Solutions */}
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-[#1B4D3E] mb-2">
+                  <p className="mb-2 text-xs font-semibold tracking-wide text-[#1B4D3E] uppercase">
                     {lang === "th" ? "บ้านไออุ่นช่วยได้" : "How We Help"}
                   </p>
                   <ul className="flex flex-col gap-2">
                     {tab.solutions.map((sol, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                        <CheckCircle2 className="size-4 shrink-0 text-[#1B4D3E] mt-0.5" aria-hidden />
+                        <CheckCircle2
+                          className="mt-0.5 size-4 shrink-0 text-[#1B4D3E]"
+                          aria-hidden
+                        />
                         {sol}
                       </li>
                     ))}
@@ -138,7 +138,7 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
                 {/* Primary CTA */}
                 <Link
                   href={tab.cta.href}
-                  className="self-start inline-flex items-center gap-2 rounded-lg bg-[#D4A843] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#C49030] transition-colors"
+                  className="inline-flex items-center gap-2 self-start rounded-lg bg-[#D4A843] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#C49030]"
                 >
                   {tab.cta.label}
                   <ArrowRight className="size-4" />
@@ -155,7 +155,7 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
                     href={lineHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#1B4D3E] font-medium underline-offset-2 hover:underline"
+                    className="font-medium text-[#1B4D3E] underline-offset-2 hover:underline"
                   >
                     ทักแชทพิมฟรีเลย →
                   </a>
@@ -167,7 +167,7 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
                     href={lineHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#1B4D3E] font-medium underline-offset-2 hover:underline"
+                    className="font-medium text-[#1B4D3E] underline-offset-2 hover:underline"
                   >
                     chat with us for free →
                   </a>
@@ -189,7 +189,7 @@ export default function HeroSection({ heroImage, fullName, lineUrl }: HeroSectio
               width={800}
               height={600}
               priority
-              className="rounded-2xl shadow-xl w-full max-w-md object-cover"
+              className="w-full max-w-md rounded-2xl object-cover shadow-xl"
             />
           </motion.div>
         </div>

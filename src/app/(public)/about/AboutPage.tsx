@@ -2,13 +2,7 @@
 
 import Image from "next/image"
 import { motion } from "framer-motion"
-import {
-  Heart,
-  Star,
-  Shield,
-  MessageCircle,
-  ExternalLink,
-} from "lucide-react"
+import { Heart, Star, Shield, MessageCircle, ExternalLink } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import SectionTitle from "@/components/layout/SectionTitle"
 import type { Profile } from "@/types"
@@ -74,18 +68,19 @@ export default function AboutPage({ profile }: { profile: Profile }) {
   return (
     <>
       <title>เกี่ยวกับพิม — นายหน้าอสังหาฯ บ้านบึง ชลบุรี</title>
-      <meta name="description" content={`รู้จัก${profile.fullName} นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี ดูแลทุกเคสด้วยหัวใจ`} />
+      <meta
+        name="description"
+        content={`รู้จัก${profile.fullName} นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี ดูแลทุกเคสด้วยหัวใจ`}
+      />
       <meta property="og:title" content="เกี่ยวกับพิม — นายหน้าอสังหาฯ บ้านบึง ชลบุรี" />
-      <meta property="og:description" content={`รู้จัก${profile.fullName} นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี ดูแลทุกเคสด้วยหัวใจ`} />
+      <meta
+        property="og:description"
+        content={`รู้จัก${profile.fullName} นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี ดูแลทุกเคสด้วยหัวใจ`}
+      />
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <Breadcrumb
-          items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "เกี่ยวกับพิม" },
-          ]}
-        />
+        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "เกี่ยวกับพิม" }]} />
       </div>
 
       {/* Hero */}
@@ -98,19 +93,17 @@ export default function AboutPage({ profile }: { profile: Profile }) {
               animate="visible"
               variants={fadeUp}
             >
-              <p className="mb-2 text-sm font-medium uppercase tracking-widest text-primary">
+              <p className="text-primary mb-2 text-sm font-medium tracking-widest uppercase">
                 เกี่ยวกับ
               </p>
-              <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              <h1 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                 {profile.fullName}
               </h1>
               {profile.role && (
-                <p className="mt-2 text-lg font-medium text-primary">
-                  {profile.role}
-                </p>
+                <p className="text-primary mt-2 text-lg font-medium">{profile.role}</p>
               )}
               {profile.bio && (
-                <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                <p className="text-muted-foreground mt-4 text-base leading-relaxed">
                   {profile.bio}
                 </p>
               )}
@@ -119,7 +112,7 @@ export default function AboutPage({ profile }: { profile: Profile }) {
                   href={profile.lineUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-2.5 text-sm font-medium text-white hover:bg-primary/90 transition-colors"
+                  className="bg-primary hover:bg-primary/90 inline-flex items-center gap-2 rounded-lg px-8 py-2.5 text-sm font-medium text-white transition-colors"
                 >
                   <MessageCircle className="size-5" />
                   อยากคุยกับพิม?
@@ -156,8 +149,8 @@ export default function AboutPage({ profile }: { profile: Profile }) {
             title="จากคนเช่าห้อง สู่นายหน้าที่คัดสรรบ้านด้วยหัวใจ"
             subtitle="เส้นทางที่ทำให้พิมเข้าใจทุกความฝันของคนอยากมีบ้าน"
           />
-          <div className="mt-12 relative">
-            <div className="absolute left-4 top-0 hidden h-full w-0.5 bg-primary/20 sm:left-1/2 sm:block" />
+          <div className="relative mt-12">
+            <div className="bg-primary/20 absolute top-0 left-4 hidden h-full w-0.5 sm:left-1/2 sm:block" />
             <div className="flex flex-col gap-10">
               {MILESTONES.map((milestone, i) => (
                 <motion.div
@@ -171,25 +164,23 @@ export default function AboutPage({ profile }: { profile: Profile }) {
                   variants={fadeUp}
                   custom={i * 0.5}
                 >
-                  <div className="hidden sm:flex sm:absolute sm:left-1/2 sm:-translate-x-1/2 sm:items-center sm:justify-center">
-                    <div className="z-10 flex size-12 items-center justify-center rounded-full bg-primary font-bold text-white text-sm shadow-md">
+                  <div className="hidden sm:absolute sm:left-1/2 sm:flex sm:-translate-x-1/2 sm:items-center sm:justify-center">
+                    <div className="bg-primary z-10 flex size-12 items-center justify-center rounded-full text-sm font-bold text-white shadow-md">
                       {milestone.year}
                     </div>
                   </div>
                   <div
-                    className={`w-full sm:w-[calc(50%-2rem)] rounded-xl bg-white p-6 shadow-sm ring-1 ring-foreground/5 ${
+                    className={`ring-foreground/5 w-full rounded-xl bg-white p-6 shadow-sm ring-1 sm:w-[calc(50%-2rem)] ${
                       i % 2 === 0 ? "sm:mr-auto" : "sm:ml-auto"
                     }`}
                   >
                     <div className="mb-1 flex items-center gap-2 sm:hidden">
-                      <span className="rounded-full bg-primary px-3 py-0.5 text-xs font-bold text-white">
+                      <span className="bg-primary rounded-full px-3 py-0.5 text-xs font-bold text-white">
                         {milestone.year}
                       </span>
                     </div>
-                    <h3 className="text-base font-semibold text-foreground">
-                      {milestone.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    <h3 className="text-foreground text-base font-semibold">{milestone.title}</h3>
+                    <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
                       {milestone.desc}
                     </p>
                   </div>
@@ -211,10 +202,10 @@ export default function AboutPage({ profile }: { profile: Profile }) {
               viewport={{ once: true }}
               variants={fadeUp}
             >
-              <p className="mb-4 text-sm font-medium uppercase tracking-widest text-white/60">
+              <p className="mb-4 text-sm font-medium tracking-widest text-white/60 uppercase">
                 วิสัยทัศน์
               </p>
-              <blockquote className="text-xl font-medium leading-relaxed text-white sm:text-2xl">
+              <blockquote className="text-xl leading-relaxed font-medium text-white sm:text-2xl">
                 “{profile.vision}”
               </blockquote>
               <p className="mt-4 text-white/70">— {profile.name}</p>
@@ -234,22 +225,18 @@ export default function AboutPage({ profile }: { profile: Profile }) {
             {PERSONAL_VALUES.map((value, i) => (
               <motion.div
                 key={value.title}
-                className="flex flex-col items-center rounded-2xl bg-white p-8 text-center shadow-sm ring-1 ring-foreground/5"
+                className="ring-foreground/5 flex flex-col items-center rounded-2xl bg-white p-8 text-center shadow-sm ring-1"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeUp}
                 custom={i * 0.3}
               >
-                <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-primary/10">
-                  <value.icon className="size-7 text-primary" />
+                <div className="bg-primary/10 mb-4 flex size-14 items-center justify-center rounded-full">
+                  <value.icon className="text-primary size-7" />
                 </div>
-                <h3 className="text-base font-semibold text-foreground">
-                  {value.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {value.desc}
-                </p>
+                <h3 className="text-foreground text-base font-semibold">{value.title}</h3>
+                <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{value.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -278,7 +265,7 @@ export default function AboutPage({ profile }: { profile: Profile }) {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 rounded-xl bg-white px-5 py-3 text-sm font-medium shadow-sm ring-1 ring-foreground/10 transition-all hover:-translate-y-0.5 hover:shadow-md"
+                    className="ring-foreground/10 flex items-center gap-2.5 rounded-xl bg-white px-5 py-3 text-sm font-medium shadow-sm ring-1 transition-all hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <span
                       className={`flex size-6 items-center justify-center rounded-md text-xs font-bold text-white ${social.color}`}
@@ -286,7 +273,7 @@ export default function AboutPage({ profile }: { profile: Profile }) {
                       {social.shortLabel}
                     </span>
                     {social.label}
-                    <ExternalLink className="size-3.5 text-muted-foreground" />
+                    <ExternalLink className="text-muted-foreground size-3.5" />
                   </a>
                 ))}
               </div>
@@ -305,17 +292,15 @@ export default function AboutPage({ profile }: { profile: Profile }) {
             viewport={{ once: true }}
             variants={fadeUp}
           >
-            <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-              อยากคุยกับพิม?
-            </h2>
-            <p className="max-w-md text-base text-muted-foreground">
+            <h2 className="text-foreground text-2xl font-bold sm:text-3xl">อยากคุยกับพิม?</h2>
+            <p className="text-muted-foreground max-w-md text-base">
               ไม่ว่าจะซื้อ ขาย เช่า หรือแค่ขอคำแนะนำ พิมยินดีช่วยเสมอค่ะ
             </p>
             <a
               href={profile.lineUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-2.5 text-sm font-medium text-white hover:bg-primary/90 transition-colors"
+              className="bg-primary hover:bg-primary/90 inline-flex items-center gap-2 rounded-lg px-8 py-2.5 text-sm font-medium text-white transition-colors"
             >
               <MessageCircle className="size-5" />
               แอดไลน์พิมเลยค่ะ

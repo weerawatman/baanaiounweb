@@ -7,16 +7,16 @@ export const metadata = { title: "เพิ่มรีวิว" }
 
 export default function NewTestimonialPage() {
   return (
-    <div className="flex flex-col gap-6 max-w-2xl">
+    <div className="flex max-w-2xl flex-col gap-6">
       <div>
         <Link
           href="/admin/testimonials"
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-3"
+          className="text-muted-foreground hover:text-foreground mb-3 inline-flex items-center gap-1 text-sm"
         >
           <ChevronLeft className="size-4" />
           กลับ
         </Link>
-        <h1 className="text-2xl font-bold text-foreground">เพิ่มรีวิวใหม่</h1>
+        <h1 className="text-foreground text-2xl font-bold">เพิ่มรีวิวใหม่</h1>
       </div>
       <TestimonialForm action={createTestimonial} submitLabel="บันทึกรีวิว" />
     </div>

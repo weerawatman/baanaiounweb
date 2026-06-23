@@ -46,14 +46,23 @@ export default function HomePage({
   return (
     <>
       <title>บ้านไออุ่น พร็อพเพอร์ตี้ — จบทุกความต้องการเรื่องอสังหาฯ บ้านบึง ชลบุรี</title>
-      <meta name="description" content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ" />
-      <meta property="og:title" content="บ้านไออุ่น พร็อพเพอร์ตี้ — จบทุกความต้องการเรื่องอสังหาฯ" />
-      <meta property="og:description" content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ" />
+      <meta
+        name="description"
+        content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ"
+      />
+      <meta
+        property="og:title"
+        content="บ้านไออุ่น พร็อพเพอร์ตี้ — จบทุกความต้องการเรื่องอสังหาฯ"
+      />
+      <meta
+        property="og:description"
+        content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ"
+      />
 
       <HeroSection heroImage={heroImage} fullName={fullName} lineUrl={lineUrl} />
 
       {/* Services — 4 กลุ่มบริการ */}
-      <section className="py-12 px-4 max-w-6xl mx-auto">
+      <section className="mx-auto max-w-6xl px-4 py-12">
         <SectionTitle
           title="บริการครบวงจรของเรา"
           subtitle="ไม่ว่าคุณจะอยากขาย เช่า หาซื้อ หรือสร้างรายได้จากอสังหาฯ"
@@ -63,19 +72,19 @@ export default function HomePage({
 
       {/* Featured Properties */}
       {featuredProperties.length > 0 && (
-        <section className="py-12 px-4 max-w-6xl mx-auto">
-          <SectionTitle
-            title="ทรัพย์แนะนำ"
-            subtitle="คัดมาแล้วโดยพิม ทุกหลังน่าอยู่"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <section className="mx-auto max-w-6xl px-4 py-12">
+          <SectionTitle title="ทรัพย์แนะนำ" subtitle="คัดมาแล้วโดยพิม ทุกหลังน่าอยู่" />
+          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredProperties.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
           <div className="mt-8 text-center">
             <Link href="/buy">
-              <Button variant="outline" className="gap-2 border-[#1B4D3E] text-[#1B4D3E] hover:bg-[#1B4D3E] hover:text-white">
+              <Button
+                variant="outline"
+                className="gap-2 border-[#1B4D3E] text-[#1B4D3E] hover:bg-[#1B4D3E] hover:text-white"
+              >
                 ดูทรัพย์ทั้งหมด
                 <ArrowRight className="size-4" />
               </Button>
@@ -87,21 +96,15 @@ export default function HomePage({
       <CoreValues />
 
       {testimonials.length > 0 && (
-        <section className="py-12 px-4 max-w-6xl mx-auto">
-          <SectionTitle
-            title="เสียงจากลูกค้า"
-            subtitle="คนที่เคยใช้บริการบ้านไออุ่น"
-          />
+        <section className="mx-auto max-w-6xl px-4 py-12">
+          <SectionTitle title="เสียงจากลูกค้า" subtitle="คนที่เคยใช้บริการบ้านไออุ่น" />
           <TestimonialSlider testimonials={testimonials} />
         </section>
       )}
 
       {faqs.length > 0 && (
-        <section className="py-12 px-4 max-w-4xl mx-auto">
-          <SectionTitle
-            title="คำถามที่พบบ่อย"
-            subtitle="สงสัยอะไร ถามพิมได้เลยค่ะ"
-          />
+        <section className="mx-auto max-w-4xl px-4 py-12">
+          <SectionTitle title="คำถามที่พบบ่อย" subtitle="สงสัยอะไร ถามพิมได้เลยค่ะ" />
           <FAQSection faqs={faqs} />
         </section>
       )}
@@ -127,20 +130,20 @@ export default function HomePage({
                 href={lineHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-2.5 text-sm font-semibold text-[#1B4D3E] hover:bg-white/90 transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-2.5 text-sm font-semibold text-[#1B4D3E] transition-colors hover:bg-white/90"
               >
                 <MessageCircle className="size-4" />
                 ทักแชทปรึกษาฟรี
               </a>
               <Link
                 href="/buy"
-                className="inline-flex items-center gap-2 rounded-lg border-2 border-white/40 px-6 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg border-2 border-white/40 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
               >
                 ดูทรัพย์ทั้งหมดของเรา
               </Link>
               <Link
                 href="/academy"
-                className="inline-flex items-center gap-2 rounded-lg border-2 border-[#D4A843] px-6 py-2.5 text-sm font-semibold text-[#D4A843] hover:bg-[#D4A843] hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg border-2 border-[#D4A843] px-6 py-2.5 text-sm font-semibold text-[#D4A843] transition-colors hover:bg-[#D4A843] hover:text-white"
               >
                 สนใจคอร์สนายหน้า
               </Link>

@@ -63,22 +63,29 @@ export function ImageUploader({
   return (
     <div className="flex flex-col gap-3">
       <div
-        onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
+        onDragOver={(e) => {
+          e.preventDefault()
+          setDragging(true)
+        }}
         onDragLeave={() => setDragging(false)}
-        onDrop={(e) => { e.preventDefault(); setDragging(false); handleFiles(e.dataTransfer.files) }}
+        onDrop={(e) => {
+          e.preventDefault()
+          setDragging(false)
+          handleFiles(e.dataTransfer.files)
+        }}
         className={cn(
-          "flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed p-8 transition-colors cursor-pointer",
+          "flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed p-8 transition-colors",
           dragging ? "border-primary bg-primary/5" : "border-border hover:border-primary/50",
         )}
         onClick={() => inputRef.current?.click()}
       >
         {isPending ? (
-          <Loader2 className="size-8 animate-spin text-primary" />
+          <Loader2 className="text-primary size-8 animate-spin" />
         ) : (
-          <Upload className="size-8 text-muted-foreground" />
+          <Upload className="text-muted-foreground size-8" />
         )}
         <p className="text-sm font-medium">{label}</p>
-        <p className="text-xs text-muted-foreground">ลากวาง หรือคลิกเพื่อเลือกไฟล์</p>
+        <p className="text-muted-foreground text-xs">ลากวาง หรือคลิกเพื่อเลือกไฟล์</p>
         <input
           ref={inputRef}
           type="file"
@@ -99,14 +106,17 @@ export function ImageUploader({
       {value.length > 0 && (
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-5">
           {value.map((url) => (
-            <div key={url} className="group relative aspect-square rounded-lg overflow-hidden border">
+            <div
+              key={url}
+              className="group relative aspect-square overflow-hidden rounded-lg border"
+            >
               <Image src={url} alt="uploaded" fill className="object-cover" sizes="120px" />
               <Button
                 type="button"
                 size="icon"
                 variant="destructive"
                 onClick={() => remove(url)}
-                className="absolute right-1 top-1 size-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 size-6 opacity-0 transition-opacity group-hover:opacity-100"
               >
                 <X className="size-3" />
               </Button>
@@ -116,7 +126,9 @@ export function ImageUploader({
       )}
 
       {value.length > 0 && (
-        <p className="text-xs text-muted-foreground">{value.length} / {maxFiles} รูป</p>
+        <p className="text-muted-foreground text-xs">
+          {value.length} / {maxFiles} รูป
+        </p>
       )}
     </div>
   )

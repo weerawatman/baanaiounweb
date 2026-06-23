@@ -61,11 +61,7 @@ export function ConfirmDialog({
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2">
-            <Button
-              variant="outline"
-              onClick={() => setOpen(false)}
-              disabled={isPending}
-            >
+            <Button variant="outline" onClick={() => setOpen(false)} disabled={isPending}>
               {cancelLabel}
             </Button>
             <Button

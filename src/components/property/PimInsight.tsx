@@ -15,7 +15,7 @@ export default function PimInsight({ insight, avatarUrl, name }: PimInsightProps
   return (
     <div className="relative rounded-2xl border border-green-200 bg-gradient-to-br from-green-50 to-emerald-50 p-5">
       {/* Decorative quote icon */}
-      <Quote className="absolute right-4 top-4 h-8 w-8 text-green-200" aria-hidden />
+      <Quote className="absolute top-4 right-4 h-8 w-8 text-green-200" aria-hidden />
 
       <div className="flex items-start gap-4">
         {/* Avatar */}
@@ -29,7 +29,7 @@ export default function PimInsight({ insight, avatarUrl, name }: PimInsightProps
 
         <div className="flex flex-col gap-1.5">
           {/* Name label */}
-          <p className="text-xs font-semibold uppercase tracking-wide text-green-700">
+          <p className="text-xs font-semibold tracking-wide text-green-700 uppercase">
             {agentName} แนะนำ
           </p>
 

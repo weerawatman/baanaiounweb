@@ -53,9 +53,7 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
       {/* Inputs */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-muted-foreground">
-            ราคาทรัพย์ (บาท)
-          </label>
+          <label className="text-muted-foreground text-xs font-medium">ราคาทรัพย์ (บาท)</label>
           <Input
             type="number"
             value={price}
@@ -66,9 +64,7 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-muted-foreground">
-            เงินดาวน์ (%)
-          </label>
+          <label className="text-muted-foreground text-xs font-medium">เงินดาวน์ (%)</label>
           <Input
             type="number"
             value={downPercent}
@@ -80,7 +76,7 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="text-muted-foreground text-xs font-medium">
             อัตราดอกเบี้ย (% ต่อปี)
           </label>
           <Input
@@ -93,9 +89,7 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-muted-foreground">
-            ระยะเวลากู้ (ปี)
-          </label>
+          <label className="text-muted-foreground text-xs font-medium">ระยะเวลากู้ (ปี)</label>
           <Input
             type="number"
             value={loanYears}
@@ -109,23 +103,16 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
 
       {/* Result */}
       <div className="rounded-xl border border-green-200 bg-green-50 p-5 text-center">
-        <p className="text-sm text-green-700 font-medium">ผ่อนชำระต่อเดือน (โดยประมาณ)</p>
+        <p className="text-sm font-medium text-green-700">ผ่อนชำระต่อเดือน (โดยประมาณ)</p>
         <p className="mt-1 text-3xl font-bold text-green-800">
-          {formatThb(result.monthly)}{" "}
-          <span className="text-base font-normal">บาท/เดือน</span>
+          {formatThb(result.monthly)} <span className="text-base font-normal">บาท/เดือน</span>
         </p>
-        <div className="mt-3 flex justify-center gap-6 text-xs text-muted-foreground">
+        <div className="text-muted-foreground mt-3 flex justify-center gap-6 text-xs">
           <span>
-            ดาวน์:{" "}
-            <strong className="text-foreground">
-              {formatThb(result.downAmount)} บาท
-            </strong>
+            ดาวน์: <strong className="text-foreground">{formatThb(result.downAmount)} บาท</strong>
           </span>
           <span>
-            เงินกู้:{" "}
-            <strong className="text-foreground">
-              {formatThb(result.loanAmount)} บาท
-            </strong>
+            เงินกู้: <strong className="text-foreground">{formatThb(result.loanAmount)} บาท</strong>
           </span>
         </div>
       </div>
@@ -145,17 +132,12 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
                 paddingAngle={3}
               >
                 {chartData.map((_, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={CHART_COLORS[index % CHART_COLORS.length]}
-                  />
+                  <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip
                 formatter={(value) =>
-                  typeof value === "number"
-                    ? [`${formatThb(value)} บาท`]
-                    : [String(value)]
+                  typeof value === "number" ? [`${formatThb(value)} บาท`] : [String(value)]
                 }
               />
               <Legend />
@@ -164,7 +146,7 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
         </div>
       )}
 
-      <p className="text-xs text-muted-foreground text-center">
+      <p className="text-muted-foreground text-center text-xs">
         * ตัวเลขนี้เป็นการประมาณการเบื้องต้นเท่านั้น ยอดผ่อนจริงขึ้นอยู่กับเงื่อนไขของแต่ละธนาคาร
       </p>
     </div>

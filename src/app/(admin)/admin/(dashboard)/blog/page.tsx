@@ -14,14 +14,14 @@ export default async function BlogPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">บทความ</h1>
-          <p className="mt-1 text-sm text-muted-foreground">จัดการบทความทั้งหมด</p>
+          <h1 className="text-foreground text-2xl font-bold">บทความ</h1>
+          <p className="text-muted-foreground mt-1 text-sm">จัดการบทความทั้งหมด</p>
         </div>
         <Link
           href="/admin/blog/new"
           className={cn(
             buttonVariants({ variant: "default" }),
-            "gap-2 bg-primary text-white hover:bg-primary/90",
+            "bg-primary hover:bg-primary/90 gap-2 text-white",
           )}
         >
           <Plus className="size-4" />

@@ -12,17 +12,14 @@ import { SITE_CONFIG } from "@/config/site"
 function LoginForm() {
   const searchParams = useSearchParams()
   const redirect = searchParams.get("redirect") ?? "/admin"
-  const [state, formAction, pending] = useActionState<LoginState, FormData>(
-    login,
-    {},
-  )
+  const [state, formAction, pending] = useActionState<LoginState, FormData>(login, {})
 
   return (
     <form action={formAction} className="flex flex-col gap-5">
       <input type="hidden" name="redirect" value={redirect} />
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="email" className="text-sm font-medium text-foreground">
+        <label htmlFor="email" className="text-foreground text-sm font-medium">
           อีเมล
         </label>
         <Input
@@ -38,7 +35,7 @@ function LoginForm() {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="password" className="text-sm font-medium text-foreground">
+        <label htmlFor="password" className="text-foreground text-sm font-medium">
           รหัสผ่าน
         </label>
         <Input
@@ -64,7 +61,7 @@ function LoginForm() {
         type="submit"
         size="lg"
         disabled={pending}
-        className="mt-1 gap-2 bg-primary text-white hover:bg-primary/90"
+        className="bg-primary hover:bg-primary/90 mt-1 gap-2 text-white"
       >
         {pending ? (
           <>
@@ -84,11 +81,11 @@ function LoginForm() {
 
 export default function AdminLoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/40 px-4">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-lg ring-1 ring-foreground/5">
+    <div className="bg-muted/40 flex min-h-screen items-center justify-center px-4">
+      <div className="ring-foreground/5 w-full max-w-sm rounded-2xl bg-white p-8 shadow-lg ring-1">
         <div className="mb-6 text-center">
-          <h1 className="text-lg font-bold text-primary">{SITE_CONFIG.name}</h1>
-          <p className="mt-1 text-sm text-muted-foreground">ระบบจัดการหลังบ้าน</p>
+          <h1 className="text-primary text-lg font-bold">{SITE_CONFIG.name}</h1>
+          <p className="text-muted-foreground mt-1 text-sm">ระบบจัดการหลังบ้าน</p>
         </div>
 
         <Suspense fallback={null}>

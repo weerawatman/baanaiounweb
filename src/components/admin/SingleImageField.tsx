@@ -42,14 +42,12 @@ export function SingleImageField({
               variant="outline"
               size="sm"
               onClick={() => onChange("")}
-              className="gap-1 text-red-600 border-red-200 hover:bg-red-50"
+              className="gap-1 border-red-200 text-red-600 hover:bg-red-50"
             >
               <X className="size-3.5" />
               ลบรูป
             </Button>
-            <p className="text-xs text-muted-foreground break-all max-w-xs">
-              {value}
-            </p>
+            <p className="text-muted-foreground max-w-xs text-xs break-all">{value}</p>
           </div>
         </div>
       ) : (

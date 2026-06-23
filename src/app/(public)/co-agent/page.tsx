@@ -1,12 +1,7 @@
 "use client"
 
 import Breadcrumb from "@/components/layout/Breadcrumb"
-import {
-  PainPointsHero,
-  SolutionsSection,
-  EmotionalHook,
-  CTAWithForm,
-} from "@/components/shared"
+import { PainPointsHero, SolutionsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { COAGENT_CONTENT } from "@/content/co-agent"
 
 export default function CoAgentPage() {
@@ -20,10 +15,7 @@ export default function CoAgentPage() {
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <Breadcrumb
-          items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "Co-Agent เครือข่ายนายหน้า" },
-          ]}
+          items={[{ label: "หน้าแรก", href: "/" }, { label: "Co-Agent เครือข่ายนายหน้า" }]}
         />
       </div>
 
@@ -43,10 +35,7 @@ export default function CoAgentPage() {
       />
 
       {/* Emotional Hook */}
-      <EmotionalHook
-        quote={COAGENT_CONTENT.hook.quote}
-        message={COAGENT_CONTENT.hook.message}
-      />
+      <EmotionalHook quote={COAGENT_CONTENT.hook.quote} message={COAGENT_CONTENT.hook.message} />
 
       {/* CTA + Form */}
       <CTAWithForm

@@ -56,7 +56,8 @@ export const HERO_CONTENT = {
   },
   en: {
     headline: "Worry-Free Thailand Real Estate Solutions",
-    tagline: "Buying, Selling, Renting, or Letting? Baan Ai Oun offers one-stop, stress-free solutions for international clients.",
+    tagline:
+      "Buying, Selling, Renting, or Letting? Baan Ai Oun offers one-stop, stress-free solutions for international clients.",
     tabs: [
       {
         label: "Property Owners",
@@ -105,12 +106,13 @@ export const HERO_CONTENT = {
       },
     ],
   },
-} as const;
+} as const
 export const HOMEPAGE_SERVICES = [
   {
     icon: "Home" as const,
     title: "ฝากขาย / ปล่อยเช่า",
-    description: "หมดกังวลเรื่องหาคนซื้อหรือคนเช่า เราช่วยดูแลตั้งแต่ประเมินราคา ทำการตลาด จนปิดดีล",
+    description:
+      "หมดกังวลเรื่องหาคนซื้อหรือคนเช่า เราช่วยดูแลตั้งแต่ประเมินราคา ทำการตลาด จนปิดดีล",
     href: "/owners",
     color: "#D4A843",
     target: "เจ้าของทรัพย์",

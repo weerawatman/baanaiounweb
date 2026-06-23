@@ -15,8 +15,8 @@ const columns: Column<BlogPost>[] = [
     label: "ชื่อบทความ",
     render: (row) => (
       <div className="flex flex-col">
-        <span className="font-medium text-foreground">{row.title}</span>
-        <span className="text-xs text-muted-foreground">{row.slug}</span>
+        <span className="text-foreground font-medium">{row.title}</span>
+        <span className="text-muted-foreground text-xs">{row.slug}</span>
       </div>
     ),
   },
@@ -31,10 +31,7 @@ const columns: Column<BlogPost>[] = [
     searchable: false,
     render: (row) =>
       row.published ? (
-        <Badge
-          className="bg-green-100 text-green-700 border-green-200"
-          variant="outline"
-        >
+        <Badge className="border-green-200 bg-green-100 text-green-700" variant="outline">
           เผยแพร่
         </Badge>
       ) : (
@@ -59,7 +56,7 @@ const columns: Column<BlogPost>[] = [
     label: "",
     searchable: false,
     render: (row) => (
-      <div className="flex items-center gap-2 justify-end">
+      <div className="flex items-center justify-end gap-2">
         <Link
           href={`/admin/blog/${row.id}/edit`}
           className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
@@ -71,7 +68,7 @@ const columns: Column<BlogPost>[] = [
             <span
               className={cn(
                 buttonVariants({ variant: "outline", size: "sm" }),
-                "text-red-600 border-red-200 hover:bg-red-50 cursor-pointer",
+                "cursor-pointer border-red-200 text-red-600 hover:bg-red-50",
               )}
             >
               ลบ

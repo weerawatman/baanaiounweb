@@ -50,10 +50,7 @@ export async function updateTestimonial(
   }
 
   const supabase = await createClient()
-  const { error } = await supabase
-    .from("testimonials")
-    .update(parsed.data)
-    .eq("id", id)
+  const { error } = await supabase.from("testimonials").update(parsed.data).eq("id", id)
 
   if (error) return { error: error.message }
 
@@ -61,9 +58,7 @@ export async function updateTestimonial(
   redirect("/admin/testimonials")
 }
 
-export async function deleteTestimonial(
-  id: string,
-): Promise<{ error?: string }> {
+export async function deleteTestimonial(id: string): Promise<{ error?: string }> {
   await requireAdmin()
 
   const supabase = await createClient()

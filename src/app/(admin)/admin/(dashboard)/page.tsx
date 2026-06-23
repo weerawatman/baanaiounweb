@@ -40,15 +40,31 @@ export default async function AdminDashboardPage() {
         .select("*", { count: "exact", head: true })
         .eq("status", "new"),
     ),
-    getCount(() =>
-      supabase.from("blog_posts").select("*", { count: "exact", head: true }),
-    ),
+    getCount(() => supabase.from("blog_posts").select("*", { count: "exact", head: true })),
   ])
 
   const stats: Stat[] = [
-    { label: "ทรัพย์ที่เผยแพร่", value: properties, href: "/admin/properties", icon: Home, accent: "bg-green-100 text-green-700" },
-    { label: "Leads ใหม่", value: newLeads, href: "/admin/leads", icon: Inbox, accent: "bg-blue-100 text-blue-700" },
-    { label: "บทความ", value: posts, href: "/admin/blog", icon: Newspaper, accent: "bg-amber-100 text-amber-700" },
+    {
+      label: "ทรัพย์ที่เผยแพร่",
+      value: properties,
+      href: "/admin/properties",
+      icon: Home,
+      accent: "bg-green-100 text-green-700",
+    },
+    {
+      label: "Leads ใหม่",
+      value: newLeads,
+      href: "/admin/leads",
+      icon: Inbox,
+      accent: "bg-blue-100 text-blue-700",
+    },
+    {
+      label: "บทความ",
+      value: posts,
+      href: "/admin/blog",
+      icon: Newspaper,
+      accent: "bg-amber-100 text-amber-700",
+    },
   ]
 
   const dbNotReady = stats.every((s) => s.value === null)
@@ -56,10 +72,8 @@ export default async function AdminDashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">ภาพรวม</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          สรุปข้อมูลระบบจัดการบ้านไออุ่น
-        </p>
+        <h1 className="text-foreground text-2xl font-bold">ภาพรวม</h1>
+        <p className="text-muted-foreground mt-1 text-sm">สรุปข้อมูลระบบจัดการบ้านไออุ่น</p>
       </div>
 
       {dbNotReady && (
@@ -87,12 +101,10 @@ export default async function AdminDashboardPage() {
               <stat.icon className="size-6" />
             </div>
             <div className="flex-1">
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
-              <p className="text-2xl font-bold text-foreground">
-                {stat.value ?? "—"}
-              </p>
+              <p className="text-muted-foreground text-sm">{stat.label}</p>
+              <p className="text-foreground text-2xl font-bold">{stat.value ?? "—"}</p>
             </div>
-            <ArrowRight className="size-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+            <ArrowRight className="text-muted-foreground size-4 opacity-0 transition-opacity group-hover:opacity-100" />
           </Link>
         ))}
       </div>

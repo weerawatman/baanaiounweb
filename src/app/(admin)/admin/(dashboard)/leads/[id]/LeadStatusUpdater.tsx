@@ -24,9 +24,9 @@ export function LeadStatusUpdater({ id, currentStatus }: LeadStatusUpdaterProps)
   }
 
   return (
-    <section className="rounded-xl border bg-white p-5 flex flex-col gap-3">
-      <p className="text-sm font-medium text-foreground">เปลี่ยนสถานะ</p>
-      <div className="flex gap-2 flex-wrap">
+    <section className="flex flex-col gap-3 rounded-xl border bg-white p-5">
+      <p className="text-foreground text-sm font-medium">เปลี่ยนสถานะ</p>
+      <div className="flex flex-wrap gap-2">
         {(["new", "contacted", "closed"] as const).map((s) => (
           <Button
             key={s}
@@ -34,17 +34,11 @@ export function LeadStatusUpdater({ id, currentStatus }: LeadStatusUpdaterProps)
             variant={status === s ? "default" : "outline"}
             disabled={isPending}
             onClick={() => changeStatus(s)}
-            className={
-              status === s
-                ? "bg-primary text-white hover:bg-primary/90"
-                : ""
-            }
+            className={status === s ? "bg-primary hover:bg-primary/90 text-white" : ""}
           >
-            {isPending && status !== s ? null : (
-              isPending && status === s ? (
-                <Loader2 className="size-3 animate-spin mr-1" />
-              ) : null
-            )}
+            {isPending && status !== s ? null : isPending && status === s ? (
+              <Loader2 className="mr-1 size-3 animate-spin" />
+            ) : null}
             <StatusBadge status={s} variant="lead" />
           </Button>
         ))}
