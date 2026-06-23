@@ -196,7 +196,7 @@ async function uploadImages(
 
   const formData = new FormData()
   for (const img of toUpload) {
-    formData.append("images", img.file)
+    formData.append("files", img.file)
   }
 
   const res = await fetch("/api/upload-images", {
@@ -216,8 +216,8 @@ async function uploadImages(
     throw new Error(body.error ?? "Upload failed")
   }
 
-  // Merge URLs back into images
-  const uploadedUrls: string[] = body.images.map((r: { url: string }) => r.url)
+  // Merge URLs back into images (API returns a flat string[] under `urls`)
+  const uploadedUrls: string[] = body.urls ?? []
   let uploadIdx = 0
   setImages(
     images.map((img) => {

@@ -3,7 +3,7 @@ import { createServerSupabase } from "@/lib/supabase"
 
 // ─── Config ──────────────────────────────────────────────────────────────
 
-const MAX_FILES = 5
+const MAX_FILES = 10 // per request; admin ImageUploader allows up to 10, public ImageUpload caps itself at 5
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
 // type → file extension. Also serves as the accepted-types allowlist.
 const EXT_BY_TYPE: Record<string, string> = {
