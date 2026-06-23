@@ -5,13 +5,75 @@ import { createServerSupabase } from "@/lib/supabase"
 
 const MAX_FILES = 5
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
-const ACCEPTED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"])
+// type → file extension. Also serves as the accepted-types allowlist.
+const EXT_BY_TYPE: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+}
 const BUCKET = "property-images"
+
+// ─── Rate limiting (in-memory, per IP) ─────────────────────────────────────
+// NOTE: this resets per serverless instance. For multi-instance / production
+// scale, back this with a shared store (e.g. Upstash Redis).
+const RATE_LIMIT_WINDOW_MS = 60_000 // 1 minute
+const RATE_LIMIT_MAX = 20 // requests per window per IP
+const rateBuckets = new Map<string, { count: number; resetAt: number }>()
+
+function getClientIp(request: NextRequest): string {
+  const fwd = request.headers.get("x-forwarded-for")
+  if (fwd) return fwd.split(",")[0]!.trim()
+  return request.headers.get("x-real-ip") ?? "unknown"
+}
+
+/** Returns true if the request is within the rate limit (and records it). */
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now()
+  const bucket = rateBuckets.get(ip)
+
+  if (!bucket || now > bucket.resetAt) {
+    rateBuckets.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS })
+    return true
+  }
+
+  if (bucket.count >= RATE_LIMIT_MAX) return false
+
+  bucket.count++
+  return true
+}
+
+/** Allow only same-origin requests (browser callers), blocking direct scripts. */
+function isAllowedOrigin(request: NextRequest): boolean {
+  const origin = request.headers.get("origin")
+  if (!origin) return false
+
+  const allowed = new Set<string>([request.nextUrl.origin])
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  if (siteUrl) allowed.add(siteUrl.replace(/\/$/, ""))
+
+  return allowed.has(origin)
+}
 
 // ─── POST Handler ────────────────────────────────────────────────────────
 
 export async function POST(request: NextRequest) {
   try {
+    // 1) Reject cross-origin / direct (non-browser) requests
+    if (!isAllowedOrigin(request)) {
+      return NextResponse.json(
+        { success: false, error: "Forbidden" },
+        { status: 403 }
+      )
+    }
+
+    // 2) Rate limit per IP
+    if (!checkRateLimit(getClientIp(request))) {
+      return NextResponse.json(
+        { success: false, error: "Too many requests" },
+        { status: 429 }
+      )
+    }
+
     const supabase = createServerSupabase()
 
     if (!supabase) {
@@ -40,7 +102,7 @@ export async function POST(request: NextRequest) {
 
     // Validate all files before uploading
     for (const file of files) {
-      if (!ACCEPTED_TYPES.has(file.type)) {
+      if (!(file.type in EXT_BY_TYPE)) {
         return NextResponse.json(
           { success: false, error: `Invalid file type: ${file.type}. Accepted: JPG, PNG, WEBP` },
           { status: 400 }
@@ -60,7 +122,8 @@ export async function POST(request: NextRequest) {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
-      const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg"
+      // Derive extension from the validated MIME type — never trust file.name.
+      const ext = EXT_BY_TYPE[file.type]
       const safeName = `${timestamp}-${i}.${ext}`
       const storagePath = `uploads/${safeName}`
 
