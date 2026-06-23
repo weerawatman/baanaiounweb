@@ -61,7 +61,16 @@ VALUES (
 )
 ON CONFLICT (id) DO NOTHING;
 
--- ─── updated_at trigger (ใช้ฟังก์ชัน set_updated_at จาก migration 007) ──
+-- ─── updated_at trigger ─────────────────────────────────────
+--  สร้างฟังก์ชัน set_updated_at เอง (idempotent) ไม่ต้องพึ่ง migration 007
+CREATE OR REPLACE FUNCTION set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 DROP TRIGGER IF EXISTS trg_agent_profile_updated_at ON agent_profile;
 CREATE TRIGGER trg_agent_profile_updated_at
   BEFORE UPDATE ON agent_profile
