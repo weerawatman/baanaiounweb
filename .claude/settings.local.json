@@ -14,7 +14,30 @@
       "mcp__claude_ai_Supabase__get_project",
       "mcp__claude_ai_Supabase__list_tables",
       "Bash(node test-supabase.mjs)",
-      "mcp__claude_ai_Supabase__apply_migration"
+      "mcp__claude_ai_Supabase__apply_migration",
+      "Bash(mkdir -p \"c:/Projects/baanaiounweb/src/app/\\(admin\\)/admin/\\(dashboard\\)/properties/new\" \"c:/Projects/baanaiounweb/src/app/\\(admin\\)/admin/\\(dashboard\\)/properties/[id]/edit\" \"c:/Projects/baanaiounweb/src/app/\\(admin\\)/admin/\\(dashboard\\)/leads/[id]\" \"c:/Projects/baanaiounweb/src/app/\\(admin\\)/admin/\\(dashboard\\)/blog/new\" \"c:/Projects/baanaiounweb/src/app/\\(admin\\)/admin/\\(dashboard\\)/blog/[id]/edit\" \"c:/Projects/baanaiounweb/src/app/\\(admin\\)/admin/\\(dashboard\\)/testimonials/new\" \"c:/Projects/baanaiounweb/src/app/\\(admin\\)/admin/\\(dashboard\\)/testimonials/[id]/edit\" \"c:/Projects/baanaiounweb/src/app/\\(admin\\)/admin/\\(dashboard\\)/faqs\")",
+      "PowerShell(cd c:\\\\Projects\\\\baanaiounweb; git add src/actions/ src/app/\\(admin\\)/ src/app/\\(public\\)/layout.tsx src/components/admin/ src/components/ui/dropdown-menu.tsx src/components/ui/label.tsx src/components/ui/select.tsx src/components/ui/switch.tsx src/components/ui/table.tsx src/components/ui/textarea.tsx src/config/admin-nav.ts src/lib/auth/ src/lib/queries/ src/lib/supabase/ src/lib/types/ src/lib/validations/ src/proxy.ts supabase/migrations/004_create_properties.sql supabase/migrations/005_create_content_tables.sql supabase/migrations/006_admin_rls_policies.sql supabase/migrations/007_updated_at_triggers.sql package.json package-lock.json docs/ src/app/layout.tsx)",
+      "mcp__claude_ai_Supabase__list_projects",
+      "Bash(npm run *)",
+      "Bash(node --input-type=module -e ' *)",
+      "Bash(curl -s \"http://localhost:3000/buy\")",
+      "Bash(curl -s \"http://localhost:3000/\")",
+      "Bash(curl -s \"http://localhost:3000/property/baan-ai-oun\")",
+      "Bash(curl -s \"http://localhost:3000/sitemap.xml\")",
+      "Bash(curl -s \"http://localhost:3000/rent\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/admin/login\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/admin\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}  content-type=%{content_type}\\\\n\" \"https://ubbuniyssfmtpiwlxnxz.supabase.co/storage/v1/object/public/property-images/uploads/1782194710764-0.jpg\")",
+      "Bash(tasklist)",
+      "Bash(taskkill //PID 32072 //F)",
+      "Bash(git check-ignore *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/about\")",
+      "Bash(curl -s \"http://localhost:3000/about\")",
+      "Bash(taskkill //IM node.exe //F)",
+      "Bash(npm start *)"
+    ],
+    "additionalDirectories": [
+      "c:\\Projects\\baanaiounweb\\src\\app\\(admin)\\admin\\(dashboard)\\properties\\[id]"
     ]
   }
 }
