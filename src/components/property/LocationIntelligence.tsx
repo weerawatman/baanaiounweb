@@ -1,6 +1,5 @@
 import { MapPin, Building2, Heart, ShoppingBag } from "lucide-react"
 import { type Property } from "@/types"
-import { SITE_CONFIG } from "@/config/site"
 
 interface LocationIntelligenceProps {
   property: Property
@@ -29,28 +28,44 @@ export default function LocationIntelligence({
 }: LocationIntelligenceProps) {
   const { location } = property
 
+  // สร้างแผนที่จากพิกัดจริงของทรัพย์; ถ้าไม่มีพิกัดใช้ชื่อตำบล/อำเภอแทน
+  const hasCoords =
+    location.lat != null && location.lng != null && location.lat !== 0 && location.lng !== 0
+  const mapQuery = hasCoords
+    ? `${location.lat},${location.lng}`
+    : encodeURIComponent(
+        [location.subdistrict, location.district].filter(Boolean).join(" "),
+      )
+  const mapSrc = mapQuery
+    ? `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed&hl=th`
+    : null
+
   return (
     <div className="flex flex-col gap-4">
-      {/* Google Maps embed */}
-      <div className="overflow-hidden rounded-xl border border-border">
-        <iframe
-          src={SITE_CONFIG.googleMapsEmbed}
-          title={`แผนที่ ${property.title}`}
-          width="100%"
-          height="300"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="w-full"
-        />
-      </div>
+      {/* Google Maps embed — ใช้พิกัดของทรัพย์ */}
+      {mapSrc && (
+        <div className="overflow-hidden rounded-xl border border-border">
+          <iframe
+            src={mapSrc}
+            title={`แผนที่ ${property.title}`}
+            width="100%"
+            height="300"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="w-full"
+          />
+        </div>
+      )}
 
       {/* Location label */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <MapPin className="h-4 w-4 shrink-0 text-green-700" />
         <span>
-          {location.subdistrict}, {location.district}
+          {location.subdistrict}
+          {location.subdistrict && location.district ? ", " : ""}
+          {location.district}
         </span>
       </div>
 

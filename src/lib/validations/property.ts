@@ -5,14 +5,17 @@ export const propertySchema = z.object({
   slug: z
     .string()
     .min(1, "กรุณาระบุ slug")
-    .regex(/^[a-z0-9-]+$/, "slug ใช้ได้เฉพาะ a-z, 0-9, และขีด (-)"),
+    .regex(
+      /^[\p{L}\p{N}-]+$/u,
+      "slug ใช้ได้เฉพาะตัวอักษร ตัวเลข และขีด (-)",
+    ),
   type: z.enum(["SALE", "RENT", "LAND"]),
   sub_type: z.preprocess(
     (v) => (v === "" || v == null ? undefined : v),
     z.enum(["new", "renovated", "townhome", "residential", "investment"]).optional().nullable(),
   ),
   price: z.coerce.number().min(0, "ราคาต้องไม่ต่ำกว่า 0"),
-  price_label: z.string().min(1, "กรุณาระบุข้อความแสดงราคา"),
+  price_label: z.string().default(""),
   area_sqm: z.coerce.number().min(0).default(0),
   bedrooms: z.coerce.number().int().min(0).default(0),
   bathrooms: z.coerce.number().int().min(0).default(0),

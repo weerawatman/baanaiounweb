@@ -2,12 +2,13 @@
 
 import { useForm, useFieldArray, Controller, type Resolver } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useActionState, useTransition } from "react"
+import { useActionState, useTransition, useState, useEffect } from "react"
 import { AlertTriangle, Plus, X, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ImageUploader } from "@/components/admin/ImageUploader"
 import { propertySchema, type PropertyFormValues } from "@/lib/validations/property"
+import { slugify } from "@/lib/format"
 import type { Property } from "@/lib/types/property"
 import type { ActionState } from "@/actions/properties"
 import { cn } from "@/lib/utils"
@@ -78,6 +79,15 @@ export function PropertyForm({
   } = useFieldArray({ control, name: "tags" as never })
 
   const images = watch("images")
+  const titleValue = watch("title")
+
+  // slug: สร้างอัตโนมัติจากชื่อทรัพย์ จนกว่าผู้ใช้จะแก้เอง
+  const [slugEdited, setSlugEdited] = useState(!!defaultValues?.slug)
+  useEffect(() => {
+    if (!slugEdited) {
+      setValue("slug", slugify(titleValue))
+    }
+  }, [titleValue, slugEdited, setValue])
 
   function onSubmit(data: PropertyFormValues) {
     const formData = new FormData()
@@ -110,8 +120,18 @@ export function PropertyForm({
             <Input {...register("title")} placeholder="บ้านเดี่ยว 2 ชั้น ซอยเกษมราษฎร์" />
           </FormField>
 
-          <FormField label="Slug (URL)" error={errors.slug?.message} required>
-            <Input {...register("slug")} placeholder="ban-diao-2-chan-soi-kasem" />
+          <FormField
+            label="Slug (URL)"
+            error={errors.slug?.message}
+            required
+            hint="สร้างอัตโนมัติจากชื่อทรัพย์ — แก้ได้ถ้าต้องการ URL อื่น"
+          >
+            <Input
+              {...register("slug", {
+                onChange: () => setSlugEdited(true),
+              })}
+              placeholder="สร้างอัตโนมัติจากชื่อทรัพย์"
+            />
           </FormField>
         </div>
 
@@ -148,8 +168,12 @@ export function PropertyForm({
           <FormField label="ราคา (บาท)" error={errors.price?.message} required>
             <Input type="number" min={0} {...register("price")} />
           </FormField>
-          <FormField label="ข้อความแสดงราคา" error={errors.price_label?.message} required>
-            <Input {...register("price_label")} placeholder="3,500,000 บาท หรือ 8,000 บาท/เดือน" />
+          <FormField
+            label="ข้อความแสดงราคา (ไม่บังคับ)"
+            error={errors.price_label?.message}
+            hint='ปล่อยว่าง = ระบบจัดรูปแบบจาก «ราคา» ให้อัตโนมัติ เช่น 1,990,000 บาท หรือใส่เอง เช่น ตกลงกันได้'
+          >
+            <Input {...register("price_label")} placeholder="ปล่อยว่างหรือพิมพ์เอง เช่น ตกลงกันได้" />
           </FormField>
         </div>
 
@@ -364,11 +388,13 @@ function FormField({
   label,
   error,
   required,
+  hint,
   children,
 }: {
   label: string
   error?: string
   required?: boolean
+  hint?: string
   children: React.ReactNode
 }) {
   return (
@@ -378,6 +404,7 @@ function FormField({
         {required && <span className="ml-1 text-red-500">*</span>}
       </label>
       {children}
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
       {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   )

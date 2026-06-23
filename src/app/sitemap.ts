@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next"
-import { MOCK_PROPERTIES } from "@/data/properties"
-import { MOCK_BLOG_POSTS } from "@/data/blog-posts"
+import { getProperties } from "@/lib/queries/properties"
+import { getBlogPosts } from "@/lib/queries/blog"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString()
 
   // ─── Static pages ──────────────────────────────────────────────────
@@ -21,18 +21,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
   ]
 
-  // ─── Property pages ────────────────────────────────────────────────
-  const propertyPages: MetadataRoute.Sitemap = MOCK_PROPERTIES.map((p) => ({
+  // ─── Property pages (from Supabase) ────────────────────────────────
+  const propertyRows = await getProperties()
+  const propertyPages: MetadataRoute.Sitemap = propertyRows.map((p) => ({
     url: `${BASE_URL}/property/${p.slug}`,
-    lastModified: p.createdAt,
+    lastModified: p.updated_at ?? p.created_at,
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }))
 
-  // ─── Blog pages ────────────────────────────────────────────────────
-  const blogPages: MetadataRoute.Sitemap = MOCK_BLOG_POSTS.map((post) => ({
+  // ─── Blog pages (published, from Supabase) ─────────────────────────
+  const blogRows = (await getBlogPosts()).filter((p) => p.published)
+  const blogPages: MetadataRoute.Sitemap = blogRows.map((post) => ({
     url: `${BASE_URL}/blog/${post.slug}`,
-    lastModified: post.publishedAt,
+    lastModified: post.published_at ?? post.updated_at ?? post.created_at,
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }))

@@ -1,4 +1,5 @@
-import { MOCK_PROPERTIES } from "@/data/properties"
+import { getPropertyBySlug } from "@/lib/queries/properties"
+import { mapProperty } from "@/lib/mappers"
 import PropertyDetailClient from "./PropertyDetailClient"
 
 export default async function PropertyPage({
@@ -7,7 +8,8 @@ export default async function PropertyPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const property = MOCK_PROPERTIES.find((p) => p.slug === slug) ?? null
+  const row = await getPropertyBySlug(slug)
+  const property = row ? mapProperty(row) : null
 
   return <PropertyDetailClient property={property} />
 }

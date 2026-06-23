@@ -13,6 +13,21 @@ export async function getProperties(): Promise<Property[]> {
   return (data as Property[]) ?? []
 }
 
+export async function getPropertyBySlug(
+  slug: string,
+): Promise<Property | null> {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from("properties")
+    .select("*")
+    .eq("slug", slug)
+    .is("deleted_at", null)
+    .single()
+
+  if (error) return null
+  return data as Property
+}
+
 export async function getPropertyById(id: string): Promise<Property | null> {
   const supabase = await createClient()
   const { data, error } = await supabase

@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { Bed, Bath, Maximize, MapPin } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { type Property } from "@/types"
+import { formatPrice } from "@/lib/format"
 
 interface PropertyCardProps {
   property: Property
@@ -82,7 +83,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
             {/* Price */}
             <p className="text-base font-semibold text-green-700">
-              {property.priceLabel}
+              {formatPrice(property)}
             </p>
 
             {/* Stats row */}

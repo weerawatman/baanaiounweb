@@ -4,6 +4,7 @@ import Link from "next/link"
 import { motion, type Transition } from "framer-motion"
 import { Phone, MessageCircle, Tag, MapPin } from "lucide-react"
 import { type Property } from "@/types"
+import { formatPrice } from "@/lib/format"
 import { SITE_CONFIG } from "@/config/site"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PropertyGallery from "@/components/property/PropertyGallery"
@@ -127,7 +128,7 @@ export default function PropertyDetailClient({
 
             {/* Price */}
             <p className="text-2xl font-bold text-green-700">
-              {property.priceLabel}
+              {formatPrice(property)}
             </p>
 
             {/* Location line */}

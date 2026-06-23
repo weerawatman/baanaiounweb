@@ -12,6 +12,21 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   return (data as BlogPost[]) ?? []
 }
 
+export async function getBlogPostBySlug(
+  slug: string,
+): Promise<BlogPost | null> {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("slug", slug)
+    .eq("published", true)
+    .single()
+
+  if (error) return null
+  return data as BlogPost
+}
+
 export async function getBlogPostById(id: string): Promise<BlogPost | null> {
   const supabase = await createClient()
   const { data, error } = await supabase

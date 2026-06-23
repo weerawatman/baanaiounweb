@@ -1,73 +1,7 @@
-import { type BlogPost, type BlogCategory } from "@/types"
+import { type BlogCategory } from "@/types"
 
-export const MOCK_BLOG_POSTS: BlogPost[] = [
-  {
-    id: "blog-001",
-    slug: "3-checklist-gu-baan-jai-fu",
-    title: "3 เช็กลิสต์กู้บ้านแบบใจฟู ไม่ต้องสู้ชีวิตตอนผ่อน",
-    category: "วางแผนการเงิน",
-    categorySlug: "finance",
-    excerpt: "เตรียมตัวให้พร้อมก่อนยื่นกู้ ไม่ใช่แค่ผ่านง่าย แต่ผ่อนแล้วยังมีเงินเหลือใช้ มาดูกันว่าต้องเตรียมอะไรบ้าง",
-    content: "Lorem ipsum...",
-    readingTime: "5 นาที",
-    publishedAt: "2026-03-10",
-    featuredImage: "https://placehold.co/800x450/1B4D3E/FFFFFF?text=กู้บ้านแบบใจฟู",
-    relatedPropertyIds: ["prop-001", "prop-006"],
-  },
-  {
-    id: "blog-002",
-    slug: "technic-jud-baan-chao-hai-un",
-    title: "เทคนิคจัดบ้านเช่าให้เป็นรังที่อบอุ่น เผื่อลูก ๆ และพ่อแม่มาเยี่ยม",
-    category: "ชีวิตคนไกลบ้าน",
-    categorySlug: "lifestyle",
-    excerpt: "บ้านเช่าก็อบอุ่นได้ แค่จัดให้ถูกวิธี มีเทคนิคง่าย ๆ ให้บ้านเช่ากลายเป็นบ้านจริง ๆ ที่ทุกคนอยากมาเยี่ยม",
-    content: "Lorem ipsum...",
-    readingTime: "7 นาที",
-    publishedAt: "2026-03-05",
-    featuredImage: "https://placehold.co/800x450/D4A843/FFFFFF?text=จัดบ้านเช่าให้อบอุ่น",
-    relatedPropertyIds: ["prop-002", "prop-004"],
-  },
-  {
-    id: "blog-003",
-    slug: "banbung-na-yu-kae-nai",
-    title: "บ้านบึงน่าอยู่แค่ไหน? เจาะลึกแหล่งงาน ที่เที่ยว และคุณภาพชีวิต",
-    category: "เจาะลึกทำเล",
-    categorySlug: "location",
-    excerpt: "ทำไมคนทำงานโรงงานถึงเลือกอยู่บ้านบึง? มาดูข้อดี-ข้อเสีย แหล่งงาน ที่เที่ยว และทำไมทำเลนี้ถึงมีแต่คนอยากมาอยู่",
-    content: "Lorem ipsum...",
-    readingTime: "8 นาที",
-    publishedAt: "2026-02-28",
-    featuredImage: "https://placehold.co/800x450/2E75B6/FFFFFF?text=บ้านบึงน่าอยู่ไหม",
-    relatedPropertyIds: ["prop-001", "prop-003"],
-  },
-  {
-    id: "blog-004",
-    slug: "tid-buro-yak-mee-baan-tum-yang-rai",
-    title: "ติดบูโร/รายได้น้อย แต่อยากมีบ้าน เริ่มต้นเตรียมตัวอย่างไร?",
-    category: "แก้ปัญหาคนอยากมีบ้าน",
-    categorySlug: "solutions",
-    excerpt: "ติดบูโรไม่ใช่จุดจบ แต่คือจุดเริ่มต้นของการวางแผน มาดูขั้นตอนแก้บูโร เตรียมตัวกู้บ้านให้ผ่านกันค่ะ",
-    content: "Lorem ipsum...",
-    readingTime: "6 นาที",
-    publishedAt: "2026-02-20",
-    featuredImage: "https://placehold.co/800x450/EF4444/FFFFFF?text=ติดบูโร+อยากมีบ้าน",
-    relatedPropertyIds: ["prop-001"],
-  },
-  {
-    id: "blog-005",
-    slug: "trend-baan-2026-khon-yuk-mai",
-    title: "เทรนด์บ้านปี 2026 บ้านแบบไหนที่คนทำงานยุคใหม่ต้องการ",
-    category: "MarTech Update",
-    categorySlug: "martech",
-    excerpt: "AI เปลี่ยนวิธีหาบ้าน Renovate บ้านเก่าเป็นเทรนด์ใหม่ บ้านเล็กแต่ฟังก์ชันครบกำลังมา มาดูว่าปี 2026 คนอยากได้บ้านแบบไหน",
-    content: "Lorem ipsum...",
-    readingTime: "5 นาที",
-    publishedAt: "2026-03-15",
-    featuredImage: "https://placehold.co/800x450/1B4D3E/FFFFFF?text=เทรนด์บ้าน+2026",
-    relatedPropertyIds: [],
-  },
-]
-
+// หมวดหมู่บทความ (config คงที่ — ไม่ใช่ข้อมูลตัวอย่าง)
+// ใช้ในหน้า /blog สำหรับกรองตามหมวดหมู่
 export const BLOG_CATEGORIES: BlogCategory[] = [
   { name: "วางแผนการเงิน", slug: "finance" },
   { name: "ชีวิตคนไกลบ้าน", slug: "lifestyle" },

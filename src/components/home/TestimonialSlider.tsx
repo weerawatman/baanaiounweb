@@ -5,9 +5,15 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Star } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { MOCK_TESTIMONIALS } from "@/data/testimonials";
+import { type Testimonial } from "@/types";
 
-export default function TestimonialSlider() {
+interface TestimonialSliderProps {
+  testimonials: Testimonial[];
+}
+
+export default function TestimonialSlider({
+  testimonials,
+}: TestimonialSliderProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 4000, stopOnInteraction: false }),
   ]);
@@ -51,7 +57,7 @@ export default function TestimonialSlider() {
 
         <div className="overflow-hidden rounded-2xl" ref={emblaRef}>
           <div className="flex">
-            {MOCK_TESTIMONIALS.map((testimonial) => (
+            {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
                 className="flex-[0_0_100%] min-w-0 px-4"
