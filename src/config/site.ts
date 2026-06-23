@@ -35,7 +35,8 @@ export const SITE_CONFIG = {
     fullName: "คุณพิม — นายหน้าอสังหาริมทรัพย์",
     bio: "จากคนเช่าห้องแถวเล็ก ๆ ในนิคมอุตสาหกรรม สู่นายหน้าอสังหาริมทรัพย์ที่คัดสรรบ้านด้วยหัวใจ เพราะพิมเข้าใจว่า 'บ้าน' สำคัญแค่ไหนสำหรับคนไกลบ้าน",
     vision: "พิมมุ่งมั่นให้คนทำงานในชลบุรีมีบ้านที่เติมพลังใจได้จริง ไม่ใช่แค่ที่ซุกหัวนอน",
-    avatar: "https://placehold.co/200x200/1B4D3E/FFFFFF?text=พิม", // TODO: รูปจริง
-    heroImage: "https://placehold.co/800x600/F5F0E8/1B4D3E?text=คุณพิม+ยิ้มแย้ม+ในบ้านรีโนเวท", // TODO: รูปจริง
+    // หมายเหตุ: placehold.co รองรับเฉพาะข้อความ ASCII (ใส่ไทยแล้วได้ HTTP 400 → รูปแตก)
+    avatar: "https://placehold.co/200x200/1B4D3E/FFFFFF?text=Pim", // TODO: อัปรูปจริงที่ /admin/profile
+    heroImage: "https://placehold.co/800x600/F5F0E8/1B4D3E?text=Baan+Ai+Oun", // TODO: อัปรูปจริงที่ /admin/profile
   },
 }
