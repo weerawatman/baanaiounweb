@@ -18,6 +18,8 @@ interface HomePageProps {
   properties: Property[]
   testimonials: Testimonial[]
   faqs: FAQ[]
+  heroImage?: string
+  fullName?: string
 }
 
 const fadeUp = {
@@ -33,6 +35,8 @@ export default function HomePage({
   properties,
   testimonials,
   faqs,
+  heroImage,
+  fullName,
 }: HomePageProps) {
   const featuredProperties = properties.filter((p) => p.featured)
 
@@ -43,7 +47,7 @@ export default function HomePage({
       <meta property="og:title" content="บ้านไออุ่น พร็อพเพอร์ตี้ — จบทุกความต้องการเรื่องอสังหาฯ" />
       <meta property="og:description" content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ" />
 
-      <HeroSection />
+      <HeroSection heroImage={heroImage} fullName={fullName} />
 
       {/* Services — 4 กลุ่มบริการ */}
       <section className="py-12 px-4 max-w-6xl mx-auto">

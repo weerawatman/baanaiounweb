@@ -10,7 +10,12 @@ import { HERO_CONTENT } from "@/content/homepage"
 
 type Lang = "th" | "en"
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  heroImage?: string
+  fullName?: string
+}
+
+export default function HeroSection({ heroImage, fullName }: HeroSectionProps) {
   const [lang, setLang] = useState<Lang>("th")
   const [activeTab, setActiveTab] = useState(0)
 
@@ -177,8 +182,8 @@ export default function HeroSection() {
             className="flex justify-center lg:sticky lg:top-24"
           >
             <Image
-              src={SITE_CONFIG.pim.heroImage}
-              alt={SITE_CONFIG.pim.fullName}
+              src={heroImage || SITE_CONFIG.pim.heroImage}
+              alt={fullName || SITE_CONFIG.pim.fullName}
               width={800}
               height={600}
               priority

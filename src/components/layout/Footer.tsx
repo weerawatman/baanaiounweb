@@ -2,8 +2,9 @@ import Link from "next/link"
 import { Phone, Mail, MapPin } from "lucide-react"
 import { SITE_CONFIG } from "@/config/site"
 import { NAV_ITEMS } from "@/config/navigation"
+import type { Profile } from "@/types"
 
-export default function Footer() {
+export default function Footer({ profile }: { profile: Profile }) {
   const currentYear = new Date().getFullYear()
 
   return (
@@ -13,9 +14,9 @@ export default function Footer() {
           {/* Column 1: Company Info + Nav */}
           <div className="flex flex-col gap-4">
             <div>
-              <h2 className="text-xl font-bold">{SITE_CONFIG.name}</h2>
+              <h2 className="text-xl font-bold">{profile.siteName || SITE_CONFIG.name}</h2>
               <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                {SITE_CONFIG.slogan}
+                {profile.slogan || SITE_CONFIG.slogan}
               </p>
             </div>
             <nav className="flex flex-col gap-1.5">
@@ -37,20 +38,20 @@ export default function Footer() {
             <ul className="flex flex-col gap-3">
               <li>
                 <a
-                  href={`tel:${SITE_CONFIG.phone}`}
+                  href={`tel:${profile.phone || SITE_CONFIG.phone}`}
                   className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
                 >
                   <Phone className="size-4 shrink-0" />
-                  {SITE_CONFIG.phone}
+                  {profile.phone || SITE_CONFIG.phone}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${SITE_CONFIG.email}`}
+                  href={`mailto:${profile.email || SITE_CONFIG.email}`}
                   className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
                 >
                   <Mail className="size-4 shrink-0" />
-                  {SITE_CONFIG.email}
+                  {profile.email || SITE_CONFIG.email}
                 </a>
               </li>
               <li className="flex items-start gap-2 text-sm text-white/80">
@@ -59,12 +60,12 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={SITE_CONFIG.lineUrl}
+                  href={profile.lineUrl || SITE_CONFIG.lineUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-white/80 hover:text-white transition-colors"
                 >
-                  LINE: {SITE_CONFIG.lineId}
+                  LINE: {profile.lineId || SITE_CONFIG.lineId}
                 </a>
               </li>
             </ul>
@@ -76,7 +77,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-3">
               <li>
                 <a
-                  href={SITE_CONFIG.lineUrl}
+                  href={profile.lineUrl || SITE_CONFIG.lineUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
@@ -87,7 +88,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={SITE_CONFIG.facebook}
+                  href={profile.facebook || SITE_CONFIG.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
@@ -98,7 +99,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={SITE_CONFIG.tiktok}
+                  href={profile.tiktok || SITE_CONFIG.tiktok}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
@@ -109,7 +110,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={SITE_CONFIG.youtube}
+                  href={profile.youtube || SITE_CONFIG.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
@@ -124,7 +125,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="mt-10 border-t border-white/20 pt-6 text-center text-sm text-white/60">
-          © {currentYear} {SITE_CONFIG.name} · {SITE_CONFIG.nameEn} · สงวนลิขสิทธิ์ทุกประการ
+          © {currentYear} {profile.siteName || SITE_CONFIG.name} · {SITE_CONFIG.nameEn} · สงวนลิขสิทธิ์ทุกประการ
         </div>
       </div>
     </footer>

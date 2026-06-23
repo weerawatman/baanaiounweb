@@ -74,3 +74,24 @@ export interface FAQ {
   answer: string;
   pageSlug: string;
 }
+
+// ─── Agent profile (singleton, editable from /admin/profile) ──────────────
+
+export interface Profile {
+  name: string;
+  fullName: string;
+  role: string;
+  bio: string;
+  vision: string;
+  avatarUrl: string;
+  heroImageUrl: string;
+  phone: string;
+  lineId: string;
+  lineUrl: string;
+  email: string;
+  facebook: string;
+  tiktok: string;
+  youtube: string;
+  siteName: string;
+  slogan: string;
+}

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sheet"
 import { NAV_ENTRIES, NAV_ITEMS, isNavGroup, type NavGroup } from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
+import type { Profile } from "@/types"
 
 // ─── Dropdown component ─────────────────────────────────────────────────
 
@@ -84,8 +85,9 @@ function NavDropdown({ group }: { group: NavGroup }) {
 
 // ─── Header ─────────────────────────────────────────────────────────────
 
-export default function Header() {
+export default function Header({ profile }: { profile: Profile }) {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const siteName = profile?.siteName || SITE_CONFIG.name
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur-sm">
@@ -95,7 +97,7 @@ export default function Header() {
           href="/"
           className="shrink-0 text-lg font-bold text-primary hover:opacity-80 transition-opacity"
         >
-          {SITE_CONFIG.name}
+          {siteName}
         </Link>
 
         {/* Desktop Nav — grouped with dropdowns */}
@@ -126,7 +128,7 @@ export default function Header() {
           <SheetContent side="right" className="w-72 p-0">
             <SheetHeader className="border-b px-4 py-4">
               <SheetTitle className="text-left text-primary text-base font-bold">
-                {SITE_CONFIG.name}
+                {siteName}
               </SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col py-2">

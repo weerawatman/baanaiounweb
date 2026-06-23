@@ -16,6 +16,8 @@ import { Badge } from "@/components/ui/badge"
 
 interface PropertyDetailClientProps {
   property: Property | null
+  pimAvatarUrl?: string
+  pimName?: string
 }
 
 const typeLabel: Record<Property["type"], string> = {
@@ -45,6 +47,8 @@ const sectionTransition: Transition = { duration: 0.5, ease: "easeOut" }
 
 export default function PropertyDetailClient({
   property,
+  pimAvatarUrl,
+  pimName,
 }: PropertyDetailClientProps) {
   if (!property) {
     return (
@@ -186,7 +190,7 @@ export default function PropertyDetailClient({
             variants={sectionVariants}
             transition={{ ...sectionTransition, delay: 0.3 }}
           >
-            <PimInsight insight={property.pimInsight} />
+            <PimInsight insight={property.pimInsight} avatarUrl={pimAvatarUrl} name={pimName} />
           </motion.section>
 
           {/* Financial calculator — SALE only */}

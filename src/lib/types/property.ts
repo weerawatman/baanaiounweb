@@ -104,3 +104,24 @@ export interface Faq {
   sort_order: number
   created_at: string
 }
+
+export interface AgentProfile {
+  id: number
+  name: string
+  full_name: string
+  role: string
+  bio: string
+  vision: string
+  avatar_url: string
+  hero_image_url: string
+  phone: string
+  line_id: string
+  line_url: string
+  email: string
+  facebook: string
+  tiktok: string
+  youtube: string
+  site_name: string
+  slogan: string
+  updated_at: string
+}

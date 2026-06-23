@@ -3,12 +3,14 @@ import type {
   BlogPost as BlogPostRow,
   Testimonial as TestimonialRow,
   Faq as FaqRow,
+  AgentProfile as AgentProfileRow,
 } from "@/lib/types/property"
 import type {
   Property,
   BlogPost,
   Testimonial,
   FAQ,
+  Profile,
 } from "@/types"
 
 // ──────────────────────────────────────────────────────────────────────────
@@ -87,5 +89,26 @@ export function mapFaq(row: FaqRow): FAQ {
     question: row.question,
     answer: row.answer ?? "",
     pageSlug: row.page_slug,
+  }
+}
+
+export function mapProfile(row: AgentProfileRow): Profile {
+  return {
+    name: row.name ?? "",
+    fullName: row.full_name ?? "",
+    role: row.role ?? "",
+    bio: row.bio ?? "",
+    vision: row.vision ?? "",
+    avatarUrl: row.avatar_url ?? "",
+    heroImageUrl: row.hero_image_url ?? "",
+    phone: row.phone ?? "",
+    lineId: row.line_id ?? "",
+    lineUrl: row.line_url ?? "",
+    email: row.email ?? "",
+    facebook: row.facebook ?? "",
+    tiktok: row.tiktok ?? "",
+    youtube: row.youtube ?? "",
+    siteName: row.site_name ?? "",
+    slogan: row.slogan ?? "",
   }
 }

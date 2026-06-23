@@ -3,38 +3,9 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyCTA from "@/components/layout/StickyCTA";
 import { SITE_CONFIG } from "@/config/site";
+import { getProfile } from "@/lib/queries/profile";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "RealEstateAgent",
-  name: SITE_CONFIG.name,
-  alternateName: SITE_CONFIG.nameEn,
-  description:
-    "นายหน้าอสังหาริมทรัพย์ จ.สมุทรปราการ ให้บริการซื้อ-ขาย-เช่า บ้าน คอนโด ที่ดิน บ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช",
-  url: BASE_URL,
-  telephone: SITE_CONFIG.phone,
-  email: SITE_CONFIG.email,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13",
-    addressLocality: "บางพลีใหญ่",
-    addressRegion: "สมุทรปราการ",
-    postalCode: "10540",
-    addressCountry: "TH",
-  },
-  sameAs: [
-    SITE_CONFIG.facebook,
-    SITE_CONFIG.tiktok,
-    SITE_CONFIG.youtube,
-    SITE_CONFIG.lineUrl,
-  ],
-  areaServed: {
-    "@type": "City",
-    name: SITE_CONFIG.areaServed,
-  },
-};
 
 export const metadata: Metadata = {
   openGraph: {
@@ -54,21 +25,53 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PublicLayout({
+export default async function PublicLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const profile = await getProfile();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    name: profile.siteName,
+    alternateName: SITE_CONFIG.nameEn,
+    description:
+      "นายหน้าอสังหาริมทรัพย์ ให้บริการซื้อ-ขาย-เช่า บ้าน คอนโด ที่ดิน บ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช",
+    url: BASE_URL,
+    telephone: profile.phone,
+    email: profile.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13",
+      addressLocality: "บางพลีใหญ่",
+      addressRegion: "สมุทรปราการ",
+      postalCode: "10540",
+      addressCountry: "TH",
+    },
+    sameAs: [
+      profile.facebook,
+      profile.tiktok,
+      profile.youtube,
+      profile.lineUrl,
+    ],
+    areaServed: {
+      "@type": "City",
+      name: SITE_CONFIG.areaServed,
+    },
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Header />
+      <Header profile={profile} />
       <main className="flex-1">{children}</main>
-      <Footer />
-      <StickyCTA />
+      <Footer profile={profile} />
+      <StickyCTA lineUrl={profile.lineUrl} />
     </>
   );
 }

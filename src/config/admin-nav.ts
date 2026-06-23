@@ -6,6 +6,7 @@ import {
   Newspaper,
   Star,
   HelpCircle,
+  User,
 } from "lucide-react"
 
 export interface AdminNavItem {
@@ -21,4 +22,5 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { label: "บทความ", href: "/admin/blog", icon: Newspaper },
   { label: "รีวิว", href: "/admin/testimonials", icon: Star },
   { label: "FAQ", href: "/admin/faqs", icon: HelpCircle },
+  { label: "โปรไฟล์", href: "/admin/profile", icon: User },
 ]
