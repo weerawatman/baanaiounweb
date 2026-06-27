@@ -1,75 +1,61 @@
 import Link from "next/link"
 import { Home, Search, Users, GraduationCap } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
+import { SERVICES_HEADING, SERVICE_CARDS } from "@/content/homepage"
 
 const ICON_MAP = { Home, Search, Users, GraduationCap } as const
-
-const SERVICES = [
-  {
-    icon: "Home" as const,
-    title: "ฝากขาย / ปล่อยเช่า",
-    description:
-      "หมดกังวลเรื่องหาคนซื้อหรือคนเช่า เราช่วยดูแลตั้งแต่ประเมินราคา ทำการตลาด จนปิดดีล",
-    href: "/owners",
-    color: "#D4A843",
-    target: "สำหรับเจ้าของทรัพย์",
-  },
-  {
-    icon: "Search" as const,
-    title: "หาบ้าน / ที่ดิน",
-    description: "บอกสเปกและงบ เราช่วยจัดหาให้ตรงใจ พร้อมช่วยกู้สินเชื่อฟรี!",
-    href: "/buy",
-    color: "#1B4D3E",
-    target: "สำหรับผู้หาซื้อ/เช่า",
-  },
-  {
-    icon: "Users" as const,
-    title: "Co-Agent เครือข่าย",
-    description: "ฝากทรัพย์เข้าระบบฟรี! ช่วยทำการตลาด คัดกรองลูกค้า วิน-วิน ทุกฝ่าย",
-    href: "/co-agent",
-    color: "#2E75B6",
-    target: "สำหรับนายหน้า/เอเจนต์",
-  },
-  {
-    icon: "GraduationCap" as const,
-    title: "สร้างรายได้กับอสังหาฯ",
-    description: "คอร์สสอนทำจริง จับมือทำ ไม่ต้องใช้ทุน เปลี่ยนความกลัวเป็นรายได้",
-    href: "/academy",
-    color: "#E85D75",
-    target: "สำหรับผู้สนใจอาชีพ",
-  },
-]
 
 export default function ServiceShortcuts() {
   return (
     <section className="bg-white py-14">
       <div className="container mx-auto max-w-6xl px-4">
+        {/* H2 หัวข้อหมวดหมู่ */}
+        <div className="mb-10 text-center">
+          <h2 className="text-2xl font-bold text-[#1B4D3E] sm:text-3xl">{SERVICES_HEADING.th}</h2>
+          <p className="mt-1 text-base font-medium text-gray-500">{SERVICES_HEADING.en}</p>
+        </div>
+
+        {/* 4 การ์ด — desktop แนวนอน / มือถือเรียงตั้ง */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((service) => {
-            const Icon = ICON_MAP[service.icon]
+          {SERVICE_CARDS.map((card) => {
+            const Icon = ICON_MAP[card.icon]
             return (
-              <Link key={service.title} href={service.href} className="group block">
-                <Card className="h-full cursor-pointer transition-shadow duration-200 hover:shadow-lg hover:ring-2 hover:ring-[#1B4D3E]/20">
-                  <CardContent className="flex flex-col items-center gap-3 px-5 py-8 text-center">
-                    <div
-                      className="flex h-14 w-14 items-center justify-center rounded-2xl"
-                      style={{ backgroundColor: `${service.color}18` }}
-                    >
-                      <Icon size={28} style={{ color: service.color }} />
-                    </div>
-                    <span
-                      className="inline-block rounded-full px-3 py-0.5 text-xs font-medium"
-                      style={{ backgroundColor: `${service.color}15`, color: service.color }}
-                    >
-                      {service.target}
-                    </span>
-                    <h3 className="text-base font-bold" style={{ color: service.color }}>
-                      {service.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-gray-600">{service.description}</p>
-                  </CardContent>
-                </Card>
-              </Link>
+              <div
+                key={card.href}
+                className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm transition-shadow duration-200 hover:shadow-lg"
+              >
+                {/* Icon บนสุด */}
+                <div
+                  className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl"
+                  style={{ backgroundColor: `${card.color}18` }}
+                >
+                  <Icon size={28} style={{ color: card.color }} />
+                </div>
+
+                {/* H3 ไทย | English */}
+                <h3 className="mt-4 text-center text-base leading-snug font-bold">
+                  <span className="block" style={{ color: card.color }}>
+                    {card.titleTh}
+                  </span>
+                  <span className="block text-sm text-gray-500">{card.titleEn}</span>
+                </h3>
+
+                {/* ปัญหา + ทางออก (2 ภาษา) */}
+                <div className="mt-3 flex flex-1 flex-col gap-1.5 text-sm">
+                  <p className="font-medium text-gray-700">{card.painTh}</p>
+                  <p className="text-xs text-gray-500">{card.painEn}</p>
+                  <p className="mt-1 text-gray-700">{card.solutionTh}</p>
+                  <p className="text-xs text-gray-500">{card.solutionEn}</p>
+                </div>
+
+                {/* ปุ่ม CTA แยกสีต่อใบ */}
+                <Link
+                  href={card.href}
+                  className="mt-5 inline-flex items-center justify-center gap-1 rounded-lg px-4 py-2.5 text-center text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: card.color }}
+                >
+                  {card.ctaEn ? `${card.ctaTh} | ${card.ctaEn}` : card.ctaTh}
+                </Link>
+              </div>
             )
           })}
         </div>

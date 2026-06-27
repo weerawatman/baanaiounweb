@@ -10,6 +10,11 @@ export default function Footer({ profile }: { profile: Profile }) {
   return (
     <footer className="bg-primary text-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        {/* ข้อความปิดท้าย (Rev.04) */}
+        <p className="mb-10 text-center text-base font-medium text-white/90 sm:text-lg">
+          เชื่อมั่นในทีมงานผู้เชี่ยวชาญ ที่พร้อมดูแลความสุขในทุกก้าวของอสังหาฯ ของคุณ
+        </p>
+
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {/* Column 1: Company Info + Nav */}
           <div className="flex flex-col gap-4">
@@ -131,10 +136,22 @@ export default function Footer({ profile }: { profile: Profile }) {
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-10 border-t border-white/20 pt-6 text-center text-sm text-white/60">
-          © {currentYear} {profile.siteName || SITE_CONFIG.name} · {SITE_CONFIG.nameEn} ·
-          สงวนลิขสิทธิ์ทุกประการ
+        {/* เมนูเสริม + Copyright */}
+        <div className="mt-10 flex flex-col items-center gap-3 border-t border-white/20 pt-6 text-center text-sm text-white/60">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            {/* Privacy เป็นลิงก์ placeholder (ยังไม่สร้างหน้าจริง) */}
+            <Link href="#" className="transition-colors hover:text-white">
+              นโยบายความเป็นส่วนตัว
+            </Link>
+            <span className="text-white/30">·</span>
+            <Link href="/blog" className="transition-colors hover:text-white">
+              บทความอสังหาฯ
+            </Link>
+          </div>
+          <p>
+            © {currentYear} {profile.siteName || SITE_CONFIG.name} · {SITE_CONFIG.nameEn} ·
+            สงวนลิขสิทธิ์ทุกประการ
+          </p>
         </div>
       </div>
     </footer>

@@ -19,7 +19,6 @@ interface HomePageProps {
   testimonials: Testimonial[]
   faqs: FAQ[]
   heroImage?: string
-  fullName?: string
   lineUrl?: string
 }
 
@@ -37,7 +36,6 @@ export default function HomePage({
   testimonials,
   faqs,
   heroImage,
-  fullName,
   lineUrl,
 }: HomePageProps) {
   const featuredProperties = properties.filter((p) => p.featured)
@@ -59,16 +57,10 @@ export default function HomePage({
         content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ"
       />
 
-      <HeroSection heroImage={heroImage} fullName={fullName} lineUrl={lineUrl} />
+      <HeroSection heroImage={heroImage} />
 
-      {/* Services — 4 กลุ่มบริการ */}
-      <section className="mx-auto max-w-6xl px-4 py-12">
-        <SectionTitle
-          title="บริการครบวงจรของเรา"
-          subtitle="ไม่ว่าคุณจะอยากขาย เช่า หาซื้อ หรือสร้างรายได้จากอสังหาฯ"
-        />
-        <ServiceShortcuts />
-      </section>
+      {/* Services — บริการของเรา (Rev.04): ServiceShortcuts มี H2 + การ์ดในตัว */}
+      <ServiceShortcuts />
 
       {/* Featured Properties */}
       {featuredProperties.length > 0 && (

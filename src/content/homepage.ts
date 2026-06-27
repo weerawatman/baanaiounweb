@@ -1,112 +1,79 @@
 /**
- * Homepage-specific content: hero tabs, services grid, and pain-point cards.
+ * Homepage-specific content (Rev.04): bilingual hero + services cards.
+ * แสดงไทย+อังกฤษพร้อมกัน (ไม่มีปุ่มสลับภาษา)
  */
 
-export const HERO_CONTENT = {
-  th: {
-    headline: "จบทุกความต้องการ\nเรื่องอสังหาฯ",
-    tagline: "ไม่ต้องปวดหัวเรื่องอสังหาฯ อีกต่อไป! เรื่องยากเราเปลี่ยนให้เป็นเรื่องง่าย",
-    tabs: [
-      {
-        label: "เจ้าของทรัพย์",
-        icon: "🏠",
-        pains: [
-          "ปวดหัวกับการประกาศขาย/ปล่อยเช่าเอง ไม่รู้จะเริ่มยังไง",
-          "กังวลว่าทรัพย์จะขายไม่ออก หรือหาคนเช่าไม่ได้",
-          "วิตกเรื่องเอกสาร กฎหมาย และกลัวถูกโกง",
-        ],
-        solutions: [
-          "เราทำการตลาดครบวงจร หาลูกค้าซื้อ-เช่าให้ จบไว!",
-          "ดูแลเรื่องเอกสารและกฎหมายให้ทุกขั้นตอน",
-          "ปรึกษาฟรี! ดูแลจนกว่าจะขายหรือปล่อยเช่าได้สำเร็จ",
-        ],
-        cta: { label: "ฝากขาย/เช่ากับเรา", href: "/owners" },
-      },
-      {
-        label: "ซื้อ / เช่าบ้าน",
-        icon: "🔍",
-        pains: [
-          "เหนื่อยกับการหาบ้าน คอนโด ที่ดินที่ใช่ในทำเลและราคาที่ชอบ",
-          "ปวดหัวเรื่องเอกสาร สัญญา และขั้นตอนการยื่นกู้",
-          "ไม่แน่ใจว่าราคาที่เห็นสมเหตุสมผลหรือเปล่า",
-        ],
-        solutions: [
-          "บริการครบวงจร จัดหาบ้าน-คอนโด-ที่ดินตามทำเลและงบที่ต้องการ จบไว!",
-          "คัดกรองทรัพย์ที่ตรงใจ พร้อมบริการปรึกษาสินเชื่อฟรี!",
-          "ดูแลตั้งแต่ดูบ้าน ทำสัญญา จนถึงวันโอนกรรมสิทธิ์",
-        ],
-        cta: { label: "หาทรัพย์ที่ใช่", href: "/buy" },
-      },
-      {
-        label: "อยากมีรายได้",
-        icon: "💰",
-        pains: [
-          "อยากมีรายได้เสริมแต่ไม่รู้จะเริ่มต้นยังไง",
-          "กลัวว่าเรื่องอสังหาฯ ยากเกินไปสำหรับมือใหม่",
-          "ไม่มีทุน ไม่มีทรัพย์เป็นของตัวเอง",
-        ],
-        solutions: [
-          "คอร์ส 'จับมือทำนายหน้าอสังหาฯ' เริ่มจากศูนย์ก็ทำได้จริง!",
-          "หรือสมัครเป็น Co-Agent ฝากทรัพย์เข้าระบบฟรี ช่วยทำการตลาด",
-          "ไม่ต้องใช้เงินลงทุน เริ่มได้ทันที",
-        ],
-        cta: { label: "เริ่มสร้างรายได้", href: "/academy" },
-      },
-    ],
-  },
-  en: {
-    headline: "Worry-Free Thailand Real Estate Solutions",
-    tagline:
-      "Buying, Selling, Renting, or Letting? Baan Ai Oun offers one-stop, stress-free solutions for international clients.",
-    tabs: [
-      {
-        label: "Property Owners",
-        icon: "🏠",
-        pains: [
-          "Struggling to find buyers or tenants on your own?",
-          "Worried your property won't sell or legal issues may arise?",
-          "Overwhelmed by Thai paperwork, contracts, or fear of being scammed?",
-        ],
-        solutions: [
-          "Full-service marketing — we find buyers and tenants fast.",
-          "We handle all documents and legal steps on your behalf.",
-          "Free consultation — we stay with you until the deal is done.",
-        ],
-        cta: { label: "List Your Property", href: "/owners" },
-      },
-      {
-        label: "Buyers & Renters",
-        icon: "🔍",
-        pains: [
-          "Can't find the right home, condo, or land at the right price?",
-          "Confused by Thai contracts, documentation, or mortgage processes?",
-          "Facing a language barrier in negotiations or legal terms?",
-        ],
-        solutions: [
-          "Curated listings pre-screened for legal validity — matched to your budget.",
-          "English-speaking agents to guide you through every step.",
-          "Free mortgage consultation included.",
-        ],
-        cta: { label: "Find Your Dream Home", href: "/buy" },
-      },
-      {
-        label: "Legal & Safety",
-        icon: "⚖️",
-        pains: [
-          "Confused by Thai property laws or ownership restrictions for foreigners?",
-          "Worried about rental scams or dishonest landlords?",
-          "Unsure how to handle deposits or contract terms safely?",
-        ],
-        solutions: [
-          "All listings are verified for legal validity before being listed.",
-          "Secure rental contract review and transparent deposit handling.",
-          "Full transparency at every step — no hidden surprises.",
-        ],
-        cta: { label: "Consult us for FREE", href: "/contact" },
-      },
-    ],
-  },
+export const HERO = {
+  h1Th: "บ้านไออุ่น: ครบจบเรื่องอสังหาฯ ในไทย ซื้อ-ขาย-เช่า ง่าย สะดวก ปลอดภัย",
+  h1En: "Baan Ai Oun: Your All-in-One Thai Real Estate Partner – Buy, Sell, Rent, Stress-Free.",
+  subTh: "เปลี่ยนเรื่องอสังหาฯ ให้เป็นเรื่องง่าย ด้วยบริการมืออาชีพเพื่อคนไทยและต่างชาติ",
+  subEn:
+    "Simplifying Thai real estate with expert, personalized service for local and international clients.",
+  // ปุ่มทั้งสองลิงก์ไปฟอร์มติดต่อเดียวกัน (/contact) — ไม่เชื่อม WhatsApp/LINE
+  ctaThai: { th: "สำหรับคนไทย คลิกที่นี่", en: "Thai Users", href: "/contact" },
+  ctaIntl: { label: "For International Clients Click Here", href: "/contact" },
 } as const
+
+export const SERVICES_HEADING = {
+  th: "บริการของเรา",
+  en: "Our Services & Solutions",
+} as const
+
+export const SERVICE_CARDS = [
+  {
+    icon: "Home",
+    color: "#E8833A",
+    titleTh: "สำหรับเจ้าของทรัพย์",
+    titleEn: "Property Owners",
+    painTh: "ขาย/ปล่อยเช่าไม่ออก? ปวดหัวเรื่องเอกสาร? กลัวถูกโกง?",
+    painEn: "Struggling to sell/rent? Worried about paperwork and legal scams?",
+    solutionTh: "การตลาดครบวงจร ปิดดีลไว ปลอดภัย 100%",
+    solutionEn: "Full-service marketing, fast-closing, and secure transactions.",
+    ctaTh: "ฝากขาย/ปล่อยเช่า",
+    ctaEn: "List Your Property",
+    href: "/owners",
+  },
+  {
+    icon: "Search",
+    color: "#2E75B6",
+    titleTh: "สำหรับผู้ซื้อ-เช่า",
+    titleEn: "Buyers & Renters",
+    painTh: "หาบ้านไม่เจอ? กู้ผ่านยาก? สับสนเรื่องสัญญา?",
+    painEn: "Can't find the right home? Loan rejection or legal concerns?",
+    solutionTh: "คัดทรัพย์ตรงโจทย์ ดูแลสินเชื่อและสัญญา จบที่เดียว",
+    solutionEn:
+      "Curated property matching, expert loan assistance, and seamless contract handling.",
+    ctaTh: "ค้นหาบ้าน/ปรึกษาสินเชื่อ",
+    ctaEn: "Find Your Home",
+    href: "/buy",
+  },
+  {
+    icon: "Users",
+    color: "#1B7A52",
+    titleTh: "สำหรับเพื่อนๆ นายหน้า",
+    titleEn: "Co-Agents",
+    painTh: "มีทรัพย์แต่หาลูกค้าไม่ได้? กังวลค่าการตลาด?",
+    painEn: "Have listings but no clients? Worried about marketing costs?",
+    solutionTh: "ฝากทรัพย์ฟรี! เราช่วยทำการตลาดจนกว่าจะปิดดีลได้",
+    solutionEn: "We market your listings for free until closed!",
+    ctaTh: "ร่วมเป็น Co-Agent",
+    ctaEn: "",
+    href: "/co-agent",
+  },
+  {
+    icon: "GraduationCap",
+    color: "#7C3AED",
+    titleTh: "สำหรับว่าที่นายหน้ามือใหม่",
+    titleEn: "Aspiring Agents",
+    painTh: "อยากมีรายได้เพิ่ม ไม่มีประสบการณ์/ไม่มีทุน?",
+    painEn: "Want extra income, but no experience or capital?",
+    solutionTh: "คอร์ส “จับมือทำ” จากศูนย์ เริ่มต้นได้ทันที",
+    solutionEn: "Take our 'hands-on' agent course! Start from zero.",
+    ctaTh: "สมัครคอร์สนายหน้า",
+    ctaEn: "",
+    href: "/academy",
+  },
+] as const
 export const HOMEPAGE_SERVICES = [
   {
     icon: "Home" as const,

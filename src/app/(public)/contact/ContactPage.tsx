@@ -147,10 +147,12 @@ export default function ContactPage({ profile }: { profile: Profile }) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div className="text-center" initial="hidden" animate="visible" variants={fadeUp}>
             <h1 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
-              ติดต่อเรา
+              ติดต่อเรา <span className="text-muted-foreground font-medium">/ Contact Us</span>
             </h1>
             <p className="text-muted-foreground mt-4 text-base">
               ส่งข้อความหาพิม หรือแอดไลน์มาได้เลยค่ะ พิมตอบทุกข้อความ
+              <br />
+              Send us a message or add us on LINE — we reply to every message.
             </p>
           </motion.div>
         </div>
@@ -162,7 +164,9 @@ export default function ContactPage({ profile }: { profile: Profile }) {
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
             {/* Left: Contact Form */}
             <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-              <h2 className="text-foreground mb-6 text-xl font-semibold">ส่งข้อความหาพิม</h2>
+              <h2 className="text-foreground mb-6 text-xl font-semibold">
+                ส่งข้อความหาพิม / Send Us a Message
+              </h2>
 
               {submitted ? (
                 <motion.div
@@ -172,9 +176,11 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 >
                   <CheckCircle className="mx-auto size-12 text-green-500" />
                   <h3 className="mt-4 text-xl font-bold text-[#1B4D3E]">
-                    ส่งข้อความเรียบร้อยแล้ว!
+                    ส่งข้อความเรียบร้อยแล้ว! / Message sent!
                   </h3>
-                  <p className="mt-2 text-gray-600">พิมจะติดต่อกลับโดยเร็วที่สุดค่ะ</p>
+                  <p className="mt-2 text-gray-600">
+                    พิมจะติดต่อกลับโดยเร็วที่สุดค่ะ / We&apos;ll get back to you shortly.
+                  </p>
                   <Button
                     className="mt-6"
                     variant="outline"
@@ -183,14 +189,14 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                       setForm({ name: "", phone: "", email: "", message: "" })
                     }}
                   >
-                    ส่งข้อความอีกครั้ง
+                    ส่งข้อความอีกครั้ง / Send another
                   </Button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
                   <div className="flex flex-col gap-1.5">
                     <label htmlFor="name" className="text-foreground text-sm font-medium">
-                      ชื่อ-นามสกุล <span className="text-destructive">*</span>
+                      ชื่อ-นามสกุล / Full Name <span className="text-destructive">*</span>
                     </label>
                     <Input
                       id="name"
@@ -207,7 +213,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
 
                   <div className="flex flex-col gap-1.5">
                     <label htmlFor="phone" className="text-foreground text-sm font-medium">
-                      เบอร์โทรศัพท์ <span className="text-destructive">*</span>
+                      เบอร์โทรศัพท์ / Phone <span className="text-destructive">*</span>
                     </label>
                     <Input
                       id="phone"
@@ -224,7 +230,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
 
                   <div className="flex flex-col gap-1.5">
                     <label htmlFor="email" className="text-foreground text-sm font-medium">
-                      อีเมล
+                      อีเมล / Email
                     </label>
                     <Input
                       id="email"
@@ -240,7 +246,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
 
                   <div className="flex flex-col gap-1.5">
                     <label htmlFor="message" className="text-foreground text-sm font-medium">
-                      ข้อความ <span className="text-destructive">*</span>
+                      ข้อความ / Message <span className="text-destructive">*</span>
                     </label>
                     <textarea
                       id="message"
@@ -271,12 +277,12 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                     {submitting ? (
                       <>
                         <Loader2 className="size-4 animate-spin" />
-                        กำลังส่ง...
+                        กำลังส่ง... / Sending...
                       </>
                     ) : (
                       <>
                         <Mail className="size-4" />
-                        ส่งข้อความ
+                        ส่งข้อความ / Send Message
                       </>
                     )}
                   </Button>
@@ -293,7 +299,9 @@ export default function ContactPage({ profile }: { profile: Profile }) {
               custom={1}
             >
               <div>
-                <h2 className="text-foreground mb-6 text-xl font-semibold">ช่องทางติดต่อ</h2>
+                <h2 className="text-foreground mb-6 text-xl font-semibold">
+                  ช่องทางติดต่อ / Contact Channels
+                </h2>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {contactCards.map((card) => {
                     const inner = (

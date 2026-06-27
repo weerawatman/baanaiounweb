@@ -23,7 +23,6 @@ export default async function HomeRoute() {
       testimonials={testimonials}
       faqs={faqs}
       heroImage={profile.heroImageUrl}
-      fullName={profile.fullName}
       lineUrl={profile.lineUrl}
     />
   )
