@@ -41,9 +41,17 @@ export default function CTAWithForm({
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-bold text-[#1B4D3E] sm:text-3xl">พร้อมเริ่มต้นหรือยัง?</h2>
+            <h2 className="text-2xl font-bold text-[#1B4D3E] sm:text-3xl">
+              พร้อมเริ่มต้นหรือยัง?
+              <span className="mt-1 block text-base font-medium text-[#D4A843]">
+                Ready to Get Started?
+              </span>
+            </h2>
             <p className="max-w-xl text-gray-600">
               คุยง่าย ตรงไปตรงมา พร้อมดูแลทุกเคสด้วยความจริงใจ
+              <span className="mt-1 block text-sm text-gray-400">
+                Straightforward communication, handling every case with sincerity.
+              </span>
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               {primary.action === "form" ? (

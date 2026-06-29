@@ -80,5 +80,25 @@ export const LIST_PROPERTY_CONTENT = {
       href: "/contact"
     }
   },
+  steps: {
+    headline: "ฝากทรัพย์ง่ายๆ ใน 3 ขั้นตอน | 3 Simple Steps to List",
+    items: [
+      {
+        number: 1,
+        title: "ส่งข้อมูลเบื้องต้น (Submit Your Info)",
+        description: "กรอกฟอร์ม 1 นาที ทีมงานพร้อมรับข้อมูลและติดต่อกลับทันที",
+      },
+      {
+        number: 2,
+        title: "ประเมินราคาและถ่ายทำ (Valuation & Media)",
+        description: "ทีมลงพื้นที่ประเมินราคาตลาด + ถ่ายภาพและวิดีโออย่างมืออาชีพ",
+      },
+      {
+        number: 3,
+        title: "ทำการตลาดและปิดดีล (Market & Close)",
+        description: "หาลูกค้าจริง เจรจา จัดการเอกสารครบวงจรจนถึงวันโอน",
+      },
+    ],
+  },
   formTag: "owner"
 }

@@ -80,5 +80,25 @@ export const FIND_PROPERTY_CONTENT = {
       href: "#listings"
     }
   },
+  steps: {
+    headline: "เป็นเจ้าของบ้านง่ายๆ ใน 3 ขั้นตอน | 3 Simple Steps to Your New Home",
+    items: [
+      {
+        number: 1,
+        title: "แจ้งความต้องการ (Tell Us What You Need)",
+        description: "ระบุทำเล สเปก งบประมาณ — ทีมงานจับคู่ทรัพย์ที่ตรงใจให้ทันที",
+      },
+      {
+        number: 2,
+        title: "ชมทรัพย์และประเมินสินเชื่อ (Viewings & Loan Pre-check)",
+        description: "เราพาดูทรัพย์จริง นัดธนาคาร และประเมินวงเงินกู้ล่วงหน้าฟรี",
+      },
+      {
+        number: 3,
+        title: "ทำสัญญาและย้ายเข้าอยู่ (Close & Move In)",
+        description: "ดูแลสัญญาและเอกสารครบจนถึงวันโอนกรรมสิทธิ์ที่กรมที่ดิน",
+      },
+    ],
+  },
   formTag: "buyer"
 }

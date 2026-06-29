@@ -85,5 +85,25 @@ export const COAGENT_CONTENT = {
       href: "/contact"
     },
   },
+  steps: {
+    headline: "ขั้นตอนการทำงานร่วมกัน | 3 Steps to Close Deals Together",
+    items: [
+      {
+        number: 1,
+        title: "ส่งข้อมูลทรัพย์ (Submit Your Listing)",
+        description: "แชร์ข้อมูลและรูปทรัพย์มาให้ทีม บ้านไออุ่น กรอกฟอร์มแค่ 1 นาที",
+      },
+      {
+        number: 2,
+        title: "จับคู่ลูกค้า & พาชมทรัพย์ (Match & View)",
+        description: "เราจัดการหาลูกค้าที่ผ่านการคัดกรองแล้ว และนัดพาชมทรัพย์",
+      },
+      {
+        number: 3,
+        title: "ปิดดีล & รับส่วนแบ่ง (Close & Split)",
+        description: "ปิดดีลร่วมกัน แบ่งคอมมิชชันชัดเจนตามสัญญา Co-Broke",
+      },
+    ],
+  },
   formTag: "co-agent"
 }

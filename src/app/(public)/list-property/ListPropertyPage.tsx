@@ -1,7 +1,7 @@
 "use client"
 
 import Breadcrumb from "@/components/layout/Breadcrumb"
-import { PainPointsHero, SolutionsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
+import { PainPointsHero, SolutionsSection, StepsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { LIST_PROPERTY_CONTENT } from "@/content/list-property"
 import { type FAQ } from "@/types"
 import SectionTitle from "@/components/layout/SectionTitle"
@@ -26,26 +26,49 @@ export default function ListPropertyPage({ faqs }: ListPropertyPageProps) {
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "ฝากขาย/เช่า | List Your Property" }]} />
+        <Breadcrumb
+          items={[
+            { label: "หน้าแรก", href: "/" },
+            { label: "บริการของเรา | Our Services", href: "/services" },
+            { label: "ฝากขาย/เช่า | List Your Property" },
+          ]}
+        />
       </div>
 
       {/* Pain Points Hero */}
       <PainPointsHero
         headline={LIST_PROPERTY_CONTENT.painPoints.headline.th}
-        points={LIST_PROPERTY_CONTENT.painPoints.points.map(p => p.th)}
+        headlineEn={LIST_PROPERTY_CONTENT.painPoints.headline.en}
+        points={LIST_PROPERTY_CONTENT.painPoints.points.map((p) => p.th)}
+        pointsEn={LIST_PROPERTY_CONTENT.painPoints.points.map((p) => p.en)}
       />
 
       {/* Solutions */}
       <SolutionsSection
         headline={LIST_PROPERTY_CONTENT.solutions.headline.th}
+        headlineEn={LIST_PROPERTY_CONTENT.solutions.headline.en}
         subtitle={LIST_PROPERTY_CONTENT.solutions.subtitle}
         description={LIST_PROPERTY_CONTENT.solutions.description.th}
+        descriptionEn={LIST_PROPERTY_CONTENT.solutions.description.en}
         highlight={LIST_PROPERTY_CONTENT.solutions.highlight.th}
-        features={LIST_PROPERTY_CONTENT.solutions.features.map(f => f.th)}
+        highlightEn={LIST_PROPERTY_CONTENT.solutions.highlight.en}
+        features={LIST_PROPERTY_CONTENT.solutions.features.map((f) => f.th)}
+        featuresEn={LIST_PROPERTY_CONTENT.solutions.features.map((f) => f.en)}
+      />
+
+      {/* 3 Steps */}
+      <StepsSection
+        headline={LIST_PROPERTY_CONTENT.steps.headline}
+        steps={LIST_PROPERTY_CONTENT.steps.items}
       />
 
       {/* Emotional Hook */}
-      <EmotionalHook quote={LIST_PROPERTY_CONTENT.hook.quote.th} message={LIST_PROPERTY_CONTENT.hook.message.th} />
+      <EmotionalHook
+        quote={LIST_PROPERTY_CONTENT.hook.quote.th}
+        quoteEn={LIST_PROPERTY_CONTENT.hook.quote.en}
+        message={LIST_PROPERTY_CONTENT.hook.message.th}
+        messageEn={LIST_PROPERTY_CONTENT.hook.message.en}
+      />
 
       {/* CTA + Form */}
       <CTAWithForm

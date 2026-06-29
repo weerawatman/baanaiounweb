@@ -859,6 +859,13 @@ export default function PropertyForm({ variant, preselect, className }: Property
     )
   }
 
+  const submitLabelMap: Record<FormVariant, string> = {
+    owner: "ส่งข้อมูลให้ทีมงาน | Submit Information",
+    buyer: "ส่งข้อมูลให้ทีมงาน | Submit Inquiry",
+    "co-agent": "ส่งข้อมูลทรัพย์ Co-Agent | Submit Co-Agent Listing",
+    academy: "สมัครคอร์สพลิกชีวิต | Register Now",
+  }
+
   const submitSection = (
     <>
       <ErrorSummary error={form.error} fieldErrors={form.fieldErrors} />
@@ -876,7 +883,7 @@ export default function PropertyForm({ variant, preselect, className }: Property
         ) : (
           <>
             <Send className="size-4" />
-            ส่งข้อมูล | Submit Information
+            {submitLabelMap[variant]}
           </>
         )}
       </Button>

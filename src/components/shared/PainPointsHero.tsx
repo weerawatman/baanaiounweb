@@ -1,52 +1,53 @@
-"use client"
-
-import { motion } from "framer-motion"
 import { AlertCircle } from "lucide-react"
 
 interface PainPointsHeroProps {
   headline: string
+  headlineEn?: string
   points: string[]
+  pointsEn?: string[]
   className?: string
 }
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.12 },
-  }),
-}
-
-export default function PainPointsHero({ headline, points, className }: PainPointsHeroProps) {
+export default function PainPointsHero({
+  headline,
+  headlineEn,
+  points,
+  pointsEn,
+  className,
+}: PainPointsHeroProps) {
   return (
     <section
       className={`bg-gradient-to-b from-[#F5F0E8] to-white py-16 sm:py-24 ${className ?? ""}`}
     >
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center" initial="hidden" animate="visible" variants={fadeUp}>
-          <h1 className="text-3xl leading-tight font-bold tracking-tight whitespace-pre-line text-[#1B4D3E] sm:text-4xl lg:text-5xl">
+        <div className="text-center" style={{ animation: "fade-up 0.5s ease both" }}>
+          <h1 className="text-3xl font-bold leading-tight tracking-tight text-[#1B4D3E] sm:text-4xl lg:text-5xl whitespace-pre-line">
             {headline}
           </h1>
-        </motion.div>
+          {headlineEn && (
+            <p className="mt-2 text-base font-medium text-[#D4A843] sm:text-lg">{headlineEn}</p>
+          )}
+        </div>
 
-        <motion.div
-          className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2"
-          initial="hidden"
-          animate="visible"
-        >
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {points.map((point, i) => (
-            <motion.div
+            <div
               key={i}
               className="ring-foreground/5 flex items-start gap-3 rounded-xl bg-white p-5 shadow-sm ring-1"
-              variants={fadeUp}
-              custom={i + 1}
+              style={{ animation: `fade-up 0.5s ease ${(i + 1) * 0.1}s both` }}
             >
               <AlertCircle className="mt-0.5 size-5 shrink-0 text-amber-500" />
-              <p className="text-sm leading-relaxed text-gray-700 sm:text-base">{point}</p>
-            </motion.div>
+              <div>
+                <p className="text-sm leading-relaxed text-gray-700 sm:text-base">{point}</p>
+                {pointsEn?.[i] && (
+                  <p className="mt-0.5 text-xs leading-relaxed text-[#D4A843]/75 sm:text-sm">
+                    {pointsEn[i]}
+                  </p>
+                )}
+              </div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
