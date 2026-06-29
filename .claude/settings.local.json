@@ -34,7 +34,16 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/about\")",
       "Bash(curl -s \"http://localhost:3000/about\")",
       "Bash(taskkill //IM node.exe //F)",
-      "Bash(npm start *)"
+      "Bash(npm start *)",
+      "mcp__claude_ai_Supabase__execute_sql",
+      "Bash(npx prettier *)",
+      "Bash(git reset *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" \"https://placehold.co/200x200/1B4D3E/FFFFFF?text=พิม\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" \"https://placehold.co/800x600/F5F0E8/1B4D3E?text=คุณพิม+ยิ้มแย้ม+ในบ้านรีโนเวท\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" \"https://placehold.co/800x600\")",
+      "Bash(git fetch *)",
+      "Bash(git rev-list *)",
+      "Bash(git mv *)"
     ],
     "additionalDirectories": [
       "c:\\Projects\\baanaiounweb\\src\\app\\(admin)\\admin\\(dashboard)\\properties\\[id]"
