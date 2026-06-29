@@ -1,45 +1,89 @@
 /**
- * Page content: Co-Agent เครือข่ายนายหน้า (/co-agent)
+ * Page content: Co-Agent เครือข่ายนายหน้า (/co-agent) - Rev.00 bilingual
  */
 export const COAGENT_CONTENT = {
   seo: {
-    title: "Co-Agent เครือข่ายนายหน้าอสังหาฯ — บ้านไออุ่น พร็อพเพอร์ตี้",
-    description:
-      "มีทรัพย์แต่ปิดการขายไม่ได้? ฝากทรัพย์เข้าระบบบ้านไออุ่นฟรี! ช่วยทำการตลาด คัดกรองลูกค้า ทำงานโปร่งใส วิน-วิน ทุกฝ่าย",
-    keywords:
-      "หาเครือข่ายนายหน้าอสังหา, โคเอเจนต์อสังหา, หาลูกค้าซื้อบ้าน, มีทรัพย์แต่ปิดการขายไม่ได้, กลุ่มนายหน้าอสังหา",
+    title: "ร่วมเป็น Co-Agent กับ บ้านไออุ่น | Partner with Baan Ai Oun",
+    description: {
+      th: "มีทรัพย์แต่หาลูกค้าไม่ได้? กังวลค่าการตลาด? — ฝากทรัพย์ฟรี! เราช่วยทำการตลาดจนกว่าจะปิดดีลได้",
+      en: "Have listings but no clients? Worried about marketing costs? We market your listings for free until closed!"
+    }
   },
   painPoints: {
-    headline: "มีทรัพย์ในมือ\nแต่ยังหาลูกค้ามาแมตช์ไม่ได้?",
+    headline: {
+      th: "มีทรัพย์แต่หาลูกค้าไม่ได้?\nกังวลค่าการตลาด?",
+      en: "Have listings but no clients?\nWorried about marketing costs?"
+    },
     points: [
-      "ปิดการขายช้าเพราะทำการตลาดคนเดียว?",
-      "ต้องการเครือข่ายช่วยโปรโมททรัพย์?",
-      "เสียเวลาลงดูบ้านกับลูกค้าที่ยังไม่พร้อม?",
-      "อยากมีระบบช่วยคัดกรองลูกค้าตัวจริง?",
-    ],
+      {
+        th: "📊 ทำการตลาดคนเดียว ปิดการขายช้า",
+        en: "📊 Marketing alone, closing slowly"
+      },
+      {
+        th: "💸 กังวลเรื่องค่าโฆษณาและการตลาด",
+        en: "💸 Worried about ad and marketing costs"
+      },
+      {
+        th: "⏰ เสียเวลากับลูกค้าที่ยังไม่พร้อม",
+        en: "⏰ Wasting time with unready clients"
+      },
+      {
+        th: "🤝 อยากมีเครือข่ายช่วยโปรโมททรัพย์",
+        en: "🤝 Want a network to help promote listings"
+      }
+    ]
   },
   solutions: {
-    headline: "ยินดีต้อนรับ Co-Agent!",
-    subtitle: "เครือข่ายนายหน้าบ้านไออุ่น",
-    description:
-      "สำหรับเพื่อนร่วมอาชีพ เราทำงานเป็นทีมเวิร์ก คุณสามารถนำทรัพย์มาฝากขาย/เช่าเข้าระบบกับเราได้ ฟรี! เราไม่คิดค่าบริการใดๆ มีระบบหลังบ้านช่วยซัพพอร์ต ช่วยทำการตลาดจนกว่าจะช่วยคุณปิดการขายได้",
-    highlight: "ทำงานโปร่งใส วิน-วิน ทุกฝ่าย",
+    headline: {
+      th: "ทำไมถึงควร Co-Broke กับ บ้านไออุ่น?",
+      en: "Why Co-Broke with Baan Ai Oun?"
+    },
+    subtitle: {
+      th: "เครือข่ายนายหน้าบ้านไออุ่น",
+      en: "Baan Ai Oun Agent Network"
+    },
+    description: {
+      th: "สำหรับเพื่อนร่วมอาชีพ เราทำงานเป็นทีมเวิร์ก คุณสามารถนำทรัพย์มาฝากขาย/เช่าเข้าระบบกับเราได้ ฟรี! เราไม่คิดค่าบริการใดๆ",
+      en: "For fellow professionals, we work as a team. You can bring your listings to our system for free! We don't charge any service fees."
+    },
+    highlight: {
+      th: "🤝 ฝากทรัพย์ฟรี! เราช่วยทำการตลาดจนกว่าจะปิดดีลได้",
+      en: "🤝 Free listings! We market until closed"
+    },
     features: [
-      "ฝากทรัพย์เข้าระบบฟรี ไม่มีค่าใช้จ่าย",
-      "ระบบหลังบ้านช่วยจัดการทรัพย์",
-      "ทำการตลาดออนไลน์ให้ทุกช่องทาง",
-      "คัดกรองลูกค้าตัวจริงก่อนนัดดูทรัพย์",
-      "แบ่งคอมมิชชั่นโปร่งใส ตามที่ตกลง",
-    ],
+      {
+        th: "👥 เรามีฐานลูกค้าพร้อมซื้อ-เช่า (Access to Ready Clients)",
+        en: "👥 Access to ready-to-buy/rent clients"
+      },
+      {
+        th: "📈 ทำการตลาดเชิงรุกให้ฟรี (Zero Marketing Costs)",
+        en: "📈 Zero marketing costs, we handle it"
+      },
+      {
+        th: "📋 โปร่งใส แบ่งคอมมิชชันชัดเจน (Transparent Commission Split)",
+        en: "📋 Transparent commission split, clear terms"
+      }
+    ]
   },
   hook: {
-    quote: "เติบโตไปพร้อมกันในสายอาชีพอสังหาฯ",
-    message:
-      'ให้ "บ้านไออุ่น" เป็นพาร์ทเนอร์ที่ช่วยดูแลทุกเคสของคุณด้วยความจริงใจ คุยง่าย ตรงไปตรงมา',
+    quote: {
+      th: '"เติบโตไปพร้อมกันในสายอาชีพอสังหาฯ"',
+      en: '"Grow together in the real estate profession"'
+    },
+    message: {
+      th: 'ให้ "บ้านไออุ่น" เป็นพาร์ทเนอร์ที่ช่วยดูแลทุกเคสของคุณด้วยความจริงใจ คุยง่าย ตรงไปตรงมา',
+      en: 'Let "Baan Ai Oun" be your partner that genuinely takes care of every case with you. Easy communication, straight talk.'
+    }
   },
   cta: {
-    primary: { label: "ส่งทรัพย์เข้าระบบ / เสนอ Co-Broker", action: "form" as const },
-    secondary: { label: "ร่วมเป็นพาร์ทเนอร์กับเรา", href: "/contact" },
+    primary: {
+      label: "ส่งทรัพย์ Co-Agent | Submit Co-Agent Listing",
+      action: "form" as const
+    },
+    secondary: {
+      label: "ร่วมเป็นพาร์ทเนอร์กับเรา | Partner with Us",
+      href: "/contact"
+    },
   },
-  formTag: "co-agent",
+  formTag: "co-agent"
 }

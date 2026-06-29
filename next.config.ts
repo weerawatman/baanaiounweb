@@ -12,6 +12,20 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com" },
     ],
   },
+  async redirects() {
+    return [
+      // Old owner -> new list-property
+      { source: '/owners', destination: '/list-property', permanent: true },
+      // Old buy -> new find-property
+      { source: '/buy', destination: '/find-property', permanent: true },
+      // Old rent -> new find-property
+      { source: '/rent', destination: '/find-property', permanent: true },
+      // Old land -> new find-property
+      { source: '/land', destination: '/find-property', permanent: true },
+      // Old academy -> new agent-course
+      { source: '/academy', destination: '/agent-course', permanent: true },
+    ]
+  },
 }
 
 export default nextConfig

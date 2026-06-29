@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createServerSupabase } from "@/lib/supabase"
-import { sendLineNotify } from "@/lib/line-notify"
+import { sendLineMessage } from "@/lib/line-messaging"
+import { sendEmailNotification } from "@/lib/email"
 
 // ─── Types ───────────────────────────────────────────────────────────────
 
@@ -23,6 +24,8 @@ interface FormSubmission {
   details?: string
   preselect?: string // SALE | RENT | LAND
   imageUrls?: string[] // uploaded property image URLs
+  commission?: string // for Co-Agent
+  occupation?: string // for Academy
 }
 
 // ─── Validation ──────────────────────────────────────────────────────────
@@ -76,6 +79,8 @@ function validateSubmission(
       imageUrls: Array.isArray(d.imageUrls)
         ? (d.imageUrls as string[]).filter((u) => typeof u === "string")
         : undefined,
+      commission: d.commission ? String(d.commission) : undefined,
+      occupation: d.occupation ? String(d.occupation) : undefined,
     },
   }
 }
@@ -120,6 +125,8 @@ export async function POST(request: NextRequest) {
           details: data.details,
           preselect: data.preselect,
           image_urls: data.imageUrls ?? [],
+          commission: data.commission,
+          occupation: data.occupation,
         })
 
         if (dbError) {
@@ -132,33 +139,60 @@ export async function POST(request: NextRequest) {
       console.error("[Supabase] Connection error:", err)
     }
 
-    // 2) Send LINE Notify
+    // 2) Send LINE Messaging API
     let lineSuccess = false
     try {
-      lineSuccess = await sendLineNotify({
+      lineSuccess = await sendLineMessage({
         formTag: data.formTag,
         name: data.name,
         contact: contactInfo,
         details: {
-          ...(data.propertyType ? { ประเภททรัพย์: data.propertyType } : {}),
-          ...(data.propertySize ? { ขนาดพื้นที่: data.propertySize } : {}),
-          ...(data.location ? { ที่ตั้ง: data.location } : {}),
-          ...(data.price ? { ราคา: `${data.price} บาท` } : {}),
-          ...(data.budget ? { งบประมาณ: `${data.budget} บาท` } : {}),
-          ...(data.requirement ? { ความต้องการ: data.requirement } : {}),
-          ...(data.purpose ? { วัตถุประสงค์: data.purpose } : {}),
-          ...(data.details ? { รายละเอียดเพิ่มเติม: data.details } : {}),
-          ...(data.imageUrls?.length ? { รูปภาพ: `${data.imageUrls.length} รูป` } : {}),
+          ...(data.purpose ? { purpose: data.purpose } : {}),
+          ...(data.requirement ? { requirement: data.requirement } : {}),
+          ...(data.propertyType ? { propertyType: data.propertyType } : {}),
+          ...(data.location ? { location: data.location } : {}),
+          ...(data.price ? { price: data.price } : {}),
+          ...(data.budget ? { budget: data.budget } : {}),
+          ...(data.lineId ? { lineId: data.lineId } : {}),
+          ...(data.commission ? { commission: data.commission } : {}),
+          ...(data.occupation ? { occupation: data.occupation } : {}),
+          ...(data.details ? { details: data.details } : {}),
         },
       })
     } catch (err) {
-      console.error("[LINE Notify] Error:", err)
+      console.error("[LINE Messaging] Error:", err)
+    }
+
+    // 3) Send Email Notification
+    let emailSuccess = false
+    try {
+      emailSuccess = await sendEmailNotification({
+        formTag: data.formTag,
+        name: data.name,
+        contact: contactInfo,
+        details: {
+          ...(data.purpose ? { purpose: data.purpose } : {}),
+          ...(data.requirement ? { requirement: data.requirement } : {}),
+          ...(data.propertyType ? { propertyType: data.propertyType } : {}),
+          ...(data.location ? { location: data.location } : {}),
+          ...(data.price ? { price: data.price } : {}),
+          ...(data.budget ? { budget: data.budget } : {}),
+          ...(data.lineId ? { lineId: data.lineId } : {}),
+          ...(data.commission ? { commission: data.commission } : {}),
+          ...(data.occupation ? { occupation: data.occupation } : {}),
+          ...(data.details ? { details: data.details } : {}),
+          ...(data.contact ? { contact: data.contact } : {}),
+        },
+      })
+    } catch (err) {
+      console.error("[Email] Error:", err)
     }
 
     return NextResponse.json({
       success: true,
       saved: dbSuccess,
-      notified: lineSuccess,
+      lineNotified: lineSuccess,
+      emailNotified: emailSuccess,
     })
   } catch {
     return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })

@@ -1,5 +1,5 @@
 /**
- * Client-side form validation rules for Baan Ai Oun forms.
+ * Client-side form validation rules for Baan Ai Oun forms (Rev.00 bilingual).
  *
  * Each form variant defines which fields are required and
  * optional validation patterns (phone, email format, etc.).
@@ -26,35 +26,41 @@ const _PHONE_LOOSE = /^[\d+\-\s()]{8,15}$/ // international / any format (reserv
 // ─── Schemas per form variant + tab ─────────────────────────────────────
 
 const SCHEMAS: Record<string, ValidationSchema> = {
-  // Owner — Thai
+  // Owner — Thai (list-property)
   owner: {
     name: { required: true, minLength: 2 },
     phone: {
       required: true,
       pattern: THAI_PHONE,
-      patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
+      patternMessage: "Please enter a valid phone number (e.g., 0812345678) | กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
     },
     propertyType: { required: true },
+    purpose: { required: true },
   },
   // Owner — Foreign
   "owner-foreign": {
     name: { required: true, minLength: 2 },
     contact: { required: true, minLength: 3 },
+    propertyType: { required: true },
+    purpose: { required: true },
   },
-  // Buyer — Thai
+  // Buyer — Thai (find-property)
   buyer: {
     name: { required: true, minLength: 2 },
     phone: {
       required: true,
       pattern: THAI_PHONE,
-      patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
+      patternMessage: "Please enter a valid phone number (e.g., 0812345678) | กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
     },
     requirement: { required: true },
+    propertyType: { required: true },
   },
   // Buyer — Foreign
   "buyer-foreign": {
     name: { required: true, minLength: 2 },
     contact: { required: true, minLength: 3 },
+    requirement: { required: true },
+    propertyType: { required: true },
   },
   // Co-Agent
   "co-agent": {
@@ -62,17 +68,21 @@ const SCHEMAS: Record<string, ValidationSchema> = {
     phone: {
       required: true,
       pattern: THAI_PHONE,
-      patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
+      patternMessage: "Please enter a valid phone number (e.g., 0812345678) | กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
     },
+    lineId: { required: true },
+    propertyType: { required: true },
   },
-  // Academy
+  // Academy (agent-course)
   academy: {
     name: { required: true, minLength: 2 },
     phone: {
       required: true,
       pattern: THAI_PHONE,
-      patternMessage: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
+      patternMessage: "Please enter a valid phone number (e.g., 0812345678) | กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (เช่น 0812345678)",
     },
+    lineId: { required: true },
+    occupation: { required: true },
   },
   // Contact page
   contact: {
@@ -80,18 +90,22 @@ const SCHEMAS: Record<string, ValidationSchema> = {
   },
 }
 
-// ─── Field labels (for error messages) ───────────────────────────────────
+// ─── Field labels (bilingual for error messages) ─────────────────────────
 
-const FIELD_LABELS: Record<string, string> = {
-  name: "ชื่อ-นามสกุล",
-  phone: "เบอร์โทรศัพท์",
-  contact: "ช่องทางติดต่อ",
-  propertyType: "ประเภททรัพย์",
-  requirement: "ประเภททรัพย์ที่ต้องการ",
-  lineId: "ไอดีไลน์",
-  location: "ที่ตั้ง",
-  price: "ราคา",
-  budget: "งบประมาณ",
+const FIELD_LABELS: Record<string, { th: string; en: string }> = {
+  name: { th: "ชื่อ-นามสกุล", en: "Full Name" },
+  phone: { th: "เบอร์โทรศัพท์", en: "Phone Number" },
+  contact: { th: "ช่องทางติดต่อ", en: "Contact Information" },
+  propertyType: { th: "ประเภททรัพย์", en: "Property Type" },
+  requirement: { th: "ความต้องการ", en: "Requirement" },
+  purpose: { th: "จุดประสงค์", en: "Purpose" },
+  lineId: { th: "LINE ID", en: "LINE ID" },
+  location: { th: "ทำเลที่ตั้ง", en: "Location" },
+  price: { th: "ราคา", en: "Price" },
+  budget: { th: "งบประมาณ", en: "Budget" },
+  occupation: { th: "อาชีพปัจจุบัน", en: "Current Occupation" },
+  goal: { th: "เป้าหมายที่อยากได้", en: "Your Goal" },
+  commission: { th: "เงื่อนไขคอมมิชชัน", en: "Commission Terms" },
 }
 
 // ─── Validate function ───────────────────────────────────────────────────
@@ -109,19 +123,19 @@ export function validateForm(
     const value = (data[field] ?? "").trim()
 
     if (rule.required && !value) {
-      const label = FIELD_LABELS[field] ?? field
-      errors[field] = `กรุณากรอก${label}`
+      const label = FIELD_LABELS[field] ?? { th: field, en: field }
+      errors[field] = `Please enter ${label.en} | กรุณากรอก${label.th}`
       continue
     }
 
     if (value && rule.minLength && value.length < rule.minLength) {
-      const label = FIELD_LABELS[field] ?? field
-      errors[field] = `${label}ต้องมีอย่างน้อย ${rule.minLength} ตัวอักษร`
+      const label = FIELD_LABELS[field] ?? { th: field, en: field }
+      errors[field] = `${label.en} must be at least ${rule.minLength} characters | ${label.th}ต้องมีอย่างน้อย ${rule.minLength} ตัวอักษร`
       continue
     }
 
     if (value && rule.pattern && !rule.pattern.test(value.replace(/[\s-]/g, ""))) {
-      errors[field] = rule.patternMessage ?? `รูปแบบ${FIELD_LABELS[field] ?? field}ไม่ถูกต้อง`
+      errors[field] = rule.patternMessage ?? `Invalid ${FIELD_LABELS[field]?.en ?? field} format | รูปแบบ${FIELD_LABELS[field]?.th ?? field}ไม่ถูกต้อง`
     }
   }
 

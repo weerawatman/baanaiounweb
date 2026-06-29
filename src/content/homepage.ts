@@ -31,7 +31,7 @@ export const SERVICE_CARDS = [
     solutionEn: "Full-service marketing, fast-closing, and secure transactions.",
     ctaTh: "ฝากขาย/ปล่อยเช่า",
     ctaEn: "List Your Property",
-    href: "/owners",
+    href: "/list-property",
   },
   {
     icon: "Search",
@@ -45,7 +45,7 @@ export const SERVICE_CARDS = [
       "Curated property matching, expert loan assistance, and seamless contract handling.",
     ctaTh: "ค้นหาบ้าน/ปรึกษาสินเชื่อ",
     ctaEn: "Find Your Home",
-    href: "/buy",
+    href: "/find-property",
   },
   {
     icon: "Users",
@@ -71,7 +71,7 @@ export const SERVICE_CARDS = [
     solutionEn: "Take our 'hands-on' agent course! Start from zero.",
     ctaTh: "สมัครคอร์สนายหน้า",
     ctaEn: "",
-    href: "/academy",
+    href: "/agent-course",
   },
 ] as const
 export const HOMEPAGE_SERVICES = [
@@ -80,7 +80,7 @@ export const HOMEPAGE_SERVICES = [
     title: "ฝากขาย / ปล่อยเช่า",
     description:
       "หมดกังวลเรื่องหาคนซื้อหรือคนเช่า เราช่วยดูแลตั้งแต่ประเมินราคา ทำการตลาด จนปิดดีล",
-    href: "/owners",
+    href: "/list-property",
     color: "#D4A843",
     target: "เจ้าของทรัพย์",
   },
@@ -88,7 +88,7 @@ export const HOMEPAGE_SERVICES = [
     icon: "Search" as const,
     title: "หาบ้าน / ที่ดิน",
     description: "บอกสเปกและงบ เราช่วยจัดหาให้ตรงใจ พร้อมช่วยกู้สินเชื่อฟรี!",
-    href: "/buy",
+    href: "/find-property",
     color: "#1B4D3E",
     target: "ผู้ที่กำลังหาซื้อ/เช่า",
   },
@@ -104,7 +104,7 @@ export const HOMEPAGE_SERVICES = [
     icon: "GraduationCap" as const,
     title: "สร้างรายได้กับอสังหาฯ",
     description: "คอร์สสอนทำจริง จับมือทำ ไม่ต้องใช้ทุน เปลี่ยนความกลัวเป็นรายได้",
-    href: "/academy",
+    href: "/agent-course",
     color: "#E85D75",
     target: "ผู้สนใจอาชีพนายหน้า",
   },
@@ -133,6 +133,6 @@ export const HOMEPAGE_PAIN_POINTS = [
     target: "อยากมีรายได้เสริม",
     pain: "ไม่มีทุน ไม่รู้เริ่มยังไง?",
     solution: "เรียนจริง ทำจริง ไม่ต้องใช้ทุน",
-    href: "/academy",
+    href: "/agent-course",
   },
 ]
