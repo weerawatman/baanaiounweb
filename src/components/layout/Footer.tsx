@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { Phone, Mail, MapPin } from "lucide-react"
 import { SITE_CONFIG } from "@/config/site"
-import { NAV_ITEMS } from "@/config/navigation"
 import type { Profile } from "@/types"
 
 export default function Footer({ profile }: { profile: Profile }) {
@@ -9,32 +8,14 @@ export default function Footer({ profile }: { profile: Profile }) {
 
   return (
     <footer className="bg-primary text-white">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* ข้อความปิดท้าย (Rev.04) */}
-        <p className="mb-10 text-center text-base font-medium text-white/90 sm:text-lg">
-          เชื่อมั่นในทีมงานผู้เชี่ยวชาญ ที่พร้อมดูแลความสุขในทุกก้าวของอสังหาฯ ของคุณ
-        </p>
-
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-          {/* Column 1: Company Info + Nav */}
-          <div className="flex flex-col gap-4">
-            <div>
-              <h2 className="text-xl font-bold">{profile.siteName || SITE_CONFIG.name}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-white/70">
-                {profile.slogan || SITE_CONFIG.slogan}
-              </p>
-            </div>
-            <nav className="flex flex-col gap-1.5">
-              {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="w-fit text-sm text-white/80 transition-colors hover:text-white"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {/* Column 1: Company Info */}
+          <div className="flex flex-col gap-2">
+            <h2 className="text-lg font-bold">{profile.siteName || SITE_CONFIG.name}</h2>
+            <p className="text-sm leading-relaxed text-white/70">
+              {profile.slogan || SITE_CONFIG.slogan}
+            </p>
           </div>
 
           {/* Column 2: Contact Info */}
@@ -137,7 +118,7 @@ export default function Footer({ profile }: { profile: Profile }) {
         </div>
 
         {/* เมนูเสริม + Copyright */}
-        <div className="mt-10 flex flex-col items-center gap-3 border-t border-white/20 pt-6 text-center text-sm text-white/60">
+        <div className="mt-6 flex flex-col items-center gap-2 border-t border-white/20 pt-4 text-center text-sm text-white/60">
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
             {/* Privacy เป็นลิงก์ placeholder (ยังไม่สร้างหน้าจริง) */}
             <Link href="#" className="transition-colors hover:text-white">
