@@ -82,8 +82,7 @@ export default function PropertyFilter({ properties, onFilter }: PropertyFilterP
     }
 
     onFilter(filtered)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [priceIndex, bedrooms, sort, properties])
+  }, [priceIndex, bedrooms, sort, properties, onFilter, priceOptions])
 
   return (
     <div className="border-border bg-card flex flex-wrap items-center gap-4 rounded-xl border px-4 py-3 text-sm">

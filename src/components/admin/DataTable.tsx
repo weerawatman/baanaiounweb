@@ -11,14 +11,14 @@ export interface Column<T> {
   searchable?: boolean
 }
 
-interface DataTableProps<T> {
+interface DataTableProps<T extends { id: string }> {
   data: T[]
   columns: Column<T>[]
   searchPlaceholder?: string
   emptyText?: string
 }
 
-export function DataTable<T>({
+export function DataTable<T extends { id: string }>({
   data,
   columns,
   searchPlaceholder = "ค้นหา...",
@@ -72,9 +72,9 @@ export function DataTable<T>({
                   </td>
                 </tr>
               ) : (
-                filtered.map((row, i) => (
+                filtered.map((row) => (
                   <tr
-                    key={i}
+                    key={row.id}
                     className="hover:bg-muted/20 border-b transition-colors last:border-b-0"
                   >
                     {columns.map((col) => (

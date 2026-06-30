@@ -73,13 +73,15 @@ export async function getRelatedProperties(ids: string[]): Promise<Property[]> {
   return (data as Property[]) ?? []
 }
 
+const ADMIN_FIELDS = "id, slug, title, type, price_label, status, deleted_at"
+
 export async function getProperties(): Promise<Property[]> {
   const supabase = await createClient()
   const { data, error } = await supabase
     .from("properties")
-    .select("*")
-    .is("deleted_at", null)
+    .select(ADMIN_FIELDS)
     .order("created_at", { ascending: false })
+    .limit(500)
 
   if (error) throw new Error(error.message)
   return (data as Property[]) ?? []
