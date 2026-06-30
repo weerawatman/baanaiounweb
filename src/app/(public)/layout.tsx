@@ -1,4 +1,7 @@
 import type { Metadata } from "next"
+
+export const revalidate = 3600
+
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 import StickyCTA from "@/components/layout/StickyCTA"

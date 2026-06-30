@@ -1,16 +1,25 @@
+import { unstable_cache } from "next/cache"
+import { publicClient } from "@/lib/supabase/public-client"
 import { createClient } from "@/lib/supabase/server"
 import type { Faq } from "@/lib/types/property"
 
-export async function getFaqsByPage(pageSlug: string): Promise<Faq[]> {
-  const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("faqs")
-    .select("id, question, answer, page_slug, sort_order")
-    .eq("page_slug", pageSlug)
-    .order("sort_order", { ascending: true })
-  if (error) throw new Error(error.message)
-  return (data as Faq[]) ?? []
-}
+// ─── Public (ISR-cached) ─────────────────────────────────────────────────────
+
+export const getFaqsByPage = unstable_cache(
+  async (pageSlug: string): Promise<Faq[]> => {
+    const { data, error } = await publicClient
+      .from("faqs")
+      .select("id, question, answer, page_slug, sort_order")
+      .eq("page_slug", pageSlug)
+      .order("sort_order", { ascending: true })
+    if (error) throw new Error(error.message)
+    return (data as Faq[]) ?? []
+  },
+  ["faqs-by-page"],
+  { revalidate: 3600, tags: ["faqs"] },
+)
+
+// ─── Admin (dynamic, requires auth) ─────────────────────────────────────────
 
 export async function getFaqs(): Promise<Faq[]> {
   const supabase = await createClient()
@@ -19,7 +28,6 @@ export async function getFaqs(): Promise<Faq[]> {
     .select("*")
     .order("page_slug")
     .order("sort_order", { ascending: true })
-
   if (error) throw new Error(error.message)
   return (data as Faq[]) ?? []
 }
