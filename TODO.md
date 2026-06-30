@@ -4,7 +4,7 @@
 > ทำทีละ Phase ตามลำดับ — **แต่ละ Phase มี Definition of Done (DoD) ต้องผ่านก่อนไป Phase ถัดไป**
 > เมื่อทำเสร็จให้ติ๊ก `[x]` แล้ว commit พร้อมกัน
 
-อัปเดตล่าสุด: 2026-06-23
+อัปเดตล่าสุด: 2026-06-30
 
 ---
 
@@ -26,7 +26,7 @@
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | โครงสร้างโค้ด          | ✅ `types/` `config/` `content/` `lib/` จัดแล้ว                                                                                               |
 | Supabase project       | ✅ ตั้งบน account **weerawat.m@baanaioun.com** (ref ดู `.env.local`)                                                                          |
-| Supabase schema        | ✅ migrations 001–009: `form_submissions`, `properties`, `blog_posts`, `testimonials`, `faqs`, `agent_profile` (+ `address`) + RLS + triggers |
+| Supabase schema        | ✅ IaC baseline migration `20260630000000_init_schema.sql` (14 tables, enums, triggers, RLS, storage) + data/fix migrations applied |
 | Supabase Auth          | ⏳ Users สร้างแล้ว (kanokpat/napat/supansa/weerawat) — **password ยัง `1234` ชั่วคราว**                                                       |
 | Admin Dashboard        | ✅ `/admin` — Properties CRUD, Leads, Blog (Tiptap), Testimonials, FAQs, **Profile**                                                          |
 | Public site ↔ Supabase | ✅ **wired ครบทุกหน้า** ผ่าน `src/lib/queries/` (`src/data/` เหลือแค่ `BLOG_CATEGORIES` config)                                               |
@@ -178,7 +178,7 @@ npm run dev             # http://localhost:3000
   - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`
   - `SUPABASE_SERVICE_ROLE_KEY`
   - `LINE_NOTIFY_TOKEN`
-- [ ] **Apply migrations 001–009 บน Supabase production** (ถ้ายังไม่ครบ)
+- [ ] ยืนยัน migration history ใน Supabase dashboard (`supabase_migrations` table) ครบก่อน deploy
 - [ ] ซื้อ/ตั้ง custom domain → ชี้ DNS เข้า Vercel
 - [ ] อัปเดต `NEXT_PUBLIC_SITE_URL` ให้ตรง domain จริง
 
@@ -239,7 +239,7 @@ npm run dev             # http://localhost:3000
 | Public layout + JSON-LD               | `src/app/(public)/layout.tsx`                                                        |
 | API: form submit                      | `src/app/api/submit-form/route.ts`                                                   |
 | API: image upload                     | `src/app/api/upload-images/route.ts`                                                 |
-| SQL migrations                        | `supabase/migrations/` (001–009)                                                     |
+| SQL migrations                        | `supabase/migrations/` (IaC baseline + timestamp-named migrations)                   |
 
 ---
 
