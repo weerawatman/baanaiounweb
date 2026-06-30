@@ -39,6 +39,8 @@ function NavDropdown({ group }: { group: NavGroup }) {
     <div ref={ref} className="relative" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
       <button
         onClick={() => setOpen((v) => !v)}
+        aria-label={`${group.label} เมนู`}
+        aria-expanded={open}
         className="text-foreground hover:text-primary inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors"
       >
         {group.label}
@@ -59,6 +61,8 @@ function NavDropdown({ group }: { group: NavGroup }) {
               key={child.href}
               href={child.href}
               onClick={() => setOpen(false)}
+              title={child.label}
+              aria-label={child.label}
               className="text-foreground hover:bg-primary/5 hover:text-primary block px-4 py-2.5 text-sm transition-colors"
             >
               {child.label}
@@ -82,20 +86,34 @@ export default function Header({ profile }: { profile: Profile }) {
         {/* Logo */}
         <Link
           href="/"
+          title={siteName}
+          aria-label={`${siteName} — หน้าแรก`}
           className="text-primary shrink-0 text-lg font-bold transition-opacity hover:opacity-80"
         >
           {siteName}
         </Link>
 
         {/* Desktop Nav — grouped with dropdowns */}
-        <nav className="hidden items-center lg:flex">
+        <nav className="hidden items-center lg:flex" aria-label="เมนูหลัก">
           {NAV_ENTRIES.map((entry) =>
             isNavGroup(entry) ? (
               <NavDropdown key={entry.label} group={entry} />
+            ) : entry.href === "/contact" ? (
+              <Link
+                key={entry.href}
+                href={entry.href}
+                title={entry.label}
+                aria-label={entry.label}
+                className="bg-primary hover:bg-primary/90 ml-2 rounded-md px-4 py-2 text-sm font-medium text-white transition-colors"
+              >
+                {entry.label}
+              </Link>
             ) : (
               <Link
                 key={entry.href}
                 href={entry.href}
+                title={entry.label}
+                aria-label={entry.label}
                 className="text-foreground hover:text-primary rounded-md px-3 py-2 text-sm font-medium transition-colors"
               >
                 {entry.label}
@@ -116,12 +134,14 @@ export default function Header({ profile }: { profile: Profile }) {
                 {siteName}
               </SheetTitle>
             </SheetHeader>
-            <nav className="flex flex-col py-2">
+            <nav className="flex flex-col py-2" aria-label="เมนูมือถือ">
               {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
+                  title={item.label}
+                  aria-label={item.label}
                   className="text-foreground hover:text-primary hover:bg-primary/5 px-6 py-3 text-sm font-medium transition-colors"
                 >
                   {item.label}

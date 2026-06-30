@@ -41,7 +41,7 @@ export default function HomePage({
       {/* Featured Properties */}
       {featuredProperties.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-12">
-          <SectionTitle title="ทรัพย์แนะนำ" subtitle="คัดมาแล้วโดยพิม ทุกหลังน่าอยู่" />
+          <SectionTitle title="ทรัพย์แนะนำ | Featured Properties" subtitle="คัดสรรทุกหลัง ทำเลศักยภาพ คุณภาพที่เชื่อถือได้" />
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredProperties.map((property) => (
               <PropertyCard key={property.id} property={property} />
@@ -53,7 +53,7 @@ export default function HomePage({
                 variant="outline"
                 className="gap-2 border-[#1B4D3E] text-[#1B4D3E] hover:bg-[#1B4D3E] hover:text-white"
               >
-                ดูทรัพย์ทั้งหมด
+                ดูทรัพย์ทั้งหมด | View All Properties
                 <ArrowRight className="size-4" />
               </Button>
             </Link>
