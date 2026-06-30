@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Menu, X, ChevronDown } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { NAV_ENTRIES, NAV_ITEMS, isNavGroup, type NavGroup } from "@/config/navigation"
@@ -80,11 +81,15 @@ export default function Header({ profile }: { profile: Profile }) {
     <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link
-          href="/"
-          className="text-primary shrink-0 text-lg font-bold transition-opacity hover:opacity-80"
-        >
-          {siteName}
+        <Link href="/" className="shrink-0 transition-opacity hover:opacity-80">
+          <Image
+            src="/logo.png"
+            alt={siteName}
+            height={44}
+            width={44}
+            priority
+            className="object-contain"
+          />
         </Link>
 
         {/* Desktop Nav — grouped with dropdowns */}
@@ -112,8 +117,14 @@ export default function Header({ profile }: { profile: Profile }) {
           </SheetTrigger>
           <SheetContent side="right" className="w-72 p-0">
             <SheetHeader className="border-b px-4 py-4">
-              <SheetTitle className="text-primary text-left text-base font-bold">
-                {siteName}
+              <SheetTitle className="text-left">
+                <Image
+                  src="/logo.png"
+                  alt={siteName}
+                  height={40}
+                  width={40}
+                  className="object-contain"
+                />
               </SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col py-2">
