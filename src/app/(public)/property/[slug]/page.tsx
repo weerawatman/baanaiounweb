@@ -1,8 +1,23 @@
 import type { Metadata } from "next"
 import { getPropertyBySlug } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
+import { createServerSupabase } from "@/lib/supabase"
 import { mapProperty } from "@/lib/mappers"
 import PropertyDetailClient from "./PropertyDetailClient"
+
+export const revalidate = 3600
+
+export async function generateStaticParams() {
+  const supabase = createServerSupabase()
+  if (!supabase) return []
+  const { data } = await supabase
+    .from("properties")
+    .select("slug")
+    .eq("status", "ACTIVE")
+    .is("deleted_at", null)
+    .limit(500)
+  return (data ?? []).map((p: { slug: string }) => ({ slug: p.slug }))
+}
 
 export async function generateMetadata({
   params,

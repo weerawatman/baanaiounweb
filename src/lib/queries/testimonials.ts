@@ -5,7 +5,8 @@ export async function getTestimonials(): Promise<Testimonial[]> {
   const supabase = await createClient()
   const { data, error } = await supabase
     .from("testimonials")
-    .select("*")
+    .select("id, client_name, quote, property_type, rating, avatar_url, sort_order")
+    .eq("published", true)
     .order("sort_order", { ascending: true })
 
   if (error) throw new Error(error.message)

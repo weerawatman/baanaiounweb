@@ -1,3 +1,4 @@
+import { cache } from "react"
 import { createClient } from "@/lib/supabase/server"
 import { mapProfile } from "@/lib/mappers"
 import { SITE_CONFIG } from "@/config/site"
@@ -38,7 +39,7 @@ function pick(dbValue: string | undefined, fallback: string): string {
  * อ่าน agent profile จาก Supabase (row id=1) แล้ว merge ทับค่า default
  * — ค่าว่างใน DB จะ fall back ไป SITE_CONFIG เสมอ จึงไม่พังแม้ยังไม่ได้กรอก
  */
-export async function getProfile(): Promise<Profile> {
+export const getProfile = cache(async (): Promise<Profile> => {
   const fallback = defaultProfile()
 
   const supabase = await createClient()
@@ -67,4 +68,4 @@ export async function getProfile(): Promise<Profile> {
     slogan: pick(row.slogan, fallback.slogan),
     address: pick(row.address, fallback.address),
   }
-}
+})

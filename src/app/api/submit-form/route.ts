@@ -139,54 +139,31 @@ export async function POST(request: NextRequest) {
       console.error("[Supabase] Connection error:", err)
     }
 
-    // 2) Send LINE Messaging API
-    let lineSuccess = false
-    try {
-      lineSuccess = await sendLineMessage({
-        formTag: data.formTag,
-        name: data.name,
-        contact: contactInfo,
-        details: {
-          ...(data.purpose ? { purpose: data.purpose } : {}),
-          ...(data.requirement ? { requirement: data.requirement } : {}),
-          ...(data.propertyType ? { propertyType: data.propertyType } : {}),
-          ...(data.location ? { location: data.location } : {}),
-          ...(data.price ? { price: data.price } : {}),
-          ...(data.budget ? { budget: data.budget } : {}),
-          ...(data.lineId ? { lineId: data.lineId } : {}),
-          ...(data.commission ? { commission: data.commission } : {}),
-          ...(data.occupation ? { occupation: data.occupation } : {}),
-          ...(data.details ? { details: data.details } : {}),
-        },
-      })
-    } catch (err) {
-      console.error("[LINE Messaging] Error:", err)
+    // 2+3) Send LINE + Email in parallel (saves 1-3s vs sequential)
+    const notificationDetails = {
+      ...(data.purpose ? { purpose: data.purpose } : {}),
+      ...(data.requirement ? { requirement: data.requirement } : {}),
+      ...(data.propertyType ? { propertyType: data.propertyType } : {}),
+      ...(data.location ? { location: data.location } : {}),
+      ...(data.price ? { price: data.price } : {}),
+      ...(data.budget ? { budget: data.budget } : {}),
+      ...(data.lineId ? { lineId: data.lineId } : {}),
+      ...(data.commission ? { commission: data.commission } : {}),
+      ...(data.occupation ? { occupation: data.occupation } : {}),
+      ...(data.details ? { details: data.details } : {}),
+      ...(data.contact ? { contact: data.contact } : {}),
     }
 
-    // 3) Send Email Notification
-    let emailSuccess = false
-    try {
-      emailSuccess = await sendEmailNotification({
-        formTag: data.formTag,
-        name: data.name,
-        contact: contactInfo,
-        details: {
-          ...(data.purpose ? { purpose: data.purpose } : {}),
-          ...(data.requirement ? { requirement: data.requirement } : {}),
-          ...(data.propertyType ? { propertyType: data.propertyType } : {}),
-          ...(data.location ? { location: data.location } : {}),
-          ...(data.price ? { price: data.price } : {}),
-          ...(data.budget ? { budget: data.budget } : {}),
-          ...(data.lineId ? { lineId: data.lineId } : {}),
-          ...(data.commission ? { commission: data.commission } : {}),
-          ...(data.occupation ? { occupation: data.occupation } : {}),
-          ...(data.details ? { details: data.details } : {}),
-          ...(data.contact ? { contact: data.contact } : {}),
-        },
-      })
-    } catch (err) {
-      console.error("[Email] Error:", err)
-    }
+    const [lineResult, emailResult] = await Promise.allSettled([
+      sendLineMessage({ formTag: data.formTag, name: data.name, contact: contactInfo, details: notificationDetails }),
+      sendEmailNotification({ formTag: data.formTag, name: data.name, contact: contactInfo, details: notificationDetails }),
+    ])
+
+    if (lineResult.status === "rejected") console.error("[LINE Messaging] Error:", lineResult.reason)
+    if (emailResult.status === "rejected") console.error("[Email] Error:", emailResult.reason)
+
+    const lineSuccess = lineResult.status === "fulfilled" && lineResult.value
+    const emailSuccess = emailResult.status === "fulfilled" && emailResult.value
 
     return NextResponse.json({
       success: true,

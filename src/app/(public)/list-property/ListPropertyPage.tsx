@@ -1,5 +1,4 @@
-"use client"
-
+import type { Metadata } from "next"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import { PainPointsHero, SolutionsSection, StepsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { LIST_PROPERTY_CONTENT } from "@/content/list-property"
@@ -12,6 +11,17 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion"
 
+export function generateMetadata(): Metadata {
+  return {
+    title: LIST_PROPERTY_CONTENT.seo.title,
+    description: LIST_PROPERTY_CONTENT.seo.description.th,
+    openGraph: {
+      title: LIST_PROPERTY_CONTENT.seo.title,
+      description: LIST_PROPERTY_CONTENT.seo.description.th,
+    },
+  }
+}
+
 interface ListPropertyPageProps {
   faqs: FAQ[]
 }
@@ -19,10 +29,6 @@ interface ListPropertyPageProps {
 export default function ListPropertyPage({ faqs }: ListPropertyPageProps) {
   return (
     <>
-      <title>{LIST_PROPERTY_CONTENT.seo.title}</title>
-      <meta name="description" content={LIST_PROPERTY_CONTENT.seo.description.th} />
-      <meta property="og:title" content={LIST_PROPERTY_CONTENT.seo.title} />
-      <meta property="og:description" content={LIST_PROPERTY_CONTENT.seo.description.th} />
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">

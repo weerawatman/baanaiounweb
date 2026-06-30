@@ -1,8 +1,5 @@
-"use client"
-
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
 import { Clock } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -14,13 +11,7 @@ interface BlogCardProps {
 
 export default function BlogCard({ post }: BlogCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      whileHover={{ scale: 1.02 }}
-      className="h-full"
-    >
+    <div className="h-full transition-transform duration-200 hover:scale-[1.02]">
       <Link href={`/blog/${post.slug}`} className="group block h-full">
         <Card className="group-hover:ring-foreground/20 h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl">
           {/* Featured image */}
@@ -58,6 +49,6 @@ export default function BlogCard({ post }: BlogCardProps) {
           </CardContent>
         </Card>
       </Link>
-    </motion.div>
+    </div>
   )
 }

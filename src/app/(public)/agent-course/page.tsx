@@ -1,3 +1,4 @@
+export { generateMetadata } from "./AgentCoursePage"
 import AgentCoursePage from "./AgentCoursePage"
 
 export default function AgentCourseRoute() {

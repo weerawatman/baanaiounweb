@@ -1,10 +1,11 @@
-import { getFaqs } from "@/lib/queries/faqs"
+export { generateMetadata } from "./ListPropertyPage"
+import { getFaqsByPage } from "@/lib/queries/faqs"
 import { mapFaq } from "@/lib/mappers"
 import ListPropertyPage from "./ListPropertyPage"
 
 export default async function ListPropertyRoute() {
-  const rows = await getFaqs()
-  const faqs = rows.filter((f) => f.page_slug === "owners").map(mapFaq)
+  const rows = await getFaqsByPage("owners")
+  const faqs = rows.map(mapFaq)
 
   return <ListPropertyPage faqs={faqs} />
 }

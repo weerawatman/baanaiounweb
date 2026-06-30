@@ -1,16 +1,22 @@
-"use client"
-
+import type { Metadata } from "next"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import { PainPointsHero, SolutionsSection, StepsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { FIND_PROPERTY_CONTENT } from "@/content/find-property"
 
+export function generateMetadata(): Metadata {
+  return {
+    title: FIND_PROPERTY_CONTENT.seo.title,
+    description: FIND_PROPERTY_CONTENT.seo.description.th,
+    openGraph: {
+      title: FIND_PROPERTY_CONTENT.seo.title,
+      description: FIND_PROPERTY_CONTENT.seo.description.th,
+    },
+  }
+}
+
 export default function FindPropertyPage() {
   return (
     <>
-      <title>{FIND_PROPERTY_CONTENT.seo.title}</title>
-      <meta name="description" content={FIND_PROPERTY_CONTENT.seo.description.th} />
-      <meta property="og:title" content={FIND_PROPERTY_CONTENT.seo.title} />
-      <meta property="og:description" content={FIND_PROPERTY_CONTENT.seo.description.th} />
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">

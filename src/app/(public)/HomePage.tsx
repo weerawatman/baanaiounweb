@@ -1,18 +1,17 @@
-"use client"
-
-import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { MessageCircle, ArrowRight } from "lucide-react"
 import HeroSection from "@/components/home/HeroSection"
 import ServiceShortcuts from "@/components/home/ServiceShortcuts"
 import CoreValues from "@/components/home/CoreValues"
-import TestimonialSlider from "@/components/home/TestimonialSlider"
-import FAQSection from "@/components/home/FAQSection"
 import SectionTitle from "@/components/layout/SectionTitle"
 import { type Property, type Testimonial, type FAQ } from "@/types"
 import { SITE_CONFIG } from "@/config/site"
 import PropertyCard from "@/components/property/PropertyCard"
 import { Button } from "@/components/ui/button"
+
+const TestimonialSlider = dynamic(() => import("@/components/home/TestimonialSlider"))
+const FAQSection = dynamic(() => import("@/components/home/FAQSection"))
 
 interface HomePageProps {
   properties: Property[]
@@ -20,15 +19,6 @@ interface HomePageProps {
   faqs: FAQ[]
   heroImage?: string
   lineUrl?: string
-}
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.1 },
-  }),
 }
 
 export default function HomePage({
@@ -43,20 +33,6 @@ export default function HomePage({
 
   return (
     <>
-      <title>บ้านไออุ่น พร็อพเพอร์ตี้ — จบทุกความต้องการเรื่องอสังหาฯ บ้านบึง ชลบุรี</title>
-      <meta
-        name="description"
-        content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ"
-      />
-      <meta
-        property="og:title"
-        content="บ้านไออุ่น พร็อพเพอร์ตี้ — จบทุกความต้องการเรื่องอสังหาฯ"
-      />
-      <meta
-        property="og:description"
-        content="บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ"
-      />
-
       <HeroSection heroImage={heroImage} />
 
       {/* Services — บริการของเรา (Rev.04): ServiceShortcuts มี H2 + การ์ดในตัว */}
@@ -104,13 +80,7 @@ export default function HomePage({
       {/* Homepage CTA */}
       <section className="bg-[#1B4D3E] py-16 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="flex flex-col items-center gap-6 text-center"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
+          <div className="flex flex-col items-center gap-6 text-center">
             <h2 className="text-2xl font-bold text-white sm:text-3xl">
               ให้บ้านไออุ่นช่วยดูแลทุกเรื่องอสังหาฯ ของคุณ
             </h2>
@@ -140,7 +110,7 @@ export default function HomePage({
                 สนใจคอร์สนายหน้า
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </>

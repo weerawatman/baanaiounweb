@@ -1,8 +1,5 @@
-"use client"
-
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
 import { Bed, Bath, Maximize, MapPin } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { type Property } from "@/types"
@@ -29,13 +26,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
   const type = typeConfig[property.type]
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      whileHover={{ scale: 1.02 }}
-      className="h-full"
-    >
+    <div className="h-full transition-transform duration-200 hover:scale-[1.02]">
       <Link href={`/property/${property.slug}`} className="group block h-full">
         <Card className="group-hover:ring-foreground/20 h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl">
           {/* Image */}
@@ -106,6 +97,6 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           </CardContent>
         </Card>
       </Link>
-    </motion.div>
+    </div>
   )
 }

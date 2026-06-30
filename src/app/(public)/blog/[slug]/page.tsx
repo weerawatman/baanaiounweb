@@ -1,8 +1,18 @@
 import type { Metadata } from "next"
 import { getBlogPostBySlug } from "@/lib/queries/blog"
-import { getProperties } from "@/lib/queries/properties"
+import { getRelatedProperties } from "@/lib/queries/properties"
+import { createServerSupabase } from "@/lib/supabase"
 import { mapBlogPost, mapProperty } from "@/lib/mappers"
 import BlogPostClient from "./BlogPostClient"
+
+export const revalidate = 86400
+
+export async function generateStaticParams() {
+  const supabase = createServerSupabase()
+  if (!supabase) return []
+  const { data } = await supabase.from("blog_posts").select("slug").eq("published", true).limit(200)
+  return (data ?? []).map((p: { slug: string }) => ({ slug: p.slug }))
+}
 
 export async function generateMetadata({
   params,
@@ -27,16 +37,13 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  // getBlogPostBySlug is React.cache() — second call (from generateMetadata) is free
   const row = await getBlogPostBySlug(slug)
   const post = row ? mapBlogPost(row) : null
 
-  let relatedProperties: ReturnType<typeof mapProperty>[] = []
-  if (post && post.relatedPropertyIds.length > 0) {
-    const allRows = await getProperties()
-    relatedProperties = allRows
-      .filter((p) => post.relatedPropertyIds.includes(p.id))
-      .map(mapProperty)
-  }
+  const relatedProperties = post?.relatedPropertyIds.length
+    ? (await getRelatedProperties(post.relatedPropertyIds)).map(mapProperty)
+    : []
 
   return <BlogPostClient post={post} relatedProperties={relatedProperties} />
 }

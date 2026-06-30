@@ -1,16 +1,22 @@
-"use client"
-
+import type { Metadata } from "next"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import { PainPointsHero, SolutionsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
 
+export function generateMetadata(): Metadata {
+  return {
+    title: AGENT_COURSE_CONTENT.seo.title,
+    description: AGENT_COURSE_CONTENT.seo.description.th,
+    openGraph: {
+      title: AGENT_COURSE_CONTENT.seo.title,
+      description: AGENT_COURSE_CONTENT.seo.description.th,
+    },
+  }
+}
+
 export default function AgentCoursePage() {
   return (
     <>
-      <title>{AGENT_COURSE_CONTENT.seo.title}</title>
-      <meta name="description" content={AGENT_COURSE_CONTENT.seo.description.th} />
-      <meta property="og:title" content={AGENT_COURSE_CONTENT.seo.title} />
-      <meta property="og:description" content={AGENT_COURSE_CONTENT.seo.description.th} />
 
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">

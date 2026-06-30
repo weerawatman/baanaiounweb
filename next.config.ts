@@ -2,7 +2,12 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  productionBrowserSourceMaps: false,
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       // Placeholder images (dev/staging)
       { protocol: "https", hostname: "placehold.co" },
