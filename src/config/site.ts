@@ -12,6 +12,7 @@ export const SITE_CONFIG = {
   phone: "086-4149960",
   lineId: "@baan-ai-oun",
   lineUrl: "https://line.me/ti/p/@baan-ai-oun",
+  whatsappUrl: "https://wa.me/66864149960",
   email: "supansa.m@baanaioun.com",
 
   // ─── Social ────────────────────────────────────────────────────────────

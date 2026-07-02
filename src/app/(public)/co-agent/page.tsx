@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
 import Breadcrumb from "@/components/layout/Breadcrumb"
+
+export const revalidate = 1800
 import { PainPointsHero, SolutionsSection, StepsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { COAGENT_CONTENT } from "@/content/co-agent"
 

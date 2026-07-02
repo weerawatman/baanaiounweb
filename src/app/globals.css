@@ -108,3 +108,11 @@ html {
     @apply bg-background text-foreground;
   }
 }
+
+/* Language toggle — CSS-only bilingual visibility */
+[data-lang="th"] .en-only {
+  display: none !important;
+}
+[data-lang="en"] .th-only {
+  display: none !important;
+}

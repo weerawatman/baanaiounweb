@@ -31,13 +31,34 @@ export default async function HomeRoute() {
   const testimonials = testimonialRows.map(mapTestimonial)
   const faqs = faqRows.map(mapFaq)
 
+  const faqJsonLd =
+    faqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: { "@type": "Answer", text: faq.answer },
+          })),
+        }
+      : null
+
   return (
-    <HomePage
-      properties={properties}
-      testimonials={testimonials}
-      faqs={faqs}
-      heroImage={profile.heroImageUrl}
-      lineUrl={profile.lineUrl}
-    />
+    <>
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
+      <HomePage
+        properties={properties}
+        testimonials={testimonials}
+        faqs={faqs}
+        heroImage={profile.heroImageUrl}
+        lineUrl={profile.lineUrl}
+      />
+    </>
   )
 }

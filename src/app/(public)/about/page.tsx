@@ -14,6 +14,34 @@ export const metadata: Metadata = {
   },
 }
 
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "RealEstateAgent"],
+  name: "บ้านไออุ่น พร็อพเพอร์ตี้",
+  alternateName: "Baan Ai Oun Property",
+  foundingDate: "2020",
+  url: "https://www.baanaioun.com",
+  areaServed: "บ้านบึง ชลบุรี ฉะเชิงเทรา สมุทรปราการ EEC",
+  knowsAbout: [
+    "Real Estate",
+    "อสังหาริมทรัพย์",
+    "บ้านบึง",
+    "นิคมอมตะ",
+    "เหมราช",
+    "EEC",
+    "ชลบุรี",
+    "ฉะเชิงเทรา",
+  ],
+}
+
 export default function Page() {
-  return <AboutPage />
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
+      <AboutPage />
+    </>
+  )
 }

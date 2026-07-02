@@ -6,6 +6,7 @@ import { Menu, X, ChevronDown } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { NAV_ENTRIES, NAV_ITEMS, isNavGroup, type NavGroup } from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
+import LanguageToggle from "@/components/layout/LanguageToggle"
 import type { Profile } from "@/types"
 
 // ─── Dropdown component ─────────────────────────────────────────────────
@@ -121,6 +122,11 @@ export default function Header({ profile }: { profile: Profile }) {
             ),
           )}
         </nav>
+
+        {/* Language Toggle */}
+        <div className="hidden lg:flex">
+          <LanguageToggle />
+        </div>
 
         {/* Mobile Hamburger */}
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
