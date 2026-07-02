@@ -70,7 +70,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             <p className="text-base font-semibold text-green-700">{formatPrice(property)}</p>
 
             {/* Stats row */}
-            <div className="text-muted-foreground flex items-center gap-3 text-xs">
+            <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-xs">
               {property.bedrooms > 0 && (
                 <span className="flex items-center gap-1">
                   <Bed className="h-3.5 w-3.5" />

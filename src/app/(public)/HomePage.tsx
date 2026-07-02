@@ -36,7 +36,7 @@ export default function HomePage({
       <ServiceShortcuts />
 
       {/* ฝากทรัพย์ CTA Strip */}
-      <section className="flex items-center justify-between bg-amber-500 px-6 py-4">
+      <section className="flex flex-wrap items-center justify-between gap-3 bg-amber-500 px-6 py-4">
         <div>
           <p className="th-only font-semibold text-white">
             อยากฝากทรัพย์ขาย/เช่า? ให้พิมดูแลให้ครบวงจร
@@ -47,7 +47,7 @@ export default function HomePage({
         </div>
         <Link
           href="/list-property"
-          className="ml-4 shrink-0 rounded-lg bg-white px-4 py-2 text-sm font-bold text-amber-600 transition-colors hover:bg-amber-50"
+          className="w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-bold text-amber-600 transition-colors hover:bg-amber-50 sm:w-auto"
         >
           <span className="th-only">ฝากทรัพย์เลย</span>
           <span className="en-only">List Property</span>

@@ -5,13 +5,16 @@ import { useEffect, useState } from "react"
 type Lang = "th" | "en"
 
 export default function LanguageToggle() {
-  const [lang, setLang] = useState<Lang | null>(null)
+  const [lang, setLang] = useState<Lang>("th")
 
   useEffect(() => {
     const saved = localStorage.getItem("lang") as Lang | null
     if (saved === "th" || saved === "en") {
       document.documentElement.dataset.lang = saved
       setLang(saved)
+    } else {
+      document.documentElement.dataset.lang = "th"
+      localStorage.setItem("lang", "th")
     }
   }, [])
 

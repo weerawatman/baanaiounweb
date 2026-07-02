@@ -154,6 +154,10 @@ export default function Header({ profile }: { profile: Profile }) {
                 </Link>
               ))}
             </nav>
+            <div className="border-t px-6 py-4">
+              <p className="mb-2 text-xs font-medium text-gray-500">ภาษา | Language</p>
+              <LanguageToggle />
+            </div>
           </SheetContent>
         </Sheet>
       </div>

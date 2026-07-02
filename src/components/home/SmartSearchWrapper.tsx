@@ -56,7 +56,7 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
   }, [filtered])
 
   const selectClass =
-    "w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1B4D3E]"
+    "w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1B4D3E]"
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
@@ -73,7 +73,7 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
             <button
               key={tab.value}
               onClick={() => setPurpose(tab.value)}
-              className={`flex-1 py-2 text-sm font-semibold transition-colors ${
+              className={`flex-1 min-h-[44px] py-2 text-sm font-semibold transition-colors ${
                 purpose === tab.value
                   ? "bg-[#1B4D3E] text-white"
                   : "text-gray-600 hover:bg-gray-50"

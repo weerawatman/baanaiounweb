@@ -412,7 +412,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                     href={lineUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-primary hover:bg-primary/90 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors"
+                    className="bg-primary hover:bg-primary/90 inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white transition-colors"
                   >
                     <MessageCircle className="size-4" />
                     แอดไลน์ {lineId}
@@ -421,7 +421,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-4 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
                   >
                     <WhatsAppIcon className="size-4" />
                     WhatsApp
