@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { RefreshCw, Home } from "lucide-react"
 import Link from "next/link"
 
-export default function Error({
+export default function PublicError({
   error,
   reset,
 }: {
@@ -18,7 +18,7 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">
+    <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
       <p className="text-6xl">😔</p>
       <h1 className="text-foreground mt-4 text-2xl font-bold sm:text-3xl">
         เกิดข้อผิดพลาดบางอย่างค่ะ

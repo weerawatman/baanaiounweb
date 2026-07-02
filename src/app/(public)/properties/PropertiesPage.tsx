@@ -1,11 +1,9 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import PropertyCard from "@/components/property/PropertyCard"
+import Breadcrumb from "@/components/layout/Breadcrumb"
 import SectionTitle from "@/components/layout/SectionTitle"
+import PropertyCard from "@/components/property/PropertyCard"
 import type { Property } from "@/types"
 
 const PRICE_OPTIONS = [
@@ -16,8 +14,7 @@ const PRICE_OPTIONS = [
   { label: "≤ 5 ล้าน | Under 5M", value: "5000000" },
 ]
 
-type PropertyType = Property["type"]
-type PurposeTab = "all" | PropertyType
+type PurposeTab = "all" | "SALE" | "RENT" | "LAND"
 
 const PURPOSE_TABS: { value: PurposeTab; th: string; en: string }[] = [
   { value: "all", th: "ทั้งหมด", en: "All" },
@@ -26,48 +23,47 @@ const PURPOSE_TABS: { value: PurposeTab; th: string; en: string }[] = [
   { value: "LAND", th: "ที่ดิน", en: "Land" },
 ]
 
-interface SmartSearchWrapperProps {
-  initialProperties: Property[]
-}
-
-export default function SmartSearchWrapper({ initialProperties }: SmartSearchWrapperProps) {
+export default function PropertiesPage({ properties }: { properties: Property[] }) {
   const [purpose, setPurpose] = useState<PurposeTab>("all")
   const [district, setDistrict] = useState("")
   const [maxPrice, setMaxPrice] = useState("")
 
   const districts = useMemo(
-    () =>
-      [...new Set(initialProperties.map((p) => p.location.district).filter(Boolean))].sort(),
-    [initialProperties],
+    () => [...new Set(properties.map((p) => p.location.district).filter(Boolean))].sort(),
+    [properties],
   )
 
   const filtered = useMemo(() => {
-    return initialProperties.filter((p) => {
+    return properties.filter((p) => {
       if (purpose !== "all" && p.type !== purpose) return false
       if (district && p.location.district !== district) return false
       if (maxPrice && p.price > Number(maxPrice)) return false
       return true
     })
-  }, [initialProperties, purpose, district, maxPrice])
-
-  const displayProperties = useMemo(() => {
-    const featured = filtered.filter((p) => p.featured)
-    return featured.length > 0 ? featured : filtered.slice(0, 6)
-  }, [filtered])
+  }, [properties, purpose, district, maxPrice])
 
   const selectClass =
     "w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1B4D3E]"
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-12">
-      {/* Search Bar */}
-      <div className="mb-8 rounded-2xl bg-white p-5 shadow-md ring-1 ring-black/5">
-        <h2 className="mb-4 text-center text-base font-bold text-[#1B4D3E] sm:text-lg">
-          <span className="th-only">ค้นหาทรัพย์ที่ใช่สำหรับคุณ</span>
-          <span className="en-only">Find Your Perfect Property</span>
-        </h2>
+    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <Breadcrumb
+        items={[
+          { label: "หน้าแรก", href: "/" },
+          { label: "ทรัพย์ทั้งหมด" },
+        ]}
+      />
 
-        {/* Purpose tabs */}
+      <div className="mt-6">
+        <SectionTitle
+          title="ทรัพย์ทั้งหมด | All Properties"
+          subtitle="บ้านขาย บ้านเช่า และที่ดิน จากบ้านไออุ่น พร็อพเพอร์ตี้"
+        />
+      </div>
+
+      {/* Filter bar */}
+      <div className="mt-6 rounded-2xl bg-white p-5 shadow-md ring-1 ring-black/5">
+        {/* Type tabs */}
         <div className="mb-3 flex overflow-hidden rounded-lg border border-gray-200">
           {PURPOSE_TABS.map((tab) => (
             <button
@@ -85,7 +81,7 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
           ))}
         </div>
 
-        {/* Filter dropdowns */}
+        {/* District + Price */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <select
             value={district}
@@ -100,7 +96,6 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
               </option>
             ))}
           </select>
-
           <select
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
@@ -116,39 +111,35 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
         </div>
       </div>
 
-      {/* Section header with result count */}
-      <SectionTitle
-        title="ทรัพย์แนะนำ | Featured Properties"
-        subtitle={`พบ ${filtered.length} รายการ | Found ${filtered.length} listings`}
-      />
+      {/* Result count */}
+      <p className="mt-4 text-sm text-gray-500">
+        <span className="th-only">พบ {filtered.length} รายการ</span>
+        <span className="en-only">Found {filtered.length} listings</span>
+      </p>
 
-      {/* Property Grid */}
-      {displayProperties.length > 0 ? (
-        <>
-          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {displayProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Link href="/properties">
-              <Button
-                variant="outline"
-                className="gap-2 border-[#1B4D3E] text-[#1B4D3E] hover:bg-[#1B4D3E] hover:text-white"
-              >
-                <span className="th-only">ดูทรัพย์ทั้งหมด</span>
-                <span className="en-only">View All Properties</span>
-                <ArrowRight className="size-4" />
-              </Button>
-            </Link>
-          </div>
-        </>
+      {/* Property grid */}
+      {filtered.length > 0 ? (
+        <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((property) => (
+            <PropertyCard key={property.id} property={property} />
+          ))}
+        </div>
       ) : (
-        <div className="py-16 text-center text-gray-500">
-          <p className="th-only">ไม่พบทรัพย์ที่ตรงเงื่อนไข — ลองเปลี่ยนตัวกรองดูนะคะ</p>
-          <p className="en-only">No properties match your filters — try adjusting the criteria.</p>
+        <div className="py-20 text-center">
+          <p className="text-lg font-medium text-gray-700">
+            <span className="th-only">ไม่พบทรัพย์ที่ตรงเงื่อนไข</span>
+            <span className="en-only">No properties match your filters</span>
+          </p>
+          <p className="mt-2 text-sm text-gray-500">
+            <span className="th-only">ลองเปลี่ยนตัวกรอง หรือ</span>
+            <span className="en-only">Try adjusting the filters or</span>{" "}
+            <a href="/contact" className="text-[#1B4D3E] underline underline-offset-2">
+              <span className="th-only">ติดต่อพิมโดยตรง</span>
+              <span className="en-only">contact us directly</span>
+            </a>
+          </p>
         </div>
       )}
-    </section>
+    </main>
   )
 }

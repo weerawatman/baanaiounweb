@@ -3,6 +3,30 @@ import { createServerSupabase } from "@/lib/supabase"
 import { sendLineMessage } from "@/lib/line-messaging"
 import { sendEmailNotification } from "@/lib/email"
 
+// ─── Rate limiting (in-memory, per IP) ────────────────────────────────────
+// NOTE: resets per serverless instance. Upgrade to Upstash Redis for multi-instance scale.
+const RATE_LIMIT_WINDOW_MS = 60_000 // 1 minute
+const RATE_LIMIT_MAX = 3 // 3 submissions per minute per IP
+const rateBuckets = new Map<string, { count: number; resetAt: number }>()
+
+function getClientIp(request: NextRequest): string {
+  const fwd = request.headers.get("x-forwarded-for")
+  if (fwd) return fwd.split(",")[0]!.trim()
+  return request.headers.get("x-real-ip") ?? "unknown"
+}
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now()
+  const bucket = rateBuckets.get(ip)
+  if (!bucket || now > bucket.resetAt) {
+    rateBuckets.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS })
+    return true
+  }
+  if (bucket.count >= RATE_LIMIT_MAX) return false
+  bucket.count++
+  return true
+}
+
 // ─── Types ───────────────────────────────────────────────────────────────
 
 interface FormSubmission {
@@ -89,6 +113,10 @@ function validateSubmission(
 
 export async function POST(request: NextRequest) {
   try {
+    if (!checkRateLimit(getClientIp(request))) {
+      return NextResponse.json({ success: false, error: "Too many requests" }, { status: 429 })
+    }
+
     const body = await request.json()
     const validation = validateSubmission(body)
 

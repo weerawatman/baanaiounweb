@@ -47,7 +47,6 @@ export async function sendLineMessage(payload: LineMessagePayload): Promise<bool
       return false
     }
 
-    console.log("[LINE Messaging] Message sent successfully")
     return true
   } catch (err) {
     console.error("[LINE Messaging] Error:", err)

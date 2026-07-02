@@ -56,7 +56,6 @@ export async function sendEmailNotification(payload: EmailPayload): Promise<bool
       return false
     }
 
-    console.log("[Email] Message sent successfully:", data)
     return true
   } catch (err) {
     console.error("[Email] Error:", err)

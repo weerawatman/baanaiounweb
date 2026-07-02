@@ -95,7 +95,7 @@ export default function HomePage({
                 <span className="en-only">Chat with Us Free</span>
               </a>
               <Link
-                href="/find-property"
+                href="/properties"
                 className="inline-flex items-center gap-2 rounded-lg border-2 border-white/40 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
               >
                 <span className="th-only">ดูทรัพย์ทั้งหมดของเรา</span>

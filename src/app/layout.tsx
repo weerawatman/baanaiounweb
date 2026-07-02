@@ -11,6 +11,15 @@ export const metadata: Metadata = {
   },
   description:
     "บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ",
+  openGraph: {
+    type: "website",
+    siteName: "บ้านไออุ่น พร็อพเพอร์ตี้",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "บ้านไออุ่น พร็อพเพอร์ตี้" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og-image.jpg"],
+  },
 }
 
 export default function RootLayout({
