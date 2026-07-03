@@ -29,9 +29,9 @@ const typeLabel: Record<Property["type"], string> = {
 }
 
 const typeBreadcrumb: Record<Property["type"], { label: string; href: string }> = {
-  SALE: { label: "ซื้อบ้าน", href: "/buy" },
-  RENT: { label: "เช่าบ้าน", href: "/rent" },
-  LAND: { label: "ที่ดิน", href: "/land" },
+  SALE: { label: "ซื้อบ้าน", href: "/find-property" },
+  RENT: { label: "เช่าบ้าน", href: "/find-property" },
+  LAND: { label: "ที่ดิน", href: "/find-property" },
 }
 
 const typeBadgeClass: Record<Property["type"], string> = {

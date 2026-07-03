@@ -115,13 +115,13 @@ export const HOMEPAGE_PAIN_POINTS = [
     target: "เจ้าของทรัพย์",
     pain: "ประกาศขาย/เช่ามานาน แต่ยังไม่จบดีล?",
     solution: "ให้เราช่วยดูแลจนปิดดีล",
-    href: "/owners",
+    href: "/list-property",
   },
   {
     target: "คนหาบ้าน/ที่ดิน",
     pain: "หาบ้านที่ใช่ในงบที่มีไม่ได้สักที?",
     solution: "บอกสเปก เราช่วยหาให้ + กู้ฟรี",
-    href: "/buy",
+    href: "/find-property",
   },
   {
     target: "นายหน้า/เอเจนต์",
