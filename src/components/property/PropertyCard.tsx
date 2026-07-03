@@ -27,7 +27,11 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
   return (
     <div className="h-full transition-transform duration-200 hover:scale-[1.02]">
-      <Link href={`/property/${property.slug}`} className="group block h-full">
+      <Link
+        href={`/property/${property.slug}`}
+        aria-label={property.title}
+        className="group block h-full"
+      >
         <Card className="group-hover:ring-foreground/20 h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl">
           {/* Image */}
           <div className="relative h-52 overflow-hidden">

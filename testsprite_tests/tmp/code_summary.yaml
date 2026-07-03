@@ -1,0 +1,241 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Next.js 16 (App Router, Turbopack)
+  - React 19
+  - Tailwind CSS 4 + shadcn/ui
+  - Supabase (PostgreSQL + Storage)
+  - React Hook Form + Zod
+  - Recharts
+  - Embla Carousel
+  - Framer Motion
+  - Resend (email) + LINE Messaging API (notifications)
+routes:
+  - path: /
+    file: src/app/(public)/page.tsx
+    auth_required: false
+    description: Home page with hero, smart property search, featured listings, services, testimonials, FAQ
+  - path: /properties
+    file: src/app/(public)/properties/page.tsx
+    auth_required: false
+    description: Full property listing grid with purpose/district/price filters
+  - path: /property/[slug]
+    file: src/app/(public)/property/[slug]/page.tsx
+    auth_required: false
+    description: Single property detail page with gallery, mortgage calculator, contact CTAs
+  - path: /find-property
+    file: src/app/(public)/find-property/page.tsx
+    auth_required: false
+    description: Lead-generation landing page for buyers/renters with requirement form
+  - path: /list-property
+    file: src/app/(public)/list-property/page.tsx
+    auth_required: false
+    description: Lead-generation landing page for property owners, with image upload and FAQ
+  - path: /co-agent
+    file: src/app/(public)/co-agent/page.tsx
+    auth_required: false
+    description: Partner/co-agent recruitment landing page with application form
+  - path: /services
+    file: src/app/(public)/services/page.tsx
+    auth_required: false
+    description: Services hub linking to Find Property, List Property, Co-Agent, Agent Course
+  - path: /blog
+    file: src/app/(public)/blog/page.tsx
+    auth_required: false
+    description: Blog listing with category filter and search
+  - path: /blog/[slug]
+    file: src/app/(public)/blog/[slug]/page.tsx
+    auth_required: false
+    description: Single blog post page with related properties
+  - path: /contact
+    file: src/app/(public)/contact/page.tsx
+    auth_required: false
+    description: Contact page with inline form, click-to-call/LINE/WhatsApp links, embedded map
+  - path: /about
+    file: src/app/(public)/about/page.tsx
+    auth_required: false
+    description: Company story, milestones/timeline, and values (static content)
+  - path: /agent-course
+    file: src/app/(public)/agent-course/page.tsx
+    auth_required: false
+    description: Marketing page for agent training course with application form
+features:
+  - name: Language Toggle (TH/EN)
+    description: Site-wide bilingual toggle that switches visible language client-side without changing the URL
+    files:
+      - src/components/layout/LanguageToggle.tsx
+      - src/app/globals.css
+    entry_route: /
+    user_interactions:
+      - Click TH button to show Thai content
+      - Click EN button to show English content
+      - Verify toggle persists across navigation via localStorage
+    api_calls: []
+    auth_required: false
+  - name: Smart Property Search & Filter
+    description: Client-side filtering of preloaded property listings by purpose, district, and price on home and listing pages
+    files:
+      - src/app/(public)/page.tsx
+      - src/app/(public)/properties/page.tsx
+    entry_route: /
+    user_interactions:
+      - Click purpose tab (All / Buy / Rent / Land)
+      - Select district from dropdown
+      - Select max price from dropdown
+      - Click a property card to view details
+      - Click "View All Properties" link
+    api_calls: []
+    auth_required: false
+  - name: Property Detail View
+    description: Single property page with image gallery lightbox and live mortgage/loan calculator
+    files:
+      - src/app/(public)/property/[slug]/page.tsx
+    entry_route: /property/[slug]
+    user_interactions:
+      - Open image gallery lightbox modal
+      - Navigate between gallery images
+      - Enter price, down-payment %, interest %, and years into mortgage calculator
+      - View recalculated Recharts loan breakdown chart
+      - Click LINE or phone CTA button
+    api_calls: []
+    auth_required: false
+  - name: Buyer/Renter Lead Form
+    description: Requirement form for buyers/renters on the Find Property landing page
+    files:
+      - src/app/(public)/find-property/page.tsx
+      - src/app/api/submit-form/route.ts
+    entry_route: /find-property
+    user_interactions:
+      - Switch between Thai / Foreign buyer tabs
+      - Fill name, phone, and contact fields
+      - Check requirement checkboxes
+      - Select property type from dropdown
+      - Click submit button
+      - See success/error feedback after submission
+    api_calls:
+      - method: POST
+        endpoint: /api/submit-form
+    auth_required: false
+  - name: Owner Listing Lead Form with Image Upload
+    description: Form for property owners to submit their property for listing, including up to 5 photo uploads
+    files:
+      - src/app/(public)/list-property/page.tsx
+      - src/app/api/upload-images/route.ts
+      - src/app/api/submit-form/route.ts
+    entry_route: /list-property
+    user_interactions:
+      - Switch between Thai / Foreign owner tabs
+      - Check purpose checkboxes
+      - Select property type from dropdown
+      - Fill text input fields
+      - Drag-and-drop or select up to 5 images to upload
+      - Click submit button
+      - Expand FAQ accordion items
+      - See success/error feedback after submission
+    api_calls:
+      - method: POST
+        endpoint: /api/upload-images
+      - method: POST
+        endpoint: /api/submit-form
+    auth_required: false
+  - name: Co-Agent Application Form
+    description: Application form for partner/co-agent recruitment
+    files:
+      - src/app/(public)/co-agent/page.tsx
+      - src/app/api/submit-form/route.ts
+    entry_route: /co-agent
+    user_interactions:
+      - Fill name, phone, and LINE ID inputs
+      - Select property type from dropdown
+      - Fill location, price, and commission inputs
+      - Fill details textarea
+      - Click submit button
+      - See success/error feedback after submission
+    api_calls:
+      - method: POST
+        endpoint: /api/submit-form
+    auth_required: false
+  - name: Agent Course Application Form
+    description: Application form for the agent training course
+    files:
+      - src/app/(public)/agent-course/page.tsx
+      - src/app/api/submit-form/route.ts
+    entry_route: /agent-course
+    user_interactions:
+      - Fill name, phone, LINE ID, and occupation inputs
+      - Fill goal textarea
+      - Click submit button
+      - See success/error feedback after submission
+    api_calls:
+      - method: POST
+        endpoint: /api/submit-form
+    auth_required: false
+  - name: Contact Form
+    description: General contact form with subject selection, plus direct contact links and embedded map
+    files:
+      - src/app/(public)/contact/page.tsx
+      - src/app/api/submit-form/route.ts
+    entry_route: /contact
+    user_interactions:
+      - Fill name, phone, email inputs
+      - Select subject from dropdown
+      - Fill message textarea
+      - Click submit button
+      - Click click-to-call / LINE / WhatsApp / email contact cards
+      - View embedded Google Map
+      - See success/error feedback after submission
+    api_calls:
+      - method: POST
+        endpoint: /api/submit-form
+    auth_required: false
+  - name: Blog Listing & Search
+    description: Blog listing page with category filter and client-side text search over preloaded posts
+    files:
+      - src/app/(public)/blog/page.tsx
+    entry_route: /blog
+    user_interactions:
+      - Click category filter button
+      - Type in search box to filter posts
+      - Click a blog post card to open it
+    api_calls: []
+    auth_required: false
+  - name: Blog Post Detail
+    description: Single blog post page showing full content and related property listings
+    files:
+      - src/app/(public)/blog/[slug]/page.tsx
+    entry_route: /blog/[slug]
+    user_interactions:
+      - Read article content
+      - Click a related property card
+      - Click LINE CTA link
+    api_calls: []
+    auth_required: false
+  - name: Services Hub Navigation
+    description: Central hub page linking out to Find Property, List Property, Co-Agent, and Agent Course
+    files:
+      - src/app/(public)/services/page.tsx
+    entry_route: /services
+    user_interactions:
+      - Click a service card to navigate to its landing page
+    api_calls: []
+    auth_required: false
+  - name: About Page
+    description: Static company story, milestone timeline, and values content
+    files:
+      - src/app/(public)/about/page.tsx
+    entry_route: /about
+    user_interactions:
+      - Scroll through milestone timeline
+    api_calls: []
+    auth_required: false
+known_limitations:
+  - issue: Legacy routes redirect and are unreachable
+    location: next.config.ts (redirects), src/app/(public)/buy, rent, land, owners, academy
+    impact: "/buy, /rent, /land permanently redirect to /find-property; /owners redirects to /list-property; /academy redirects to /agent-course. Their page.tsx files exist but can never render, so they should be excluded from navigable test targets."
+  - issue: Language toggle is client-side only, not URL-based
+    location: src/components/layout/LanguageToggle.tsx
+    impact: TH/EN switch does not change the URL or use hreflang routing; both languages render in the DOM simultaneously and are shown/hidden via CSS + localStorage, which may affect SEO/crawler-based test assumptions.
+  - issue: Lead-form endpoints are rate-limited per IP
+    location: src/app/api/submit-form/route.ts (3/min), src/app/api/upload-images/route.ts (20/min)
+    impact: Repeated automated form submissions or image uploads from the same test runner IP within a short window will be rejected; test plans should avoid resubmitting the same form many times in rapid succession.
