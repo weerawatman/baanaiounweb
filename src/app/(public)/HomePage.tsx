@@ -38,10 +38,8 @@ export default function HomePage({
       {/* ฝากทรัพย์ CTA Strip */}
       <section className="flex flex-wrap items-center justify-between gap-3 bg-amber-500 px-6 py-4">
         <div>
-          <p className="th-only font-semibold text-white">
-            อยากฝากทรัพย์ขาย/เช่า? ให้พิมดูแลให้ครบวงจร
-          </p>
-          <p className="en-only font-semibold text-white">
+          <p className="font-semibold text-white">อยากฝากทรัพย์ขาย/เช่า? ให้พิมดูแลให้ครบวงจร</p>
+          <p className="text-sm text-white/80">
             Want to list your property? We handle everything for you.
           </p>
         </div>
@@ -49,8 +47,7 @@ export default function HomePage({
           href="/list-property"
           className="w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-bold text-amber-600 transition-colors hover:bg-amber-50 sm:w-auto"
         >
-          <span className="th-only">ฝากทรัพย์เลย</span>
-          <span className="en-only">List Property</span>
+          ฝากทรัพย์เลย | List Property
         </Link>
       </section>
 
@@ -76,12 +73,16 @@ export default function HomePage({
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-6 text-center">
             <h2 className="text-2xl font-bold text-white sm:text-3xl">
-              <span className="th-only">ให้บ้านไออุ่นช่วยดูแลทุกเรื่องอสังหาฯ ของคุณ</span>
-              <span className="en-only">Let Baan Ai Oun Handle All Your Real Estate Needs</span>
+              ให้บ้านไออุ่นช่วยดูแลทุกเรื่องอสังหาฯ ของคุณ
+              <span className="mt-1 block text-lg font-medium text-white/70">
+                Let Baan Ai Oun Handle All Your Real Estate Needs
+              </span>
             </h2>
             <p className="max-w-xl text-base text-white/80">
-              <span className="th-only">คุยง่าย ตรงไปตรงมา พร้อมดูแลทุกเคสด้วยความจริงใจ</span>
-              <span className="en-only">Easy to talk to, straightforward, caring for every case with sincerity.</span>
+              คุยง่าย ตรงไปตรงมา พร้อมดูแลทุกเคสด้วยความจริงใจ
+              <span className="mt-1 block text-sm text-white/60">
+                Easy to talk to, straightforward, caring for every case with sincerity.
+              </span>
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
@@ -91,22 +92,19 @@ export default function HomePage({
                 className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-2.5 text-sm font-semibold text-[#1B4D3E] transition-colors hover:bg-white/90"
               >
                 <MessageCircle className="size-4" />
-                <span className="th-only">ทักแชทปรึกษาฟรี</span>
-                <span className="en-only">Chat with Us Free</span>
+                ทักแชทปรึกษาฟรี | Free Chat
               </a>
               <Link
                 href="/properties"
                 className="inline-flex items-center gap-2 rounded-lg border-2 border-white/40 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
               >
-                <span className="th-only">ดูทรัพย์ทั้งหมดของเรา</span>
-                <span className="en-only">View All Properties</span>
+                ดูทรัพย์ทั้งหมด | All Properties
               </Link>
               <Link
                 href="/agent-course"
                 className="inline-flex items-center gap-2 rounded-lg border-2 border-[#D4A843] px-6 py-2.5 text-sm font-semibold text-[#D4A843] transition-colors hover:bg-[#D4A843] hover:text-white"
               >
-                <span className="th-only">สนใจคอร์สนายหน้า</span>
-                <span className="en-only">Agent Course</span>
+                คอร์สนายหน้า | Agent Course
               </Link>
             </div>
           </div>

@@ -4,10 +4,29 @@ import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { NAV_ENTRIES, NAV_ITEMS, isNavGroup, type NavGroup } from "@/config/navigation"
+import {
+  NAV_ENTRIES,
+  NAV_ITEMS,
+  isNavGroup,
+  navLabel,
+  type NavGroup,
+} from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
-import LanguageToggle from "@/components/layout/LanguageToggle"
 import type { Profile } from "@/types"
+
+// ─── Bilingual label (Thai primary, English secondary) ──────────────────
+
+function BilingualLabel({ th, en }: { th: string; en: string }) {
+  if (th === en) {
+    return <span className="text-sm leading-tight font-medium">{th}</span>
+  }
+  return (
+    <>
+      <span className="text-sm leading-tight font-medium">{th}</span>
+      <span className="text-[11px] leading-tight font-normal opacity-70">{en}</span>
+    </>
+  )
+}
 
 // ─── Dropdown component ─────────────────────────────────────────────────
 
@@ -40,14 +59,16 @@ function NavDropdown({ group }: { group: NavGroup }) {
     <div ref={ref} className="relative" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
       <button
         onClick={() => setOpen((v) => !v)}
-        aria-label={`${group.label} เมนู`}
+        aria-label={`${navLabel(group)} เมนู`}
         aria-expanded={open}
-        className="text-foreground hover:text-primary inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors"
+        className="text-foreground hover:text-primary inline-flex flex-col items-center rounded-md px-3 py-1.5 text-center transition-colors"
       >
-        {group.label}
-        <ChevronDown
-          className={`size-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
+        <span className="inline-flex items-center gap-1">
+          <BilingualLabel th={group.th} en={group.en} />
+          <ChevronDown
+            className={`size-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          />
+        </span>
       </button>
 
       {/* Dropdown panel */}
@@ -62,11 +83,11 @@ function NavDropdown({ group }: { group: NavGroup }) {
               key={child.href}
               href={child.href}
               onClick={() => setOpen(false)}
-              title={child.label}
-              aria-label={child.label}
+              title={navLabel(child)}
+              aria-label={navLabel(child)}
               className="text-foreground hover:bg-primary/5 hover:text-primary block px-4 py-2.5 text-sm transition-colors"
             >
-              {child.label}
+              {navLabel(child)}
             </Link>
           ))}
         </div>
@@ -83,7 +104,7 @@ export default function Header({ profile }: { profile: Profile }) {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link
           href="/"
@@ -95,38 +116,33 @@ export default function Header({ profile }: { profile: Profile }) {
         </Link>
 
         {/* Desktop Nav — grouped with dropdowns */}
-        <nav className="hidden items-center lg:flex" aria-label="เมนูหลัก">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="เมนูหลัก">
           {NAV_ENTRIES.map((entry) =>
             isNavGroup(entry) ? (
-              <NavDropdown key={entry.label} group={entry} />
+              <NavDropdown key={entry.th} group={entry} />
             ) : entry.href === "/contact" ? (
               <Link
                 key={entry.href}
                 href={entry.href}
-                title={entry.label}
-                aria-label={entry.label}
-                className="bg-primary hover:bg-primary/90 ml-2 rounded-md px-4 py-2 text-sm font-medium text-white transition-colors"
+                title={navLabel(entry)}
+                aria-label={navLabel(entry)}
+                className="bg-primary hover:bg-primary/90 ml-2 inline-flex flex-col items-center rounded-md px-4 py-1.5 text-center text-white transition-colors"
               >
-                {entry.label}
+                <BilingualLabel th={entry.th} en={entry.en} />
               </Link>
             ) : (
               <Link
                 key={entry.href}
                 href={entry.href}
-                title={entry.label}
-                aria-label={entry.label}
-                className="text-foreground hover:text-primary rounded-md px-3 py-2 text-sm font-medium transition-colors"
+                title={navLabel(entry)}
+                aria-label={navLabel(entry)}
+                className="text-foreground hover:text-primary inline-flex flex-col items-center rounded-md px-3 py-1.5 text-center transition-colors"
               >
-                {entry.label}
+                <BilingualLabel th={entry.th} en={entry.en} />
               </Link>
             ),
           )}
         </nav>
-
-        {/* Language Toggle */}
-        <div className="hidden lg:flex">
-          <LanguageToggle />
-        </div>
 
         {/* Mobile Hamburger */}
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -143,21 +159,20 @@ export default function Header({ profile }: { profile: Profile }) {
             <nav className="flex flex-col py-2" aria-label="เมนูมือถือ">
               {NAV_ITEMS.map((item) => (
                 <Link
-                  key={item.href}
+                  key={`${item.href}-${item.th}`}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  title={item.label}
-                  aria-label={item.label}
-                  className="text-foreground hover:text-primary hover:bg-primary/5 px-6 py-3 text-sm font-medium transition-colors"
+                  title={navLabel(item)}
+                  aria-label={navLabel(item)}
+                  className="text-foreground hover:text-primary hover:bg-primary/5 flex flex-col px-6 py-2.5 transition-colors"
                 >
-                  {item.label}
+                  <span className="text-sm leading-snug font-medium">{item.th}</span>
+                  {item.en !== item.th && (
+                    <span className="text-xs leading-snug text-gray-400">{item.en}</span>
+                  )}
                 </Link>
               ))}
             </nav>
-            <div className="border-t px-6 py-4">
-              <p className="mb-2 text-xs font-medium text-gray-500">ภาษา | Language</p>
-              <LanguageToggle />
-            </div>
           </SheetContent>
         </Sheet>
       </div>

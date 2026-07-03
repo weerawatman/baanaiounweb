@@ -75,8 +75,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
                   : "text-gray-600 hover:bg-gray-50"
               }`}
             >
-              <span className="th-only">{tab.th}</span>
-              <span className="en-only">{tab.en}</span>
+              {tab.th === tab.en ? tab.th : `${tab.th} | ${tab.en}`}
             </button>
           ))}
         </div>
@@ -113,8 +112,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
 
       {/* Result count */}
       <p className="mt-4 text-sm text-gray-500">
-        <span className="th-only">พบ {filtered.length} รายการ</span>
-        <span className="en-only">Found {filtered.length} listings</span>
+        พบ {filtered.length} รายการ | Found {filtered.length} listings
       </p>
 
       {/* Property grid */}
@@ -127,16 +125,22 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
       ) : (
         <div className="py-20 text-center">
           <p className="text-lg font-medium text-gray-700">
-            <span className="th-only">ไม่พบทรัพย์ที่ตรงเงื่อนไข</span>
-            <span className="en-only">No properties match your filters</span>
+            ไม่พบทรัพย์ที่ตรงเงื่อนไข
+            <span className="mt-1 block text-base text-gray-500">
+              No properties match your filters
+            </span>
           </p>
           <p className="mt-2 text-sm text-gray-500">
-            <span className="th-only">ลองเปลี่ยนตัวกรอง หรือ</span>
-            <span className="en-only">Try adjusting the filters or</span>{" "}
+            ลองเปลี่ยนตัวกรอง หรือ{" "}
             <a href="/contact" className="text-[#1B4D3E] underline underline-offset-2">
-              <span className="th-only">ติดต่อพิมโดยตรง</span>
-              <span className="en-only">contact us directly</span>
+              ติดต่อพิมโดยตรง
             </a>
+            <span className="mt-0.5 block">
+              Try adjusting the filters or{" "}
+              <a href="/contact" className="text-[#1B4D3E] underline underline-offset-2">
+                contact us directly
+              </a>
+            </span>
           </p>
         </div>
       )}

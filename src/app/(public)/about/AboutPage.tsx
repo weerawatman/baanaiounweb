@@ -138,10 +138,10 @@ export default function AboutPage() {
             custom={1}
             className="mx-auto mt-8 max-w-2xl rounded-r-xl border-l-4 border-[#1B4D3E] bg-white py-4 pl-6 pr-4 text-left shadow-sm"
           >
-            <p className="th-only text-base font-semibold text-[#1B4D3E]">
+            <p className="text-base font-semibold text-[#1B4D3E]">
               พันธกิจ: ทำให้ทุกคนเข้าถึงบ้านที่ใช่ ในราคาที่ใช่
             </p>
-            <p className="en-only text-base font-semibold text-[#1B4D3E]">
+            <p className="mt-1 text-sm text-[#1B4D3E]/70">
               Mission: Making the Right Home Accessible for Everyone, at the Right Price
             </p>
           </motion.div>
@@ -292,15 +292,12 @@ export default function AboutPage() {
             className="rounded-2xl border border-green-200 bg-green-50 p-6"
           >
             <h3 className="mb-3 font-bold text-green-800">
-              <span className="th-only">ความเชี่ยวชาญเฉพาะพื้นที่ | Local Market Expertise</span>
-              <span className="en-only">Local Market Expertise — Areas We Serve</span>
+              ความเชี่ยวชาญเฉพาะพื้นที่ | Local Market Expertise
             </h3>
             <p className="mb-4 text-sm text-green-700">
-              <span className="th-only">
-                เราคลุกคลีในตลาดอสังหาริมทรัพย์ของพื้นที่เหล่านี้มากกว่า 10 ปี
-                รู้จักทุกซอกทุกมุม ทุกทำเล และทุกราคาในโซนนี้
-              </span>
-              <span className="en-only">
+              เราคลุกคลีในตลาดอสังหาริมทรัพย์ของพื้นที่เหล่านี้มากกว่า 10 ปี รู้จักทุกซอกทุกมุม
+              ทุกทำเล และทุกราคาในโซนนี้
+              <span className="mt-1 block text-green-700/80">
                 Over 10 years of deep expertise in these local real estate markets — we know every
                 corner, location, and price point.
               </span>

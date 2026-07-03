@@ -10,11 +10,13 @@ This spec covers the **public-facing site only** (no admin/login testing in
 this pass). Scope: pages under `src/app/(public)/`.
 
 ## Global / Site-Wide Behavior
-- **Language Toggle (TH/EN):** Buttons in the header switch visible language
-  client-side (via `localStorage` + `data-lang` attribute + CSS show/hide).
-  It does **not** change the URL. Acceptance: clicking TH shows Thai text and
-  hides English text everywhere on the current page (and vice versa); the
-  choice persists after navigating to another page.
+- **Bilingual display (TH + EN together):** As of 2026-07-03 there is NO
+  language toggle — the site permanently displays Thai and English together
+  (Thai primary, English as a secondary line or after a "|" separator).
+  Header nav items render as two stacked lines (Thai over English).
+  Acceptance: both languages are visible simultaneously on every page; no
+  TH/EN switch button exists anywhere. (Older test plans TC020/TC022/TC030
+  that verified toggle persistence are obsolete.)
 - **Navigation:** Header links must route to the correct page for every item
   in the main nav. Footer quick links must also resolve correctly.
 - **Legacy redirects:** `/buy`, `/rent`, `/land` → `/find-property` (301);

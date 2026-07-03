@@ -63,8 +63,10 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
       {/* Search Bar */}
       <div className="mb-8 rounded-2xl bg-white p-5 shadow-md ring-1 ring-black/5">
         <h2 className="mb-4 text-center text-base font-bold text-[#1B4D3E] sm:text-lg">
-          <span className="th-only">ค้นหาทรัพย์ที่ใช่สำหรับคุณ</span>
-          <span className="en-only">Find Your Perfect Property</span>
+          ค้นหาทรัพย์ที่ใช่สำหรับคุณ
+          <span className="ml-1.5 text-sm font-medium text-gray-400">
+            | Find Your Perfect Property
+          </span>
         </h2>
 
         {/* Purpose tabs */}
@@ -79,8 +81,7 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
                   : "text-gray-600 hover:bg-gray-50"
               }`}
             >
-              <span className="th-only">{tab.th}</span>
-              <span className="en-only">{tab.en}</span>
+              {tab.th === tab.en ? tab.th : `${tab.th} | ${tab.en}`}
             </button>
           ))}
         </div>
@@ -136,8 +137,7 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
                 variant="outline"
                 className="gap-2 border-[#1B4D3E] text-[#1B4D3E] hover:bg-[#1B4D3E] hover:text-white"
               >
-                <span className="th-only">ดูทรัพย์ทั้งหมด</span>
-                <span className="en-only">View All Properties</span>
+                ดูทรัพย์ทั้งหมด | View All Properties
                 <ArrowRight className="size-4" />
               </Button>
             </Link>
@@ -145,8 +145,10 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
         </>
       ) : (
         <div className="py-16 text-center text-gray-500">
-          <p className="th-only">ไม่พบทรัพย์ที่ตรงเงื่อนไข — ลองเปลี่ยนตัวกรองดูนะคะ</p>
-          <p className="en-only">No properties match your filters — try adjusting the criteria.</p>
+          <p>ไม่พบทรัพย์ที่ตรงเงื่อนไข — ลองเปลี่ยนตัวกรองดูนะคะ</p>
+          <p className="mt-1 text-sm text-gray-400">
+            No properties match your filters — try adjusting the criteria.
+          </p>
         </div>
       )}
     </section>
