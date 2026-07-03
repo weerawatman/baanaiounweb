@@ -25,6 +25,11 @@ this pass). Scope: pages under `src/app/(public)/`.
   widths (this site was recently updated for mobile responsiveness).
 
 ## Lead Form Behavior (applies to every form below)
+- **Click-to-reveal (intentional design):** on find-property, list-property,
+  co-agent, and agent-course pages the form is NOT visible on page load. The
+  page ends with a "พร้อมเริ่มต้นหรือยัง? (Ready to Get Started?)" section —
+  the tester MUST click its primary CTA button first; the form then replaces
+  that section. Do not report "form not found" without clicking this CTA.
 - Required fields must block submission with a visible validation message
   when empty or invalid (e.g. malformed phone number).
 - On successful submit, the form calls `POST /api/submit-form` and the user

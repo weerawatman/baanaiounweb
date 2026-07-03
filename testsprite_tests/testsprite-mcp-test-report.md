@@ -42,7 +42,7 @@
 | TC039 | `/find-property` — empty-submit validation | ⚠️ Blocked (flaky) |
 | TC043 | `/list-property` — empty-submit validation | ⚠️ Blocked (flaky) |
 
-**Analysis:** Form validation and upload rejection work. TC039 and TC043 both reported "form not found" on pages where sibling tests interacted with the same form successfully in the same round (TC021 on `/find-property`; TC040 on `/list-property`) and Round 1 submitted both forms end-to-end (TC001, TC006, TC008). Both blocks coincide with dev-server crash/restart windows logged by the watchdog. These are environmental, not code defects.
+**Analysis:** Form validation and upload rejection work. TC039 and TC043 both reported "form not found" — root cause confirmed post-run: the lead forms use an **intentional click-to-reveal design** (`src/components/shared/CTAWithForm.tsx` renders the form only after the visitor clicks the "Ready to Get Started?" CTA button; the server HTML contains no form elements). Tests that clicked the CTA first (TC001, TC021, TC040, TC006, TC008) found and used the forms; tests that searched the DOM for a form directly reported none. Product owner reviewed this on 2026-07-03 and chose to keep the design as-is. SPEC.md now instructs future test runs to click the CTA before asserting on the form.
 
 ### Requirement: Language Toggle TH/EN (Round 2)
 | Test | Result |
