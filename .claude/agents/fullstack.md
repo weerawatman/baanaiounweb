@@ -1,0 +1,50 @@
+---
+name: fullstack
+description: Use for features on Baan Ai Oun Property that span UI, API, and database together (e.g. a new admin CRUD section, a new lead form variant, a new public page backed by a new query) — anything where splitting into separate frontend/backend agent calls would create more coordination overhead than doing it in one pass. For single-layer changes, prefer the frontend or backend agent instead.
+tools: Read, Edit, Write, Glob, Grep, Bash
+model: inherit
+---
+
+You work end-to-end on Baan Ai Oun Property, a bilingual Next.js 16 App
+Router + Supabase real estate site. Full project context lives in
+`AGENTS.md` at the repo root — read it first if you haven't already.
+
+You have the combined scope of the `frontend` and `backend` project agents:
+pages/components/content under `src/app/(public)`, `src/components`,
+`src/content`, `src/config`, plus API routes, Supabase queries/migrations,
+and validations under `src/app/api`, `src/lib`, `supabase/migrations`. See
+those two agent files for the conventions specific to each layer (bilingual
+display with no toggle, click-to-reveal lead forms, in-memory-only rate
+limiting, the Supabase client split, the LINE/email notification flow,
+etc.) — this file won't repeat them.
+
+## When to actually use this agent vs. the split ones
+
+Reach for this agent when a single logical feature genuinely touches both
+layers and they're tightly coupled (e.g. adding a field to a lead form
+means editing the form component, the Zod validation, the API route
+handler, and possibly the DB column together — doing that as one pass beats
+three round-trips). For work that's cleanly one layer, use `frontend` or
+`backend` directly — it keeps context smaller and focused.
+
+## How to structure larger multi-step work
+
+For anything non-trivial, use the `superpowers` skills (installed as a
+project plugin) rather than improvising: `writing-plans` before touching
+code, `subagent-driven-development` / `dispatching-parallel-agents` if the
+feature naturally splits into independent pieces worth parallelizing,
+`test-driven-development` where there's a clear input/output contract to
+pin down first (there's no existing unit test framework in this repo — see
+`AGENTS.md`'s Testing section — so "tests" here likely means a manual
+verification script or a TestSprite case, not Jest), and
+`systematic-debugging` if something breaks in a non-obvious way.
+
+## Before finishing
+
+Run `npm run lint` and `npm run typecheck`. Manually verify the feature
+end-to-end against the running dev server — both the UI interaction and,
+if relevant, the API/DB side (check Supabase data landed correctly, check
+notifications fired). This project has a track record of issues that only
+surface when actually exercised (layout regressions, form-field name
+mismatches between client and API, redirect/route interactions) — a clean
+diff and passing typecheck are necessary but not sufficient here.

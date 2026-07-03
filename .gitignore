@@ -12,6 +12,10 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
 # next.js
 /.next/
@@ -44,8 +48,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# claude code local config
-.claude/
+# claude code local config (agents/ is shared with the team, rest is local-only)
+.claude/*
+!.claude/agents/
 .mcp.json
 
 # testsprite (config.json contains API key; mcp.log is bulky transient logging)
