@@ -120,8 +120,7 @@ export default function Footer({ profile }: { profile: Profile }) {
         {/* เมนูเสริม + Copyright */}
         <div className="mt-6 flex flex-col items-center gap-2 border-t border-white/20 pt-4 text-center text-sm text-white/60">
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-            {/* Privacy เป็นลิงก์ placeholder (ยังไม่สร้างหน้าจริง) */}
-            <Link href="#" className="transition-colors hover:text-white">
+            <Link href="/privacy-policy" className="transition-colors hover:text-white">
               นโยบายความเป็นส่วนตัว
             </Link>
             <span className="text-white/30">·</span>
