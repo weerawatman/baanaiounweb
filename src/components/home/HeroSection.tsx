@@ -46,25 +46,27 @@ export default function HeroSection({ heroImage }: HeroSectionProps) {
 
           {/* คำบรรยายรอง 2 ภาษา */}
           <p className="mt-6 max-w-2xl">
-            <span className="block text-base text-white/90 sm:text-lg">{HERO.subTh}</span>
-            <span className="mt-1 block text-sm text-white/75 sm:text-base">{HERO.subEn}</span>
+            <span className="block whitespace-pre-line text-base text-white/90 sm:text-lg">{HERO.subTh}</span>
+            <span className="mt-1 block whitespace-pre-line text-sm text-white/75 sm:text-base">{HERO.subEn}</span>
           </p>
 
           {/* ปุ่ม CTA แยกบริการ — ทั้งคู่ → /request (แท็บตามบริการ) */}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href={HERO.ctaThai.href}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1B4D3E] px-6 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#163f33]"
+              className="inline-flex flex-col items-center justify-center gap-1 rounded-lg bg-[#1B4D3E] px-6 py-4 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#163f33]"
             >
               <Home className="size-5" />
-              {HERO.ctaThai.th} | {HERO.ctaThai.en}
+              <span className="text-sm font-semibold">{HERO.ctaThai.th}</span>
+              <span className="text-xs font-medium text-white/90">{HERO.ctaThai.en}</span>
             </Link>
             <Link
               href={HERO.ctaIntl.href}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#E8833A] px-6 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#d4742f]"
+              className="inline-flex flex-col items-center justify-center gap-1 rounded-lg bg-[#E8833A] px-6 py-4 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#d4742f]"
             >
               <Search className="size-5" />
-              {HERO.ctaIntl.th} | {HERO.ctaIntl.en}
+              <span className="text-sm font-semibold">{HERO.ctaIntl.th}</span>
+              <span className="text-xs font-medium text-white/90">{HERO.ctaIntl.en}</span>
             </Link>
           </div>
         </motion.div>

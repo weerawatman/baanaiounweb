@@ -7,9 +7,9 @@ export const HERO = {
   h1Th: "ครบจบเรื่องอสังหาฯ ซื้อ-ขาย-เช่า ง่าย สะดวก ปลอดภัย",
   h1En: "Your All-in-One Thai Real Estate Partner – Buy, Sell, Rent, Stress-Free.",
   subTh:
-    "ดูแลครบวงจรด้วยทีมงานมืออาชีพ พร้อมเจาะลึกทำเลศักยภาพ: กรุงเทพฯ, สมุทรปราการ, EEC, ฉะเชิงเทรา (นิคมฯ เวลโกรว์, ทีเอฟดี), ชลบุรี, พัทยา, ศรีราชา, บ้านบึง, บ่อทอง, หนองใหญ่ (นิคมฯ โรจนะ, WHA หนองใหญ่) และโซนนิคมอุตสาหกรรมหลัก (อมตะ 1-2, อีสเทิร์นซีบอร์ด)",
+    "ดูแลครบวงจรด้วยทีมงานมืออาชีพ พร้อมเจาะลึกทำเลศักยภาพ: กรุงเทพฯ, สมุทรปราการ, EEC, ฉะเชิงเทรา (นิคมฯ เวลโกรว์, ทีเอฟดี), ชลบุรี, พัทยา, ศรีราชา, บ้านบึง, บ่อทอง, หนองใหญ่ (นิคมฯ โรจนะ, WHA หนองใหญ่) และโซนนิคมอุตสาหกรรมหลัก (อมตะ 1-2,\nอีสเทิร์นซีบอร์ด)",
   subEn:
-    "Expert, personalized service for local and international clients. Specializing in prime locations: Bangkok, Samut Prakan, EEC, Chachoengsao (Wellgrow & TFD Industrial Estates), Chonburi, Pattaya, Sriracha, Ban Bueng, Bo Thong, Nong Yai (Rojana & WHA Nong Yai), and major Industrial Zones (Amata 1 & 2, Eastern Seaboard).",
+    "Expert, personalized service for local and international clients. Specializing in prime locations: Bangkok, Samut Prakan, EEC, Chachoengsao (Wellgrow & TFD Industrial Estates), Chonburi, Pattaya, Sriracha, Ban Bueng, Bo Thong, Nong Yai (Rojana & WHA Nong Yai), and major Industrial Zones (Amata 1 & 2,\nEastern Seaboard).", 
   // ปุ่มทั้งสองลิงก์ไปหน้าฟอร์มคำขอบริการ /request (แท็บตามบริการ)
   ctaThai: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property", href: "/request?tab=list-property" },
   ctaIntl: {
