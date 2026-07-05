@@ -76,6 +76,9 @@ function getFormTagLabel(formTag: string): string {
     "buyer-foreign": "หาบ้าน (Foreign Buyer)",
     "co-agent": "Co-Agent | Network Partner",
     "academy": "คอร์สนายหน้า | Agent Course",
+    "request-list-property": "ฝากขาย/ปล่อยเช่า | List Your Property",
+    "request-matchmaking": "จัดหาทรัพย์ตามต้องการ | Property Matchmaking",
+    "request-co-agent": "ร่วมเป็น Co-Agent | Join as a Co-Agent",
   }
 
   return labels[formTag] || formTag
@@ -113,6 +116,10 @@ function getBriefSummary(details: Record<string, string>): string {
 
   if (details.lineId) {
     summaryLines.push(`💬 LINE ID: ${details.lineId}`)
+  }
+
+  if (details.email) {
+    summaryLines.push(`📧 อีเมล: ${details.email}`)
   }
 
   if (details.commission) {

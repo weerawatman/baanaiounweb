@@ -35,22 +35,6 @@ export default function HomePage({
       {/* บริการของเรา */}
       <ServiceShortcuts />
 
-      {/* ฝากทรัพย์ CTA Strip */}
-      <section className="flex flex-wrap items-center justify-between gap-3 bg-amber-500 px-6 py-4">
-        <div>
-          <p className="font-semibold text-white">อยากฝากทรัพย์ขาย/เช่า? ให้พิมดูแลให้ครบวงจร</p>
-          <p className="text-sm text-white/80">
-            Want to list your property? We handle everything for you.
-          </p>
-        </div>
-        <Link
-          href="/list-property"
-          className="w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-bold text-amber-600 transition-colors hover:bg-amber-50 sm:w-auto"
-        >
-          ฝากทรัพย์เลย | List Property
-        </Link>
-      </section>
-
       {/* Smart Search + Property Grid */}
       <SmartSearchWrapper initialProperties={properties} />
 

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { MessageCircle, Globe } from "lucide-react"
+import { Home, Search } from "lucide-react"
 import { SITE_CONFIG } from "@/config/site"
 import { HERO } from "@/content/homepage"
 
@@ -50,21 +50,21 @@ export default function HeroSection({ heroImage }: HeroSectionProps) {
             <span className="mt-1 block text-sm text-white/75 sm:text-base">{HERO.subEn}</span>
           </p>
 
-          {/* ปุ่ม CTA แยกกลุ่มลูกค้า — ทั้งคู่ → /contact */}
+          {/* ปุ่ม CTA แยกบริการ — ทั้งคู่ → /request (แท็บตามบริการ) */}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href={HERO.ctaThai.href}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1B4D3E] px-6 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#163f33]"
             >
-              <MessageCircle className="size-5" />
-              {HERO.ctaThai.th} / {HERO.ctaThai.en}
+              <Home className="size-5" />
+              {HERO.ctaThai.th} | {HERO.ctaThai.en}
             </Link>
             <Link
               href={HERO.ctaIntl.href}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#E8833A] px-6 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#d4742f]"
             >
-              <Globe className="size-5" />
-              {HERO.ctaIntl.label}
+              <Search className="size-5" />
+              {HERO.ctaIntl.th} | {HERO.ctaIntl.en}
             </Link>
           </div>
         </motion.div>

@@ -78,6 +78,9 @@ function getEmailSubject(formTag: string): string {
     "buyer-foreign": "[New Lead] Buyer/Renter Inquiry (Foreign) from Baan Ai Oun Website",
     "co-agent": "[Co-Agent ใหม่] มีนายหน้าส่งทรัพย์มาเสนอ Co-Broke | [New Co-Agent] Property Co-Broke Proposal from Baan Ai Oun Website",
     "academy": "[นักเรียนใหม่] สมัครคอร์สนายหน้า Workshop พลิกชีวิต | [New Student] Agent Course Registration from Baan Ai Oun Website",
+    "request-list-property": "[Lead ใหม่] คำขอฝากขาย/ปล่อยเช่า จากเว็บไซต์บ้านไออุ่น | [New Lead] List Property Request from Baan Ai Oun Website",
+    "request-matchmaking": "[Lead ใหม่] คำขอจัดหาทรัพย์ตามต้องการ จากเว็บไซต์บ้านไออุ่น | [New Lead] Property Matchmaking Request from Baan Ai Oun Website",
+    "request-co-agent": "[Co-Agent ใหม่] คำขอร่วมเป็น Co-Agent จากเว็บไซต์บ้านไออุ่น | [New Lead] Co-Agent Request from Baan Ai Oun Website",
   }
 
   return subjects[formTag] || `[Lead ใหม่] ฟอร์มจากเว็บไซต์บ้านไออุ่น | [New Lead] Form from Baan Ai Oun Website`
@@ -155,6 +158,9 @@ function getFormTagLabel(formTag: string): string {
     "buyer-foreign": "หาบ้าน (Foreign Buyer)",
     "co-agent": "Co-Agent | Network Partner",
     "academy": "คอร์สนายหน้า | Agent Course",
+    "request-list-property": "ฝากขาย/ปล่อยเช่า | List Your Property",
+    "request-matchmaking": "จัดหาทรัพย์ตามต้องการ | Property Matchmaking",
+    "request-co-agent": "ร่วมเป็น Co-Agent | Join as a Co-Agent",
   }
 
   return labels[formTag] || formTag

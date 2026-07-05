@@ -9,7 +9,7 @@ test.describe("smoke", () => {
   })
 
   test("key public pages respond 200", async ({ page }) => {
-    for (const path of ["/properties", "/find-property", "/list-property", "/contact", "/about", "/privacy-policy"]) {
+    for (const path of ["/properties", "/find-property", "/list-property", "/request", "/contact", "/about", "/privacy-policy"]) {
       const response = await page.goto(path)
       expect(response?.status(), `${path} should return 200`).toBe(200)
     }
@@ -21,5 +21,14 @@ test.describe("smoke", () => {
 
     await page.goto("/owners")
     await expect(page).toHaveURL(/\/list-property$/)
+  })
+
+  test("request page renders all 3 service tabs and the form", async ({ page }) => {
+    await page.goto("/request?tab=matchmaking")
+    await expect(page.getByRole("tab", { name: /จัดหาทรัพย์ตามต้องการ/ })).toBeVisible()
+    await expect(page.getByRole("tab", { name: /ฝากขาย\/ปล่อยเช่า/ })).toBeVisible()
+    await expect(page.getByRole("tab", { name: /ร่วมเป็น Co-Agent/ })).toBeVisible()
+    await expect(page.locator('input[name="email"]')).toBeVisible()
+    await expect(page.locator('select[name="propertyType"]')).toBeVisible()
   })
 })

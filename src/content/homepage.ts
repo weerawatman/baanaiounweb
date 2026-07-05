@@ -4,14 +4,19 @@
  */
 
 export const HERO = {
-  h1Th: "บ้านไออุ่น: ครบจบเรื่องอสังหาฯ ในไทย ซื้อ-ขาย-เช่า ง่าย สะดวก ปลอดภัย",
-  h1En: "Baan Ai Oun: Your All-in-One Thai Real Estate Partner – Buy, Sell, Rent, Stress-Free.",
-  subTh: "เปลี่ยนเรื่องอสังหาฯ ให้เป็นเรื่องง่าย ด้วยบริการมืออาชีพเพื่อคนไทยและต่างชาติ",
+  h1Th: "ครบจบเรื่องอสังหาฯ ซื้อ-ขาย-เช่า ง่าย สะดวก ปลอดภัย",
+  h1En: "Your All-in-One Thai Real Estate Partner – Buy, Sell, Rent, Stress-Free.",
+  subTh:
+    "ดูแลครบวงจรด้วยทีมงานมืออาชีพ พร้อมเจาะลึกทำเลศักยภาพ: กรุงเทพฯ, สมุทรปราการ, EEC, ฉะเชิงเทรา (นิคมฯ เวลโกรว์, ทีเอฟดี), ชลบุรี, พัทยา, ศรีราชา, บ้านบึง, บ่อทอง, หนองใหญ่ (นิคมฯ โรจนะ, WHA หนองใหญ่) และโซนนิคมอุตสาหกรรมหลัก (อมตะ 1-2, อีสเทิร์นซีบอร์ด)",
   subEn:
-    "Simplifying Thai real estate with expert, personalized service for local and international clients.",
-  // ปุ่มทั้งสองลิงก์ไปฟอร์มติดต่อเดียวกัน (/contact) — ไม่เชื่อม WhatsApp/LINE
-  ctaThai: { th: "สำหรับคนไทย คลิกที่นี่", en: "Thai Users", href: "/contact" },
-  ctaIntl: { label: "For International Clients Click Here", href: "/contact" },
+    "Expert, personalized service for local and international clients. Specializing in prime locations: Bangkok, Samut Prakan, EEC, Chachoengsao (Wellgrow & TFD Industrial Estates), Chonburi, Pattaya, Sriracha, Ban Bueng, Bo Thong, Nong Yai (Rojana & WHA Nong Yai), and major Industrial Zones (Amata 1 & 2, Eastern Seaboard).",
+  // ปุ่มทั้งสองลิงก์ไปหน้าฟอร์มคำขอบริการ /request (แท็บตามบริการ)
+  ctaThai: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property", href: "/request?tab=list-property" },
+  ctaIntl: {
+    th: "บริการจัดหาทรัพย์ตามต้องการ",
+    en: "Property Matchmaking Service",
+    href: "/request?tab=matchmaking",
+  },
 } as const
 
 export const SERVICES_HEADING = {
@@ -31,7 +36,7 @@ export const SERVICE_CARDS = [
     solutionEn: "Full-service marketing, fast-closing, and secure transactions.",
     ctaTh: "ฝากขาย/ปล่อยเช่า",
     ctaEn: "List Your Property",
-    href: "/list-property",
+    href: "/request?tab=list-property",
   },
   {
     icon: "Search",
@@ -43,9 +48,9 @@ export const SERVICE_CARDS = [
     solutionTh: "คัดทรัพย์ตรงโจทย์ ดูแลสินเชื่อและสัญญา จบที่เดียว",
     solutionEn:
       "Curated property matching, expert loan assistance, and seamless contract handling.",
-    ctaTh: "ค้นหาบ้าน/ปรึกษาสินเชื่อ",
-    ctaEn: "Find Your Home",
-    href: "/find-property",
+    ctaTh: "บริการจัดหาทรัพย์ตามต้องการ",
+    ctaEn: "Property Matchmaking Service",
+    href: "/request?tab=matchmaking",
   },
   {
     icon: "Users",
@@ -57,8 +62,8 @@ export const SERVICE_CARDS = [
     solutionTh: "ฝากทรัพย์ฟรี! เราช่วยทำการตลาดจนกว่าจะปิดดีลได้",
     solutionEn: "We market your listings for free until closed!",
     ctaTh: "ร่วมเป็น Co-Agent",
-    ctaEn: "",
-    href: "/co-agent",
+    ctaEn: "Join as a Co-Agent",
+    href: "/request?tab=co-agent",
   },
   {
     icon: "GraduationCap",
@@ -70,7 +75,7 @@ export const SERVICE_CARDS = [
     solutionTh: "คอร์ส “จับมือทำ” จากศูนย์ เริ่มต้นได้ทันที",
     solutionEn: "Take our 'hands-on' agent course! Start from zero.",
     ctaTh: "สมัครคอร์สนายหน้า",
-    ctaEn: "",
+    ctaEn: "Join Our Agent Course",
     href: "/agent-course",
   },
 ] as const

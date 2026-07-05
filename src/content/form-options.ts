@@ -12,6 +12,18 @@ export const PROPERTY_TYPE_OPTIONS = [
   { value: "other", label: "อื่นๆ | Other", labelTh: "อื่นๆ", labelEn: "Other" },
 ]
 
+/**
+ * Property types for the /request service-request forms (per owner's spec):
+ * บ้านเดี่ยว, บ้านแฝด, ทาวน์โฮม, คอนโด, ที่ดิน
+ */
+export const REQUEST_PROPERTY_TYPE_OPTIONS = [
+  { value: "house", label: "บ้านเดี่ยว | Single House", labelTh: "บ้านเดี่ยว", labelEn: "Single House" },
+  { value: "twin-house", label: "บ้านแฝด | Twin House", labelTh: "บ้านแฝด", labelEn: "Twin House" },
+  { value: "townhome", label: "ทาวน์โฮม | Townhome", labelTh: "ทาวน์โฮม", labelEn: "Townhome" },
+  { value: "condo", label: "คอนโด | Condo", labelTh: "คอนโด", labelEn: "Condo" },
+  { value: "land", label: "ที่ดิน | Land", labelTh: "ที่ดิน", labelEn: "Land" },
+]
+
 export const OWNER_PURPOSE_OPTIONS = [
   { value: "sale", label: "ฝากขาย | For Sale", labelTh: "ฝากขาย", labelEn: "For Sale" },
   { value: "rent", label: "ฝากปล่อยเช่า | For Rent", labelTh: "ฝากปล่อยเช่า", labelEn: "For Rent" },

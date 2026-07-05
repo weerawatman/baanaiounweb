@@ -53,6 +53,10 @@ next-env.d.ts
 !.claude/agents/
 .mcp.json
 
+# codex local config (config.toml contains the TestSprite API key; agents/ is shareable)
+.codex/*
+!.codex/agents/
+
 # testsprite (config.json contains API key; mcp.log is bulky transient logging)
 testsprite_tests/tmp/config.json
 testsprite_tests/tmp/mcp.log

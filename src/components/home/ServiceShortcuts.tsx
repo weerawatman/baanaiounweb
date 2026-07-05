@@ -47,13 +47,18 @@ export default function ServiceShortcuts() {
                   <p className="text-xs text-gray-500">{card.solutionEn}</p>
                 </div>
 
-                {/* ปุ่ม CTA แยกสีต่อใบ */}
+                {/* ปุ่ม CTA แยกสีต่อใบ — ไทยบรรทัดบน อังกฤษบรรทัดล่าง */}
                 <Link
                   href={card.href}
-                  className="mt-5 inline-flex items-center justify-center gap-1 rounded-lg px-4 py-2.5 text-center text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  className="mt-5 inline-flex flex-col items-center justify-center rounded-lg px-4 py-2.5 text-center text-white transition-opacity hover:opacity-90"
                   style={{ backgroundColor: card.color }}
                 >
-                  {card.ctaEn ? `${card.ctaTh} | ${card.ctaEn}` : card.ctaTh}
+                  <span className="text-sm leading-snug font-semibold">{card.ctaTh}</span>
+                  {card.ctaEn && (
+                    <span className="text-xs leading-snug font-medium text-white/85">
+                      {card.ctaEn}
+                    </span>
+                  )}
                 </Link>
               </div>
             )
