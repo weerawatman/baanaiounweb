@@ -44,7 +44,10 @@ function CarouselDots({
 }
 
 export default function SocialProofSection({ stories, testimonials }: SocialProofSectionProps) {
-  const [storyRef, storyApi] = useEmblaCarousel({ loop: stories.length > 1 })
+  const [storyRef, storyApi] = useEmblaCarousel({
+    loop: stories.length > 1,
+    watchDrag: false,
+  })
   const [storyIndex, setStoryIndex] = useState(0)
   const [storySnaps, setStorySnaps] = useState<number[]>([])
 
@@ -97,24 +100,21 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
 
       {hasStories && (
         <div className="mt-10" data-testid="success-stories-section">
-          <h3 className="mb-4 text-center text-lg font-semibold text-foreground">
-            ผลงานจริง ก่อน-หลังรีโนเวท
-            <span className="mt-0.5 block text-sm font-normal text-muted-foreground">
-              Real Results: Before &amp; After Renovations
-            </span>
-          </h3>
+          <p className="mb-4 text-center text-sm text-muted-foreground">
+            ผลงานจริง ก่อน-หลังรีโนเวท · Real Results: Before &amp; After Renovations
+          </p>
 
           <div className="overflow-hidden rounded-2xl" ref={storyRef}>
             <div className="flex">
               {stories.map((story) => (
                 <div key={story.id} className="min-w-0 flex-[0_0_100%] px-1">
                   <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-4 md:p-6">
-                    <BeforeAfterSlider
-                      beforeUrl={story.beforeImageUrl}
-                      afterUrl={story.afterImageUrl}
-                      beforeAlt={`Before renovation ${story.location}`}
-                      afterAlt={`After renovation ${story.location}`}
-                    />
+                    <div onPointerDown={(e) => e.stopPropagation()}>
+                      <BeforeAfterSlider
+                        beforeUrl={story.beforeImageUrl}
+                        afterUrl={story.afterImageUrl}
+                      />
+                    </div>
                     <div className="text-center md:text-left">
                       <p className="text-lg font-bold text-foreground">{story.title}</p>
                       {story.titleEn && (

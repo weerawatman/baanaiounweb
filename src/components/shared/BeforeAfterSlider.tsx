@@ -8,16 +8,15 @@ import { cn } from "@/lib/utils"
 interface BeforeAfterSliderProps {
   beforeUrl: string
   afterUrl: string
-  beforeAlt: string
-  afterAlt: string
+  /** Kept for API compatibility; images are decorative (caption below). */
+  beforeAlt?: string
+  afterAlt?: string
   className?: string
 }
 
 export default function BeforeAfterSlider({
   beforeUrl,
   afterUrl,
-  beforeAlt,
-  afterAlt,
   className,
 }: BeforeAfterSliderProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -33,81 +32,90 @@ export default function BeforeAfterSlider({
   }, [])
 
   const onPointerDown = (e: React.PointerEvent) => {
+    e.stopPropagation()
     setIsDragging(true)
-    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+    containerRef.current?.setPointerCapture(e.pointerId)
     updatePosition(e.clientX)
   }
 
   const onPointerMove = (e: React.PointerEvent) => {
     if (!isDragging) return
+    e.stopPropagation()
     updatePosition(e.clientX)
   }
 
   const onPointerUp = (e: React.PointerEvent) => {
+    if (!isDragging) return
     setIsDragging(false)
-    ;(e.target as HTMLElement).releasePointerCapture(e.pointerId)
+    if (containerRef.current?.hasPointerCapture(e.pointerId)) {
+      containerRef.current.releasePointerCapture(e.pointerId)
+    }
   }
+
+  const beforeClip = `inset(0 ${100 - position}% 0 0)`
 
   return (
     <div
       ref={containerRef}
       data-testid="before-after-slider"
       className={cn(
-        "relative aspect-[4/3] w-full select-none overflow-hidden rounded-xl bg-gray-200",
+        "relative aspect-[4/3] w-full touch-none select-none overflow-hidden rounded-xl bg-muted",
         className,
       )}
+      onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
-      onPointerLeave={onPointerUp}
+      onPointerCancel={onPointerUp}
     >
       <Image
         src={afterUrl}
-        alt={afterAlt}
+        alt=""
+        aria-hidden
         fill
         sizes="(max-width: 768px) 100vw, 800px"
         className="object-cover"
         draggable={false}
       />
 
+      <Image
+        src={beforeUrl}
+        alt=""
+        aria-hidden
+        fill
+        sizes="(max-width: 768px) 100vw, 800px"
+        className="object-cover"
+        style={{ clipPath: beforeClip }}
+        draggable={false}
+      />
+
       <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ width: `${position}%` }}
+        className="pointer-events-none absolute inset-y-0 z-10 w-0.5 -translate-x-1/2 bg-white shadow-lg"
+        style={{ left: `${position}%` }}
         aria-hidden
       >
-        <div
-          className="relative h-full"
-          style={{ width: position > 0 ? `${10000 / position}%` : "100%" }}
-        >
-          <Image
-            src={beforeUrl}
-            alt={beforeAlt}
-            fill
-            sizes="(max-width: 768px) 100vw, 800px"
-            className="object-cover"
-            draggable={false}
-          />
+        <div className="absolute top-1/2 left-1/2 flex size-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-primary text-primary-foreground shadow-md">
+          <GripVertical className="size-5" />
         </div>
       </div>
 
       <div
-        className="absolute inset-y-0 z-10 w-1 -translate-x-1/2 cursor-ew-resize bg-white shadow-lg"
-        style={{ left: `${position}%` }}
-        onPointerDown={onPointerDown}
         role="slider"
         aria-label="Compare before and after"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(position)}
-      >
-        <div className="absolute top-1/2 left-1/2 flex size-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-[#1B4D3E] text-white shadow-md">
-          <GripVertical className="size-5" />
-        </div>
-      </div>
+        className="sr-only"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowLeft") setPosition((p) => Math.max(0, p - 5))
+          if (e.key === "ArrowRight") setPosition((p) => Math.min(100, p + 5))
+        }}
+      />
 
-      <span className="absolute top-3 left-3 rounded bg-black/60 px-2 py-1 text-xs font-semibold text-white">
+      <span className="pointer-events-none absolute top-3 left-3 rounded bg-black/60 px-2 py-1 text-xs font-semibold text-white">
         Before | ก่อน
       </span>
-      <span className="absolute top-3 right-3 rounded bg-[#1B4D3E]/90 px-2 py-1 text-xs font-semibold text-white">
+      <span className="pointer-events-none absolute top-3 right-3 rounded bg-primary/90 px-2 py-1 text-xs font-semibold text-white">
         After | หลัง
       </span>
     </div>
