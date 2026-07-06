@@ -102,7 +102,7 @@ python testsprite_tests/TC024_TestSprite_about_course_phase6.py
 ### ปัญหาที่แก้
 - กรอบหดเมื่อลาก — ลบ `10000/position%` hack ใช้ `clip-path: inset()` แทน (กรอบคงที่)
 - ข้อความ alt ซ้อนทับ — รูปเป็น decorative (`alt=""`, `aria-hidden`)
-- Embla carousel แย่ง gesture — `watchDrag: false` บน story carousel + `stopPropagation` บน slider
+- กรอบ+ข้อความเลื่อนตามการลาก — **ถอด Embla ออกจาก success stories** ใช้ state + dots แทน (ไม่มี carousel swipe ชน slider)
 
 ### ไฟล์ที่แก้
 - `src/components/shared/BeforeAfterSlider.tsx` — clip-path, touch-action, design tokens

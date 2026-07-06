@@ -32,6 +32,7 @@ export default function BeforeAfterSlider({
   }, [])
 
   const onPointerDown = (e: React.PointerEvent) => {
+    e.preventDefault()
     e.stopPropagation()
     setIsDragging(true)
     containerRef.current?.setPointerCapture(e.pointerId)
@@ -40,12 +41,15 @@ export default function BeforeAfterSlider({
 
   const onPointerMove = (e: React.PointerEvent) => {
     if (!isDragging) return
+    e.preventDefault()
     e.stopPropagation()
     updatePosition(e.clientX)
   }
 
   const onPointerUp = (e: React.PointerEvent) => {
     if (!isDragging) return
+    e.preventDefault()
+    e.stopPropagation()
     setIsDragging(false)
     if (containerRef.current?.hasPointerCapture(e.pointerId)) {
       containerRef.current.releasePointerCapture(e.pointerId)

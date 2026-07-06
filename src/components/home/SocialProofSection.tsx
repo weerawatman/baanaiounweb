@@ -44,12 +44,8 @@ function CarouselDots({
 }
 
 export default function SocialProofSection({ stories, testimonials }: SocialProofSectionProps) {
-  const [storyRef, storyApi] = useEmblaCarousel({
-    loop: stories.length > 1,
-    watchDrag: false,
-  })
   const [storyIndex, setStoryIndex] = useState(0)
-  const [storySnaps, setStorySnaps] = useState<number[]>([])
+  const activeStory = stories[storyIndex]
 
   const [testRef, testApi] = useEmblaCarousel({ loop: testimonials.length > 1 }, [
     Autoplay({ delay: 4000, stopOnInteraction: false }),
@@ -57,25 +53,10 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
   const [testIndex, setTestIndex] = useState(0)
   const [testSnaps, setTestSnaps] = useState<number[]>([])
 
-  const onStorySelect = useCallback(() => {
-    if (!storyApi) return
-    setStoryIndex(storyApi.selectedScrollSnap())
-  }, [storyApi])
-
   const onTestSelect = useCallback(() => {
     if (!testApi) return
     setTestIndex(testApi.selectedScrollSnap())
   }, [testApi])
-
-  useEffect(() => {
-    if (!storyApi) return
-    setStorySnaps(storyApi.scrollSnapList())
-    storyApi.on("select", onStorySelect)
-    onStorySelect()
-    return () => {
-      storyApi.off("select", onStorySelect)
-    }
-  }, [storyApi, onStorySelect])
 
   useEffect(() => {
     if (!testApi) return
@@ -86,6 +67,12 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
       testApi.off("select", onTestSelect)
     }
   }, [testApi, onTestSelect])
+
+  useEffect(() => {
+    if (storyIndex >= stories.length) {
+      setStoryIndex(0)
+    }
+  }, [stories.length, storyIndex])
 
   const hasStories = stories.length > 0
   const hasTestimonials = testimonials.length > 0
@@ -98,41 +85,35 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
         subtitle="ผลงานจริงและเสียงจากลูกค้าที่เราดูแลจนจบ"
       />
 
-      {hasStories && (
+      {hasStories && activeStory && (
         <div className="mt-10" data-testid="success-stories-section">
           <p className="mb-4 text-center text-sm text-muted-foreground">
             ผลงานจริง ก่อน-หลังรีโนเวท · Real Results: Before &amp; After Renovations
           </p>
 
-          <div className="overflow-hidden rounded-2xl" ref={storyRef}>
-            <div className="flex">
-              {stories.map((story) => (
-                <div key={story.id} className="min-w-0 flex-[0_0_100%] px-1">
-                  <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-4 md:p-6">
-                    <div onPointerDown={(e) => e.stopPropagation()}>
-                      <BeforeAfterSlider
-                        beforeUrl={story.beforeImageUrl}
-                        afterUrl={story.afterImageUrl}
-                      />
-                    </div>
-                    <div className="text-center md:text-left">
-                      <p className="text-lg font-bold text-foreground">{story.title}</p>
-                      {story.titleEn && (
-                        <p className="text-sm text-muted-foreground">{story.titleEn}</p>
-                      )}
-                      {story.location && (
-                        <p className="mt-1 text-xs font-medium text-secondary">{story.location}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
+          <div className="mx-auto max-w-3xl">
+            <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-4 md:p-6">
+              <BeforeAfterSlider
+                key={activeStory.id}
+                beforeUrl={activeStory.beforeImageUrl}
+                afterUrl={activeStory.afterImageUrl}
+              />
+              <div className="text-center md:text-left">
+                <p className="text-lg font-bold text-foreground">{activeStory.title}</p>
+                {activeStory.titleEn && (
+                  <p className="text-sm text-muted-foreground">{activeStory.titleEn}</p>
+                )}
+                {activeStory.location && (
+                  <p className="mt-1 text-xs font-medium text-secondary">{activeStory.location}</p>
+                )}
+              </div>
             </div>
           </div>
+
           <CarouselDots
-            count={storySnaps.length}
+            count={stories.length}
             selectedIndex={storyIndex}
-            onSelect={(i) => storyApi?.scrollTo(i)}
+            onSelect={setStoryIndex}
           />
         </div>
       )}
