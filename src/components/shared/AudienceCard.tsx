@@ -11,6 +11,8 @@ interface AudienceCardProps {
   titleEn: string
   descTh: string
   descEn: string
+  highlightTh?: string
+  highlightEn?: string
   className?: string
 }
 
@@ -22,6 +24,8 @@ export default function AudienceCard({
   titleEn,
   descTh,
   descEn,
+  highlightTh,
+  highlightEn,
   className,
 }: AudienceCardProps) {
   return (
@@ -44,6 +48,15 @@ export default function AudienceCard({
         <span className="block text-foreground">{titleTh}</span>
         <span className="block text-sm font-medium text-muted-foreground">{titleEn}</span>
       </h3>
+
+      {highlightTh && (
+        <p className="mt-2 text-xs font-semibold text-primary">
+          {highlightTh}
+          {highlightEn && (
+            <span className="mt-0.5 block font-normal text-muted-foreground">{highlightEn}</span>
+          )}
+        </p>
+      )}
 
       <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/90">{descTh}</p>
       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{descEn}</p>
