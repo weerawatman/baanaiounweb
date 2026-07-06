@@ -5,7 +5,7 @@ test.describe("smoke", () => {
     await page.goto("/")
     await expect(page).toHaveTitle(/บ้านไออุ่น|Baan Ai Oun/)
     await expect(page.getByRole("link", { name: /หน้าแรก/ }).first()).toBeVisible()
-    await expect(page.getByRole("link", { name: /ค้นหาทรัพย์/ }).first()).toBeVisible()
+    await expect(page.getByRole("link", { name: /งานหาทรัพย์/ }).first()).toBeVisible()
   })
 
   test("key public pages respond 200", async ({ page }) => {

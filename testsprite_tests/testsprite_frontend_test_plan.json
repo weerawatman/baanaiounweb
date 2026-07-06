@@ -1,37 +1,37 @@
 [
   {
     "id": "TC001",
-    "title": "Submit a buyer or renter requirement form successfully",
-    "description": "Verifies that a buyer or renter can complete the lead form and see a successful submission with the form reset.",
-    "category": "Buyer/Renter Lead Form",
+    "title": "TestSprite submits a property listing request",
+    "description": "A visitor can complete the property listing request form and see a bilingual success confirmation.",
+    "category": "Tabbed Service Request Form",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /find-property"
+        "description": "Navigate to /request"
       },
       {
         "type": "action",
-        "description": "Choose the Thai buyer mode"
+        "description": "Select the property listing tab"
       },
       {
         "type": "action",
-        "description": "Fill in the name field with a unique test name"
+        "description": "Fill in the name field with TestSprite Listing Lead"
       },
       {
         "type": "action",
-        "description": "Fill in the phone field with a valid phone number"
+        "description": "Fill in the contact field with TestSprite Listing Contact"
       },
       {
         "type": "action",
-        "description": "Fill in the contact field with a valid contact detail"
+        "description": "Fill in the property type field with a suitable property type"
       },
       {
         "type": "action",
-        "description": "Select the required property options"
+        "description": "Fill in the location field with a suitable location"
       },
       {
         "type": "action",
-        "description": "Select a property type"
+        "description": "Fill in the budget field with a suitable budget"
       },
       {
         "type": "action",
@@ -39,360 +39,368 @@
       },
       {
         "type": "assertion",
-        "description": "Verify a success confirmation is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the form is reset"
+        "description": "Verify a bilingual success confirmation is visible"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC002",
-    "title": "Submit a property request successfully",
-    "description": "This verifies that a buyer or renter can complete the property requirement form and see a successful reset after submission.",
-    "category": "Smart Property Search & Filter",
+    "title": "TestSprite owner inquiry form can be revealed and submitted with images",
+    "description": "Verifies that a property owner can reveal the legacy listing form, add valid images, submit it, and see a confirmation state.",
+    "category": "Legacy Lead Forms",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /find-property"
+        "description": "Navigate to /list-property"
       },
       {
         "type": "action",
-        "description": "Fill in the requester name field with Alex Buyer"
+        "description": "Scroll to the start section for property owners"
       },
       {
         "type": "action",
-        "description": "Fill in the contact field with 0812345678"
+        "description": "Reveal the inquiry form"
       },
       {
         "type": "action",
-        "description": "Fill a valid property requirement into the requirement field"
+        "description": "Fill in a valid name in the listing form"
       },
       {
         "type": "action",
-        "description": "Submit the form"
+        "description": "Fill in a valid phone number in the listing form"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a valid email in the listing form"
+      },
+      {
+        "type": "action",
+        "description": "Fill in valid property details in the listing form"
+      },
+      {
+        "type": "action",
+        "description": "Upload one or more valid property images"
+      },
+      {
+        "type": "action",
+        "description": "Submit the listing form"
       },
       {
         "type": "assertion",
-        "description": "Verify a success confirmation is visible"
+        "description": "Verify a confirmation state is visible"
       },
       {
         "type": "assertion",
-        "description": "Verify the form is reset"
+        "description": "Verify the listing request was submitted successfully"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC003",
-    "title": "Search and open a property from the home page",
-    "description": "Verifies that a visitor can filter properties on the home page and open a matching property detail page.",
-    "category": "Home page and /properties smart property search/filter",
+    "title": "TestSprite submits a property matchmaking request",
+    "description": "A visitor can complete the property matchmaking request form and see a bilingual success confirmation.",
+    "category": "Tabbed Service Request Form",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /"
+        "description": "Navigate to /request"
       },
       {
         "type": "action",
-        "description": "Switch to the Thai language view"
+        "description": "Select the property matchmaking tab"
       },
       {
         "type": "action",
-        "description": "Set the property purpose filter"
+        "description": "Fill in the name field with TestSprite Matchmaking Lead"
       },
       {
         "type": "action",
-        "description": "Set the district filter"
+        "description": "Fill in the contact field with TestSprite Matchmaking Contact"
       },
       {
         "type": "action",
-        "description": "Set the price filter"
+        "description": "Fill in the desired property type field with a suitable property type"
       },
       {
         "type": "action",
-        "description": "Open a matching property from the results"
+        "description": "Fill in the location field with a suitable location"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the budget field with a suitable budget"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
       },
       {
         "type": "assertion",
-        "description": "Verify the property detail page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify property listing details are displayed"
+        "description": "Verify a bilingual success confirmation is visible"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC004",
-    "title": "Filter properties and open a matching listing",
-    "description": "This verifies that a visitor can narrow properties by purpose, district, and price and open a matching property detail page from the results.",
-    "category": "Smart Property Search & Filter",
+    "title": "TestSprite submits Property Match from /find-property",
+    "description": "A visitor opens /find-property, sees the matchmaking form above the fold without clicking a CTA, completes it, and sees a bilingual success confirmation.",
+    "category": "Property Match (/find-property)",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Choose a property purpose"
-      },
-      {
-        "type": "action",
-        "description": "Select a district"
-      },
-      {
-        "type": "action",
-        "description": "Select a maximum price"
+        "description": "Navigate to /find-property"
       },
       {
         "type": "assertion",
-        "description": "Verify matching property cards are displayed"
+        "description": "Verify the Property Match form fields are visible without revealing a hidden form"
       },
       {
         "type": "action",
-        "description": "Click a property card"
+        "description": "Fill in the name field with TestSprite Property Match Lead"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the phone field with 0812345678"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with testsprite.match@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Select a property type"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the location field with Ban Bueng, Chonburi"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the budget field with 2,500,000 THB"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
       },
       {
         "type": "assertion",
-        "description": "Verify the property detail page is displayed"
+        "description": "Verify a bilingual success confirmation is visible"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC005",
-    "title": "Open a property gallery and use contact actions",
-    "description": "Verifies that a visitor can view a property detail page, browse the gallery, use the mortgage calculator, and access contact options.",
-    "category": "Property detail page gallery + mortgage calculator + LINE/phone contact CTAs",
+    "title": "TestSprite submits a co-agent request",
+    "description": "A visitor can complete the co-agent request form and see a bilingual success confirmation.",
+    "category": "Tabbed Service Request Form",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /properties"
+        "description": "Navigate to /request"
       },
       {
         "type": "action",
-        "description": "Open a property detail page from the listing"
+        "description": "Select the co-agent tab"
       },
       {
         "type": "action",
-        "description": "Open a gallery image"
+        "description": "Fill in the name field with TestSprite Co-agent Lead"
       },
       {
         "type": "action",
-        "description": "Close the gallery view"
+        "description": "Fill in the contact field with TestSprite Co-agent Contact"
       },
       {
         "type": "action",
-        "description": "Interact with the mortgage calculator"
+        "description": "Fill in the property type field with a suitable property type"
       },
       {
         "type": "action",
-        "description": "Use the LINE contact action"
+        "description": "Fill in the location field with a suitable location"
       },
       {
         "type": "action",
-        "description": "Use the phone contact action"
+        "description": "Fill in the budget field with a suitable budget"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
       },
       {
         "type": "assertion",
-        "description": "Verify the property detail content remains visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify contact actions are available"
+        "description": "Verify a bilingual success confirmation is visible"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC006",
-    "title": "Submit an owner listing request with uploaded photos",
-    "description": "Verifies that a property owner can complete the listing form, upload up to five photos, and see a successful submission with a reset state.",
-    "category": "Owner Listing Lead Form with Image Upload",
+    "title": "TestSprite contact form can be submitted successfully",
+    "description": "Verifies that a website visitor can submit the contact form on the contact page and see a success confirmation.",
+    "category": "Contact Page",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /list-property"
+        "description": "Navigate to /contact"
       },
       {
         "type": "action",
-        "description": "Choose the Thai owner mode"
+        "description": "Fill in a valid name in the contact form"
       },
       {
         "type": "action",
-        "description": "Select the intended purpose"
+        "description": "Fill in a valid phone number in the contact form"
       },
       {
         "type": "action",
-        "description": "Select a property type"
+        "description": "Fill in a valid email in the contact form"
       },
       {
         "type": "action",
-        "description": "Fill in the listing name field with a unique test name"
+        "description": "Fill in a valid subject in the contact form"
       },
       {
         "type": "action",
-        "description": "Fill in the phone field with a valid phone number"
+        "description": "Fill in a valid message in the contact form"
       },
       {
         "type": "action",
-        "description": "Fill in the location details field"
-      },
-      {
-        "type": "action",
-        "description": "Upload five valid image files"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify image previews are displayed"
+        "description": "Submit the contact form"
       },
       {
         "type": "assertion",
         "description": "Verify a success confirmation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the message was sent successfully"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC007",
-    "title": "Start a contact conversation from a property detail page",
-    "description": "This verifies that a visitor can use the direct LINE or phone contact action from a property detail page.",
-    "category": "Property Detail View",
+    "title": "TestSprite shows validation for an incomplete email field",
+    "description": "A visitor cannot submit the request form when the email field is missing or malformed and a validation error is shown.",
+    "category": "Tabbed Service Request Form",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /"
+        "description": "Navigate to /request"
       },
       {
         "type": "action",
-        "description": "Click a property card"
+        "description": "Select the property listing tab"
       },
       {
         "type": "action",
-        "description": "Click the LINE contact action"
+        "description": "Fill in the name field with TestSprite Invalid Email Lead"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the contact field with TestSprite Invalid Email Contact"
+      },
+      {
+        "type": "action",
+        "description": "Leave the email field empty or enter an invalid email value"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the property type field with a suitable property type"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the location field with a suitable location"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
       },
       {
         "type": "assertion",
-        "description": "Verify a contact action is initiated"
+        "description": "Verify a bilingual validation error is visible"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC008",
-    "title": "Submit a property listing with uploaded photos",
-    "description": "This verifies that a property owner can enter listing details, upload photos, and submit the listing successfully.",
-    "category": "Smart Property Search & Filter",
+    "title": "TestSprite co-agent application can be revealed and submitted",
+    "description": "Verifies that a potential partner can reveal the co-agent form, complete it, and see a confirmation state.",
+    "category": "Legacy Lead Forms",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /list-property"
+        "description": "Navigate to /co-agent"
       },
       {
         "type": "action",
-        "description": "Fill in the owner name field with Sam Owner"
+        "description": "Scroll to the start section for potential partners"
       },
       {
         "type": "action",
-        "description": "Fill in the contact field with 0898765432"
+        "description": "Reveal the inquiry form"
       },
       {
         "type": "action",
-        "description": "Fill a valid property listing description into the listing details field"
+        "description": "Fill in a valid name in the partner form"
       },
       {
         "type": "action",
-        "description": "Upload a valid image file"
+        "description": "Fill in a valid phone number in the partner form"
       },
       {
         "type": "action",
-        "description": "Upload another valid image file"
+        "description": "Fill in a valid email in the partner form"
       },
       {
         "type": "action",
-        "description": "Submit the form"
+        "description": "Fill in valid partner details in the partner form"
+      },
+      {
+        "type": "action",
+        "description": "Submit the partner form"
       },
       {
         "type": "assertion",
-        "description": "Verify a success confirmation is visible"
+        "description": "Verify a confirmation state is visible"
       },
       {
         "type": "assertion",
-        "description": "Verify the uploaded image previews are displayed"
+        "description": "Verify the partner application was submitted successfully"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC009",
-    "title": "Submit a co-agent application successfully",
-    "description": "Verifies that a potential partner can complete the co-agent form and see a successful submission with the form reset.",
-    "category": "Co-Agent Application Form",
+    "title": "Open the list property service from the services hub",
+    "description": "A property owner can use the services hub to reach the property listing lead page.",
+    "category": "Services Hub Navigation",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /co-agent"
+        "description": "Navigate to /services"
       },
       {
         "type": "action",
-        "description": "Fill in the name field with a unique test name"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the phone field with a valid phone number"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the LINE ID field with a valid test LINE ID"
-      },
-      {
-        "type": "action",
-        "description": "Select a property type"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the location field"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the price field"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the commission field"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the details field"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
+        "description": "Click the link to the property owner lead page"
       },
       {
         "type": "assertion",
-        "description": "Verify a success confirmation is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the form is reset"
+        "description": "Verify the property owner lead page is displayed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC010",
-    "title": "View property gallery and open the image lightbox",
-    "description": "This verifies that a visitor can browse property photos and open the gallery lightbox from a property detail page.",
-    "category": "Property Detail View",
+    "title": "TestSprite opens the listing request from the homepage hero",
+    "description": "A visitor can start the property listing journey from the homepage hero and land on the correct request tab.",
+    "category": "Homepage Hero and Service Shortcuts",
     "steps": [
       {
         "type": "action",
@@ -400,65 +408,57 @@
       },
       {
         "type": "action",
-        "description": "Click a property card"
-      },
-      {
-        "type": "action",
-        "description": "Open the image gallery lightbox"
+        "description": "Click the hero action for property listing"
       },
       {
         "type": "assertion",
-        "description": "Verify the lightbox is displayed"
-      },
-      {
-        "type": "action",
-        "description": "Navigate to the next image"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a different property image is displayed"
+        "description": "Verify the property listing request tab is displayed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC011",
-    "title": "Use the property listing page filters to find a property",
-    "description": "Verifies that a visitor can narrow the property grid on the listing page and see matching results.",
-    "category": "Home page and /properties smart property search/filter",
+    "title": "TestSprite mortgage estimate updates with user input",
+    "description": "Verifies that changing mortgage calculator inputs on a property detail page updates the loan estimate and chart immediately.",
+    "category": "Property Detail View",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /properties"
+        "description": "Navigate to /property/[slug]"
       },
       {
         "type": "action",
-        "description": "Set the property purpose filter"
+        "description": "Scroll to the mortgage calculator"
       },
       {
         "type": "action",
-        "description": "Set the district filter"
+        "description": "Fill in a valid property price in the mortgage calculator"
       },
       {
         "type": "action",
-        "description": "Set the price filter"
+        "description": "Fill in a valid down payment in the mortgage calculator"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid loan term"
       },
       {
         "type": "assertion",
-        "description": "Verify matching property cards are displayed"
+        "description": "Verify the mortgage estimate is displayed"
       },
       {
         "type": "assertion",
-        "description": "Verify the filtered results are shown"
+        "description": "Verify the loan chart is displayed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC012",
-    "title": "Submit a complete contact inquiry",
-    "description": "A visitor can send a general contact inquiry and see a success confirmation with the form cleared afterward.",
-    "category": "Contact Form",
+    "title": "TestSprite contact channel links open the preferred outreach method",
+    "description": "Verifies that a visitor can use the contact page to open a direct call, LINE, WhatsApp, or email channel.",
+    "category": "Contact Page",
     "steps": [
       {
         "type": "action",
@@ -466,81 +466,61 @@
       },
       {
         "type": "action",
-        "description": "Fill in the name field with a valid full name"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the phone field with a valid phone number"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the email field with a valid email address"
-      },
-      {
-        "type": "action",
-        "description": "Select a valid subject"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the message field with a valid message"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
+        "description": "Click the direct communication option for one contact channel"
       },
       {
         "type": "assertion",
-        "description": "Verify a success confirmation is visible"
+        "description": "Verify the selected contact channel is opened"
       },
       {
         "type": "assertion",
-        "description": "Verify the form is reset"
+        "description": "Verify the user can proceed to reach sales through the chosen channel"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC013",
-    "title": "Submit a contact inquiry successfully",
-    "description": "This verifies that a business lead can submit the contact form and see a successful reset afterward.",
-    "category": "Smart Property Search & Filter",
+    "title": "TestSprite property gallery opens and closes",
+    "description": "Verifies that a visitor can open a property image gallery, browse images, and return to the property detail view.",
+    "category": "Property Detail View",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /contact"
+        "description": "Navigate to /property/[slug]"
       },
       {
         "type": "action",
-        "description": "Fill in the name field with Taylor Lead"
+        "description": "Click the property image gallery"
       },
       {
         "type": "action",
-        "description": "Fill in the contact field with 0800000000"
+        "description": "Click the control to move to the next image"
       },
       {
         "type": "action",
-        "description": "Fill a valid inquiry into the message field"
+        "description": "Click the control to move to the previous image"
       },
       {
         "type": "action",
-        "description": "Submit the form"
+        "description": "Close the image gallery"
       },
       {
         "type": "assertion",
-        "description": "Verify a success confirmation is visible"
+        "description": "Verify the property detail page is visible"
       },
       {
         "type": "assertion",
-        "description": "Verify the form is reset"
+        "description": "Verify the image gallery is closed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC014",
-    "title": "View all properties from the home page",
-    "description": "This verifies that a visitor can move from the home page to the full property listing page to browse all listings.",
-    "category": "Smart Property Search & Filter",
+    "title": "TestSprite opens each service shortcut from the homepage",
+    "description": "A visitor can use the homepage service shortcuts to reach the corresponding request or course page.",
+    "category": "Homepage Hero and Service Shortcuts",
     "steps": [
       {
         "type": "action",
@@ -548,943 +528,86 @@
       },
       {
         "type": "action",
-        "description": "Click the link to view all properties"
+        "description": "Click the service shortcut for property listing support"
       },
       {
         "type": "assertion",
-        "description": "Verify the property listing page is displayed"
+        "description": "Verify the property listing request tab is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the service shortcut for agent training"
       },
       {
         "type": "assertion",
-        "description": "Verify property cards are displayed"
+        "description": "Verify the agent course page is displayed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC015",
-    "title": "Submit a complete agent course application",
-    "description": "A visitor can complete the agent course application form and receive a success confirmation with the form cleared afterward.",
-    "category": "Agent Course Application Form",
+    "title": "Open the co-agent service from the services hub",
+    "description": "A partner applicant can use the services hub to reach the co-agent lead page.",
+    "category": "Services Hub Navigation",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /agent-course"
+        "description": "Navigate to /services"
       },
       {
         "type": "action",
-        "description": "Fill in the name field with a valid full name"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the phone field with a valid phone number"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the LINE ID field with a valid LINE ID"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the occupation field with a valid occupation"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the training goal field with a valid goal"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
+        "description": "Click the link to the co-agent lead page"
       },
       {
         "type": "assertion",
-        "description": "Verify a success confirmation is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the form is reset"
+        "description": "Verify the co-agent lead page is displayed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC016",
-    "title": "Find Property service opens the buyer and renter form",
-    "description": "A visitor can use the services hub to reach the buyer and renter lead form page.",
-    "category": "Services Hub Navigation",
+    "title": "TestSprite filters listings on the homepage",
+    "description": "A visitor can narrow the homepage property grid by purpose, district, and maximum price and see matching listings.",
+    "category": "Smart Property Search and Listing Filter",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /services"
+        "description": "Navigate to /"
       },
       {
         "type": "action",
-        "description": "Select the Find Property service card"
+        "description": "Choose a purpose filter"
+      },
+      {
+        "type": "action",
+        "description": "Select a district filter"
+      },
+      {
+        "type": "action",
+        "description": "Select a maximum price filter"
       },
       {
         "type": "assertion",
-        "description": "Verify the buyer and renter lead form page is displayed"
+        "description": "Verify the property grid is narrowed to matching listings"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC017",
-    "title": "Find a property through the services hub",
-    "description": "This verifies that a buyer or renter can use the services hub to reach the property request form.",
-    "category": "Smart Property Search & Filter",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /services"
-      },
-      {
-        "type": "action",
-        "description": "Click the link to the property request page"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the property request form is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC018",
-    "title": "Filter and search blog posts then open a related article",
-    "description": "Verifies that a visitor can filter the blog list, open a post, and use related property navigation from the post page.",
-    "category": "blog listing category filter + live search + article open",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /blog"
-      },
-      {
-        "type": "action",
-        "description": "Select a blog category"
-      },
-      {
-        "type": "action",
-        "description": "Enter a search term"
-      },
-      {
-        "type": "action",
-        "description": "Open a matching blog post"
-      },
-      {
-        "type": "action",
-        "description": "Open a related property from the post"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the blog post page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the property detail page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC019",
-    "title": "List Property service opens the owner listing form",
-    "description": "A visitor can use the services hub to reach the property owner listing form page.",
-    "category": "Services Hub Navigation",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /services"
-      },
-      {
-        "type": "action",
-        "description": "Select the List Property service card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the owner listing form page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC020",
-    "title": "Switch to Thai content and keep it after navigating",
-    "description": "This verifies that a visitor can switch the site to Thai and see the selected language remain active after moving to another public page.",
-    "category": "Language Toggle (TH/EN)",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Click the Thai language option"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify Thai content is displayed"
-      },
-      {
-        "type": "action",
-        "description": "Click the link to view the services page"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify Thai content remains displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC021",
-    "title": "Block buyer or renter submission when required data is missing",
-    "description": "Verifies that the buyer or renter form shows validation feedback and does not submit when required information is incomplete.",
-    "category": "Buyer/Renter Lead Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /find-property"
-      },
-      {
-        "type": "action",
-        "description": "Choose the Thai buyer mode"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the name field with a unique test name"
-      },
-      {
-        "type": "action",
-        "description": "Leave a required contact field empty"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a validation error is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the form remains unsent"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC022",
-    "title": "Switch to English content and keep it after navigating",
-    "description": "This verifies that a visitor can switch the site to English and see the selected language remain active after moving to another public page.",
-    "category": "Language Toggle (TH/EN)",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Click the English language option"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify English content is displayed"
-      },
-      {
-        "type": "action",
-        "description": "Click the link to view the services page"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify English content remains displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC023",
-    "title": "Co-Agent service opens the partner application form",
-    "description": "A visitor can use the services hub to reach the co-agent application page.",
-    "category": "Services Hub Navigation",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /services"
-      },
-      {
-        "type": "action",
-        "description": "Select the Co-Agent service card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the co-agent application page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC024",
-    "title": "Use the mortgage calculator on a property detail page",
-    "description": "This verifies that a visitor can enter loan inputs and see the mortgage breakdown update on a property detail page.",
+    "title": "TestSprite LINE contact opens from property detail",
+    "description": "Verifies that a visitor can start a LINE contact action from a property detail page.",
     "category": "Property Detail View",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Click a property card"
-      },
-      {
-        "type": "action",
-        "description": "Fill a purchase price into the purchase price field"
-      },
-      {
-        "type": "action",
-        "description": "Fill a down payment percentage into the down payment field"
-      },
-      {
-        "type": "action",
-        "description": "Fill an interest rate into the interest rate field"
-      },
-      {
-        "type": "action",
-        "description": "Fill a loan term into the loan term field"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the loan breakdown chart is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify calculated mortgage details are displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC025",
-    "title": "Agent Course service opens the training application page",
-    "description": "A visitor can use the services hub to reach the agent course application page.",
-    "category": "Services Hub Navigation",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /services"
-      },
-      {
-        "type": "action",
-        "description": "Select the Agent Course service card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the agent course application page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC026",
-    "title": "Browse the blog by category and search term",
-    "description": "This verifies that a visitor can filter the blog list by category and search for a relevant article.",
-    "category": "Smart Property Search & Filter",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /blog"
-      },
-      {
-        "type": "action",
-        "description": "Select a blog category"
-      },
-      {
-        "type": "action",
-        "description": "Fill a search term into the blog search field"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify matching blog posts are displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC027",
-    "title": "Reach lead pages from the services hub",
-    "description": "Verifies that a visitor can use the services hub to navigate to the main lead-generation pages.",
-    "category": "services hub navigation to the four lead pages",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /services"
-      },
-      {
-        "type": "action",
-        "description": "Open the buyer or renter service"
-      },
-      {
-        "type": "action",
-        "description": "Return to the services hub"
-      },
-      {
-        "type": "action",
-        "description": "Open the property owner service"
-      },
-      {
-        "type": "action",
-        "description": "Return to the services hub"
-      },
-      {
-        "type": "action",
-        "description": "Open the co-agent service"
-      },
-      {
-        "type": "action",
-        "description": "Return to the services hub"
-      },
-      {
-        "type": "action",
-        "description": "Open the agent course service"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a lead page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the services hub navigation is usable"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC028",
-    "title": "Open the agent course application from the services hub",
-    "description": "This verifies that an applicant can navigate from the services hub to the agent course application page.",
-    "category": "Smart Property Search & Filter",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /services"
-      },
-      {
-        "type": "action",
-        "description": "Click the link to the agent course page"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the agent course application form is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC029",
-    "title": "Filter blog posts by category and search term",
-    "description": "A visitor can narrow the blog listing to matching posts using category and live search.",
-    "category": "Blog Listing & Search",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /blog"
-      },
-      {
-        "type": "action",
-        "description": "Choose a blog category"
-      },
-      {
-        "type": "action",
-        "description": "Type a search term into the search field"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify only matching blog posts are displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify non-matching posts are hidden"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC030",
-    "title": "Persist the language choice while browsing the site",
-    "description": "Verifies that switching between Thai and English persists across navigation to another page.",
-    "category": "Language toggle persistence across navigation",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Switch to the English language view"
-      },
-      {
-        "type": "action",
-        "description": "Navigate to /properties"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the English language view remains active"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the property listing content is displayed in the selected language"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC031",
-    "title": "Reach the property listing form from the services hub",
-    "description": "This verifies that a property owner can use the services hub to open the listing form.",
-    "category": "Smart Property Search & Filter",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /services"
-      },
-      {
-        "type": "action",
-        "description": "Click the link to the property listing page"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the property listing lead form is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC032",
-    "title": "Open a blog post and follow a related property",
-    "description": "This verifies that a visitor can open a blog article and navigate to a related property detail page from it.",
-    "category": "Smart Property Search & Filter",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /blog"
-      },
-      {
-        "type": "action",
-        "description": "Open a blog post"
-      },
-      {
-        "type": "action",
-        "description": "Click a related property card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the property detail page is displayed"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC033",
-    "title": "Switch between buyer modes while preparing a requirement request",
-    "description": "Verifies that a visitor can change between Thai and foreign buyer modes and continue completing the form correctly.",
-    "category": "Buyer/Renter Lead Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /find-property"
-      },
-      {
-        "type": "action",
-        "description": "Choose the foreign buyer mode"
-      },
-      {
-        "type": "action",
-        "description": "Switch back to the Thai buyer mode"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the name field with a unique test name"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the phone field with a valid phone number"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the contact field with a valid contact detail"
-      },
-      {
-        "type": "action",
-        "description": "Select the required property options"
-      },
-      {
-        "type": "action",
-        "description": "Select a property type"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the active buyer mode is reflected in the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the form inputs are available for submission"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC034",
-    "title": "Block invalid contact submission",
-    "description": "A visitor cannot send the contact form with missing or invalid required details and validation feedback is shown.",
-    "category": "Contact Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the name field with a valid full name"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the phone field with an invalid phone value"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the email field with an invalid email value"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify validation feedback is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify submission is blocked"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC035",
-    "title": "Reach the contact page communication links and map",
-    "description": "This verifies that a visitor can use the contact page's direct communication links and confirm the location map is present.",
-    "category": "Smart Property Search & Filter",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact"
-      },
-      {
-        "type": "action",
-        "description": "Click the LINE contact link"
-      },
-      {
-        "type": "action",
-        "description": "Click the phone contact link"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify direct communication links are available"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the embedded map is displayed"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC036",
-    "title": "Block incomplete co-agent applications",
-    "description": "Verifies that the co-agent form shows validation feedback when required information is missing and the submission is blocked.",
-    "category": "Co-Agent Application Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /co-agent"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the name field with a unique test name"
-      },
-      {
-        "type": "action",
-        "description": "Leave the phone field empty"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the LINE ID field with a valid test LINE ID"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a validation error is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the application is not submitted"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC037",
-    "title": "Use direct contact options and view the map on the contact page",
-    "description": "Verifies that a business lead can open the contact page, use direct communication links, and view the embedded map location.",
-    "category": "contact page direct call/LINE/WhatsApp/email links and embedded map",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact"
-      },
-      {
-        "type": "action",
-        "description": "Use the phone contact link"
-      },
-      {
-        "type": "action",
-        "description": "Use the LINE contact link"
-      },
-      {
-        "type": "action",
-        "description": "Use the WhatsApp contact link"
-      },
-      {
-        "type": "action",
-        "description": "Use the email contact link"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the contact methods are available"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the embedded map is displayed"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC038",
-    "title": "Open a blog article from the listing",
-    "description": "A visitor can open a blog post from the listing and reach the full article page.",
-    "category": "Blog Listing & Search",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /blog"
-      },
-      {
-        "type": "action",
-        "description": "Click a blog post card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the article page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the selected post content is visible"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC039",
-    "title": "Show validation when required property request fields are missing",
-    "description": "This verifies that a buyer or renter sees validation feedback when submitting the property request form without completing required details.",
-    "category": "Smart Property Search & Filter",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /find-property"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify form validation errors are visible"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC040",
-    "title": "Reject an invalid owner listing image upload",
-    "description": "Verifies that the owner listing form shows upload validation feedback and does not accept a wrong type or oversized image file.",
-    "category": "Owner Listing Lead Form with Image Upload",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /list-property"
-      },
-      {
-        "type": "action",
-        "description": "Choose the Thai owner mode"
-      },
-      {
-        "type": "action",
-        "description": "Upload an invalid file type or oversized image file"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify an upload validation message is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify no image preview is added"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC041",
-    "title": "Block incomplete agent course submission",
-    "description": "A visitor cannot submit the agent course application when required information is missing and validation feedback is shown.",
-    "category": "Agent Course Application Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /agent-course"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify validation feedback is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify submission is blocked"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC042",
-    "title": "Read the about page story and milestones",
-    "description": "A visitor can scroll through the about page and view the company story, milestones, and values content.",
-    "category": "About Page",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /about"
-      },
-      {
-        "type": "action",
-        "description": "Scroll through the page content"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the milestone timeline is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the company values content is displayed"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC043",
-    "title": "Prevent submitting an incomplete property listing",
-    "description": "This verifies that a property owner sees validation feedback when required listing fields are missing.",
-    "category": "Smart Property Search & Filter",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /list-property"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify form validation errors are visible"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC044",
-    "title": "Browse the about page milestones and values",
-    "description": "Verifies that a visitor can scroll through the about page and view the company story milestones and values content.",
-    "category": "about page milestone timeline and values scrolling",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /about"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the milestones section"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the values section"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify milestone content is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify values content is displayed"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC045",
-    "title": "Use direct contact links from the contact page",
-    "description": "A visitor can start a direct communication channel from the contact page through one of the available contact options.",
-    "category": "Contact Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact"
-      },
-      {
-        "type": "action",
-        "description": "Click a direct contact option"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the corresponding communication action is initiated"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the contact options remain available"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC046",
-    "title": "Contact a property team from a blog post",
-    "description": "A visitor can use the LINE contact action from a blog post to start a LINE conversation flow.",
-    "category": "Blog Post Detail",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /blog"
-      },
-      {
-        "type": "action",
-        "description": "Open a blog post"
+        "description": "Navigate to /property/[slug]"
       },
       {
         "type": "action",
@@ -1492,41 +615,20 @@
       },
       {
         "type": "assertion",
-        "description": "Verify a LINE conversation flow is initiated"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC047",
-    "title": "View the business location map on the contact page",
-    "description": "A visitor can open the contact page and confirm the embedded map displays the business location.",
-    "category": "Contact Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the map section"
+        "description": "Verify the LINE contact flow is opened"
       },
       {
         "type": "assertion",
-        "description": "Verify an embedded map is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the business location is shown"
+        "description": "Verify the user can proceed to contact sales through LINE"
       }
     ],
-    "priority": "Low"
+    "priority": "High"
   },
   {
-    "id": "TC048",
-    "title": "See no-match results when filters are too narrow",
-    "description": "This verifies that a visitor sees an empty state when selected property filters produce no matching listings.",
-    "category": "Smart Property Search & Filter",
+    "id": "TC018",
+    "title": "TestSprite filters listings on the properties page",
+    "description": "A visitor can narrow the full listings grid by purpose, district, and maximum price and see matching properties.",
+    "category": "Smart Property Search and Listing Filter",
     "steps": [
       {
         "type": "action",
@@ -1534,48 +636,212 @@
       },
       {
         "type": "action",
-        "description": "Choose a property purpose"
+        "description": "Choose a purpose filter"
       },
       {
         "type": "action",
-        "description": "Select a district"
+        "description": "Select a district filter"
       },
       {
         "type": "action",
-        "description": "Select a maximum price"
+        "description": "Select a maximum price filter"
       },
       {
         "type": "assertion",
-        "description": "Verify an empty state message is visible"
+        "description": "Verify the listing grid is narrowed to matching properties"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC019",
+    "title": "Open the agent course page from the services hub",
+    "description": "A visitor can use the services hub to reach the agent training page.",
+    "category": "Services Hub Navigation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /services"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to the agent training page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the agent training page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC020",
+    "title": "TestSprite opens a property from the homepage grid",
+    "description": "A visitor can select a property card on the homepage and open the matching property detail page.",
+    "category": "Smart Property Search and Listing Filter",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a property card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the property detail page is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC021",
+    "title": "TestSprite opens a property from the listings grid",
+    "description": "A visitor can select a property card on the listings page and open the matching property detail page.",
+    "category": "Smart Property Search and Listing Filter",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /properties"
+      },
+      {
+        "type": "action",
+        "description": "Select a property card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the property detail page is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC022",
+    "title": "Open and read a blog post with related properties",
+    "description": "A reader can open a blog post and view related property suggestions on the article page.",
+    "category": "Blog Listing and Article Reading",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog"
+      },
+      {
+        "type": "action",
+        "description": "Open a blog post"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the article content is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify related property cards are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC023",
+    "title": "Open a related property from a blog post",
+    "description": "A reader can follow a related property suggestion from an article to the matching property detail page.",
+    "category": "Blog Listing and Article Reading",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog"
+      },
+      {
+        "type": "action",
+        "description": "Open a blog post"
+      },
+      {
+        "type": "action",
+        "description": "Select a related property suggestion"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the property detail page is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC024",
+    "title": "Search the blog for an article",
+    "description": "A reader can search the blog and see the article list update immediately.",
+    "category": "Blog Listing and Article Reading",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog"
+      },
+      {
+        "type": "action",
+        "description": "Enter a search term into the blog search field"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the article list is filtered to matching posts"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC025",
+    "title": "Filter blog posts by category",
+    "description": "A reader can narrow the blog list by category and see matching posts only.",
+    "category": "Blog Listing and Article Reading",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog"
+      },
+      {
+        "type": "action",
+        "description": "Select a blog category filter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the article list is filtered to matching posts"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC026",
+    "title": "Review the company story and values",
+    "description": "A visitor can read the about page to understand the company story, timeline, and values.",
+    "category": "Company Information Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /about"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the company story is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the timeline and values sections are displayed"
       }
     ],
     "priority": "Low"
   },
   {
-    "id": "TC049",
-    "title": "Read owner listing FAQs from the form page",
-    "description": "Verifies that a property owner can expand and read FAQ content on the listing page.",
-    "category": "Owner Listing Lead Form with Image Upload",
+    "id": "TC027",
+    "title": "Review the privacy policy",
+    "description": "A visitor can read the bilingual privacy policy to understand the site’s personal data policy.",
+    "category": "Company Information Pages",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /list-property"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the FAQ section"
-      },
-      {
-        "type": "action",
-        "description": "Expand an FAQ item"
+        "description": "Navigate to /privacy-policy"
       },
       {
         "type": "assertion",
-        "description": "Verify the FAQ answer is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the expanded FAQ remains visible"
+        "description": "Verify the bilingual privacy policy content is displayed"
       }
     ],
     "priority": "Low"

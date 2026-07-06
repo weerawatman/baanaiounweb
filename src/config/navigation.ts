@@ -30,7 +30,7 @@ export function navLabel(item: { th: string; en: string }): string {
 
 export const NAV_ENTRIES: NavEntry[] = [
   { th: "หน้าแรก", en: "Home", href: "/" },
-  { th: "ค้นหาทรัพย์", en: "Find Property", href: "/find-property" },
+  { th: "งานหาทรัพย์", en: "Property Match", href: "/find-property" },
   { th: "บริการของเรา", en: "Our Services", href: "/services" },
   { th: "บทความ", en: "Blog", href: "/blog" },
   { th: "เกี่ยวกับเรา", en: "About Us", href: "/about" },
@@ -41,10 +41,9 @@ export const NAV_ENTRIES: NavEntry[] = [
 
 export const NAV_ITEMS: NavItem[] = [
   { th: "หน้าแรก", en: "Home", href: "/" },
-  { th: "ค้นหาทรัพย์", en: "Find Property", href: "/find-property" },
+  { th: "งานหาทรัพย์", en: "Property Match", href: "/find-property" },
   { th: "บริการของเรา", en: "Our Services", href: "/services" },
   { th: "ฝากขาย/เช่า", en: "List Property", href: "/list-property" },
-  { th: "ค้นหาบ้าน/สินเชื่อ", en: "Find Home & Loan", href: "/find-property" },
   { th: "Co-Agent", en: "Co-Agent", href: "/co-agent" },
   { th: "คอร์สนายหน้า", en: "Agent Course", href: "/agent-course" },
   { th: "บทความ", en: "Blog", href: "/blog" },

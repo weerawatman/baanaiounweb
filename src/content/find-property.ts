@@ -5,100 +5,108 @@
 
 export const FIND_PROPERTY_CONTENT = {
   seo: {
-    title: "ค้นหาบ้านที่ใช่ และบริการสินเชื่อครบวงจร | Find Your Dream Home & Loan Solutions",
+    title: "งานหาทรัพย์ตรงใจโดยทีมบ้านไออุ่น | Property Match by Baan Ai Oun",
     description: {
-      th: "คัดทรัพย์ตรงโจทย์ ดูแลสินเชื่อและสัญญา จบที่เดียว ไม่มีค่าใช้จ่ายสำหรับผู้ซื้อและผู้เช่า",
-      en: "Curated property matching, expert loan assistance, and seamless contract handling. 100% Free for buyers and renters."
+      th: "บอกงบ ทำเล และสเปกที่ต้องการ แล้วให้ทีมบ้านไออุ่นคัดทรัพย์ที่ใช่มาให้ พร้อมช่วยประสานดูทรัพย์และปิดดีลอย่างมั่นใจ",
+      en: "Tell us your budget, location, and must-haves, and Baan Ai Oun will curate the right properties, arrange viewings, and help you move forward with confidence.",
     }
   },
-  painPoints: {
+  hero: {
     headline: {
-      th: "หาบ้านไม่เจอ กู้ไม่ผ่าน สับสนทุกอย่าง?",
-      en: "Can't find the right home? Loan rejected? Confused about everything?"
+      th: "บอกโจทย์ที่ใช่ แล้วให้เราหาทรัพย์ให้ตรงใจ",
+      en: "Share your brief and let us match the right property for you",
     },
-    points: [
+    description: {
+      th: "ไม่ต้องเสียเวลาหาด้วยตัวเองทุกประกาศ เราช่วยคัดทรัพย์ตามงบ ทำเล ประเภท และเงื่อนไขที่คุณต้องการ พร้อมประสานนัดดูทรัพย์ให้ครบใน flow เดียว",
+      en: "Skip the endless listing hunt. We curate properties by budget, location, type, and deal requirements, then coordinate viewings in one smooth flow.",
+    },
+    highlights: [
       {
-        th: "🔍 หาบ้านตามสเปกและงบประมาณไม่เจอ",
-        en: "🔍 Can't find a home matching your specs and budget"
+        th: "คัดทรัพย์ตามโจทย์จริง ไม่โยนลิสต์กว้างๆ ให้เลือกเอง",
+        en: "Curated to your real brief, not a generic list to sort through alone.",
       },
       {
-        th: "🏦 สินเชื่อไม่ผ่าน ไม่รู้จะแก้ไขยังไง",
-        en: "🏦 Loan rejected, don't know how to fix it"
+        th: "ช่วยจัดลำดับตัวเลือกให้เห็นภาพก่อนนัดดูทรัพย์",
+        en: "We prioritize options so you can review the best fits before viewing.",
       },
       {
-        th: "📝 ไม่เข้าใจสัญญา กลัวโดนหลอก",
-        en: "📝 Don't understand contracts, worried about being scammed"
-      }
-    ]
+        th: "เหมาะกับทั้งซื้ออยู่เอง ลงทุน หรือหาทรัพย์ให้ทีม/ครอบครัว",
+        en: "Useful for owner-occupiers, investors, and teams searching on behalf of others.",
+      },
+      {
+        th: "ส่งความต้องการด้านขวาได้เลย ทีมงานติดต่อกลับเร็วที่สุด",
+        en: "Complete the form on the right and our team will follow up quickly.",
+      },
+    ],
   },
   solutions: {
     headline: {
-      th: "ทำไมต้องหาบ้านกับ บ้านไออุ่น?",
-      en: "Why Find Your Home with Baan Ai Oun?"
+      th: "ทำไมต้องใช้บริการงานหาทรัพย์กับบ้านไออุ่น?",
+      en: "Why use Baan Ai Oun for Property Match?"
     },
     subtitle: "",
     description: {
-      th: "เราช่วยคัดทรัพย์ตรงโจทย์ ดูแลการประเมินสินเชื่อ ประสานธนาคาร และจัดการสัญญาจนถึงวันโอน",
-      en: "We help match you with the perfect property, handle loan assessments, coordinate with banks, and manage contracts through closing day."
+      th: "เราทำงานแบบเป็นคู่คิด ไม่ใช่แค่ส่งลิงก์ประกาศ แต่ช่วยตีโจทย์ แนะนำทำเล เปรียบเทียบตัวเลือก และดู flow การตัดสินใจให้คุณเดินเร็วขึ้นอย่างมั่นใจ",
+      en: "We work like a trusted property partner, not just a listing sender, helping refine the brief, suggest the right areas, compare options, and speed up confident decisions.",
     },
     highlight: {
-      th: "🎯 ฟรี! ไม่มีค่าใช้จ่ายสำหรับผู้ซื้อและผู้เช่า",
-      en: "🎯 Free! No charges for buyers and renters"
+      th: "🎯 เริ่มจากบรีฟสั้นๆ แล้วให้ทีมงานช่วยคัดกรองต่อได้ทันที",
+      en: "🎯 Start with a short brief and let our team handle the first round of curation.",
     },
     features: [
       {
-        th: "🏠 คัดทรัพย์คุณภาพ ตรงตามงบประมาณ (Curated Properties)",
-        en: "🏠 Quality properties matching your budget (Curated)"
+        th: "🏠 คัดทรัพย์ตามงบ ทำเล และประเภทที่ต้องการ",
+        en: "🏠 Shortlisted properties matched to your budget, area, and property type",
       },
       {
-        th: "💰 บริการที่ปรึกษาสินเชื่อฟรี ดันทุกเคส (Free Loan Consultation)",
-        en: "💰 Free loan consultation, we push every case"
+        th: "📍 ช่วยแนะนำทำเลและแลนด์มาร์คที่ตอบโจทย์การใช้ชีวิตหรือการลงทุน",
+        en: "📍 Guidance on areas and landmarks that fit your lifestyle or investment plan",
       },
       {
-        th: "📋 ดูแลสัญญาและกฎหมาย ปลอดภัย 100% (Secure & Legal Contracts)",
-        en: "📋 Secure contract handling, 100% legal protection"
+        th: "🤝 ประสานนัดดูทรัพย์และคุยรายละเอียดกับทีมงานได้ต่อเนื่อง",
+        en: "🤝 Coordinated viewings and smooth follow-up with the team throughout the process",
       }
     ]
   },
   hook: {
     quote: {
-      th: '"บอกสเปกได้ เราหาให้ตรงใจ ฟรี!"',
-      en: '"Tell us what you need, we\'ll find your perfect match, Free!"'
+      th: '"บรีฟครั้งเดียว ดีกว่าไล่ดูประกาศเองเป็นร้อยรายการ"',
+      en: '"One clear brief beats scrolling through hundreds of listings alone."'
     },
     message: {
-      th: "ลูกค้าท่านหนึ่งบอกว่า 'มองหาบ้านมาหลายเดือนยังไม่เจอ งบ 3 ล้าน อยากได้ 3 นอน 2 น้ำ ใกล้ BTS' พิมเลยคัดทรัพย์ให้ 3 หลังตรงสเปก พาดูทรัพย์จริง ช่วยเช็ควงเงินกู้ล่วงหน้า ประสานธนาคาร จนกู้ผ่าน ทำสัญญาโอนเรียบร้อย ลูกค้าบอก 'ขอบคุณมากค่ะ หาไม่เจอจริงๆ ถ้าไม่มีพิมช่วย'",
-      en: "One client told us 'Been looking for months, budget 3 million, want 3 bed 2 bath near BTS.' Pim immediately found 3 properties matching the specs, arranged viewings, checked loan eligibility in advance, coordinated with the bank until approval was secured, and handled the closing. The client said 'Thank you so much, I really couldn't find anything without Pim's help.'"
+      th: "ลูกค้าหลายเคสมาหาเราพร้อมโจทย์ที่ยังไม่ชัด 100% เช่น อยากได้บ้านมือสองรีโนเวทพร้อมอยู่ งบประมาณจำกัด หรืออยากได้ทำเลที่ปล่อยเช่าง่าย เราจึงช่วยไล่เรียงโจทย์ คัดตัวเลือกที่มีโอกาสใช่จริง และทำให้การตัดสินใจง่ายขึ้นตั้งแต่การนัดดูทรัพย์ครั้งแรก",
+      en: "Many clients come to us with an incomplete brief, such as wanting a move-in-ready renovated home, a tight budget, or an area that rents out easily. We help clarify the brief, shortlist realistic options, and make the first viewing feel far more focused and actionable.",
     }
   },
-  cta: {
-    primary: {
-      label: "ค้นหาบ้าน/ปรึกษาสินเชื่อ | Find Your Home",
-      href: "#form"
+  formCard: {
+    title: {
+      th: "ส่งบรีฟงานหาทรัพย์",
+      en: "Submit Your Property Match Brief",
     },
-    secondary: {
-      label: "ดูทรัพย์ที่มี | View Available Properties",
-      href: "#listings"
-    }
+    description: {
+      th: "กรอกข้อมูลสำคัญให้ครบที่สุด ทีมงานจะใช้ข้อมูลนี้คัดทรัพย์และติดต่อกลับเพื่อนัดคุยต่อ",
+      en: "Share the essentials so our team can curate relevant properties and follow up with the next steps.",
+    },
   },
   steps: {
-    headline: "เป็นเจ้าของบ้านง่ายๆ ใน 3 ขั้นตอน | 3 Simple Steps to Your New Home",
+    headline: "เริ่มงานหาทรัพย์ง่ายๆ ใน 3 ขั้นตอน | 3 Simple Steps to Property Match",
     items: [
       {
         number: 1,
-        title: "แจ้งความต้องการ (Tell Us What You Need)",
-        description: "ระบุทำเล สเปก งบประมาณ — ทีมงานจับคู่ทรัพย์ที่ตรงใจให้ทันที",
+        title: "ส่งโจทย์ที่ต้องการ (Share Your Brief)",
+        description: "ระบุประเภททรัพย์ ทำเล และงบประมาณ เพื่อให้ทีมงานเริ่มคัดทรัพย์ได้ตรงขึ้นตั้งแต่แรก",
       },
       {
         number: 2,
-        title: "ชมทรัพย์และประเมินสินเชื่อ (Viewings & Loan Pre-check)",
-        description: "เราพาดูทรัพย์จริง นัดธนาคาร และประเมินวงเงินกู้ล่วงหน้าฟรี",
+        title: "รับลิสต์ที่คัดแล้ว (Review Curated Matches)",
+        description: "ทีมงานคัดตัวเลือกที่เหมาะกว่า ส่งให้พิจารณา และช่วยนัดดูทรัพย์ที่น่าสนใจ",
       },
       {
         number: 3,
-        title: "ทำสัญญาและย้ายเข้าอยู่ (Close & Move In)",
-        description: "ดูแลสัญญาและเอกสารครบจนถึงวันโอนกรรมสิทธิ์ที่กรมที่ดิน",
+        title: "เดินหน้าต่ออย่างมั่นใจ (Move Forward with Confidence)",
+        description: "เมื่อเจอตัวเลือกที่ใช่แล้ว เราช่วยประสานงานให้คุยต่อและตัดสินใจได้ง่ายขึ้น",
       },
     ],
   },
-  formTag: "buyer"
+  formTag: "request-matchmaking",
 }
