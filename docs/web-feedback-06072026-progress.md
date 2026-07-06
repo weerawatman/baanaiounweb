@@ -58,9 +58,13 @@ Archive SQL เดิม: `docs/archive/supabase-setup/`
 
 ### Phase 3 — Social proof
 
-- [ ] Migration: ตาราง `success_stories`
-- [ ] Admin CRUD
-- [ ] Slider ก่อน/หลัง (before/after)
+- [x] Migration: ตาราง `success_stories` (+ seed 1 รายการ)
+- [x] Admin CRUD (`/admin/success-stories`)
+- [x] Slider ก่อน/หลัง (before/after) บนหน้าแรก
+
+**TestSprite:** `testsprite_tests/TC021_TestSprite_success_stories_phase3.py`
+
+**ไฟล์ที่เกี่ยวข้อง:** `supabase/migrations/20260706220000_success_stories.sql`, `src/components/shared/BeforeAfterSlider.tsx`, `src/components/home/SuccessStoriesSection.tsx`, `src/app/(admin)/admin/(dashboard)/success-stories/`
 
 ---
 
@@ -121,8 +125,24 @@ python testsprite_tests/TC004_TestSprite_submits_property_match_from_find_proper
 |-------|--------|
 | Phase 1 | ✅ pushed + TestSprite PASS on Vercel (2026-07-06) |
 | Phase 2 | ✅ pushed + TestSprite PASS on Vercel (2026-07-06) |
-| Phase 3 | ⏳ ถัดไป |
-| Phase 4–6 | 📋 รอคิว |
+| Phase 3 | ✅ pushed + TestSprite PASS on Vercel (2026-07-06) |
+| Phase 4 | ⏳ ถัดไป |
+| Phase 5–6 | 📋 รอคิว |
+
+### Phase 3 — TestSprite (Vercel)
+
+| รายการ | สถานะ |
+|--------|--------|
+| Push to GitHub (`bb112ab`) | ✅ |
+| Supabase migration applied | ✅ |
+| Vercel deploy reflects changes | ✅ |
+| TC021 success stories before/after | ✅ PASS |
+
+```
+TESTSPRITE_BASE_URL=https://baanaiounweb.vercel.app
+python testsprite_tests/TC021_TestSprite_success_stories_phase3.py
+→ PASS (2026-07-06)
+```
 
 ### Phase 2 — TestSprite (Vercel)
 
