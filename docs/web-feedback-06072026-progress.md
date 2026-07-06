@@ -91,7 +91,25 @@ python testsprite_tests/TC024_TestSprite_about_course_phase6.py
 ทำต่อ — อ่าน docs/web-feedback-06072026-progress.md
 ```
 
-> **แผน 6 เฟสเสร็จครบแล้ว** — Homepage Cohesion (A) ✅ | Site Cohesion (B) ✅ (รอ push Vercel)
+> **แผน 6 เฟสเสร็จครบแล้ว** — Homepage Cohesion (A) ✅ | Site Cohesion (B) ✅ | Slider Fix (A) ✅
+
+---
+
+## Before/After Slider Fix (Option A) — ✅ 2026-07-06
+
+**Commit:** `44259e9` | **TestSprite (local):** TC021 PASS
+
+### ปัญหาที่แก้
+- กรอบหดเมื่อลาก — ลบ `10000/position%` hack ใช้ `clip-path: inset()` แทน (กรอบคงที่)
+- ข้อความ alt ซ้อนทับ — รูปเป็น decorative (`alt=""`, `aria-hidden`)
+- Embla carousel แย่ง gesture — `watchDrag: false` บน story carousel + `stopPropagation` บน slider
+
+### ไฟล์ที่แก้
+- `src/components/shared/BeforeAfterSlider.tsx` — clip-path, touch-action, design tokens
+- `src/components/home/SocialProofSection.tsx` — Embla isolation, caption ไม่ซ้ำ SectionTitle
+
+### ถัดไป (content)
+- อัปรูป before/after จริงที่ `/admin/success-stories` (ตอนนี้ยังเป็น `placehold.co`)
 
 ---
 
