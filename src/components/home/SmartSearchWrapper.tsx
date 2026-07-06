@@ -19,6 +19,7 @@ interface SmartSearchWrapperProps {
 }
 
 export default function SmartSearchWrapper({ initialProperties }: SmartSearchWrapperProps) {
+  const [query, setQuery] = useState("")
   const [purpose, setPurpose] = useState<PurposeTab>("all")
   const [district, setDistrict] = useState("")
   const [maxPrice, setMaxPrice] = useState("")
@@ -30,8 +31,8 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
   )
 
   const filtered = useMemo(
-    () => filterProperties(initialProperties, { purpose, district, maxPrice, subType: "" }),
-    [initialProperties, purpose, district, maxPrice],
+    () => filterProperties(initialProperties, { query, purpose, district, maxPrice, subType: "" }),
+    [initialProperties, query, purpose, district, maxPrice],
   )
 
   const displayProperties = useMemo(() => {
@@ -72,6 +73,14 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
 
         {/* Filter dropdowns */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="ค้นหาทำเล ชื่อโครงการ หรือคำสำคัญ | Search area, project, keyword"
+            className={`${selectClass} sm:col-span-2`}
+            aria-label="ค้นหาทรัพย์"
+          />
           <select
             value={district}
             onChange={(e) => setDistrict(e.target.value)}

@@ -8,6 +8,7 @@ import type { Property } from "@/types"
 export type PurposeTab = "all" | Property["type"]
 
 export interface PropertyFilters {
+  query: string
   purpose: PurposeTab
   district: string
   maxPrice: string
@@ -15,6 +16,7 @@ export interface PropertyFilters {
 }
 
 export const EMPTY_FILTERS: PropertyFilters = {
+  query: "",
   purpose: "all",
   district: "",
   maxPrice: "",
@@ -46,7 +48,21 @@ export const SUB_TYPE_OPTIONS: { label: string; value: "" | Property["subType"] 
 ]
 
 export function filterProperties(properties: Property[], filters: PropertyFilters): Property[] {
+  const q = filters.query.trim().toLowerCase()
+
   return properties.filter((p) => {
+    if (q) {
+      const haystack = [
+        p.title,
+        p.location.district,
+        p.location.subdistrict,
+        p.tags?.join(" "),
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+      if (!haystack.includes(q)) return false
+    }
     if (filters.purpose !== "all" && p.type !== filters.purpose) return false
     if (filters.district && p.location.district !== filters.district) return false
     if (filters.maxPrice && p.price > Number(filters.maxPrice)) return false
@@ -61,6 +77,7 @@ export function parseFilters(params: URLSearchParams): PropertyFilters {
   const maxPrice = params.get("maxPrice") ?? ""
   const subType = params.get("subType") ?? ""
   return {
+    query: params.get("query") ?? "",
     purpose: PURPOSE_TABS.some((t) => t.value === purpose) ? (purpose as PurposeTab) : "all",
     district: params.get("district") ?? "",
     maxPrice: PRICE_OPTIONS.some((o) => o.value === maxPrice) ? maxPrice : "",
@@ -71,6 +88,7 @@ export function parseFilters(params: URLSearchParams): PropertyFilters {
 /** Build a query string from filters, skipping empty/default values. */
 export function buildQueryString(filters: PropertyFilters): string {
   const params = new URLSearchParams()
+  if (filters.query.trim()) params.set("query", filters.query.trim())
   if (filters.purpose !== "all") params.set("purpose", filters.purpose)
   if (filters.district) params.set("district", filters.district)
   if (filters.maxPrice) params.set("maxPrice", filters.maxPrice)

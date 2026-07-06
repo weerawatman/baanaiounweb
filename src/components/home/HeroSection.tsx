@@ -6,12 +6,14 @@ import { motion } from "framer-motion"
 import { Home, Search } from "lucide-react"
 import { SITE_CONFIG } from "@/config/site"
 import { HERO } from "@/content/homepage"
+import HeroSearchBar from "./HeroSearchBar"
 
 interface HeroSectionProps {
   heroImage?: string
+  districts: string[]
 }
 
-export default function HeroSection({ heroImage }: HeroSectionProps) {
+export default function HeroSection({ heroImage, districts }: HeroSectionProps) {
   const background = heroImage || SITE_CONFIG.pim.heroImage
 
   return (
@@ -50,11 +52,11 @@ export default function HeroSection({ heroImage }: HeroSectionProps) {
             <span className="mt-1 block whitespace-pre-line text-sm text-white/75 sm:text-base">{HERO.subEn}</span>
           </p>
 
-          {/* ปุ่ม CTA แยกบริการ — ทั้งคู่ → /request (แท็บตามบริการ) */}
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          {/* ปุ่ม CTA หลัก */}
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link
               href={HERO.ctaThai.href}
-              className="inline-flex flex-col items-center justify-center gap-1 rounded-lg bg-[#1B4D3E] px-6 py-4 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#163f33]"
+              className="inline-flex flex-col items-center justify-center gap-1 rounded-lg bg-[#E8833A] px-6 py-4 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#d4742f]"
             >
               <Home className="size-5" />
               <span className="text-sm font-semibold">{HERO.ctaThai.th}</span>
@@ -62,13 +64,15 @@ export default function HeroSection({ heroImage }: HeroSectionProps) {
             </Link>
             <Link
               href={HERO.ctaIntl.href}
-              className="inline-flex flex-col items-center justify-center gap-1 rounded-lg bg-[#E8833A] px-6 py-4 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#d4742f]"
+              className="inline-flex flex-col items-center justify-center gap-1 rounded-lg bg-[#1B4D3E] px-6 py-4 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#163f33]"
             >
               <Search className="size-5" />
               <span className="text-sm font-semibold">{HERO.ctaIntl.th}</span>
               <span className="text-xs font-medium text-white/90">{HERO.ctaIntl.en}</span>
             </Link>
           </div>
+
+          <HeroSearchBar districts={districts} />
         </motion.div>
       </div>
     </section>

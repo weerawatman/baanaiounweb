@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
 import { getActiveProperties } from "@/lib/queries/properties"
 import { mapProperty } from "@/lib/mappers"
 import PropertiesPage from "./PropertiesPage"
@@ -14,5 +15,9 @@ export const metadata: Metadata = {
 export default async function PropertiesRoute() {
   const rows = await getActiveProperties()
   const properties = rows.map(mapProperty)
-  return <PropertiesPage properties={properties} />
+  return (
+    <Suspense>
+      <PropertiesPage properties={properties} />
+    </Suspense>
+  )
 }

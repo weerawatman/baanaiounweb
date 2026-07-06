@@ -4,18 +4,36 @@
  */
 
 export const HERO = {
-  h1Th: "ครบจบเรื่องอสังหาฯ ซื้อ-ขาย-เช่า ง่าย สะดวก ปลอดภัย",
-  h1En: "Your All-in-One Thai Real Estate Partner – Buy, Sell, Rent, Stress-Free.",
+  h1Th: "คัดสรรและดูแลทรัพย์โดยทีมนักลงทุนและผู้เชี่ยวชาญตัวจริง",
+  h1En: "Curated and managed by real estate investors and local experts.",
   subTh:
-    "ดูแลครบวงจรด้วยทีมงานมืออาชีพ พร้อมเจาะลึกทำเลศักยภาพ: กรุงเทพฯ, สมุทรปราการ, EEC, ฉะเชิงเทรา (นิคมฯ เวลโกรว์, ทีเอฟดี), ชลบุรี, พัทยา, ศรีราชา, บ้านบึง, บ่อทอง, หนองใหญ่ (นิคมฯ โรจนะ, WHA หนองใหญ่) และโซนนิคมอุตสาหกรรมหลัก (อมตะ 1-2,\nอีสเทิร์นซีบอร์ด)",
+    "บ้านไออุ่นช่วยเจ้าของทรัพย์ ผู้ซื้อ-เช่า และเครือข่ายนายหน้า ด้วยบริการครบวงจรในทำเลศักยภาพ: กรุงเทพฯ, สมุทรปราการ, EEC, ฉะเชิงเทรา, ชลบุรี, พัทยา, ศรีราชา, บ้านบึง และโซนนิคมอุตสาหกรรมหลัก",
   subEn:
-    "Expert, personalized service for local and international clients. Specializing in prime locations: Bangkok, Samut Prakan, EEC, Chachoengsao (Wellgrow & TFD Industrial Estates), Chonburi, Pattaya, Sriracha, Ban Bueng, Bo Thong, Nong Yai (Rojana & WHA Nong Yai), and major Industrial Zones (Amata 1 & 2,\nEastern Seaboard).", 
-  // ปุ่มทั้งสองลิงก์ไปหน้าฟอร์มคำขอบริการ /request (แท็บตามบริการ)
+    "Baan Ai Oun supports owners, buyers, renters, and co-agents across prime locations: Bangkok, Samut Prakan, EEC, Chachoengsao, Chonburi, Pattaya, Sriracha, Ban Bueng, and major industrial zones.",
   ctaThai: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property", href: "/request?tab=list-property" },
   ctaIntl: {
-    th: "บริการจัดหาทรัพย์ตามต้องการ",
-    en: "Property Matchmaking Service",
-    href: "/request?tab=matchmaking",
+    th: "ค้นหาทรัพย์ที่ใช่",
+    en: "Find Your Perfect Match",
+    href: "/find-property",
+  },
+} as const
+
+export const ECOSYSTEM_BAND = {
+  title: {
+    th: "เติบโตไปด้วยกันกับครอบครัวบ้านไออุ่น",
+    en: "Join Our Ecosystem",
+  },
+  body: {
+    th: "อยากเป็นนายหน้าอสังหาฯ แต่ไม่มีทุน ไม่รู้จะเริ่มอย่างไร? บ้านไออุ่นเปิดโอกาสให้เรียนรู้แบบจับมือทำ พร้อมเข้าร่วมเครือข่าย Co-Agent และคอร์สนายหน้าที่ถ่ายทอดจากนักลงทุนและผู้เชี่ยวชาญตัวจริง",
+    en: "Want to build a real estate career without heavy capital? Learn hands-on with our team, join the Co-Agent network, or start with our agent course led by practicing investors and experts.",
+  },
+  primary: {
+    label: { th: "ร่วมเป็น Co-Agent", en: "Join as Co-Agent" },
+    href: "/request?tab=co-agent",
+  },
+  secondary: {
+    label: { th: "สมัครคอร์สนายหน้า", en: "Agent Course" },
+    href: "/agent-course",
   },
 } as const
 
@@ -32,8 +50,8 @@ export const SERVICE_CARDS = [
     titleEn: "Property Owners",
     painTh: "ขาย/ปล่อยเช่าไม่ออก? ปวดหัวเรื่องเอกสาร? กลัวถูกโกง?",
     painEn: "Struggling to sell/rent? Worried about paperwork and legal scams?",
-    solutionTh: "การตลาดครบวงจร ปิดดีลไว ปลอดภัย 100%",
-    solutionEn: "Full-service marketing, fast-closing, and secure transactions.",
+    solutionTh: "ประเมินศักยภาพทรัพย์ฟรี โดยทีมนักลงทุนตัวจริง — การตลาดครบวงจรจนปิดดีล",
+    solutionEn: "Free investor-led property assessment plus full-service marketing until closing.",
     ctaTh: "ฝากขาย/ปล่อยเช่า",
     ctaEn: "List Your Property",
     href: "/request?tab=list-property",
@@ -45,12 +63,13 @@ export const SERVICE_CARDS = [
     titleEn: "Buyers & Renters",
     painTh: "หาบ้านไม่เจอ? กู้ผ่านยาก? สับสนเรื่องสัญญา?",
     painEn: "Can't find the right home? Loan rejection or legal concerns?",
-    solutionTh: "คัดทรัพย์ตรงโจทย์ ดูแลสินเชื่อและสัญญา จบที่เดียว",
+    solutionTh:
+      "คัดสรรบ้านทำเลทอง และทรัพย์รีโนเวทสภาพพร้อมอยู่ ผ่านการตรวจสอบโครงสร้างแล้ว",
     solutionEn:
-      "Curated property matching, expert loan assistance, and seamless contract handling.",
-    ctaTh: "บริการจัดหาทรัพย์ตามต้องการ",
-    ctaEn: "Property Matchmaking Service",
-    href: "/request?tab=matchmaking",
+      "Curated prime-location homes and move-in-ready renovated properties, structurally vetted.",
+    ctaTh: "ค้นหาทรัพย์ที่ใช่",
+    ctaEn: "Find Your Perfect Match",
+    href: "/find-property",
   },
   {
     icon: "Users",
@@ -72,8 +91,8 @@ export const SERVICE_CARDS = [
     titleEn: "Aspiring Agents",
     painTh: "อยากมีรายได้เพิ่ม ไม่มีประสบการณ์/ไม่มีทุน?",
     painEn: "Want extra income, but no experience or capital?",
-    solutionTh: "คอร์ส “จับมือทำ” จากศูนย์ เริ่มต้นได้ทันที",
-    solutionEn: "Take our 'hands-on' agent course! Start from zero.",
+    solutionTh: "คอร์ส “จับมือทำ” ถ่ายทอดเคล็ดลับจากผู้แต่งหนังสือและนักลงทุนตัวจริง",
+    solutionEn: "Hands-on course led by practicing investors and published authors.",
     ctaTh: "สมัครคอร์สนายหน้า",
     ctaEn: "Join Our Agent Course",
     href: "/agent-course",

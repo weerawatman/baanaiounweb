@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Home, Search, Users, GraduationCap } from "lucide-react"
+import { ArrowRight, Home, Search, Users, GraduationCap } from "lucide-react"
 import { SERVICES_HEADING, SERVICE_CARDS } from "@/content/homepage"
 
 const ICON_MAP = { Home, Search, Users, GraduationCap } as const
@@ -59,6 +59,7 @@ export default function ServiceShortcuts() {
                       {card.ctaEn}
                     </span>
                   )}
+                  <ArrowRight className="mt-1 size-4" aria-hidden />
                 </Link>
               </div>
             )

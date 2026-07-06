@@ -4,6 +4,7 @@ import { MessageCircle } from "lucide-react"
 import HeroSection from "@/components/home/HeroSection"
 import ServiceShortcuts from "@/components/home/ServiceShortcuts"
 import CoreValues from "@/components/home/CoreValues"
+import EcosystemBand from "@/components/home/EcosystemBand"
 import SmartSearchWrapper from "@/components/home/SmartSearchWrapper"
 import { type Property, type Testimonial, type FAQ } from "@/types"
 import { SITE_CONFIG } from "@/config/site"
@@ -27,10 +28,13 @@ export default function HomePage({
   lineUrl,
 }: HomePageProps) {
   const lineHref = lineUrl || SITE_CONFIG.lineUrl
+  const districts = [
+    ...new Set(properties.map((p) => p.location.district).filter(Boolean)),
+  ].sort()
 
   return (
     <>
-      <HeroSection heroImage={heroImage} />
+      <HeroSection heroImage={heroImage} districts={districts} />
 
       {/* บริการของเรา */}
       <ServiceShortcuts />
@@ -39,6 +43,8 @@ export default function HomePage({
       <SmartSearchWrapper initialProperties={properties} />
 
       <CoreValues />
+
+      <EcosystemBand />
 
       {testimonials.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-12">

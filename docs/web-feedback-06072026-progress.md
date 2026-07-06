@@ -45,10 +45,12 @@ Archive SQL เดิม: `docs/archive/supabase-setup/`
 
 ### Phase 2 — Home
 
-- [ ] Hero search bar → `/properties?query`
-- [ ] เปลี่ยน CTA
-- [ ] Service cards ใหม่
-- [ ] Ecosystem band
+- [x] Hero search bar → `/properties?query`
+- [x] เปลี่ยน CTA (investor hero copy + Find Your Perfect Match)
+- [x] Service cards ใหม่ (trust signals + buyer CTA → `/find-property`)
+- [x] Ecosystem band
+
+**TestSprite:** `testsprite_tests/TC020_TestSprite_homepage_phase2.py`
 
 **ไฟล์ที่เกี่ยวข้อง:** `src/content/homepage.ts`, `src/components/home/`, `src/app/(public)/HomePage.tsx`
 
@@ -118,7 +120,7 @@ python testsprite_tests/TC004_TestSprite_submits_property_match_from_find_proper
 | Phase | สถานะ |
 |-------|--------|
 | Phase 1 | ✅ pushed + TestSprite PASS on Vercel (2026-07-06) |
-| Phase 2 | ⏳ ถัดไป |
+| Phase 2 | ⏳ pushed — รอ TestSprite Vercel |
 | Phase 3–6 | 📋 รอคิว |
 
 ### Phase 1 — TestSprite (Vercel)

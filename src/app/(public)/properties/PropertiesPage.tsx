@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import SectionTitle from "@/components/layout/SectionTitle"
 import PropertyCard from "@/components/property/PropertyCard"
@@ -9,13 +10,25 @@ import {
   PRICE_OPTIONS,
   PURPOSE_TABS,
   filterProperties,
+  parseFilters,
   type PurposeTab,
 } from "@/lib/search"
 
 export default function PropertiesPage({ properties }: { properties: Property[] }) {
-  const [purpose, setPurpose] = useState<PurposeTab>("all")
-  const [district, setDistrict] = useState("")
-  const [maxPrice, setMaxPrice] = useState("")
+  const searchParams = useSearchParams()
+  const urlFilters = useMemo(() => parseFilters(searchParams), [searchParams])
+
+  const [query, setQuery] = useState(urlFilters.query)
+  const [purpose, setPurpose] = useState<PurposeTab>(urlFilters.purpose)
+  const [district, setDistrict] = useState(urlFilters.district)
+  const [maxPrice, setMaxPrice] = useState(urlFilters.maxPrice)
+
+  useEffect(() => {
+    setQuery(urlFilters.query)
+    setPurpose(urlFilters.purpose)
+    setDistrict(urlFilters.district)
+    setMaxPrice(urlFilters.maxPrice)
+  }, [urlFilters])
 
   const districts = useMemo(
     () => [...new Set(properties.map((p) => p.location.district).filter(Boolean))].sort(),
@@ -23,8 +36,8 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
   )
 
   const filtered = useMemo(
-    () => filterProperties(properties, { purpose, district, maxPrice, subType: "" }),
-    [properties, purpose, district, maxPrice],
+    () => filterProperties(properties, { query, purpose, district, maxPrice, subType: "" }),
+    [properties, query, purpose, district, maxPrice],
   )
 
   const selectClass =
@@ -65,8 +78,16 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
           ))}
         </div>
 
-        {/* District + Price */}
+        {/* Query + District + Price */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="ค้นหาทำเล ชื่อโครงการ หรือคำสำคัญ | Search area, project, keyword"
+            className={`${selectClass} sm:col-span-2`}
+            aria-label="ค้นหาทรัพย์"
+          />
           <select
             value={district}
             onChange={(e) => setDistrict(e.target.value)}
