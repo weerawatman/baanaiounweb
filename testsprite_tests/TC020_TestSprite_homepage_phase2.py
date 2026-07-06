@@ -28,15 +28,15 @@ async def run_test() -> None:
         ).to_be_visible()
 
         await expect(
-            page.get_by_role("link", name=re.compile(r"ค้นหาทรัพย์ที่ใช่|Find Your Perfect Match"))
+            page.get_by_role("link", name=re.compile(r"Find Your Perfect Match")).first
         ).to_be_visible()
 
-        await expect(page.get_by_text(re.compile(r"Join Our Ecosystem|เติบโตไปด้วยกัน"))).to_be_visible()
+        await expect(page.get_by_text("Join Our Ecosystem")).to_be_visible()
 
-        search = page.get_by_placeholder(re.compile(r"ค้นหาทำเล|Search area"))
+        search = page.get_by_placeholder(re.compile(r"Search area|project, keyword"))
         await expect(search.first).to_be_visible()
         await search.first.fill("บ้านบึง")
-        await page.get_by_role("button", name=re.compile(r"ค้นหาทรัพย์|Search Properties")).click()
+        await page.get_by_role("button", name=re.compile(r"Search Properties")).click()
         await page.wait_for_url(re.compile(r"/properties\?.*query="))
         assert "query=" in page.url
 

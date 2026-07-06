@@ -120,8 +120,23 @@ python testsprite_tests/TC004_TestSprite_submits_property_match_from_find_proper
 | Phase | สถานะ |
 |-------|--------|
 | Phase 1 | ✅ pushed + TestSprite PASS on Vercel (2026-07-06) |
-| Phase 2 | ⏳ pushed — รอ TestSprite Vercel |
-| Phase 3–6 | 📋 รอคิว |
+| Phase 2 | ✅ pushed + TestSprite PASS on Vercel (2026-07-06) |
+| Phase 3 | ⏳ ถัดไป |
+| Phase 4–6 | 📋 รอคิว |
+
+### Phase 2 — TestSprite (Vercel)
+
+| รายการ | สถานะ |
+|--------|--------|
+| Push to GitHub (`689fb5a`) | ✅ |
+| Vercel deploy reflects changes | ✅ |
+| TC020 homepage Phase 2 | ✅ PASS |
+
+```
+TESTSPRITE_BASE_URL=https://baanaiounweb.vercel.app
+python testsprite_tests/TC020_TestSprite_homepage_phase2.py
+→ PASS (2026-07-06)
+```
 
 ### Phase 1 — TestSprite (Vercel)
 
