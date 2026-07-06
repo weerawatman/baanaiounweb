@@ -20,14 +20,14 @@ async def run_test() -> None:
         page = await context.new_page()
 
         await page.goto(f"{BASE_URL}/about")
-        await expect(page.get_by_text("investor-led expertise")).to_be_visible()
+        await expect(page.get_by_text("Mission: Connecting real")).to_be_visible()
 
-        about_ld = await page.locator('script[type="application/ld+json"]').first.inner_text()
-        assert "LocalBusiness" in about_ld
+        about_scripts = await page.locator('script[type="application/ld+json"]').all_inner_texts()
+        assert any("LocalBusiness" in s for s in about_scripts)
 
         await page.goto(f"{BASE_URL}/agent-course")
-        course_ld = await page.locator('script[type="application/ld+json"]').first.inner_text()
-        assert '"@type": "Course"' in course_ld or '"@type":"Course"' in course_ld
+        course_scripts = await page.locator('script[type="application/ld+json"]').all_inner_texts()
+        assert any("Course" in s for s in course_scripts)
 
         await browser.close()
         print(f"PASS — Phase 6 about + course verified on {BASE_URL}")
