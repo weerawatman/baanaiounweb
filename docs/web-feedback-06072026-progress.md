@@ -46,8 +46,8 @@
 | Phase | Script | Commit | ผล |
 |-------|--------|--------|-----|
 | 1 | `TC004_TestSprite_submits_property_match_from_find_property.py` | `6385fe1` | ✅ PASS |
-| 2 | `TC020_TestSprite_homepage_phase2.py` | `689fb5a` | ✅ PASS |
-| 3 | `TC021_TestSprite_success_stories_phase3.py` | `bb112ab` | ✅ PASS |
+| 2 | `TC020_TestSprite_homepage_phase2.py` | `11ca84a` | ✅ PASS (cohesion) |
+| 3 | `TC021_TestSprite_success_stories_phase3.py` | `11ca84a` | ✅ PASS (social proof) |
 | 4 | `TC022_TestSprite_services_phase4.py` | `188bd60` | ✅ PASS |
 | 5 | `TC023_TestSprite_blog_phase5.py` | `188bd60` | ✅ PASS |
 | 6 | `TC024_TestSprite_about_course_phase6.py` | `188bd60` | ✅ PASS |
@@ -91,4 +91,34 @@ python testsprite_tests/TC024_TestSprite_about_course_phase6.py
 ทำต่อ — อ่าน docs/web-feedback-06072026-progress.md
 ```
 
-> **แผน 6 เฟสเสร็จครบแล้ว** — งานถัดไปเป็น polish/QA เพิ่มเติมหรือ content จริงใน admin ตามต้องการ
+> **แผน 6 เฟสเสร็จครบแล้ว** — รอบถัดไป: Cohesion Pass หน้าอื่น (Option B)
+
+---
+
+## Homepage Cohesion Pass (Option A) — ✅ 2026-07-06
+
+**Commit:** `11ca84a` | **TestSprite:** TC020 + TC021 PASS บน Vercel
+
+### ปัญหาที่แก้
+- Search bar ซ้ำ 2 จุด (hero + SmartSearchWrapper) → เหลือ **hero เท่านั้น**
+- CTA ซ้ำหลายชั้น (hero + 4 การ์ด + ecosystem + footer) → **การ์ดคลิกทั้งใบ** + footer LINE เดียว
+- Section ไม่เป็น rhythm → `PageSection` + `SectionTitle` + token colors
+
+### โครงสร้างหน้าแรกใหม่
+1. Hero (compact CTA + search)
+2. ServiceShortcuts (AudienceCard × 4 + ลิงก์ `/about`)
+3. FeaturedProperties (grid only)
+4. CoreValues
+5. SocialProofSection (before/after + testimonials)
+6. FAQ
+7. Closing CTA (LINE + text links)
+
+### ไฟล์ใหม่
+- `src/components/layout/PageSection.tsx`
+- `src/components/shared/AudienceCard.tsx`
+- `src/components/home/FeaturedProperties.tsx`
+- `src/components/home/SocialProofSection.tsx`
+
+### ถอดจากหน้าแรก
+- `EcosystemBand` (เนื้อหาอยู่ที่ `/about`)
+- `SmartSearchWrapper` (แทนด้วย FeaturedProperties — ไฟล์เดิมยังอยู่ใน repo แต่ไม่ถูก mount)
