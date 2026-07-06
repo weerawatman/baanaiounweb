@@ -4,6 +4,7 @@ import { Bed, Bath, Maximize, MapPin } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { type Property } from "@/types"
 import { formatPrice } from "@/lib/format"
+import { deriveBadges } from "@/lib/badges"
 
 interface PropertyCardProps {
   property: Property
@@ -24,6 +25,7 @@ const typeConfig: Record<Property["type"], { label: string; className: string }>
 export default function PropertyCard({ property }: PropertyCardProps) {
   const status = statusConfig[property.status]
   const type = typeConfig[property.type]
+  const badges = deriveBadges(property)
 
   return (
     <div className="h-full transition-transform duration-200 hover:scale-[1.02]">
@@ -37,7 +39,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           <div className="relative h-52 overflow-hidden">
             <Image
               src={property.imagePrimary}
-              alt={property.title}
+              alt={`${type.label} ${property.title}`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -56,11 +58,19 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                 {status.label}
               </span>
             )}
-            {/* First tag badge */}
-            {property.tags[0] && (
-              <span className="absolute bottom-3 left-3 inline-flex items-center rounded-full bg-black/60 px-2.5 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
-                {property.tags[0]}
-              </span>
+            {/* Trust badges (max 2) */}
+            {badges.length > 0 && (
+              <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
+                {badges.map((badge) => (
+                  <span
+                    key={badge.key}
+                    title={`${badge.th} | ${badge.en}`}
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-sm ${badge.className}`}
+                  >
+                    {badge.th}
+                  </span>
+                ))}
+              </div>
             )}
           </div>
 

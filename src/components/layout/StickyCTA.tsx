@@ -7,7 +7,7 @@ import { SITE_CONFIG } from "@/config/site"
 export default function StickyCTA({ lineUrl }: { lineUrl: string }) {
   const url = lineUrl || SITE_CONFIG.lineUrl
   return (
-    <div className="fixed right-6 bottom-6 z-50">
+    <div className="fixed right-6 bottom-6 z-50 hidden md:block">
       <motion.a
         href={url}
         target="_blank"

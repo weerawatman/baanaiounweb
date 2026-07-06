@@ -5,23 +5,12 @@ import Breadcrumb from "@/components/layout/Breadcrumb"
 import SectionTitle from "@/components/layout/SectionTitle"
 import PropertyCard from "@/components/property/PropertyCard"
 import type { Property } from "@/types"
-
-const PRICE_OPTIONS = [
-  { label: "ทุกราคา | All Prices", value: "" },
-  { label: "≤ 1 ล้าน | Under 1M", value: "1000000" },
-  { label: "≤ 2 ล้าน | Under 2M", value: "2000000" },
-  { label: "≤ 3 ล้าน | Under 3M", value: "3000000" },
-  { label: "≤ 5 ล้าน | Under 5M", value: "5000000" },
-]
-
-type PurposeTab = "all" | "SALE" | "RENT" | "LAND"
-
-const PURPOSE_TABS: { value: PurposeTab; th: string; en: string }[] = [
-  { value: "all", th: "ทั้งหมด", en: "All" },
-  { value: "SALE", th: "ซื้อ", en: "Buy" },
-  { value: "RENT", th: "เช่า", en: "Rent" },
-  { value: "LAND", th: "ที่ดิน", en: "Land" },
-]
+import {
+  PRICE_OPTIONS,
+  PURPOSE_TABS,
+  filterProperties,
+  type PurposeTab,
+} from "@/lib/search"
 
 export default function PropertiesPage({ properties }: { properties: Property[] }) {
   const [purpose, setPurpose] = useState<PurposeTab>("all")
@@ -33,14 +22,10 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
     [properties],
   )
 
-  const filtered = useMemo(() => {
-    return properties.filter((p) => {
-      if (purpose !== "all" && p.type !== purpose) return false
-      if (district && p.location.district !== district) return false
-      if (maxPrice && p.price > Number(maxPrice)) return false
-      return true
-    })
-  }, [properties, purpose, district, maxPrice])
+  const filtered = useMemo(
+    () => filterProperties(properties, { purpose, district, maxPrice, subType: "" }),
+    [properties, purpose, district, maxPrice],
+  )
 
   const selectClass =
     "w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1B4D3E]"

@@ -5,6 +5,7 @@ export const revalidate = 3600
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 import StickyCTA from "@/components/layout/StickyCTA"
+import MobileContactBar from "@/components/layout/MobileContactBar"
 import { SITE_CONFIG } from "@/config/site"
 import { getProfile } from "@/lib/queries/profile"
 
@@ -74,7 +75,14 @@ export default async function PublicLayout({
       <Header profile={profile} />
       <main className="flex-1">{children}</main>
       <Footer profile={profile} />
+      {/* Spacer so the fixed MobileContactBar never covers footer links */}
+      <div aria-hidden className="h-14 md:hidden" />
       <StickyCTA lineUrl={profile.lineUrl} />
+      <MobileContactBar
+        phone={profile.phone || SITE_CONFIG.phone}
+        lineUrl={profile.lineUrl || SITE_CONFIG.lineUrl}
+        whatsappUrl={SITE_CONFIG.whatsappUrl}
+      />
     </>
   )
 }

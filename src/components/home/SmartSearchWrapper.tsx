@@ -7,24 +7,12 @@ import { Button } from "@/components/ui/button"
 import PropertyCard from "@/components/property/PropertyCard"
 import SectionTitle from "@/components/layout/SectionTitle"
 import type { Property } from "@/types"
-
-const PRICE_OPTIONS = [
-  { label: "ทุกราคา | All Prices", value: "" },
-  { label: "≤ 1 ล้าน | Under 1M", value: "1000000" },
-  { label: "≤ 2 ล้าน | Under 2M", value: "2000000" },
-  { label: "≤ 3 ล้าน | Under 3M", value: "3000000" },
-  { label: "≤ 5 ล้าน | Under 5M", value: "5000000" },
-]
-
-type PropertyType = Property["type"]
-type PurposeTab = "all" | PropertyType
-
-const PURPOSE_TABS: { value: PurposeTab; th: string; en: string }[] = [
-  { value: "all", th: "ทั้งหมด", en: "All" },
-  { value: "SALE", th: "ซื้อ", en: "Buy" },
-  { value: "RENT", th: "เช่า", en: "Rent" },
-  { value: "LAND", th: "ที่ดิน", en: "Land" },
-]
+import {
+  PRICE_OPTIONS,
+  PURPOSE_TABS,
+  filterProperties,
+  type PurposeTab,
+} from "@/lib/search"
 
 interface SmartSearchWrapperProps {
   initialProperties: Property[]
@@ -41,14 +29,10 @@ export default function SmartSearchWrapper({ initialProperties }: SmartSearchWra
     [initialProperties],
   )
 
-  const filtered = useMemo(() => {
-    return initialProperties.filter((p) => {
-      if (purpose !== "all" && p.type !== purpose) return false
-      if (district && p.location.district !== district) return false
-      if (maxPrice && p.price > Number(maxPrice)) return false
-      return true
-    })
-  }, [initialProperties, purpose, district, maxPrice])
+  const filtered = useMemo(
+    () => filterProperties(initialProperties, { purpose, district, maxPrice, subType: "" }),
+    [initialProperties, purpose, district, maxPrice],
+  )
 
   const displayProperties = useMemo(() => {
     const featured = filtered.filter((p) => p.featured)

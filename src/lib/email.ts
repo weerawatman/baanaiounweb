@@ -11,7 +11,7 @@ type ResendClient = {
       to: string[]
       subject: string
       html: string
-    }) => Promise<{ data: any; error: any }>
+    }) => Promise<{ data: unknown; error: unknown }>
   }
 }
 
@@ -44,7 +44,7 @@ export async function sendEmailNotification(payload: EmailPayload): Promise<bool
   const { subject, htmlContent } = formatEmailContent(payload)
 
   try {
-    const { data, error } = await resendClient.emails.send({
+    const { error } = await resendClient.emails.send({
       from: "Baan Ai Oun Website <noreply@baanaioun.com>",
       to: [NOTIFY_EMAIL],
       subject,

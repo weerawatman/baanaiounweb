@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server"
 import type { Property } from "@/lib/types/property"
 
 const CARD_FIELDS =
-  "id, slug, title, type, price, price_label, status, featured, images, image_primary, bedrooms, bathrooms, area_sqm, district, subdistrict, created_at"
+  "id, slug, title, type, sub_type, price, price_label, status, featured, tags, images, image_primary, bedrooms, bathrooms, area_sqm, district, subdistrict, created_at"
 
 // ─── Public queries (ISR-cached, no cookies) ────────────────────────────────
 
