@@ -2,10 +2,11 @@ import type {
   Property as PropertyRow,
   BlogPost as BlogPostRow,
   Testimonial as TestimonialRow,
+  SuccessStory as SuccessStoryRow,
   Faq as FaqRow,
   AgentProfile as AgentProfileRow,
 } from "@/lib/types/property"
-import type { Property, BlogPost, Testimonial, FAQ, Profile } from "@/types"
+import type { Property, BlogPost, Testimonial, SuccessStory, FAQ, Profile } from "@/types"
 
 // ──────────────────────────────────────────────────────────────────────────
 //  Mappers: snake_case Supabase rows → camelCase shapes that the public
@@ -74,6 +75,19 @@ export function mapTestimonial(row: TestimonialRow): Testimonial {
     propertyType: row.property_type ?? "",
     rating: row.rating ?? 5,
     avatarUrl: row.avatar_url ?? "",
+  }
+}
+
+export function mapSuccessStory(row: SuccessStoryRow): SuccessStory {
+  return {
+    id: row.id,
+    title: row.title,
+    titleEn: row.title_en ?? "",
+    description: row.description ?? "",
+    descriptionEn: row.description_en ?? "",
+    location: row.location ?? "",
+    beforeImageUrl: row.before_image_url,
+    afterImageUrl: row.after_image_url,
   }
 }
 

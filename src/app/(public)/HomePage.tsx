@@ -6,15 +6,17 @@ import ServiceShortcuts from "@/components/home/ServiceShortcuts"
 import CoreValues from "@/components/home/CoreValues"
 import EcosystemBand from "@/components/home/EcosystemBand"
 import SmartSearchWrapper from "@/components/home/SmartSearchWrapper"
-import { type Property, type Testimonial, type FAQ } from "@/types"
+import { type Property, type Testimonial, type SuccessStory, type FAQ } from "@/types"
 import { SITE_CONFIG } from "@/config/site"
 
 const TestimonialSlider = dynamic(() => import("@/components/home/TestimonialSlider"))
+const SuccessStoriesSection = dynamic(() => import("@/components/home/SuccessStoriesSection"))
 const FAQSection = dynamic(() => import("@/components/home/FAQSection"))
 
 interface HomePageProps {
   properties: Property[]
   testimonials: Testimonial[]
+  successStories: SuccessStory[]
   faqs: FAQ[]
   heroImage?: string
   lineUrl?: string
@@ -23,6 +25,7 @@ interface HomePageProps {
 export default function HomePage({
   properties,
   testimonials,
+  successStories,
   faqs,
   heroImage,
   lineUrl,
@@ -45,6 +48,8 @@ export default function HomePage({
       <CoreValues />
 
       <EcosystemBand />
+
+      {successStories.length > 0 && <SuccessStoriesSection stories={successStories} />}
 
       {testimonials.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-12">

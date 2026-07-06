@@ -6,6 +6,7 @@ import {
   ClipboardList,
   Newspaper,
   Star,
+  Images,
   HelpCircle,
   User,
 } from "lucide-react"
@@ -23,6 +24,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { label: "คำขอบริการ", href: "/admin/requests", icon: ClipboardList },
   { label: "บทความ", href: "/admin/blog", icon: Newspaper },
   { label: "รีวิว", href: "/admin/testimonials", icon: Star },
+  { label: "ผลงานก่อน-หลัง", href: "/admin/success-stories", icon: Images },
   { label: "FAQ", href: "/admin/faqs", icon: HelpCircle },
   { label: "โปรไฟล์", href: "/admin/profile", icon: User },
 ]

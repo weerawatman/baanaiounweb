@@ -66,6 +66,19 @@ export interface Testimonial {
   avatarUrl: string
 }
 
+// ─── Success story (before/after renovation) ───────────────────────────
+
+export interface SuccessStory {
+  id: string
+  title: string
+  titleEn: string
+  description: string
+  descriptionEn: string
+  location: string
+  beforeImageUrl: string
+  afterImageUrl: string
+}
+
 // ─── FAQ ─────────────────────────────────────────────────────────────────
 
 export interface FAQ {

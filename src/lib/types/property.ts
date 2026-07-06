@@ -91,6 +91,20 @@ export interface Testimonial {
   created_at: string
 }
 
+export interface SuccessStory {
+  id: string
+  title: string
+  title_en: string
+  description: string
+  description_en: string
+  location: string
+  before_image_url: string
+  after_image_url: string
+  published: boolean
+  sort_order: number
+  created_at: string
+}
+
 export interface Faq {
   id: string
   question: string

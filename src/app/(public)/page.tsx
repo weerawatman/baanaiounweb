@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { getActiveProperties } from "@/lib/queries/properties"
 import { getTestimonials } from "@/lib/queries/testimonials"
+import { getPublishedSuccessStories } from "@/lib/queries/success-stories"
 import { getFaqsByPage } from "@/lib/queries/faqs"
 import { getProfile } from "@/lib/queries/profile"
-import { mapProperty, mapTestimonial, mapFaq } from "@/lib/mappers"
+import { mapProperty, mapTestimonial, mapSuccessStory, mapFaq } from "@/lib/mappers"
 import HomePage from "./HomePage"
 
 export const revalidate = 900
@@ -20,15 +21,17 @@ export const metadata: Metadata = {
 }
 
 export default async function HomeRoute() {
-  const [propertyRows, testimonialRows, faqRows, profile] = await Promise.all([
+  const [propertyRows, testimonialRows, successStoryRows, faqRows, profile] = await Promise.all([
     getActiveProperties(),
     getTestimonials(),
+    getPublishedSuccessStories(),
     getFaqsByPage("home"),
     getProfile(),
   ])
 
   const properties = propertyRows.map(mapProperty)
   const testimonials = testimonialRows.map(mapTestimonial)
+  const successStories = successStoryRows.map(mapSuccessStory)
   const faqs = faqRows.map(mapFaq)
 
   const faqJsonLd =
@@ -55,6 +58,7 @@ export default async function HomeRoute() {
       <HomePage
         properties={properties}
         testimonials={testimonials}
+        successStories={successStories}
         faqs={faqs}
         heroImage={profile.heroImageUrl}
         lineUrl={profile.lineUrl}
