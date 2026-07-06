@@ -91,7 +91,35 @@ python testsprite_tests/TC024_TestSprite_about_course_phase6.py
 ทำต่อ — อ่าน docs/web-feedback-06072026-progress.md
 ```
 
-> **แผน 6 เฟสเสร็จครบแล้ว** — รอบถัดไป: Cohesion Pass หน้าอื่น (Option B)
+> **แผน 6 เฟสเสร็จครบแล้ว** — Homepage Cohesion (A) ✅ | Site Cohesion (B) ✅ (รอ push Vercel)
+
+---
+
+## Site Cohesion Pass (Option B) — ✅ 2026-07-06
+
+**Commit:** `f5a3911` | **TestSprite (local):** TC004 + TC022 + TC024 PASS
+
+### หน้าที่ปรับ
+- **`/services`** — `PageSection` + `SectionTitle`, `AudienceCard` (คลิกทั้งใบ), `SocialProofSection`, `LineClosingCta` (LINE + โทร)
+- **`/find-property`** — `PageSection`, design tokens, ลบ CTA ซ้ำใน hero (เหลือลิงก์ดูทรัพย์), form above-fold คงเดิม
+- **`/about`** — `PageSection` + `SectionTitle`, token colors แทน hex, timeline/value cards unified
+- **Homepage** — ใช้ `LineClosingCta` ร่วมกับ services
+
+### ไฟล์ใหม่/แก้
+- `src/components/shared/LineClosingCta.tsx` (shared closing CTA)
+- `AudienceCard` — เพิ่ม optional `highlightTh`/`highlightEn` สำหรับ services hub
+
+### testid ที่คงไว้ (TC022)
+- `services-stats-bar`, `services-four-column-grid`, `services-line-cta`
+
+### ขั้นตอนถัดไป
+```powershell
+git push origin master   # รอ Vercel deploy
+$env:TESTSPRITE_BASE_URL="https://baanaiounweb.vercel.app"
+python testsprite_tests/TC004_TestSprite_submits_property_match_from_find_property.py
+python testsprite_tests/TC022_TestSprite_services_phase4.py
+python testsprite_tests/TC024_TestSprite_about_course_phase6.py
+```
 
 ---
 
