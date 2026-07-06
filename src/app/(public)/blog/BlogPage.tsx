@@ -83,7 +83,7 @@ export default function BlogPage({ posts }: BlogPageProps) {
       )}
 
       {/* Search + Category filter */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" data-testid="blog-filters">
         <BlogCategoryFilter
           categories={BLOG_CATEGORIES}
           activeCategory={activeCategory}

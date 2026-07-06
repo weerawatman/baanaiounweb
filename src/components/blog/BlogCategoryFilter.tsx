@@ -35,7 +35,7 @@ export default function BlogCategoryFilter({
               : "border-border bg-background text-muted-foreground hover:border-primary/50 hover:text-foreground"
           }`}
         >
-          {cat.name}
+          {cat.nameEn ? `${cat.name} | ${cat.nameEn}` : cat.name}
         </button>
       ))}
     </div>

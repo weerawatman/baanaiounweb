@@ -1,93 +1,95 @@
 /**
- * Services Hub content - bilingual display of 4 main services
+ * Services Hub content — bilingual, requirement-aligned (Phase 4)
  */
 
 export const SERVICES_HUB_CONTENT = {
   seo: {
     title: "บริการของเรา | Our Services — บ้านไออุ่น Baan Ai Oun",
     description: {
-      th: "บริการครบวงจรด้านอสังหาริมทรัพย์ ฝากขาย-ปล่อยเช่า ค้นหาบ้าน สินเชื่อ คอร์สนายหน้า และ Co-Agent",
-      en: "Comprehensive real estate services: property listing, home search, loan consultation, agent training, and co-agent partnerships"
-    }
+      th: "ศูนย์รวมทางลัดความสำเร็จในโลกอสังหาฯ — ฝากขาย ค้นหาทรัพย์ Co-Agent คอร์สนายหน้า",
+      en: "Your shortcut to real estate success — listing, matchmaking, co-agent network, and agent training.",
+    },
   },
   hero: {
     h1: {
-      th: "บริการของเรา",
-      en: "Our Services"
+      th: "บ้านไออุ่น พร็อพเพอร์ตี้",
+      en: "Baan Ai Oun Property",
     },
     sub: {
-      th: "ครบจบเรื่องอสังหาฯ ในที่เดียว บริการมืออาชีพ ตั้งแต่เจ้าของทรัพย์ ผู้ซื้อ-เช่า นายหน้า ไปจนถึงคอร์สอบรม",
-      en: "All your real estate needs in one place. Professional services for property owners, buyers, renters, agents, and training."
-    }
+      th: "ศูนย์รวมทางลัดความสำเร็จในโลกอสังหาฯ ที่เข้าใจทั้งเจ้าของทรัพย์ ผู้ซื้อ และคนอยากสร้างรายได้ด้วยใจ",
+      en: "Your shortcut to real estate success—empowering property owners, buyers, and aspiring agents with expertise and heart.",
+    },
+  },
+  stats: [
+    { value: "200+", th: "เคสสำเร็จปีนี้", en: "Deals Closed" },
+    { value: "50+", th: "เครือข่ายนายหน้า", en: "Co-Agent Network" },
+    { value: "300+", th: "ทรัพย์ที่ดูแล", en: "Properties Managed" },
+    { value: "10+", th: "ปีประสบการณ์", en: "Years Experience" },
+  ],
+  localAuthority: {
+    th: "บ้านไออุ่น พร็อพเพอร์ตี้ ให้บริการและมีความเชี่ยวชาญพิเศษในทำเล: กรุงเทพฯ, สมุทรปราการ (บางพลี, เมกาบางนา), ชลบุรี, ฉะเชิงเทรา, EEC และพื้นที่ใกล้เคียง",
+    en: "Baan Ai Oun Property provides expert real estate services in: Bangkok, Samut Prakan (Bang Phli, Mega Bangna), Chonburi, Chachoengsao, EEC, and surrounding areas.",
   },
   services: [
     {
       icon: "Home",
       color: "#E8833A",
-      title: {
-        th: "ฝากขาย/ปล่อยเช่า",
-        en: "List Your Property"
+      title: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property" },
+      highlight: {
+        th: "ประเมินศักยภาพทรัพย์ฟรี โดยทีมนักลงทุนตัวจริง",
+        en: "Free investor-led property assessment",
       },
       description: {
-        th: "จบทุกปัญหาขายยาก ปวดหัวเอกสาร และการฉ้อโกง — บริการครบวงจร ปิดดีลไว ไว้ใจได้ 100%",
-        en: "Stop worrying about unsold properties, complex paperwork, or scams. We handle everything from start to finish."
+        th: "จบทุกปัญหาขายยาก ปวดหัวเอกสาร และการฉ้อโกง — บริการครบวงจร ปิดดีลไว ไว้ใจได้",
+        en: "End-to-end listing support — marketing, paperwork, and closing handled by experts.",
       },
-      cta: {
-        th: "ฝากขาย/ปล่อยเช่า | List Your Property",
-        en: ""
-      },
-      href: "/list-property"
+      cta: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property" },
+      href: "/list-property",
     },
     {
       icon: "Search",
       color: "#2E75B6",
-      title: {
-        th: "ค้นหาบ้าน/สินเชื่อ",
-        en: "Find Your Home"
+      title: { th: "ค้นหาบ้าน/สินเชื่อ", en: "Find Your Home" },
+      highlight: {
+        th: "คัดสรรบ้านทำเลทอง และทรัพย์รีโนเวทสภาพพร้อมอยู่ ผ่านการตรวจสอบโครงสร้างแล้ว",
+        en: "Prime-location and move-in-ready renovated homes, structurally vetted.",
       },
       description: {
         th: "คัดทรัพย์ตรงโจทย์ ดูแลสินเชื่อและสัญญา จบที่เดียว ไม่มีค่าใช้จ่ายสำหรับผู้ซื้อและผู้เช่า",
-        en: "Curated property matching, expert loan assistance, and seamless contract handling. 100% Free for buyers and renters."
+        en: "Curated matching, loan guidance, and contracts — free for buyers and renters.",
       },
-      cta: {
-        th: "ค้นหาบ้าน/ปรึกษาสินเชื่อ | Find Your Home",
-        en: ""
-      },
-      href: "/find-property"
+      cta: { th: "ค้นหาทรัพย์ที่ใช่", en: "Find Your Perfect Match" },
+      href: "/find-property",
     },
     {
       icon: "Users",
       color: "#1B7A52",
-      title: {
-        th: "ร่วมเป็น Co-Agent",
-        en: "Partner with Us"
+      title: { th: "ร่วมเป็น Co-Agent", en: "Partner with Us" },
+      highlight: {
+        th: "ฝากทรัพย์ฟรี เราช่วยทำการตลาดจนกว่าจะปิดดีลได้",
+        en: "List with us free — we market until the deal closes.",
       },
       description: {
-        th: "มีทรัพย์แต่หาลูกค้าไม่ได้? กังวลค่าการตลาด? — ฝากทรัพย์ฟรี! เราช่วยทำการตลาดจนกว่าจะปิดดีลได้",
-        en: "Have listings but no clients? Worried about marketing costs? We market your listings for free until closed!"
+        th: "มีทรัพย์แต่หาลูกค้าไม่ได้? กังวลค่าการตลาด? — เข้าร่วมเครือข่ายที่เติบโตไปด้วยกัน",
+        en: "Have listings but no clients? Join our growing co-agent network.",
       },
-      cta: {
-        th: "ร่วมเป็น Co-Agent | Partner with Us",
-        en: ""
-      },
-      href: "/co-agent"
+      cta: { th: "ร่วมเป็น Co-Agent", en: "Join as Co-Agent" },
+      href: "/co-agent",
     },
     {
       icon: "GraduationCap",
       color: "#7C3AED",
-      title: {
-        th: "คอร์สนายหน้า",
-        en: "Agent Course"
+      title: { th: "คอร์สนายหน้า", en: "Agent Course" },
+      highlight: {
+        th: "ถ่ายทอดเคล็ดลับจากผู้แต่งหนังสือและนักลงทุนตัวจริง",
+        en: "Secrets from published authors and practicing investors.",
       },
       description: {
-        th: "2 วันเปลี่ยนชีวิต! Workshop พลิกชีวิตสำหรับว่าที่นายหน้า — เรียนจริง ทำจริง ได้เงินจริง",
-        en: "Life-changing 2-day workshop for aspiring agents — Real learning, real practice, real income."
+        th: "2 วันเปลี่ยนชีวิต! Workshop จับมือทำจริง สำหรับว่าที่นายหน้า — เรียนจริง ทำจริง ได้เงินจริง",
+        en: "Life-changing 2-day hands-on workshop for aspiring agents.",
       },
-      cta: {
-        th: "สมัครคอร์สนายหน้า | Enroll in Agent Course",
-        en: ""
-      },
-      href: "/agent-course"
-    }
-  ]
-}
+      cta: { th: "สมัครคอร์สนายหน้า", en: "Enroll in Agent Course" },
+      href: "/agent-course",
+    },
+  ],
+} as const

@@ -52,6 +52,7 @@ export interface BlogPost {
 
 export interface BlogCategory {
   name: string
+  nameEn?: string
   slug: string
 }
 

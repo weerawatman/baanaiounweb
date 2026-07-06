@@ -121,12 +121,11 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-base leading-relaxed">
-              ศูนย์รวมอสังหาในไทยและเครือข่ายนายหน้า เชื่อมต่อโอกาส ซื้อ-ขาย-เช่า
-              และเติบโตไปด้วยกัน สำหรับลูกค้าคนไทยและต่างชาติ
+              บ้านไออุ่น พร็อพเพอร์ตี้: เชื่อมโยงทุกความต้องการอสังหาฯ ด้วยประสบการณ์นักลงทุนและบริการที่จริงใจ
             </p>
-            <p className="mx-auto mt-1 max-w-2xl text-sm italic text-gray-500">
-              The Premier Thai Real Estate Hub &amp; Agent Network – Connecting Opportunities for
-              Buy, Sell, Rent, and Professional Growth for Local &amp; International Clients.
+            <p className="mx-auto mt-2 max-w-2xl text-sm italic text-gray-500">
+              Baan Ai Oun Property: Connecting real estate goals through investor-led expertise
+              and heartfelt service.
             </p>
           </motion.div>
 
@@ -139,10 +138,11 @@ export default function AboutPage() {
             className="mx-auto mt-8 max-w-2xl rounded-r-xl border-l-4 border-[#1B4D3E] bg-white py-4 pl-6 pr-4 text-left shadow-sm"
           >
             <p className="text-base font-semibold text-[#1B4D3E]">
-              พันธกิจ: ทำให้ทุกคนเข้าถึงบ้านที่ใช่ ในราคาที่ใช่
+              พันธกิจ: เชื่อมโยงทุกความต้องการอสังหาฯ ด้วยประสบการณ์นักลงทุนและบริการที่จริงใจ
             </p>
             <p className="mt-1 text-sm text-[#1B4D3E]/70">
-              Mission: Making the Right Home Accessible for Everyone, at the Right Price
+              Mission: Connecting real estate goals through investor-led expertise and heartfelt
+              service.
             </p>
           </motion.div>
         </div>

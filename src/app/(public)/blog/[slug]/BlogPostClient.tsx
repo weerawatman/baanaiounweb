@@ -3,19 +3,21 @@
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { Clock, CalendarDays, MessageCircle } from "lucide-react"
+import { Clock, CalendarDays } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import SectionTitle from "@/components/layout/SectionTitle"
 import PropertyCard from "@/components/property/PropertyCard"
+import ArticleCTA from "@/components/blog/ArticleCTA"
 import { type BlogPost, type Property } from "@/types"
 
 interface BlogPostClientProps {
   post: BlogPost | null
   relatedProperties: Property[]
+  lineUrl?: string
 }
 
-export default function BlogPostClient({ post, relatedProperties }: BlogPostClientProps) {
+export default function BlogPostClient({ post, relatedProperties, lineUrl }: BlogPostClientProps) {
   if (!post) {
     return (
       <main className="container mx-auto max-w-4xl px-4 py-16 text-center">
@@ -119,23 +121,7 @@ export default function BlogPostClient({ post, relatedProperties }: BlogPostClie
         </section>
       )}
 
-      {/* CTA */}
-      <section className="bg-primary/5 border-primary/20 space-y-4 rounded-2xl border px-6 py-8 text-center">
-        <h2 className="text-foreground text-xl font-bold">สนใจปรึกษาเรื่องบ้าน?</h2>
-        <p className="text-muted-foreground mx-auto max-w-md text-sm">
-          พิมพร้อมให้คำแนะนำทุกขั้นตอน ตั้งแต่เลือกทำเล วางแผนการเงิน จนถึงวันโอน
-          ไม่มีค่าใช้จ่ายในการปรึกษา
-        </p>
-        <Link
-          href="https://line.me/ti/p/~@baanaioun"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full bg-[#06C755] px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-        >
-          <MessageCircle className="h-4 w-4" />
-          ติดต่อพิมผ่าน LINE
-        </Link>
-      </section>
+      <ArticleCTA lineUrl={lineUrl} />
     </main>
   )
 }

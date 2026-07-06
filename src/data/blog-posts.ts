@@ -1,11 +1,16 @@
 import { type BlogCategory } from "@/types"
 
-// หมวดหมู่บทความ (config คงที่ — ไม่ใช่ข้อมูลตัวอย่าง)
-// ใช้ในหน้า /blog สำหรับกรองตามหมวดหมู่
+/** 5 หมวดบทความ — เน้น Local SEO และ E-E-A-T (Phase 5) */
 export const BLOG_CATEGORIES: BlogCategory[] = [
-  { name: "วางแผนการเงิน", slug: "finance" },
-  { name: "ชีวิตคนไกลบ้าน", slug: "lifestyle" },
-  { name: "เจาะลึกทำเล", slug: "location" },
-  { name: "แก้ปัญหาคนอยากมีบ้าน", slug: "solutions" },
-  { name: "MarTech Update", slug: "martech" },
+  { name: "ซื้อ-ขายและเช่า", nameEn: "Buy, Sell & Rent", slug: "buy-sell-rent" },
+  { name: "สินเชื่อและการเงิน", nameEn: "Loans & Finance", slug: "loans-finance" },
+  { name: "ทำเลและการลงทุน", nameEn: "Locations & Investment", slug: "locations" },
+  { name: "รีโนเวทและต่อเติม", nameEn: "Renovation", slug: "renovation" },
+  { name: "นายหน้าและอาชีพ", nameEn: "Agent Career", slug: "agent-career" },
 ]
+
+export function getCategoryLabel(slug: string): string {
+  const cat = BLOG_CATEGORIES.find((c) => c.slug === slug)
+  if (!cat) return slug
+  return cat.nameEn ? `${cat.name} | ${cat.nameEn}` : cat.name
+}
