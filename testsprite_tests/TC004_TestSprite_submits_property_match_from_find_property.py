@@ -31,7 +31,8 @@ async def run_test() -> None:
 
         # /find-property shows the matchmaking form above the fold (no CTA click)
         await page.goto(f"{BASE_URL}/find-property")
-        await expect(page.get_by_role("heading", name=re.compile(r"งานหาทรัพย์|Property Match"))).to_be_visible()
+        await expect(page.get_by_role("heading", level=1)).to_be_visible()
+        await expect(page.get_by_role("heading", name=re.compile(r"ส่งบรีฟ|Submit Your Property Match"))).to_be_visible()
         await expect(page.locator('input[name="name"]')).to_be_visible()
         await expect(page.locator('input[name="email"]')).to_be_visible()
         await expect(page.locator('select[name="propertyType"]')).to_be_visible()
@@ -39,7 +40,7 @@ async def run_test() -> None:
         await page.locator('input[name="name"]').fill("TestSprite Property Match Lead")
         await page.locator('input[name="phone"]').fill("0812345678")
         await page.locator('input[name="email"]').fill("testsprite.match@example.com")
-        await page.locator('select[name="propertyType"]').select_option(label=re.compile(r"บ้านเดี่ยว|Single House"))
+        await page.locator('select[name="propertyType"]').select_option(value="house")
         await page.locator('input[name="location"]').fill("บ้านบึง ชลบุรี | Ban Bueng, Chonburi")
         await page.locator('input[name="budget"]').fill("2,500,000 THB")
 
