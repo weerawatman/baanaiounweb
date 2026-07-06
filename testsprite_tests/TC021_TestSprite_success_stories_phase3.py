@@ -1,7 +1,5 @@
 """
-Phase 3 — Success stories before/after slider on homepage
-Run against Vercel:
-
+Phase 3 — Success stories inside unified social proof section
   set TESTSPRITE_BASE_URL=https://baanaiounweb.vercel.app
   python testsprite_tests/TC021_TestSprite_success_stories_phase3.py
 """
@@ -25,6 +23,7 @@ async def run_test() -> None:
 
         section = page.get_by_test_id("success-stories-section")
         await expect(section).to_be_visible()
+        await expect(page.get_by_test_id("social-proof-section")).to_be_visible()
 
         await expect(section.get_by_text("Real Results: Before & After Renovations")).to_be_visible()
 

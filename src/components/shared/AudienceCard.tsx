@@ -1,0 +1,59 @@
+import Link from "next/link"
+import type { LucideIcon } from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import { cn } from "@/lib/utils"
+
+interface AudienceCardProps {
+  href: string
+  icon: LucideIcon
+  accentColor: string
+  titleTh: string
+  titleEn: string
+  descTh: string
+  descEn: string
+  className?: string
+}
+
+export default function AudienceCard({
+  href,
+  icon: Icon,
+  accentColor,
+  titleTh,
+  titleEn,
+  descTh,
+  descEn,
+  className,
+}: AudienceCardProps) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "group flex h-full flex-col rounded-2xl border border-border bg-card p-5 shadow-sm",
+        "transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md",
+        className,
+      )}
+    >
+      <div
+        className="flex h-12 w-12 items-center justify-center rounded-xl"
+        style={{ backgroundColor: `${accentColor}18` }}
+      >
+        <Icon size={24} style={{ color: accentColor }} />
+      </div>
+
+      <h3 className="mt-4 text-base font-bold leading-snug">
+        <span className="block text-foreground">{titleTh}</span>
+        <span className="block text-sm font-medium text-muted-foreground">{titleEn}</span>
+      </h3>
+
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/90">{descTh}</p>
+      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{descEn}</p>
+
+      <span
+        className="mt-4 inline-flex items-center gap-1 text-sm font-semibold transition-colors"
+        style={{ color: accentColor }}
+      >
+        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+      </span>
+    </Link>
+  )
+}

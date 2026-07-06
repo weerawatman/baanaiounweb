@@ -1,7 +1,5 @@
 """
-Phase 2 — Homepage hero search, CTAs, service cards, ecosystem band
-Run against Vercel preview:
-
+Homepage cohesion — hero search (single), service paths, social proof
   set TESTSPRITE_BASE_URL=https://baanaiounweb.vercel.app
   python testsprite_tests/TC020_TestSprite_homepage_phase2.py
 """
@@ -31,11 +29,10 @@ async def run_test() -> None:
             page.get_by_role("link", name=re.compile(r"Find Your Perfect Match")).first
         ).to_be_visible()
 
-        await expect(page.get_by_text("Join Our Ecosystem")).to_be_visible()
-
+        # Single search bar in hero only
         search = page.get_by_placeholder(re.compile(r"Search area|project, keyword"))
-        await expect(search.first).to_be_visible()
-        await search.first.fill("บ้านบึง")
+        await expect(search).to_have_count(1)
+        await search.fill("บ้านบึง")
         await page.get_by_role("button", name=re.compile(r"Search Properties")).click()
         await page.wait_for_url(re.compile(r"/properties\?.*query="))
         assert "query=" in page.url
@@ -44,8 +41,12 @@ async def run_test() -> None:
         await page.get_by_role("link", name=re.compile(r"Find Your Perfect Match")).first.click()
         await page.wait_for_url(re.compile(r"/find-property"))
 
+        # Ecosystem moved to About page
+        await page.goto(f"{BASE_URL}/about")
+        await expect(page.get_by_text("Join Our Ecosystem")).to_be_visible()
+
         await browser.close()
-        print(f"PASS — Phase 2 homepage verified on {BASE_URL}")
+        print(f"PASS — Homepage cohesion verified on {BASE_URL}")
 
 
 if __name__ == "__main__":

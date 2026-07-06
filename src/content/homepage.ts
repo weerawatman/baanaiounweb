@@ -6,10 +6,8 @@
 export const HERO = {
   h1Th: "คัดสรรและดูแลทรัพย์โดยทีมนักลงทุนและผู้เชี่ยวชาญตัวจริง",
   h1En: "Curated and managed by real estate investors and local experts.",
-  subTh:
-    "บ้านไออุ่นช่วยเจ้าของทรัพย์ ผู้ซื้อ-เช่า และเครือข่ายนายหน้า ด้วยบริการครบวงจรในทำเลศักยภาพ: กรุงเทพฯ, สมุทรปราการ, EEC, ฉะเชิงเทรา, ชลบุรี, พัทยา, ศรีราชา, บ้านบึง และโซนนิคมอุตสาหกรรมหลัก",
-  subEn:
-    "Baan Ai Oun supports owners, buyers, renters, and co-agents across prime locations: Bangkok, Samut Prakan, EEC, Chachoengsao, Chonburi, Pattaya, Sriracha, Ban Bueng, and major industrial zones.",
+  subTh: "บ้านไออุ่นช่วยเจ้าของทรัพย์ ผู้ซื้อ-เช่า และเครือข่ายนายหน้า ด้วยบริการครบวงจร",
+  subEn: "Full-service real estate support for owners, buyers, renters, and co-agents.",
   ctaThai: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property", href: "/request?tab=list-property" },
   ctaIntl: {
     th: "ค้นหาทรัพย์ที่ใช่",
@@ -48,12 +46,8 @@ export const SERVICE_CARDS = [
     color: "#E8833A",
     titleTh: "สำหรับเจ้าของทรัพย์",
     titleEn: "Property Owners",
-    painTh: "ขาย/ปล่อยเช่าไม่ออก? ปวดหัวเรื่องเอกสาร? กลัวถูกโกง?",
-    painEn: "Struggling to sell/rent? Worried about paperwork and legal scams?",
-    solutionTh: "ประเมินศักยภาพทรัพย์ฟรี โดยทีมนักลงทุนตัวจริง — การตลาดครบวงจรจนปิดดีล",
-    solutionEn: "Free investor-led property assessment plus full-service marketing until closing.",
-    ctaTh: "ฝากขาย/ปล่อยเช่า",
-    ctaEn: "List Your Property",
+    descTh: "ประเมินศักยภาพทรัพย์ฟรี และการตลาดครบวงจรจนปิดดีล",
+    descEn: "Free investor-led assessment and full-service marketing until closing.",
     href: "/request?tab=list-property",
   },
   {
@@ -61,14 +55,8 @@ export const SERVICE_CARDS = [
     color: "#2E75B6",
     titleTh: "สำหรับผู้ซื้อ-เช่า",
     titleEn: "Buyers & Renters",
-    painTh: "หาบ้านไม่เจอ? กู้ผ่านยาก? สับสนเรื่องสัญญา?",
-    painEn: "Can't find the right home? Loan rejection or legal concerns?",
-    solutionTh:
-      "คัดสรรบ้านทำเลทอง และทรัพย์รีโนเวทสภาพพร้อมอยู่ ผ่านการตรวจสอบโครงสร้างแล้ว",
-    solutionEn:
-      "Curated prime-location homes and move-in-ready renovated properties, structurally vetted.",
-    ctaTh: "ค้นหาทรัพย์ที่ใช่",
-    ctaEn: "Find Your Perfect Match",
+    descTh: "คัดสรรทรัพย์ทำเลทองและรีโนเวทพร้อมอยู่ ดูแลสินเชื่อฟรี",
+    descEn: "Curated homes and free loan guidance through closing.",
     href: "/find-property",
   },
   {
@@ -76,12 +64,8 @@ export const SERVICE_CARDS = [
     color: "#1B7A52",
     titleTh: "สำหรับเพื่อนๆ นายหน้า",
     titleEn: "Co-Agents",
-    painTh: "มีทรัพย์แต่หาลูกค้าไม่ได้? กังวลค่าการตลาด?",
-    painEn: "Have listings but no clients? Worried about marketing costs?",
-    solutionTh: "ฝากทรัพย์ฟรี! เราช่วยทำการตลาดจนกว่าจะปิดดีลได้",
-    solutionEn: "We market your listings for free until closed!",
-    ctaTh: "ร่วมเป็น Co-Agent",
-    ctaEn: "Join as a Co-Agent",
+    descTh: "ฝากทรัพย์ฟรี เราช่วยทำการตลาดจนกว่าจะปิดดีล",
+    descEn: "List with us free — we market until the deal closes.",
     href: "/request?tab=co-agent",
   },
   {
@@ -89,12 +73,8 @@ export const SERVICE_CARDS = [
     color: "#7C3AED",
     titleTh: "สำหรับว่าที่นายหน้ามือใหม่",
     titleEn: "Aspiring Agents",
-    painTh: "อยากมีรายได้เพิ่ม ไม่มีประสบการณ์/ไม่มีทุน?",
-    painEn: "Want extra income, but no experience or capital?",
-    solutionTh: "คอร์ส “จับมือทำ” ถ่ายทอดเคล็ดลับจากผู้แต่งหนังสือและนักลงทุนตัวจริง",
-    solutionEn: "Hands-on course led by practicing investors and published authors.",
-    ctaTh: "สมัครคอร์สนายหน้า",
-    ctaEn: "Join Our Agent Course",
+    descTh: "คอร์สจับมือทำ ถ่ายทอดจากนักลงทุนและผู้เชี่ยวชาญตัวจริง",
+    descEn: "Hands-on agent course led by practicing investors.",
     href: "/agent-course",
   },
 ] as const
