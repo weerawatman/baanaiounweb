@@ -7,6 +7,8 @@ import { AlertTriangle, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { BlogEditor } from "@/components/admin/BlogEditor"
+import { SingleImageField } from "@/components/admin/SingleImageField"
+import { BLOG_CATEGORIES } from "@/data/blog-posts"
 import { blogSchema, type BlogFormValues } from "@/lib/validations/blog"
 import type { BlogPost } from "@/lib/types/property"
 import type { ActionState } from "@/actions/properties"
@@ -24,6 +26,7 @@ export function BlogPostForm({ defaultValues, action, submitLabel = "บัน�
   const {
     register,
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<BlogFormValues>({
@@ -44,9 +47,11 @@ export function BlogPostForm({ defaultValues, action, submitLabel = "บัน�
   function onSubmit(data: BlogFormValues) {
     const formData = new FormData()
     Object.entries(data).forEach(([key, val]) => {
+      if (key === "published" || key === "featured_image") return
       if (val != null && val !== "") formData.append(key, String(val))
     })
     formData.set("published", String(data.published))
+    formData.set("featured_image", data.featured_image ?? "")
     formAction(formData)
   }
 
@@ -72,17 +77,49 @@ export function BlogPostForm({ defaultValues, action, submitLabel = "บัน�
           </FormField>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <FormField label="หมวดหมู่" error={errors.category?.message}>
-            <Input {...register("category")} placeholder="ซื้อบ้าน" />
-          </FormField>
-          <FormField label="Slug หมวดหมู่" error={errors.category_slug?.message}>
-            <Input {...register("category_slug")} placeholder="buy-home" />
-          </FormField>
-        </div>
+        <FormField label="หมวดหมู่" error={errors.category_slug?.message}>
+          <Controller
+            control={control}
+            name="category_slug"
+            render={({ field }) => (
+              <select
+                value={field.value}
+                onChange={(e) => {
+                  const slug = e.target.value
+                  field.onChange(slug)
+                  const cat = BLOG_CATEGORIES.find((c) => c.slug === slug)
+                  setValue(
+                    "category",
+                    cat ? (cat.nameEn ? `${cat.name} | ${cat.nameEn}` : cat.name) : "",
+                  )
+                }}
+                className={selectCls}
+              >
+                <option value="">— เลือกหมวดหมู่ —</option>
+                {BLOG_CATEGORIES.map((cat) => (
+                  <option key={cat.slug} value={cat.slug}>
+                    {cat.nameEn ? `${cat.name} | ${cat.nameEn}` : cat.name}
+                  </option>
+                ))}
+              </select>
+            )}
+          />
+          <input type="hidden" {...register("category")} />
+        </FormField>
 
-        <FormField label="URL รูปปก" error={errors.featured_image?.message}>
-          <Input {...register("featured_image")} placeholder="https://..." />
+        <FormField label="รูปปกบทความ" error={errors.featured_image?.message}>
+          <Controller
+            control={control}
+            name="featured_image"
+            render={({ field }) => (
+              <SingleImageField
+                value={field.value}
+                onChange={field.onChange}
+                label="อัปโหลดรูปปก"
+                aspect="wide"
+              />
+            )}
+          />
         </FormField>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

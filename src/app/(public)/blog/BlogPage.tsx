@@ -26,26 +26,24 @@ export default function BlogPage({ posts }: BlogPageProps) {
     return true
   })
 
+  const showComingSoon = posts.length === 0
+
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "บทความ | Blog" }]} />
 
-      <header className="mb-10 mt-6 text-center">
-        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
+      <header className="mb-10 mt-5 text-center">
+        <h1 className="text-[2.2rem] font-bold leading-tight text-foreground">
           บทความน่าอ่าน จากบ้านไออุ่น
-          <span className="mt-2 block text-xl font-medium text-muted-foreground sm:text-2xl">
-            Insightful Articles by Baan Ai Oun
-          </span>
         </h1>
-        <div className="mx-auto mt-4 flex items-center justify-center gap-2">
-          <div className="h-0.5 w-8 rounded-full bg-primary/30" />
-          <div className="h-1 w-12 rounded-full bg-primary" />
-          <div className="h-0.5 w-8 rounded-full bg-primary/30" />
-        </div>
+        <p className="mt-2 text-xl font-medium text-muted-foreground">
+          Insightful Articles by Baan Ai Oun
+        </p>
+        <div className="mx-auto mt-4 h-1 w-[60px] rounded-sm bg-primary" />
       </header>
 
       <div
-        className="mb-10 flex flex-col-reverse items-stretch justify-between gap-5 border-b border-border pb-6 sm:flex-row sm:items-center"
+        className="mb-10 flex flex-col-reverse items-stretch justify-between gap-5 border-b border-border pb-5 sm:flex-row sm:items-center"
         data-testid="blog-filters"
       >
         <BlogCategoryFilter
@@ -59,30 +57,34 @@ export default function BlogPage({ posts }: BlogPageProps) {
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="ค้นหาบทความ | Search articles..."
+            placeholder="ค้นหาบทความ... | Search articles..."
             className="w-full rounded-full border border-border bg-card py-2.5 pr-4 pl-10 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
         </div>
       </div>
 
-      {filteredPosts.length > 0 ? (
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {filteredPosts.length > 0 && (
+        <div className="mb-12 grid grid-cols-1 gap-[30px] sm:grid-cols-2 xl:grid-cols-3">
           {filteredPosts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
         </div>
-      ) : posts.length === 0 ? (
-        <div className="rounded-xl border-2 border-dashed border-border bg-card/50 px-6 py-12 text-center">
-          <p className="text-base font-medium text-muted-foreground">
-            ยังไม่มีบทความใหม่ในระบบ ทีมงานบ้านไออุ่นกำลังเตรียมคอนเทนต์ดีๆ ติดตามได้เร็วๆ นี้ค่ะ
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground/80">
-            No new articles at the moment. Our team is preparing great content. Stay tuned!
-          </p>
-        </div>
-      ) : (
+      )}
+
+      {!showComingSoon && filteredPosts.length === 0 && (
         <div className="py-16 text-center text-muted-foreground">
           ไม่พบบทความที่ตรงกับการค้นหา | No articles match your search.
+        </div>
+      )}
+
+      {showComingSoon && (
+        <div className="mt-5 rounded-xl border-2 border-dashed border-border bg-card/70 px-5 py-10 text-center">
+          <p className="text-base font-medium text-muted-foreground">
+            🚧 ยังไม่มีบทความใหม่ในระบบ ทีมงานบ้านไออุ่นกำลังเตรียมคอนเทนต์ดีๆ ติดตามได้เร็วๆ นี้ค่ะ
+          </p>
+          <p className="mt-2 text-sm text-muted-foreground/80">
+            🚧 No new articles at the moment. Our team is preparing great content. Stay tuned!
+          </p>
         </div>
       )}
     </main>

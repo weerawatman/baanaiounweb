@@ -22,8 +22,8 @@ async def run_test() -> None:
 
         await page.goto(f"{BASE_URL}/blog")
         await expect(page.get_by_test_id("blog-filters")).to_be_visible()
-        await expect(page.get_by_role("button", name=re.compile(r"Loans & Finance"))).to_be_visible()
-        await expect(page.get_by_role("button", name=re.compile(r"Agent Career"))).to_be_visible()
+        await expect(page.get_by_role("button", name=re.compile(r"สินเชื่อและการเงิน"))).to_be_visible()
+        await expect(page.get_by_role("button", name=re.compile(r"นายหน้าและอาชีพ"))).to_be_visible()
 
         # Open first article if any link exists
         article_link = page.locator('a[href^="/blog/"]').first
