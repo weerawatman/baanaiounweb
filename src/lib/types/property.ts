@@ -127,6 +127,7 @@ export interface AgentProfile {
   trust_renovation_image: string
   trust_network_image: string
   trust_shopper_image: string
+  match_team_image: string
   phone: string
   line_id: string
   line_url: string

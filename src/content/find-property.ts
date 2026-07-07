@@ -12,6 +12,8 @@ export const FIND_PROPERTY_CONTENT = {
     }
   },
   hero: {
+    eyebrow: { th: "บริการของเรา", en: "Our Services" },
+    pageName: "งานหาทรัพย์ | Property Match",
     headline: {
       th: "บอกโจทย์ที่ใช่ แล้วให้เราหาทรัพย์ให้ตรงใจ",
       en: "Share your brief and let us match the right property for you",
@@ -20,7 +22,7 @@ export const FIND_PROPERTY_CONTENT = {
       th: "ไม่ต้องเสียเวลาหาด้วยตัวเองทุกประกาศ เราช่วยคัดทรัพย์ตามงบ ทำเล ประเภท และเงื่อนไขที่คุณต้องการ พร้อมประสานนัดดูทรัพย์ให้ครบใน flow เดียว",
       en: "Skip the endless listing hunt. We curate properties by budget, location, type, and deal requirements, then coordinate viewings in one smooth flow.",
     },
-    highlights: [
+    benefits: [
       {
         th: "คัดทรัพย์ตามโจทย์จริง ไม่โยนลิสต์กว้างๆ ให้เลือกเอง",
         en: "Curated to your real brief, not a generic list to sort through alone.",
@@ -33,39 +35,43 @@ export const FIND_PROPERTY_CONTENT = {
         th: "เหมาะกับทั้งซื้ออยู่เอง ลงทุน หรือหาทรัพย์ให้ทีม/ครอบครัว",
         en: "Useful for owner-occupiers, investors, and teams searching on behalf of others.",
       },
-      {
-        th: "ส่งความต้องการด้านขวาได้เลย ทีมงานติดต่อกลับเร็วที่สุด",
-        en: "Complete the form on the right and our team will follow up quickly.",
-      },
     ],
+    closing: {
+      th: "ส่งความต้องการด้านขวาได้เลย ทีมงานติดต่อกลับเร็วที่สุด",
+      en: "Complete the form on the right and our team will follow up quickly.",
+    },
+    teamImageAlt: "ทีมงานบ้านไออุ่นให้คำปรึกษาลูกค้าเรื่องงานหาทรัพย์",
   },
   solutions: {
     headline: {
       th: "ทำไมต้องใช้บริการงานหาทรัพย์กับบ้านไออุ่น?",
       en: "Why use Baan Ai Oun for Property Match?"
     },
-    subtitle: "",
     description: {
       th: "เราทำงานแบบเป็นคู่คิด ไม่ใช่แค่ส่งลิงก์ประกาศ แต่ช่วยตีโจทย์ แนะนำทำเล เปรียบเทียบตัวเลือก และดู flow การตัดสินใจให้คุณเดินเร็วขึ้นอย่างมั่นใจ",
       en: "We work like a trusted property partner, not just a listing sender, helping refine the brief, suggest the right areas, compare options, and speed up confident decisions.",
     },
-    highlight: {
-      th: "🎯 เริ่มจากบรีฟสั้นๆ แล้วให้ทีมงานช่วยคัดกรองต่อได้ทันที",
-      en: "🎯 Start with a short brief and let our team handle the first round of curation.",
-    },
     features: [
       {
-        th: "🏠 คัดทรัพย์ตามงบ ทำเล และประเภทที่ต้องการ",
-        en: "🏠 Shortlisted properties matched to your budget, area, and property type",
+        icon: "🎯",
+        th: "เริ่มจากบรีฟสั้นๆ แล้วให้ทีมงานช่วยคัดกรองต่อได้ทันที",
+        en: "Start with a short brief and let our team handle the first round of curation.",
       },
       {
-        th: "📍 ช่วยแนะนำทำเลและแลนด์มาร์คที่ตอบโจทย์การใช้ชีวิตหรือการลงทุน",
-        en: "📍 Guidance on areas and landmarks that fit your lifestyle or investment plan",
+        icon: "🏠",
+        th: "คัดทรัพย์ตามงบ ทำเล และประเภทที่ต้องการ",
+        en: "Shortlisted properties matched to your budget, area, and property type.",
       },
       {
-        th: "🤝 ประสานนัดดูทรัพย์และคุยรายละเอียดกับทีมงานได้ต่อเนื่อง",
-        en: "🤝 Coordinated viewings and smooth follow-up with the team throughout the process",
-      }
+        icon: "📍",
+        th: "ช่วยแนะนำทำเลและแลนด์มาร์คที่ตอบโจทย์การใช้ชีวิตหรือการลงทุน",
+        en: "Guidance on areas and landmarks that fit your lifestyle or investment plan.",
+      },
+      {
+        icon: "🤝",
+        th: "ประสานนัดดูทรัพย์และคุยรายละเอียดกับทีมงานได้ต่อเนื่อง",
+        en: "Coordinated viewings and smooth follow-up with the team throughout the process.",
+      },
     ]
   },
   hook: {

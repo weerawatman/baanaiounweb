@@ -113,6 +113,7 @@ export function mapProfile(row: AgentProfileRow): Profile {
     trustRenovationImage: row.trust_renovation_image ?? "",
     trustNetworkImage: row.trust_network_image ?? "",
     trustShopperImage: row.trust_shopper_image ?? "",
+    matchTeamImage: row.match_team_image ?? "",
     phone: row.phone ?? "",
     lineId: row.line_id ?? "",
     lineUrl: row.line_url ?? "",

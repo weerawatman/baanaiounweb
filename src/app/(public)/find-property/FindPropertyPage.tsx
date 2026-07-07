@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import Image from "next/image"
+import { CheckCircle, Users } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
-import { SolutionsSection, StepsSection, EmotionalHook } from "@/components/shared"
+import { StepsSection } from "@/components/shared"
 import { FIND_PROPERTY_CONTENT } from "@/content/find-property"
 import RequestForm from "../request/RequestForm"
 
@@ -17,7 +19,19 @@ export function generateMetadata(): Metadata {
   }
 }
 
-export default function FindPropertyPage() {
+interface FindPropertyPageProps {
+  /** รูปทีมงานให้คำปรึกษา — จัดการผ่าน Admin > โปรไฟล์ (ว่าง = แสดงกล่องสำรอง) */
+  teamImage?: string
+}
+
+/**
+ * โครงหน้าตาม mockup (example_page/งานหาทรัพย์.html):
+ * Hero 2 คอลัมน์ (เนื้อหา+รูปทีมงาน / ฟอร์ม) → Why-Us การ์ด 4 ใบ →
+ * 3 ขั้นตอน → Quote section เขียวเข้ม
+ */
+export default function FindPropertyPage({ teamImage }: FindPropertyPageProps) {
+  const { hero, solutions, steps, hook } = FIND_PROPERTY_CONTENT
+
   return (
     <>
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
@@ -30,45 +44,73 @@ export default function FindPropertyPage() {
         />
       </div>
 
+      {/* ─── Hero + Form (above the fold) ─────────────────────────────── */}
       <PageSection variant="warm" className="pt-4 lg:pt-6">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="py-4 lg:py-8">
-            <span className="inline-flex rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
-              งานหาทรัพย์ | Property Match
+            <span className="text-sm font-bold text-muted-foreground">
+              {hero.eyebrow.th} | {hero.eyebrow.en}
             </span>
 
-            <h1 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-              {FIND_PROPERTY_CONTENT.hero.headline.th}
+            <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              <span className="block text-primary">{hero.pageName}</span>
+              <span className="mt-1 block text-foreground">{hero.headline.th}</span>
             </h1>
             <p className="mt-2 text-lg font-medium text-secondary sm:text-xl">
-              {FIND_PROPERTY_CONTENT.hero.headline.en}
+              {hero.headline.en}
             </p>
 
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-foreground/90">
-              {FIND_PROPERTY_CONTENT.hero.description.th}
+              {hero.description.th}
             </p>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-              {FIND_PROPERTY_CONTENT.hero.description.en}
+              {hero.description.en}
             </p>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {FIND_PROPERTY_CONTENT.hero.highlights.map((item) => (
-                <div
-                  key={item.th}
-                  className="rounded-2xl border border-border bg-card p-4 shadow-sm"
-                >
-                  <p className="text-sm font-semibold text-primary">{item.th}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{item.en}</p>
-                </div>
+            <ul className="mt-6 flex max-w-2xl flex-col gap-4">
+              {hero.benefits.map((item) => (
+                <li key={item.th} className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 size-5 shrink-0 text-primary" />
+                  <div>
+                    <p className="text-sm font-medium leading-relaxed text-foreground sm:text-base">
+                      {item.th}
+                    </p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                      {item.en}
+                    </p>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ul>
 
-            <p className="mt-6 text-sm text-muted-foreground">
-              อยากดูทรัพย์ที่มีอยู่แล้ว?{" "}
-              <Link href="/properties" className="font-semibold text-primary underline-offset-2 hover:underline">
-                ดูทรัพย์ทั้งหมด | Browse all properties
-              </Link>
+            <p className="mt-6 text-sm text-foreground/90">
+              {hero.closing.th}
+              <span className="mt-0.5 block text-xs text-muted-foreground">{hero.closing.en}</span>
             </p>
+
+            <Link
+              href="/properties"
+              className="mt-5 inline-block border-b-2 border-[#E8833A] pb-0.5 text-sm font-bold text-[#E8833A] transition-opacity hover:opacity-80"
+            >
+              อยากดูทรัพย์ที่มีอยู่แล้ว? ดูทรัพย์ทั้งหมด → | Browse all properties →
+            </Link>
+
+            {/* รูปทีมงาน — จัดการผ่าน Admin > โปรไฟล์ > รูปภาพหน้างานหาทรัพย์ */}
+            <div className="relative mt-8 h-52 overflow-hidden rounded-2xl bg-muted sm:h-60">
+              {teamImage ? (
+                <Image
+                  src={teamImage}
+                  alt={hero.teamImageAlt}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center">
+                  <Users className="size-10 text-muted-foreground/40" />
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="lg:pb-4">
@@ -94,29 +136,59 @@ export default function FindPropertyPage() {
         </div>
       </PageSection>
 
-      <SolutionsSection
-        headline={FIND_PROPERTY_CONTENT.solutions.headline.th}
-        headlineEn={FIND_PROPERTY_CONTENT.solutions.headline.en}
-        subtitle={FIND_PROPERTY_CONTENT.solutions.subtitle}
-        description={FIND_PROPERTY_CONTENT.solutions.description.th}
-        descriptionEn={FIND_PROPERTY_CONTENT.solutions.description.en}
-        highlight={FIND_PROPERTY_CONTENT.solutions.highlight.th}
-        highlightEn={FIND_PROPERTY_CONTENT.solutions.highlight.en}
-        features={FIND_PROPERTY_CONTENT.solutions.features.map((f) => f.th)}
-        featuresEn={FIND_PROPERTY_CONTENT.solutions.features.map((f) => f.en)}
-      />
+      {/* ─── Why Us (4 feature cards) ──────────────────────────────────── */}
+      <PageSection variant="default">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+            {solutions.headline.th}
+          </h2>
+          <p className="mt-1 text-base font-medium text-secondary">{solutions.headline.en}</p>
+          <p className="mt-4 text-base leading-relaxed text-foreground/90">
+            {solutions.description.th}
+          </p>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+            {solutions.description.en}
+          </p>
+        </div>
 
-      <StepsSection
-        headline={FIND_PROPERTY_CONTENT.steps.headline}
-        steps={FIND_PROPERTY_CONTENT.steps.items}
-      />
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {solutions.features.map((feature) => (
+            <div
+              key={feature.th}
+              className="rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+            >
+              <span aria-hidden className="text-3xl">
+                {feature.icon}
+              </span>
+              <p className="mt-4 text-sm font-medium leading-relaxed text-foreground">
+                {feature.th}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{feature.en}</p>
+            </div>
+          ))}
+        </div>
+      </PageSection>
 
-      <EmotionalHook
-        quote={FIND_PROPERTY_CONTENT.hook.quote.th}
-        quoteEn={FIND_PROPERTY_CONTENT.hook.quote.en}
-        message={FIND_PROPERTY_CONTENT.hook.message.th}
-        messageEn={FIND_PROPERTY_CONTENT.hook.message.en}
-      />
+      {/* ─── 3 Steps ───────────────────────────────────────────────────── */}
+      <StepsSection headline={steps.headline} steps={steps.items} />
+
+      {/* ─── Quote (dark green band per mockup) ────────────────────────── */}
+      <PageSection variant="default">
+        <div className="rounded-3xl bg-primary px-6 py-14 text-center sm:px-12 sm:py-16">
+          <blockquote className="mx-auto max-w-3xl text-2xl font-bold italic leading-relaxed text-[#D4A843] sm:text-3xl">
+            {hook.quote.th}
+          </blockquote>
+          <blockquote className="mx-auto mt-3 max-w-3xl text-base font-medium italic leading-relaxed text-[#D4A843]/75">
+            {hook.quote.en}
+          </blockquote>
+          <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-white/85 sm:text-lg">
+            {hook.message.th}
+          </p>
+          <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-white/60">
+            {hook.message.en}
+          </p>
+        </div>
+      </PageSection>
     </>
   )
 }

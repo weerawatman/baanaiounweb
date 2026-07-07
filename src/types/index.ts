@@ -103,6 +103,7 @@ export interface Profile {
   trustRenovationImage: string
   trustNetworkImage: string
   trustShopperImage: string
+  matchTeamImage: string
   phone: string
   lineId: string
   lineUrl: string

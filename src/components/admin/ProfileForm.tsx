@@ -39,6 +39,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       trust_renovation_image: defaultValues.trustRenovationImage,
       trust_network_image: defaultValues.trustNetworkImage,
       trust_shopper_image: defaultValues.trustShopperImage,
+      match_team_image: defaultValues.matchTeamImage,
       phone: defaultValues.phone,
       line_id: defaultValues.lineId,
       line_url: defaultValues.lineUrl,
@@ -201,6 +202,29 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
             />
           </FormField>
         </div>
+      </section>
+
+      {/* ─── รูปภาพหน้างานหาทรัพย์ ───────────────── */}
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">รูปภาพหน้างานหาทรัพย์ (Property Match)</h2>
+
+        <FormField
+          label="รูปทีมงานให้คำปรึกษาลูกค้า"
+          hint="แสดงใต้ข้อความฝั่งซ้ายของหน้างานหาทรัพย์ (ยังไม่อัปโหลด = แสดงกล่องสำรองแทน)"
+        >
+          <Controller
+            control={control}
+            name="match_team_image"
+            render={({ field }) => (
+              <SingleImageField
+                value={field.value}
+                onChange={field.onChange}
+                label="อัปโหลดรูปทีมงาน"
+                aspect="wide"
+              />
+            )}
+          />
+        </FormField>
       </section>
 
       {/* ─── ช่องทางติดต่อ ───────────────────────── */}

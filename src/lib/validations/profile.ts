@@ -12,6 +12,7 @@ export const profileSchema = z.object({
   trust_renovation_image: z.string().default(""),
   trust_network_image: z.string().default(""),
   trust_shopper_image: z.string().default(""),
+  match_team_image: z.string().default(""),
   phone: z.string().default(""),
   line_id: z.string().default(""),
   line_url: z.string().default(""),
