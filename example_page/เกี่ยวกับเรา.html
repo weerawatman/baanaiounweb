@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ติดต่อเรา | Contact Us - บ้านไออุ่น พร็อพเพอร์ตี้</title>
+    <style>
+        /* 📌 Theme Variables */
+        :root {
+            --primary-green: #14532d;
+            --accent-orange: #ea580c;
+            --accent-yellow: #eab308;
+            --bg-light: #f8f6f0;
+            --text-dark: #333333;
+            --footer-bg: #14532d;
+            --border-color: #e5e7eb;
+        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.6;}
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; min-height: 70vh;}
+        
+        /* 📌 Navbar */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: color 0.2s;}
+        .nav-links a:hover { color: var(--primary-green); }
+        .lang-switch { background: #eee; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; border: 1px solid #ccc; display: flex; gap: 5px; align-items: center;}
+        .btn-contact { background: var(--primary-green); color: white !important; padding: 8px 20px; border-radius: 5px; font-weight: bold;}
+        
+        /* 📌 Page Header */
+        .page-header { text-align: center; margin-bottom: 50px; margin-top: 20px;}
+        .page-header h1 { color: var(--text-dark); font-size: 2.2em; margin-bottom: 10px;}
+        .page-header p { color: #555; font-size: 1.1em; max-width: 600px; margin: 0 auto;}
+
+        /* 📌 Contact Layout (2 Columns) */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        
+        /* 📌 Left Column: Form */
+        .contact-form-box { background: white; padding: 40px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+        .contact-form-box h2 { margin-top: 0; color: var(--primary-green); margin-bottom: 25px; font-size: 1.5em; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px;}
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #444; font-size: 0.95em;}
+        .required { color: #dc2626; }
+        input[type="text"], input[type="tel"], input[type="email"], select, textarea { width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; box-sizing: border-box; background: #fafafa; transition: border-color 0.2s;}
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-green); background: white; }
+        textarea { resize: vertical; min-height: 120px; }
+        
+        .btn-submit { background: var(--primary-green); color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 1.1em; font-weight: bold; width: 100%; margin-top: 10px; transition: background 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;}
+        .btn-submit:hover { background: #0f3d20; }
+
+        /* 📌 Right Column: Info & Map */
+        .contact-info-wrapper { display: flex; flex-direction: column; gap: 25px; }
+        
+        /* Contact Cards Grid */
+        .info-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .info-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);}
+        .info-card.full-width { grid-column: 1 / -1; }
+        .info-icon { width: 40px; height: 40px; background: #f0fdf4; color: var(--primary-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2em; }
+        .info-label { font-size: 0.85em; color: #888; font-weight: bold; text-transform: uppercase;}
+        .info-value { font-size: 1em; color: var(--text-dark); font-weight: 500; word-break: break-word;}
+        
+        /* Map Placeholder */
+        .map-placeholder { background: #e2e8f0; height: 250px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #64748b; position: relative; overflow: hidden;}
+        .map-placeholder::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; opacity: 0.5;}
+        .map-text { position: relative; z-index: 2; font-weight: bold; background: white; padding: 8px 16px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);}
+        
+        /* Fast Reply Box */
+        .fast-reply-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 30px; border-radius: 16px; text-align: center; }
+        .fast-reply-box h3 { color: var(--primary-green); margin-top: 0; margin-bottom: 10px; font-size: 1.2em;}
+        .fast-reply-box p { color: #555; font-size: 0.95em; margin-bottom: 20px;}
+        .fast-reply-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;}
+        .btn-line { background: #00c300; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.2s; box-shadow: 0 4px 6px rgba(0, 195, 0, 0.2);}
+        .btn-line:hover { background: #00a600; }
+        .btn-whatsapp { background: #25d366; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.2s; box-shadow: 0 4px 6px rgba(37, 211, 102, 0.2);}
+        .btn-whatsapp:hover { background: #1ebc59; }
+
+        /* 📌 Footer (Consistent with all pages) */
+        .footer { background: var(--footer-bg); color: #f9fafb; padding: 60px 20px 20px; margin-top: 60px; font-size: 14px; border-top: 5px solid var(--accent-yellow);}
+        .footer-grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 1200px; margin: 0 auto; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .footer-col h4 { font-size: 1.2em; margin-top: 0; margin-bottom: 20px; color: var(--accent-yellow);}
+        .footer-col p { color: #d1d5db; line-height: 1.6; margin: 0 0 10px 0;}
+        .footer-col a { color: #d1d5db; text-decoration: none; display: block; margin-bottom: 12px; transition: color 0.2s;}
+        .footer-col a:hover { color: white; }
+        .footer-bottom { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 20px; }
+        
+        .lang-en { display: none; }
+
+        @media (max-width: 900px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .info-cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 📌 Navbar -->
+    <nav class="navbar">
+        <div style="font-weight: bold; color: var(--primary-green); font-size: 1.5em;">Baan Ai Oun</div>
+        <div class="nav-links">
+            <a href="index.html" class="lang-th">หน้าแรก</a><a href="index.html" class="lang-en">Home</a>
+            <a href="match.html" class="lang-th">งานหาทรัพย์</a><a href="match.html" class="lang-en">Property Match</a>
+            <a href="services.html" class="lang-th">บริการของเรา</a><a href="services.html" class="lang-en">Our Services</a>
+            <a href="blog.html" class="lang-th">บทความ</a><a href="blog.html" class="lang-en">Blog</a>
+            <a href="about.html" class="lang-th">เกี่ยวกับเรา</a><a href="about.html" class="lang-en">About Us</a>
+            
+            <button class="lang-switch" onclick="toggleLanguage()"><span id="current-lang-text">🌐 EN</span></button>
+            <a href="#" class="btn-contact lang-th">ติดต่อเรา</a><a href="#" class="btn-contact lang-en">Contact Us</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        <!-- 📌 Page Header -->
+        <div class="page-header">
+            <h1 class="lang-th">ติดต่อเรา | Contact Us</h1>
+            <h1 class="lang-en">Contact Us</h1>
+            
+            <p class="lang-th">ส่งข้อความหาพิม หรือแอดไลน์มาได้เลยค่ะ เราตอบทุกข้อความ</p>
+            <p class="lang-en">Send us a message or add us on LINE — we reply to every message.</p>
+        </div>
+
+        <!-- 📌 Contact Layout (Form + Info) -->
+        <div class="contact-grid">
+            
+            <!-- Left: Form -->
+            <div class="contact-form-box">
+                <h2 class="lang-th">✉️ ส่งข้อความหาเรา</h2>
+                <h2 class="lang-en">✉️ Send Us a Message</h2>
+                
+                <form action="#">
+                    <div class="form-group">
+                        <label class="lang-th">ชื่อ-นามสกุล <span class="required">*</span></label>
+                        <label class="lang-en">Full Name <span class="required">*</span></label>
+                        <input type="text" placeholder="คุณชื่ออะไรคะ?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="lang-th">เบอร์โทรศัพท์ <span class="required">*</span></label>
+                        <label class="lang-en">Phone Number <span class="required">*</span></label>
+                        <input type="tel" placeholder="0xx-xxx-xxxx" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="lang-th">อีเมล</label>
+                        <label class="lang-en">Email</label>
+                        <input type="email" placeholder="your@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="lang-th">หัวข้อ</label>
+                        <label class="lang-en">Subject</label>
+                        <select>
+                            <option value="" disabled selected class="lang-th">เลือกหัวข้อ</option>
+                            <option value="" disabled selected class="lang-en">Select Topic</option>
+                            <option class="lang-th">ซื้อ/เช่า</option><option class="lang-en">Buy / Rent Property</option>
+                            <option class="lang-th">ฝากขาย/เช่า</option><option class="lang-en">List My Property</option>
+                            <option class="lang-th">สินเชื่อบ้าน</option><option class="lang-en">Home Loan Inquiry</option>
+                            <option class="lang-th">Co-Agent</option><option class="lang-en">Partnership</option>
+                            <option class="lang-th">อื่นๆ</option><option class="lang-en">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="lang-th">ข้อความ <span class="required">*</span></label>
+                        <label class="lang-en">Message <span class="required">*</span></label>
+                        <textarea placeholder="บอกพิมได้เลยค่ะ ว่าสนใจซื้อ ขาย เช่า หรือมีคำถามอะไร..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">
+                        <span class="lang-th">ส่งข้อความ</span><span class="lang-en">Send Message</span> 🚀
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right: Info, Map & Fast Reply -->
+            <div class="contact-info-wrapper">
+                
+                <!-- Map Placeholder -->
+                <div class="map-placeholder">
+                    <div class="map-text">🗺️ [Placeholder: แผนที่ Google Maps]</div>
+                </div>
+
+                <!-- Fast Reply Box -->
+                <div class="fast-reply-box">
+                    <h3 class="lang-th">⚡ ต้องการคำตอบเร็วกว่านี้?</h3>
+                    <h3 class="lang-en">⚡ Need a Faster Reply?</h3>
+                    <p class="lang-th">แอดไลน์หรือ WhatsApp หาพิมได้เลย ตอบไวกว่าค่ะ!</p>
+                    <p class="lang-en">Add us on LINE or WhatsApp for the fastest response!</p>
+                    
+                    <div class="fast-reply-buttons">
+                        <a href="#" class="btn-line">
+                            💬 <span class="lang-th">แอดไลน์ @baan-ai-oun</span><span class="lang-en">LINE @baan-ai-oun</span>
+                        </a>
+                        <a href="#" class="btn-whatsapp">
+                            📞 WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Cards -->
+                <div class="info-cards-grid">
+                    <div class="info-card">
+                        <div class="info-icon">📱</div>
+                        <div>
+                            <div class="info-label"><span class="lang-th">โทรศัพท์</span><span class="lang-en">Phone</span></div>
+                            <div class="info-value">086-4149960</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">✉️</div>
+                        <div>
+                            <div class="info-label"><span class="lang-th">อีเมล</span><span class="lang-en">Email</span></div>
+                            <div class="info-value">supansa.m@baanaioun.com</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card full-width">
+                        <div class="info-icon">📍</div>
+                        <div>
+                            <div class="info-label"><span class="lang-th">ที่อยู่สำนักงาน</span><span class="lang-en">Address</span></div>
+                            <div class="info-value lang-th">107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540</div>
+                            <div class="info-value lang-en">107/57 The Colors Leisure, Soi Mahachai, Moo 13, Bang Phli Yai, Bang Phli, Samut Prakan 10540</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 📌 Footer (Match with all pages) -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 class="lang-th">Baan Ai Oun Property</h4><h4 class="lang-en">Baan Ai Oun Property</h4>
+                <p class="lang-th">บ้านไออุ่น: มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ</p>
+                <p class="lang-en">More than just a house, it's the energy to keep you moving forward.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">เมนูลัด</h4><h4 class="lang-en">Quick Links</h4>
+                <a href="#" class="lang-th">- ฝากขาย/ปล่อยเช่า</a><a href="#" class="lang-en">- List Your Property</a>
+                <a href="#" class="lang-th">- ค้นหาทรัพย์</a><a href="#" class="lang-en">- Find Properties</a>
+                <a href="#" class="lang-th">- ร่วมเป็น Co-Agent</a><a href="#" class="lang-en">- Co-Agent Program</a>
+                <a href="#" class="lang-th">- คอร์สนายหน้าอสังหาฯ</a><a href="#" class="lang-en">- Real Estate Course</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">ติดต่อเรา</h4><h4 class="lang-en">Contact Us</h4>
+                <p>📞 โทร (Tel): 086-4149960</p>
+                <p>🟢 LINE: @baan-ai-oun</p>
+                <p>✉️ Email: supansa.m@baanaioun.com</p>
+                <p style="margin-top: 15px;">
+                    <span class="lang-th">📍 ที่ตั้งสำนักงาน: 107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540</span>
+                    <span class="lang-en">📍 Office: 107/57 The Colors Leisure, Soi Mahachai, Moo 13, Bang Phli Yai, Bang Phli, Samut Prakan 10540</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="lang-th">&copy; 2026 บ้านไออุ่น พร็อพเพอร์ตี้ สงวนลิขสิทธิ์ทุกประการ | นโยบายความเป็นส่วนตัว</p>
+            <p class="lang-en">&copy; 2026 Baan Ai Oun Property. All rights reserved. | Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        let isEnglish = false;
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            document.querySelectorAll('.lang-th').forEach(el => el.style.display = isEnglish ? 'none' : 'block');
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = isEnglish ? 'block' : 'none');
+            document.getElementById('current-lang-text').innerText = isEnglish ? '🌐 TH' : '🌐 EN';
+        }
+    </script>
+</body>
+</html>

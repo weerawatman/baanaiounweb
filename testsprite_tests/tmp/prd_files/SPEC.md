@@ -26,6 +26,21 @@ this pass). Scope: pages under `src/app/(public)/`.
 - **Responsiveness:** All pages must render correctly on mobile viewport
   widths (this site was recently updated for mobile responsiveness).
 
+## NEW (2026-07-05): `/request` — Tabbed Service Request Page (primary test target)
+
+The homepage hero CTAs and the first 3 service cards now link to
+`/request?tab=list-property|matchmaking|co-agent`. The page shows 3
+selectable tab cards; the active tab's form is **visible immediately**
+(NOT click-to-reveal). All 3 tabs share the same 7-field structure:
+name*, phone/WhatsApp/LINE*, email* (format-validated), property type*
+(dropdown: บ้านเดี่ยว, บ้านแฝด, ทาวน์โฮม, คอนโด, ที่ดิน), location*,
+budget (optional), image upload (optional, max 5 × 5MB).
+Acceptance: tab switch updates URL and form labels; valid submission posts
+to `/api/service-request` and shows a bilingual 🎉 success card; missing or
+malformed email blocks submission with a bilingual error.
+⚠️ This is the PRODUCTION site — submit at most ONE test per tab and prefix
+test names with "TestSprite".
+
 ## Lead Form Behavior (applies to every form below)
 - **Click-to-reveal (intentional design):** on find-property, list-property,
   co-agent, and agent-course pages the form is NOT visible on page load. The

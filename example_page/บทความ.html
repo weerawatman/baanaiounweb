@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทความน่าอ่าน - บ้านไออุ่น พร็อพเพอร์ตี้</title>
+    <style>
+        /* 📌 Theme Variables (คุมสีให้ตรงกันทุกหน้า) */
+        :root {
+            --primary-green: #14532d;
+            --accent-orange: #ea580c;
+            --accent-yellow: #eab308;
+            --bg-light: #f8f6f0;
+            --text-dark: #333333;
+            --footer-bg: #14532d;
+            --border-color: #e5e7eb;
+        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.6;}
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; min-height: 70vh;}
+        
+        /* 📌 Navbar */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: color 0.2s;}
+        .nav-links a:hover { color: var(--primary-green); }
+        .lang-switch { background: #eee; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; border: 1px solid #ccc; display: flex; gap: 5px; align-items: center;}
+        .btn-contact { background: var(--primary-green); color: white !important; padding: 8px 20px; border-radius: 5px; font-weight: bold;}
+        
+        /* 📌 Page Header */
+        .page-header { text-align: center; margin-bottom: 40px; margin-top: 20px;}
+        .page-header h1 { color: var(--text-dark); font-size: 2.2em; margin-bottom: 15px;}
+        .page-header .underline { width: 60px; height: 4px; background: var(--primary-green); margin: 0 auto; border-radius: 2px;}
+
+        /* 📌 Filter & Search Section */
+        .filter-search-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;}
+        
+        .filters { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-btn { background: white; border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 30px; color: var(--text-dark); font-size: 0.95em; cursor: pointer; transition: all 0.2s; }
+        .filter-btn:hover { border-color: var(--primary-green); color: var(--primary-green); }
+        .filter-btn.active { background: var(--primary-green); color: white; border-color: var(--primary-green); }
+        
+        .search-bar { position: relative; width: 100%; max-width: 300px; }
+        .search-bar input { width: 100%; padding: 10px 15px 10px 40px; border: 1px solid var(--border-color); border-radius: 30px; font-size: 0.95em; box-sizing: border-box; background: white;}
+        .search-bar input:focus { outline: none; border-color: var(--primary-green); }
+        .search-bar .icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888; }
+
+        /* 📌 Article Grid */
+        .article-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
+        
+        .article-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.03); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column;}
+        .article-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+        
+        .article-img { height: 200px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 0.9em; text-align: center; border-bottom: 1px solid var(--border-color); position: relative;}
+        .article-content { padding: 25px; flex: 1; display: flex; flex-direction: column;}
+        
+        .article-tag { background: #f0fdf4; color: var(--primary-green); padding: 4px 10px; border-radius: 4px; font-size: 0.8em; font-weight: bold; display: inline-block; margin-bottom: 12px; align-self: flex-start;}
+        .article-title { font-size: 1.25em; color: var(--text-dark); margin: 0 0 10px 0; line-height: 1.4; }
+        .article-excerpt { font-size: 0.95em; color: #666; margin-bottom: 20px; line-height: 1.5; flex: 1;}
+        
+        .article-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: auto;}
+        .read-more { color: var(--accent-orange); text-decoration: none; font-weight: bold; font-size: 0.9em; }
+        .read-more:hover { text-decoration: underline; }
+        .article-date { color: #aaa; font-size: 0.85em; }
+
+        /* 📌 Coming Soon Message */
+        .coming-soon-box { background: rgba(255,255,255,0.7); border: 2px dashed #ccc; padding: 40px 20px; text-align: center; border-radius: 12px; margin-top: 20px;}
+        .coming-soon-box p { color: #666; font-size: 1.1em; margin: 0; font-weight: 500;}
+
+        /* 📌 Green Footer (100% Match with Pages 1, 2, and 3) */
+        .footer { background: var(--footer-bg); color: #f9fafb; padding: 60px 20px 20px; margin-top: 60px; font-size: 14px; border-top: 5px solid var(--accent-yellow);}
+        .footer-grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 1200px; margin: 0 auto; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .footer-col h4 { font-size: 1.2em; margin-top: 0; margin-bottom: 20px; color: var(--accent-yellow);}
+        .footer-col p { color: #d1d5db; line-height: 1.6; margin: 0 0 10px 0;}
+        .footer-col a { color: #d1d5db; text-decoration: none; display: block; margin-bottom: 12px; transition: color 0.2s;}
+        .footer-col a:hover { color: white; }
+        .footer-bottom { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 20px; }
+        
+        .lang-en { display: none; }
+
+        @media (max-width: 768px) {
+            .filter-search-container { flex-direction: column-reverse; align-items: stretch; }
+            .search-bar { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 📌 Navbar -->
+    <nav class="navbar">
+        <div style="font-weight: bold; color: var(--primary-green); font-size: 1.5em;">Baan Ai Oun</div>
+        <div class="nav-links">
+            <a href="index.html" class="lang-th">หน้าแรก</a><a href="index.html" class="lang-en">Home</a>
+            <a href="match.html" class="lang-th">งานหาทรัพย์</a><a href="match.html" class="lang-en">Property Match</a>
+            <a href="services.html" class="lang-th">บริการของเรา</a><a href="services.html" class="lang-en">Our Services</a>
+            <a href="#" class="lang-th" style="color:var(--primary-green); font-weight:bold;">บทความ</a><a href="#" class="lang-en" style="color:var(--primary-green); font-weight:bold;">Blog</a>
+            <a href="#" class="lang-th">เกี่ยวกับเรา</a><a href="#" class="lang-en">About Us</a>
+            
+            <button class="lang-switch" onclick="toggleLanguage()"><span id="current-lang-text">🌐 EN</span></button>
+            <a href="#" class="btn-contact lang-th">ติดต่อเรา</a><a href="#" class="btn-contact lang-en">Contact Us</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        <!-- 📌 Page Header -->
+        <div class="page-header">
+            <h1 class="lang-th">บทความน่าอ่าน จากบ้านไออุ่น</h1>
+            <h1 class="lang-en">Insightful Articles by Baan Ai Oun</h1>
+            <div class="underline"></div>
+        </div>
+
+        <!-- 📌 Filter & Search Section -->
+        <div class="filter-search-container">
+            <div class="filters">
+                <button class="filter-btn active">
+                    <span class="lang-th">ทั้งหมด</span><span class="lang-en">All</span>
+                </button>
+                <button class="filter-btn">
+                    <span class="lang-th">ซื้อ-ขายและเช่า</span><span class="lang-en">Buy, Sell & Rent</span>
+                </button>
+                <button class="filter-btn">
+                    <span class="lang-th">สินเชื่อและการเงิน</span><span class="lang-en">Loans & Finance</span>
+                </button>
+                <button class="filter-btn">
+                    <span class="lang-th">ทำเลและการลงทุน</span><span class="lang-en">Locations & Investment</span>
+                </button>
+                <button class="filter-btn">
+                    <span class="lang-th">รีโนเวทและต่อเติม</span><span class="lang-en">Renovation</span>
+                </button>
+                <button class="filter-btn">
+                    <span class="lang-th">นายหน้าและอาชีพ</span><span class="lang-en">Agent Career</span>
+                </button>
+            </div>
+            
+            <div class="search-bar">
+                <span class="icon">🔍</span>
+                <input type="text" class="lang-th" placeholder="ค้นหาบทความ...">
+                <input type="text" class="lang-en" placeholder="Search articles...">
+            </div>
+        </div>
+
+        <!-- 📌 Article Grid -->
+        <div class="article-grid">
+            
+            <!-- Article Card 1 -->
+            <article class="article-card">
+                <div class="article-img">
+                    🖼️ [Placeholder: รูปภาพปกบทความ]
+                </div>
+                <div class="article-content">
+                    <span class="article-tag">
+                        <span class="lang-th">สินเชื่อและการเงิน</span><span class="lang-en">Loans & Finance</span>
+                    </span>
+                    <h3 class="article-title lang-th">5 เทคนิคเตรียมตัวกู้ซื้อบ้าน ให้ผ่านฉลุยตั้งแต่ครั้งแรก</h3>
+                    <h3 class="article-title lang-en">5 Tips to Get Your Home Loan Approved on the First Try</h3>
+                    <p class="article-excerpt lang-th">รวมเคล็ดลับสำหรับผู้ที่ต้องการซื้อบ้านหลังแรก เตรียมเอกสารอย่างไรให้ธนาคารอนุมัติง่ายและได้วงเงินสูง...</p>
+                    <p class="article-excerpt lang-en">Essential tips for first-time homebuyers. Learn how to prepare your documents for quick bank approval...</p>
+                    
+                    <div class="article-footer">
+                        <a href="#" class="read-more">
+                            <span class="lang-th">อ่านต่อ →</span><span class="lang-en">Read more →</span>
+                        </a>
+                        <span class="article-date">07 Jul 2026</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article Card 2 -->
+            <article class="article-card">
+                <div class="article-img">
+                    🖼️ [Placeholder: รูปภาพทำเล]
+                </div>
+                <div class="article-content">
+                    <span class="article-tag">
+                        <span class="lang-th">ทำเลและการลงทุน</span><span class="lang-en">Locations & Investment</span>
+                    </span>
+                    <h3 class="article-title lang-th">เจาะลึกทำเล EEC: ทำไมชลบุรีและระยองถึงน่าลงทุนที่สุดในปีนี้</h3>
+                    <h3 class="article-title lang-en">EEC Deep Dive: Why Chonburi and Rayong are Top Investments This Year</h3>
+                    <p class="article-excerpt lang-th">วิเคราะห์ศักยภาพพื้นที่เศรษฐกิจภาคตะวันออก พร้อมเจาะโซนน่าลงทุนสำหรับการปล่อยเช่าและการอยู่อาศัย...</p>
+                    <p class="article-excerpt lang-en">Analyzing the potential of the Eastern Economic Corridor and highlighting the best zones for property investment...</p>
+                    
+                    <div class="article-footer">
+                        <a href="#" class="read-more">
+                            <span class="lang-th">อ่านต่อ →</span><span class="lang-en">Read more →</span>
+                        </a>
+                        <span class="article-date">02 Jul 2026</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article Card 3 -->
+            <article class="article-card">
+                <div class="article-img">
+                    🖼️ [Placeholder: รูปภาพรีโนเวท]
+                </div>
+                <div class="article-content">
+                    <span class="article-tag">
+                        <span class="lang-th">รีโนเวทและต่อเติม</span><span class="lang-en">Renovation</span>
+                    </span>
+                    <h3 class="article-title lang-th">ซื้อบ้านมือสองมารีโนเวท คุ้มไหม? สรุปข้อดีข้อเสียจากนักลงทุน</h3>
+                    <h3 class="article-title lang-en">Is Buying a Second-Hand Home for Renovation Worth It?</h3>
+                    <p class="article-excerpt lang-th">คำถามยอดฮิตของคนอยากมีบ้าน บทความนี้จะพาไปดูข้อดีข้อเสีย และงบประมาณคร่าวๆ เพื่อให้คุณตัดสินใจได้ง่ายขึ้น...</p>
+                    <p class="article-excerpt lang-en">A popular question for homebuyers. This article covers the pros, cons, and estimated budgets to help you decide...</p>
+                    
+                    <div class="article-footer">
+                        <a href="#" class="read-more">
+                            <span class="lang-th">อ่านต่อ →</span><span class="lang-en">Read more →</span>
+                        </a>
+                        <span class="article-date">25 Jun 2026</span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- 📌 Coming Soon Message -->
+        <div class="coming-soon-box">
+            <p>
+                <span class="lang-th">🚧 ยังไม่มีบทความใหม่ในระบบ ทีมงานบ้านไออุ่นกำลังเตรียมคอนเทนต์ดีๆ ติดตามได้เร็วๆ นี้ค่ะ</span>
+                <span class="lang-en">🚧 No new articles at the moment. Our team is preparing great content. Stay tuned!</span>
+            </p>
+        </div>
+
+    </main>
+
+    <!-- 📌 Footer (Match with Pages 1, 2, and 3) -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 class="lang-th">Baan Ai Oun Property</h4><h4 class="lang-en">Baan Ai Oun Property</h4>
+                <p class="lang-th">บ้านไออุ่น: มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ</p>
+                <p class="lang-en">More than just a house, it's the energy to keep you moving forward.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">เมนูลัด</h4><h4 class="lang-en">Quick Links</h4>
+                <a href="#" class="lang-th">- ฝากขาย/ปล่อยเช่า</a><a href="#" class="lang-en">- List Your Property</a>
+                <a href="#" class="lang-th">- ค้นหาทรัพย์</a><a href="#" class="lang-en">- Find Properties</a>
+                <a href="#" class="lang-th">- ร่วมเป็น Co-Agent</a><a href="#" class="lang-en">- Co-Agent Program</a>
+                <a href="#" class="lang-th">- คอร์สนายหน้าอสังหาฯ</a><a href="#" class="lang-en">- Real Estate Course</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">ติดต่อเรา</h4><h4 class="lang-en">Contact Us</h4>
+                <p>📞 โทร (Tel): 086-4149960</p>
+                <p>🟢 LINE: @baan-ai-oun</p>
+                <p>✉️ Email: supansa.m@baanaioun.com</p>
+                <p style="margin-top: 15px;">
+                    <span class="lang-th">📍 ที่ตั้งสำนักงาน: 107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540</span>
+                    <span class="lang-en">📍 Office: 107/57 The Colors Leisure, Soi Mahachai, Moo 13, Bang Phli Yai, Bang Phli, Samut Prakan 10540</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="lang-th">&copy; 2026 บ้านไออุ่น พร็อพเพอร์ตี้ สงวนลิขสิทธิ์ทุกประการ | นโยบายความเป็นส่วนตัว</p>
+            <p class="lang-en">&copy; 2026 Baan Ai Oun Property. All rights reserved. | Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        let isEnglish = false;
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            document.querySelectorAll('.lang-th').forEach(el => el.style.display = isEnglish ? 'none' : 'block');
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = isEnglish ? 'block' : 'none');
+            document.getElementById('current-lang-text').innerText = isEnglish ? '🌐 TH' : '🌐 EN';
+        }
+    </script>
+</body>
+</html>
