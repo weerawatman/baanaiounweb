@@ -97,7 +97,7 @@ python testsprite_tests/TC024_TestSprite_about_course_phase6.py
 
 ## Services Page Mockup — ✅ 2026-07-07
 
-**อ้างอิง:** `example_page/บริการของเรา.html`
+**Commit:** `58ea3db` | **Pushed:** `master` → Vercel deploy
 
 ### โครงสร้างใหม่ `/services`
 1. Hero เขียว + stats 4 ตัวในบล็อกเดียว (พื้นหลัง `hero_image_url`)
