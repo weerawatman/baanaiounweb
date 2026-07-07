@@ -16,9 +16,40 @@ export const SERVICES_HUB_CONTENT = {
       en: "Baan Ai Oun Property",
     },
     sub: {
-      th: "ศูนย์รวมทางลัดความสำเร็จในโลกอสังหาฯ ที่เข้าใจทั้งเจ้าของทรัพย์ ผู้ซื้อ และคนอยากสร้างรายได้ด้วยใจ",
-      en: "Your shortcut to real estate success—empowering property owners, buyers, and aspiring agents with expertise and heart.",
+      th: "ศูนย์รวมทางลัดความสำเร็จในโลกอสังหาฯ ที่เข้าใจทั้งเจ้าของทรัพย์ ผู้ซื้อ และคนอยากสร้างรายได้ด้วยใจทั้งคนไทยและต่างชาติ",
+      en: "The ultimate shortcut to real estate success—empowering property owners, buyers, and aspiring agents with genuine care for both local and international clients.",
     },
+  },
+  whyChoose: {
+    title: "ทำไมต้องเลือกบ้านไออุ่น? | Why Choose Baan Ai Oun?",
+    subtitle:
+      "ศูนย์รวมอสังหาและเครือข่ายนายหน้า บริการซื้อ-ขาย-เช่า ครบจบในที่เดียว | All-in-one real estate center and agent network for buying, selling, and renting.",
+    items: [
+      {
+        icon: "Heart",
+        title: { th: "เข้าใจทุกความต้องการ", en: "Understand Your Needs" },
+        description: {
+          th: "บริการ 2 ภาษา ค้นหาและจับคู่ทรัพย์ในกรุงเทพฯ, สมุทรปราการ, EEC, ชลบุรี และพื้นที่นิคมอุตสาหกรรม",
+          en: "Bilingual experts matching you with properties across Bangkok, Samut Prakan, EEC, and Chonburi.",
+        },
+      },
+      {
+        icon: "Shield",
+        title: { th: "บริการครบวงจรที่เดียว", en: "All-In-One Seamless Services" },
+        description: {
+          th: "ดูแลตั้งแต่หาทรัพย์ สินเชื่อ สัญญา จนถึงวันโอนกรรมสิทธิ์",
+          en: "End-to-end support from search and loans to secure ownership transfer.",
+        },
+      },
+      {
+        icon: "Star",
+        title: { th: "เครือข่ายทีมงานคุณภาพ", en: "Quality Network & Screened Properties" },
+        description: {
+          th: "คัดกรองทรัพย์ทุกหลังด้วยสายตานักลงทุน",
+          en: "Properties curated by investor-minded experts for true value.",
+        },
+      },
+    ],
   },
   stats: [
     { value: "200+", th: "เคสสำเร็จปีนี้", en: "Deals Closed" },

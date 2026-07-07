@@ -1,7 +1,5 @@
 import type { Metadata } from "next"
 import { getProfile } from "@/lib/queries/profile"
-import { getPublishedSuccessStories } from "@/lib/queries/success-stories"
-import { mapSuccessStory } from "@/lib/mappers"
 import ServicesHubPage from "./ServicesHubPage"
 
 export const revalidate = 3600
@@ -18,8 +16,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ServicesRoute() {
-  const [profile, storyRows] = await Promise.all([getProfile(), getPublishedSuccessStories()])
-  const successStories = storyRows.map(mapSuccessStory)
+  const profile = await getProfile()
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
@@ -46,7 +43,11 @@ export default async function ServicesRoute() {
       <ServicesHubPage
         heroImageUrl={profile.heroImageUrl}
         lineUrl={profile.lineUrl}
-        successStories={successStories}
+        trustImages={{
+          renovation: profile.trustRenovationImage,
+          network: profile.trustNetworkImage,
+          shopper: profile.trustShopperImage,
+        }}
       />
     </>
   )

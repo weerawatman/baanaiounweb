@@ -59,7 +59,7 @@ interface TrustPillarsProps {
 
 /**
  * "ความไว้วางใจจากลูกค้า" — 3 pillar cards ตาม mockup หน้าแรก
- * รูปแต่ละใบจัดการผ่าน Admin > โปรไฟล์ > รูปภาพหน้าแรก
+ * รูปแต่ละใบจัดการผ่าน Admin > โปรไฟล์ > รูปภาพประกอบหน้า Website
  * ยังไม่อัปโหลด = แสดงกล่องสีพื้น + ไอคอนแทน (ไม่ใช้รูปตัวอย่างปลอม)
  */
 export default function TrustPillars({ images }: TrustPillarsProps) {

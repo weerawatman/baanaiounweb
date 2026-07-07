@@ -10,6 +10,9 @@ interface LineClosingCtaProps {
   titleTh?: string
   titleEn?: string
   subtitleTh?: string
+  subtitleEn?: string
+  locationTh?: string
+  locationEn?: string
   lineTestId?: string
   secondaryLinks?: { href: string; label: string }[]
 }
@@ -21,6 +24,9 @@ export default function LineClosingCta({
   titleTh = "ปรึกษาเรื่องอสังหาฯ ฟรีกับพิม",
   titleEn = "Free real estate consultation with Pim",
   subtitleTh = "คุยง่าย ตรงไปตรงมา ไม่มีค่าใช้จ่ายในการปรึกษา",
+  subtitleEn,
+  locationTh,
+  locationEn,
   lineTestId,
   secondaryLinks,
 }: LineClosingCtaProps) {
@@ -28,7 +34,17 @@ export default function LineClosingCta({
 
   return (
     <PageSection variant={variant}>
-      <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 text-center">
+      <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+        {(locationTh || locationEn) && (
+          <div className="w-full border-y border-border py-8">
+            {locationTh && (
+              <p className="text-base leading-relaxed text-foreground/90">{locationTh}</p>
+            )}
+            {locationEn && (
+              <p className="mt-2 text-sm text-muted-foreground">{locationEn}</p>
+            )}
+          </div>
+        )}
         <h2
           className={cn(
             "text-2xl font-bold sm:text-3xl",
@@ -52,6 +68,9 @@ export default function LineClosingCta({
           )}
         >
           {subtitleTh}
+          {subtitleEn && (
+            <span className="mt-1 block text-sm">{subtitleEn}</span>
+          )}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <a

@@ -91,7 +91,31 @@ python testsprite_tests/TC024_TestSprite_about_course_phase6.py
 ทำต่อ — อ่าน docs/web-feedback-06072026-progress.md
 ```
 
-> **แผน 6 เฟสเสร็จครบแล้ว** — Homepage Cohesion (A) ✅ | Site Cohesion (B) ✅ | Slider Fix (A) ✅
+> **แผน 6 เฟสเสร็จครบแล้ว** — Homepage mockup ✅ | Services mockup ✅ | Slider Fix ✅
+
+---
+
+## Services Page Mockup — ✅ 2026-07-07
+
+**อ้างอิง:** `example_page/บริการของเรา.html`
+
+### โครงสร้างใหม่ `/services`
+1. Hero เขียว + stats 4 ตัวในบล็อกเดียว (พื้นหลัง `hero_image_url`)
+2. Choose Your Path — 4 `AudienceCard`
+3. Why Choose Baan Ai Oun — `ServicesWhyChoose` (3 การ์ด)
+4. Trusted by Clients — `TrustPillars` รูปจาก Admin (`trust_*_image` เดียวกับหน้าแรก)
+5. ทำเลเชี่ยวชาญ + CTA LINE/โทร — `LineClosingCta` รวม `localAuthority`
+
+### Admin
+- Section **รูปภาพประกอบหน้า Website** (ชื่อเดิมอัปเดตแล้ว)
+- รูป 3 pillar ใช้ร่วมหน้าแรก + หน้าบริการ
+
+### ถอดออก
+- `SocialProofSection` / success-stories slider บน `/services`
+
+### Verify
+- `npm run typecheck` + `lint` PASS
+- TC022: รันบน Vercel หลัง push (`services-stats-bar`, `services-four-column-grid`, `services-line-cta`)
 
 ---
 
