@@ -34,7 +34,10 @@ src/lib/queries/*       Supabase read queries (blog, properties, leads, ...)
 src/lib/supabase/*      client.ts / server.ts / public-client.ts / proxy.ts
 src/lib/validations/*   Zod schemas for admin forms
 supabase/migrations/*   SQL migrations (applied via Supabase MCP, no local Docker)
-testsprite_tests/*      TestSprite E2E test scripts + reports (no unit tests exist)
+testsprite_tests/*      Curated E2E scripts + production_audit.py (no unit tests exist)
+docs/mockups/*          HTML reference mockups per public page (design source of truth)
+docs/archive/*          Completed plans/reports — history only, may be stale
+.cursor/skills/*        Project agent skills (see Skills section below)
 ```
 
 ## Commands
@@ -89,10 +92,12 @@ Panel → System → Advanced → Performance → Virtual Memory) and reboot.
   the bilingual nav, all key public pages return 200, and the legacy
   `/buy /owners` etc. redirects still resolve correctly.
 - No Jest/Vitest unit/component test suite exists.
-- QA also runs through TestSprite (MCP-driven, browser-based E2E against
-  the dev server) — see `testsprite_tests/testsprite-mcp-test-report.md`
-  for the latest results and `testsprite_tests/improvement-plan.md` for
-  open follow-ups.
+- **Production audit:** `python testsprite_tests/production_audit.py` runs
+  ~37 checks (status codes, redirects, SEO basics, forms, API probes, load
+  timings) against the live site (`TESTSPRITE_BASE_URL` env var, defaults
+  to the Vercel URL). The 5 `TC02x_*_phaseN.py` scripts are curated
+  TestSprite regression tests for the same URL. Historical TestSprite
+  reports live in `docs/archive/`.
 
 ## Error monitoring (Sentry)
 
@@ -104,6 +109,30 @@ Panel → System → Advanced → Performance → Virtual Memory) and reboot.
 `.env.example`), and the SDK no-ops safely with no DSN. To activate: create
 a Sentry project, set those 4 env vars (DSN in Vercel + `.env.local`; org/
 project/authToken at minimum in CI for source-map upload), redeploy.
+
+## Project skills (.cursor/skills/)
+
+Discipline methodologies shared with any agent working in this repo. Load
+the relevant one before starting work of that kind; `polymath-thinking` is
+the index for choosing a lens when a problem spans domains:
+
+- `fullstack-engineering`, `frontend-craft`, `backend-architecture` — build
+  methodology (vertical slices, UI states, security boundaries) including
+  this repo's specific conventions
+- `data-science`, `data-engineering`, `data-analysis` — evidence, pipelines,
+  metrics/funnels
+- `business-analysis`, `strategy-consulting`, `sales-persuasion` — specs,
+  prioritization, conversion copy
+- `scientific-thinking` — hypothesis-driven debugging and experiment design
+- `creative-direction` — taste, composition, storytelling, brand voice
+- `polymath-thinking` — cross-discipline lens switching + shared mental models
+- `grilling` — stress-test a plan/idea before building: one question at a
+  time with a recommended answer, decisions stay with the user; includes a
+  brainstorm mode. Use before starting any vaguely-specified feature
+- `fable5-core-method` — domain-agnostic working discipline for any
+  substantive task: Understand → Shape → Build → Verify → Deliver, plus
+  error recovery and communication habits. Load before multi-step work
+  (references include per-artifact verification checklists)
 
 ## Installed Claude Code plugins (project scope)
 
