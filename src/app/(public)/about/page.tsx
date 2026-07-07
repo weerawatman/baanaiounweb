@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { getProfile } from "@/lib/queries/profile"
 import { SITE_CONFIG } from "@/config/site"
 import AboutPage from "./AboutPage"
 
@@ -65,14 +66,16 @@ const localBusinessJsonLd = {
   ],
 }
 
-export default function Page() {
+export default async function Page() {
+  const profile = await getProfile()
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
       />
-      <AboutPage />
+      <AboutPage profile={profile} />
     </>
   )
 }

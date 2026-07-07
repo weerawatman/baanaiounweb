@@ -128,6 +128,10 @@ export interface AgentProfile {
   trust_network_image: string
   trust_shopper_image: string
   match_team_image: string
+  about_timeline_2002_image: string
+  about_timeline_2016_image: string
+  about_timeline_2020_image: string
+  about_timeline_2026_image: string
   phone: string
   line_id: string
   line_url: string

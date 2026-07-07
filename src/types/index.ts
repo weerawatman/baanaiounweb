@@ -104,6 +104,10 @@ export interface Profile {
   trustNetworkImage: string
   trustShopperImage: string
   matchTeamImage: string
+  aboutTimeline2002Image: string
+  aboutTimeline2016Image: string
+  aboutTimeline2020Image: string
+  aboutTimeline2026Image: string
   phone: string
   lineId: string
   lineUrl: string

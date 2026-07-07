@@ -42,6 +42,10 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       trust_network_image: defaultValues.trustNetworkImage,
       trust_shopper_image: defaultValues.trustShopperImage,
       match_team_image: defaultValues.matchTeamImage,
+      about_timeline_2002_image: defaultValues.aboutTimeline2002Image,
+      about_timeline_2016_image: defaultValues.aboutTimeline2016Image,
+      about_timeline_2020_image: defaultValues.aboutTimeline2020Image,
+      about_timeline_2026_image: defaultValues.aboutTimeline2026Image,
       phone: defaultValues.phone,
       line_id: defaultValues.lineId,
       line_url: defaultValues.lineUrl,
@@ -227,6 +231,73 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
             )}
           />
         </FormField>
+      </section>
+
+      {/* ─── รูปภาพหน้าเกี่ยวกับเรา (Timeline) ─────── */}
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">รูปภาพหน้าเกี่ยวกับเรา (About Us)</h2>
+        <p className="text-muted-foreground text-sm">
+          รูปประกอบไทม์ไลน์ &ldquo;จุดเริ่มต้นของเรา&rdquo; — ยังไม่อัปโหลดจะแสดงกล่องสำรองบนหน้าเว็บ
+        </p>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <FormField label="2002 — หอพักหรือกุญแจบ้าน">
+            <Controller
+              control={control}
+              name="about_timeline_2002_image"
+              render={({ field }) => (
+                <SingleImageField
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="อัปโหลดรูป"
+                  aspect="wide"
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="2016 — รีโนเวทบ้าน หรือศึกษาดูงาน">
+            <Controller
+              control={control}
+              name="about_timeline_2016_image"
+              render={({ field }) => (
+                <SingleImageField
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="อัปโหลดรูป"
+                  aspect="wide"
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="2020 — ทีมงานพูดคุยกับลูกค้า">
+            <Controller
+              control={control}
+              name="about_timeline_2020_image"
+              render={({ field }) => (
+                <SingleImageField
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="อัปโหลดรูป"
+                  aspect="wide"
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="2026 — หน้าจอเว็บไซต์ หรือการจับมือปิดดีล">
+            <Controller
+              control={control}
+              name="about_timeline_2026_image"
+              render={({ field }) => (
+                <SingleImageField
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="อัปโหลดรูป"
+                  aspect="wide"
+                />
+              )}
+            />
+          </FormField>
+        </div>
       </section>
 
       {/* ─── ช่องทางติดต่อ ───────────────────────── */}
