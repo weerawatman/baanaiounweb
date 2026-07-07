@@ -119,6 +119,23 @@ python testsprite_tests/TC024_TestSprite_about_course_phase6.py
 
 ---
 
+## Blog Page Mockup — ✅ 2026-07-07
+
+**อ้างอิง:** `example_page/บทความ.html`
+
+### หน้าเว็บ `/blog`
+- Header bilingual + underline decoration
+- Filter pills + search (layout ตาม mockup)
+- Article grid cards (รูปปก, tag, excerpt, อ่านต่อ + วันที่)
+- Coming-soon box เมื่อยังไม่มีบทความ
+
+### Admin `/admin/blog`
+- คอลัมน์ **รูปปก** thumbnail ในรายการ
+- สถานะ **ใช้งาน** / **ยกเลิก** (`published` true/false — ยกเลิกไม่แสดงบนเว็บ)
+- ฟอร์มแก้ไข: dropdown สถานะแทน checkbox
+
+---
+
 ## Before/After Slider Fix (Option A) — ✅ 2026-07-06
 
 **Commit:** `44259e9` | **TestSprite (local):** TC021 PASS

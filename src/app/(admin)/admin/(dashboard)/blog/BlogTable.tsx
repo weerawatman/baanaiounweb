@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { buttonVariants } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DataTable, type Column } from "@/components/admin/DataTable"
@@ -8,8 +9,31 @@ import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
 import { deleteBlogPost } from "@/actions/blog"
 import type { BlogPost } from "@/lib/types/property"
 import { cn } from "@/lib/utils"
+import { FileImage } from "lucide-react"
 
 const columns: Column<BlogPost>[] = [
+  {
+    key: "featured_image",
+    label: "รูปปก",
+    searchable: false,
+    render: (row) => (
+      <div className="relative size-14 shrink-0 overflow-hidden rounded-lg border border-border bg-muted">
+        {row.featured_image ? (
+          <Image
+            src={row.featured_image}
+            alt=""
+            fill
+            sizes="56px"
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex size-full items-center justify-center text-muted-foreground">
+            <FileImage className="size-5" />
+          </div>
+        )}
+      </div>
+    ),
+  },
   {
     key: "title",
     label: "ชื่อบทความ",
@@ -32,11 +56,11 @@ const columns: Column<BlogPost>[] = [
     render: (row) =>
       row.published ? (
         <Badge className="border-green-200 bg-green-100 text-green-700" variant="outline">
-          เผยแพร่
+          ใช้งาน
         </Badge>
       ) : (
-        <Badge variant="outline" className="text-muted-foreground">
-          ฉบับร่าง
+        <Badge variant="outline" className="border-amber-200 bg-amber-50 text-amber-800">
+          ยกเลิก
         </Badge>
       ),
   },
@@ -45,7 +69,7 @@ const columns: Column<BlogPost>[] = [
     label: "วันที่",
     searchable: false,
     render: (row) =>
-      new Date(row.created_at).toLocaleDateString("th-TH", {
+      new Date(row.published_at ?? row.created_at).toLocaleDateString("th-TH", {
         day: "numeric",
         month: "short",
         year: "2-digit",

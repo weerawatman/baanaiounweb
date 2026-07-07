@@ -89,24 +89,22 @@ export function BlogPostForm({ defaultValues, action, submitLabel = "บัน�
           <FormField label="เวลาอ่าน" error={errors.reading_time?.message}>
             <Input {...register("reading_time")} placeholder="5 นาที" />
           </FormField>
-          <div className="flex items-end gap-3 pb-1">
+          <FormField label="สถานะ" error={errors.published?.message}>
             <Controller
               control={control}
               name="published"
               render={({ field }) => (
-                <input
-                  type="checkbox"
-                  id="published"
-                  checked={field.value}
-                  onChange={(e) => field.onChange(e.target.checked)}
-                  className="border-border accent-primary size-4 rounded"
-                />
+                <select
+                  value={field.value ? "active" : "cancelled"}
+                  onChange={(e) => field.onChange(e.target.value === "active")}
+                  className={selectCls}
+                >
+                  <option value="active">ใช้งาน — แสดงบนหน้าเว็บ</option>
+                  <option value="cancelled">ยกเลิก — ไม่แสดงบนหน้าเว็บ</option>
+                </select>
               )}
             />
-            <label htmlFor="published" className="cursor-pointer text-sm font-medium">
-              เผยแพร่ทันที
-            </label>
-          </div>
+          </FormField>
         </div>
       </section>
 
@@ -175,4 +173,9 @@ function FormField({
 const textareaCls = cn(
   "w-full rounded-md border border-input bg-background px-3 py-2",
   "text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-y",
+)
+
+const selectCls = cn(
+  "h-9 w-full rounded-md border border-input bg-background px-3 py-1",
+  "text-sm focus:outline-none focus:ring-2 focus:ring-ring",
 )

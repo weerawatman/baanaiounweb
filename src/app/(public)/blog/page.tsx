@@ -6,11 +6,11 @@ import BlogPage from "./BlogPage"
 export const revalidate = 1800
 
 export const metadata: Metadata = {
-  title: "บทความอสังหาฯ | Baan Ai Oun Property Blog",
+  title: "บทความน่าอ่าน จากบ้านไออุ่น | Baan Ai Oun Blog",
   description:
     "ความรู้ด้านอสังหาริมทรัพย์ บ้านบึง ชลบุรี EEC จากทีมบ้านไออุ่น — เรื่องกู้บ้าน วางแผนการเงิน เจาะลึกทำเล",
   openGraph: {
-    title: "บทความอสังหาฯ | Baan Ai Oun Property Blog",
+    title: "บทความน่าอ่าน จากบ้านไออุ่น | Baan Ai Oun Blog",
     description:
       "Real estate knowledge from Baan Ai Oun — home loans, financial planning, location insights for Ban Bueng, Chonburi, EEC.",
   },
