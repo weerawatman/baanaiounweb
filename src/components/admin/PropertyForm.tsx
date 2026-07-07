@@ -203,7 +203,7 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
             )}
           />
           <label htmlFor="featured" className="cursor-pointer text-sm font-medium">
-            ทรัพย์แนะนำ (แสดงในหน้าแรก)
+            ทรัพย์แนะนำคัดพิเศษ (แสดงในหน้าแรก สูงสุด 9 รายการ)
           </label>
         </div>
       </section>

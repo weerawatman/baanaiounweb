@@ -1,12 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { ArchiveRestore } from "lucide-react"
+import { ArchiveRestore, Star } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
 import { DataTable, type Column } from "@/components/admin/DataTable"
 import { StatusBadge } from "@/components/admin/StatusBadge"
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
-import { archiveProperty, restoreProperty } from "@/actions/properties"
+import { archiveProperty, restoreProperty, toggleFeaturedProperty } from "@/actions/properties"
 import type { Property } from "@/lib/types/property"
 import { cn } from "@/lib/utils"
 
@@ -38,6 +38,32 @@ const columns: Column<Property>[] = [
     label: "สถานะ",
     searchable: false,
     render: (row) => <StatusBadge status={row.status} variant="property" />,
+  },
+  {
+    key: "featured",
+    label: "คัดพิเศษ",
+    searchable: false,
+    render: (row) =>
+      row.deleted_at ? null : (
+        <button
+          type="button"
+          onClick={() => toggleFeaturedProperty(row.id, !row.featured)}
+          title={
+            row.featured
+              ? "เอาออกจากทรัพย์แนะนำคัดพิเศษ (หน้าแรก)"
+              : "ตั้งเป็นทรัพย์แนะนำคัดพิเศษ (แสดงหน้าแรก สูงสุด 9 รายการ)"
+          }
+          aria-label="สลับทรัพย์แนะนำคัดพิเศษ"
+          className="rounded-md p-1.5 transition-colors hover:bg-gray-100"
+        >
+          <Star
+            className={cn(
+              "size-5 transition-colors",
+              row.featured ? "fill-[#D4A843] text-[#D4A843]" : "text-gray-300 hover:text-gray-400",
+            )}
+          />
+        </button>
+      ),
   },
   {
     key: "actions",

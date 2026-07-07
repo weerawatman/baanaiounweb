@@ -123,6 +123,10 @@ export interface AgentProfile {
   vision: string
   avatar_url: string
   hero_image_url: string
+  home_hero_image: string
+  trust_renovation_image: string
+  trust_network_image: string
+  trust_shopper_image: string
   phone: string
   line_id: string
   line_url: string

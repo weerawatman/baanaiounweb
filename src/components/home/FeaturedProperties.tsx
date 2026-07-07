@@ -11,15 +11,15 @@ interface FeaturedPropertiesProps {
 }
 
 export default function FeaturedProperties({ properties }: FeaturedPropertiesProps) {
-  const featured = properties.filter((p) => p.featured)
-  const display = featured.length > 0 ? featured.slice(0, 6) : properties.slice(0, 6)
+  // แสดงเฉพาะทรัพย์ที่ Admin ติ๊ก "ทรัพย์แนะนำคัดพิเศษ" สูงสุด 9 รายการ (3 แถว)
+  const display = properties.filter((p) => p.featured).slice(0, 9)
 
   if (display.length === 0) return null
 
   return (
     <PageSection variant="warm">
       <SectionTitle
-        title="ทรัพย์แนะนำ | Featured Properties"
+        title="ทรัพย์แนะนำคัดพิเศษ | Featured Properties"
         subtitle="คัดสรรโดยทีมนักลงทุน — ใช้แถบค้นหาด้านบนเพื่อกรองทรัพย์ทั้งหมด"
       />
 

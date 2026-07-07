@@ -99,6 +99,10 @@ export interface Profile {
   vision: string
   avatarUrl: string
   heroImageUrl: string
+  homeHeroImage: string
+  trustRenovationImage: string
+  trustNetworkImage: string
+  trustShopperImage: string
   phone: string
   lineId: string
   lineUrl: string

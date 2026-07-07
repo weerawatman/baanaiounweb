@@ -35,6 +35,10 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       vision: defaultValues.vision,
       avatar_url: defaultValues.avatarUrl,
       hero_image_url: defaultValues.heroImageUrl,
+      home_hero_image: defaultValues.homeHeroImage,
+      trust_renovation_image: defaultValues.trustRenovationImage,
+      trust_network_image: defaultValues.trustNetworkImage,
+      trust_shopper_image: defaultValues.trustShopperImage,
       phone: defaultValues.phone,
       line_id: defaultValues.lineId,
       line_url: defaultValues.lineUrl,
@@ -114,7 +118,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
           />
         </FormField>
 
-        <FormField label="รูป Hero (รูปใหญ่ หน้าแรก/เกี่ยวกับ)">
+        <FormField label="รูป Hero (รูปใหญ่ หน้าเกี่ยวกับ/บริการ)">
           <Controller
             control={control}
             name="hero_image_url"
@@ -128,6 +132,75 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
             )}
           />
         </FormField>
+      </section>
+
+      {/* ─── รูปภาพหน้าแรก ───────────────────────── */}
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">รูปภาพหน้าแรก</h2>
+        <p className="text-muted-foreground -mt-2 text-sm">
+          รูป 4 รูปที่ใช้เฉพาะหน้าแรก — พื้นหลัง Hero ด้านบน และรูปประกอบ 3 การ์ด
+          &quot;ความไว้วางใจจากลูกค้า&quot; (ยังไม่อัปโหลด = หน้าเว็บแสดงภาพสำรอง/ไอคอนแทน)
+        </p>
+
+        <FormField label="รูปพื้นหลัง Hero หน้าแรก" hint="ถ้าไม่ใส่ จะใช้รูป Hero ด้านบนแทน">
+          <Controller
+            control={control}
+            name="home_hero_image"
+            render={({ field }) => (
+              <SingleImageField
+                value={field.value}
+                onChange={field.onChange}
+                label="อัปโหลดรูปพื้นหลังหน้าแรก"
+                aspect="wide"
+              />
+            )}
+          />
+        </FormField>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <FormField label="รูปผลงานรีโนเวท" hint="แนะนำภาพเปรียบเทียบ Before & After">
+            <Controller
+              control={control}
+              name="trust_renovation_image"
+              render={({ field }) => (
+                <SingleImageField
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="อัปโหลดรูป"
+                  aspect="wide"
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="รูปนายหน้ามืออาชีพ" hint="ภาพบรรยากาศทีมงาน">
+            <Controller
+              control={control}
+              name="trust_network_image"
+              render={({ field }) => (
+                <SingleImageField
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="อัปโหลดรูป"
+                  aspect="wide"
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="รูปบริการจัดหาบ้านฟรี" hint="ภาพลูกค้า/การให้คำปรึกษา">
+            <Controller
+              control={control}
+              name="trust_shopper_image"
+              render={({ field }) => (
+                <SingleImageField
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="อัปโหลดรูป"
+                  aspect="wide"
+                />
+              )}
+            />
+          </FormField>
+        </div>
       </section>
 
       {/* ─── ช่องทางติดต่อ ───────────────────────── */}

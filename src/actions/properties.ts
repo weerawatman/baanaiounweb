@@ -71,6 +71,22 @@ export async function updateProperty(
   redirect("/admin/properties")
 }
 
+export async function toggleFeaturedProperty(id: string, featured: boolean): Promise<ActionState> {
+  await requireAdmin()
+
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from("properties")
+    .update({ featured, updated_at: new Date().toISOString() })
+    .eq("id", id)
+
+  if (error) return { error: error.message }
+
+  revalidatePath("/")
+  revalidatePath("/admin/properties")
+  return {}
+}
+
 export async function archiveProperty(id: string): Promise<ActionState> {
   await requireAdmin()
 

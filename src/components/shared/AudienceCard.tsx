@@ -14,6 +14,8 @@ interface AudienceCardProps {
   highlightTh?: string
   highlightEn?: string
   className?: string
+  /** "dark" = การ์ดพื้นเขียวเข้มแบบหน้าแรก (mockup), default = การ์ดขาว */
+  variant?: "light" | "dark"
 }
 
 export default function AudienceCard({
@@ -27,7 +29,33 @@ export default function AudienceCard({
   highlightTh,
   highlightEn,
   className,
+  variant = "light",
 }: AudienceCardProps) {
+  if (variant === "dark") {
+    return (
+      <Link
+        href={href}
+        className={cn(
+          "group flex h-full flex-col items-center rounded-2xl bg-primary p-6 text-center shadow-sm",
+          "transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg",
+          className,
+        )}
+      >
+        <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/20 transition-colors group-hover:bg-white/15">
+          <Icon size={30} className="text-white" />
+        </div>
+
+        <h3 className="mt-4 text-base font-bold leading-snug">
+          <span className="block text-white">{titleTh}</span>
+          <span className="block text-sm font-medium text-white/70">{titleEn}</span>
+        </h3>
+
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-white/90">{descTh}</p>
+        <p className="mt-1 text-xs leading-relaxed text-white/60">{descEn}</p>
+      </Link>
+    )
+  }
+
   return (
     <Link
       href={href}

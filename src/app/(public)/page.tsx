@@ -1,10 +1,7 @@
 import type { Metadata } from "next"
 import { getActiveProperties } from "@/lib/queries/properties"
-import { getTestimonials } from "@/lib/queries/testimonials"
-import { getPublishedSuccessStories } from "@/lib/queries/success-stories"
-import { getFaqsByPage } from "@/lib/queries/faqs"
 import { getProfile } from "@/lib/queries/profile"
-import { mapProperty, mapTestimonial, mapSuccessStory, mapFaq } from "@/lib/mappers"
+import { mapProperty } from "@/lib/mappers"
 import HomePage from "./HomePage"
 
 export const revalidate = 900
@@ -21,48 +18,19 @@ export const metadata: Metadata = {
 }
 
 export default async function HomeRoute() {
-  const [propertyRows, testimonialRows, successStoryRows, faqRows, profile] = await Promise.all([
-    getActiveProperties(),
-    getTestimonials(),
-    getPublishedSuccessStories(),
-    getFaqsByPage("home"),
-    getProfile(),
-  ])
+  const [propertyRows, profile] = await Promise.all([getActiveProperties(), getProfile()])
 
   const properties = propertyRows.map(mapProperty)
-  const testimonials = testimonialRows.map(mapTestimonial)
-  const successStories = successStoryRows.map(mapSuccessStory)
-  const faqs = faqRows.map(mapFaq)
-
-  const faqJsonLd =
-    faqs.length > 0
-      ? {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.map((faq) => ({
-            "@type": "Question",
-            name: faq.question,
-            acceptedAnswer: { "@type": "Answer", text: faq.answer },
-          })),
-        }
-      : null
 
   return (
-    <>
-      {faqJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
-      )}
-      <HomePage
-        properties={properties}
-        testimonials={testimonials}
-        successStories={successStories}
-        faqs={faqs}
-        heroImage={profile.heroImageUrl}
-        lineUrl={profile.lineUrl}
-      />
-    </>
+    <HomePage
+      properties={properties}
+      heroImage={profile.homeHeroImage || profile.heroImageUrl}
+      trustImages={{
+        renovation: profile.trustRenovationImage,
+        network: profile.trustNetworkImage,
+        shopper: profile.trustShopperImage,
+      }}
+    />
   )
 }

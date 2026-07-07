@@ -39,15 +39,18 @@ export default function HeroSection({ heroImage, districts }: HeroSectionProps) 
             <span className="block text-3xl leading-snug font-bold sm:text-4xl lg:text-5xl">
               {HERO.h1Th}
             </span>
-            <span className="mt-2 block text-lg font-medium text-white/85 sm:text-xl">
+            <span className="mt-1 block text-2xl leading-snug font-bold sm:text-3xl lg:text-4xl">
+              {HERO.h1Th2}
+            </span>
+            <span className="mt-3 block text-lg font-medium text-white/85 sm:text-xl">
               {HERO.h1En}
+            </span>
+            <span className="mt-0.5 block text-base font-medium text-white/75 sm:text-lg">
+              {HERO.h1En2}
             </span>
           </h1>
 
-          <p className="mt-4 max-w-2xl">
-            <span className="block text-base text-white/90 sm:text-lg">{HERO.subTh}</span>
-            <span className="mt-1 block text-sm text-white/75">{HERO.subEn}</span>
-          </p>
+          <HeroSearchBar districts={districts} />
 
           <div className="mt-5 flex flex-wrap gap-3">
             <Link
@@ -69,8 +72,6 @@ export default function HeroSection({ heroImage, districts }: HeroSectionProps) 
               </span>
             </Link>
           </div>
-
-          <HeroSearchBar districts={districts} />
         </motion.div>
       </div>
     </section>

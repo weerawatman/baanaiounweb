@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { Home, Search, Users, GraduationCap } from "lucide-react"
 import PageSection from "@/components/layout/PageSection"
 import SectionTitle from "@/components/layout/SectionTitle"
@@ -18,6 +17,7 @@ export default function ServiceShortcuts() {
           return (
             <AudienceCard
               key={card.href}
+              variant="dark"
               href={card.href}
               icon={Icon}
               accentColor={card.color}
@@ -29,13 +29,6 @@ export default function ServiceShortcuts() {
           )
         })}
       </div>
-
-      <p className="mt-8 text-center text-sm text-muted-foreground">
-        สนใจเครือข่าย Co-Agent หรือคอร์สนายหน้า?{" "}
-        <Link href="/about" className="font-semibold text-primary underline-offset-2 hover:underline">
-          ดูเพิ่มเติมที่เกี่ยวกับเรา | Learn more on About Us
-        </Link>
-      </p>
     </PageSection>
   )
 }
