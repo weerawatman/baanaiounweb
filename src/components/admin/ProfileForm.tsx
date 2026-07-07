@@ -135,13 +135,9 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </FormField>
       </section>
 
-      {/* ─── รูปภาพหน้าแรก ───────────────────────── */}
+      {/* ─── รูปภาพประกอบหน้า Website ────────────── */}
       <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
-        <h2 className="text-foreground font-semibold">รูปภาพหน้าแรก</h2>
-        <p className="text-muted-foreground -mt-2 text-sm">
-          รูป 4 รูปที่ใช้เฉพาะหน้าแรก — พื้นหลัง Hero ด้านบน และรูปประกอบ 3 การ์ด
-          &quot;ความไว้วางใจจากลูกค้า&quot; (ยังไม่อัปโหลด = หน้าเว็บแสดงภาพสำรอง/ไอคอนแทน)
-        </p>
+        <h2 className="text-foreground font-semibold">รูปภาพประกอบหน้า Website</h2>
 
         <FormField label="รูปพื้นหลัง Hero หน้าแรก" hint="ถ้าไม่ใส่ จะใช้รูป Hero ด้านบนแทน">
           <Controller
