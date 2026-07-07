@@ -114,4 +114,6 @@ export interface Profile {
   siteName: string
   slogan: string
   address: string
+  mapLat: number | null
+  mapLng: number | null
 }

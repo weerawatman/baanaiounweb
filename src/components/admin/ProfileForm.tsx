@@ -7,6 +7,7 @@ import { AlertTriangle, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { SingleImageField } from "@/components/admin/SingleImageField"
+import { MapCoordinateField } from "@/components/admin/MapCoordinateField"
 import { profileSchema, type ProfileFormValues } from "@/lib/validations/profile"
 import type { Profile } from "@/types"
 import type { ActionState } from "@/actions/properties"
@@ -23,6 +24,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
   const {
     register,
     control,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<ProfileFormValues>({
@@ -50,8 +52,12 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       site_name: defaultValues.siteName,
       slogan: defaultValues.slogan,
       address: defaultValues.address,
+      map_lat: defaultValues.mapLat != null ? String(defaultValues.mapLat) : "",
+      map_lng: defaultValues.mapLng != null ? String(defaultValues.mapLng) : "",
     },
   })
+
+  const addressValue = watch("address")
 
   function onSubmit(data: ProfileFormValues) {
     const formData = new FormData()
@@ -246,15 +252,40 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </div>
 
         <FormField
-          label="ที่อยู่ (สำหรับแสดง + สร้างแผนที่ Google Map หน้าติดต่อ)"
+          label="ที่อยู่ (แสดงบนหน้าเว็บ)"
           error={errors.address?.message}
-          hint="แก้ที่อยู่นี้แล้วแผนที่หน้า 'ติดต่อ' จะอัปเดตตามอัตโนมัติ"
         >
           <textarea
             {...register("address")}
             rows={2}
             placeholder="107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540"
             className={textareaCls}
+          />
+        </FormField>
+
+        <FormField
+          label="พิกัดแผนที่ Google Maps (หน้าติดต่อเรา)"
+          error={errors.map_lat?.message ?? errors.map_lng?.message}
+          hint="ใส่ lat/lng หรือเปิด Google Maps เพื่อคัดลอกพิกัด — แผนที่หน้า 'ติดต่อเรา' จะใช้ค่านี้"
+        >
+          <Controller
+            control={control}
+            name="map_lat"
+            render={({ field: latField }) => (
+              <Controller
+                control={control}
+                name="map_lng"
+                render={({ field: lngField }) => (
+                  <MapCoordinateField
+                    lat={latField.value}
+                    lng={lngField.value}
+                    address={addressValue}
+                    onLatChange={latField.onChange}
+                    onLngChange={lngField.onChange}
+                  />
+                )}
+              />
+            )}
           />
         </FormField>
       </section>

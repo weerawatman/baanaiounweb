@@ -18,8 +18,15 @@ export async function upsertProfile(_prev: ActionState, formData: FormData): Pro
 
   const supabase = await createClient()
 
-  // singleton: always row id=1
-  const { error } = await supabase.from("agent_profile").upsert({ id: 1, ...parsed.data })
+  const { map_lat, map_lng, ...rest } = parsed.data
+  const row = {
+    id: 1,
+    ...rest,
+    map_lat: map_lat.trim() ? Number(map_lat) : null,
+    map_lng: map_lng.trim() ? Number(map_lng) : null,
+  }
+
+  const { error } = await supabase.from("agent_profile").upsert(row)
 
   if (error) return { error: error.message }
 

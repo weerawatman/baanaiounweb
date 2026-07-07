@@ -29,6 +29,8 @@ function defaultProfile(): Profile {
     siteName: SITE_CONFIG.name,
     slogan: SITE_CONFIG.slogan,
     address: SITE_CONFIG.address,
+    mapLat: null,
+    mapLng: null,
   }
 }
 
@@ -74,6 +76,8 @@ export const getProfile = unstable_cache(
       siteName: pick(row.siteName, fallback.siteName),
       slogan: pick(row.slogan, fallback.slogan),
       address: pick(row.address, fallback.address),
+      mapLat: row.mapLat ?? fallback.mapLat,
+      mapLng: row.mapLng ?? fallback.mapLng,
     }
   },
   ["profile-v1"],

@@ -138,5 +138,7 @@ export interface AgentProfile {
   site_name: string
   slogan: string
   address: string
+  map_lat: number | null
+  map_lng: number | null
   updated_at: string
 }

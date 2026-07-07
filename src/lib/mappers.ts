@@ -124,5 +124,7 @@ export function mapProfile(row: AgentProfileRow): Profile {
     siteName: row.site_name ?? "",
     slogan: row.slogan ?? "",
     address: row.address ?? "",
+    mapLat: row.map_lat ?? null,
+    mapLng: row.map_lng ?? null,
   }
 }

@@ -1,12 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
+import Image from "next/image"
 import {
-  Phone,
-  MessageCircle,
-  Mail,
-  MapPin,
   Loader2,
   CheckCircle,
   AlertTriangle,
@@ -16,16 +12,8 @@ import { Input } from "@/components/ui/input"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import WhatsAppIcon from "@/components/shared/WhatsAppIcon"
 import { SITE_CONFIG } from "@/config/site"
+import { buildGoogleMapsEmbedUrl } from "@/lib/google-maps"
 import type { Profile } from "@/types"
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.1 },
-  }),
-}
 
 interface FormState {
   name: string
@@ -35,6 +23,9 @@ interface FormState {
   message: string
 }
 
+const inputCls =
+  "w-full rounded-lg border border-input bg-[#fafafa] px-4 py-3 text-[15px] transition-colors focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
+
 export default function ContactPage({ profile }: { profile: Profile }) {
   const phone = profile.phone || SITE_CONFIG.phone
   const lineId = profile.lineId || SITE_CONFIG.lineId
@@ -42,9 +33,12 @@ export default function ContactPage({ profile }: { profile: Profile }) {
   const email = profile.email || SITE_CONFIG.email
   const address = profile.address || SITE_CONFIG.address
   const whatsappUrl = SITE_CONFIG.whatsappUrl
-  const mapEmbed = address
-    ? `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed&hl=th`
-    : SITE_CONFIG.googleMapsEmbed
+  const mapEmbed =
+    buildGoogleMapsEmbedUrl({
+      lat: profile.mapLat,
+      lng: profile.mapLng,
+      address,
+    }) ?? SITE_CONFIG.googleMapsEmbed
 
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -99,326 +93,272 @@ export default function ContactPage({ profile }: { profile: Profile }) {
 
   return (
     <>
-      {/* Breadcrumb */}
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "ติดต่อเรา" }]} />
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "ติดต่อเรา | Contact Us" }]} />
       </div>
 
-      {/* Page Header */}
-      <section className="bg-primary/5 py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div className="text-center" initial="hidden" animate="visible" variants={fadeUp}>
-            <h1 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
-              ติดต่อเรา <span className="text-muted-foreground font-medium">/ Contact Us</span>
-            </h1>
-            <p className="text-muted-foreground mt-4 text-base">
-              ส่งข้อความหาพิม หรือแอดไลน์มาได้เลยค่ะ พิมตอบทุกข้อความ
-              <br />
-              Send us a message or add us on LINE — we reply to every message.
-            </p>
-          </motion.div>
+      {/* Hero — mockup: green banner + optional background image */}
+      <header className="relative mb-12 overflow-hidden border-b-4 border-[#eab308] bg-primary py-16 text-center text-white sm:py-20">
+        {profile.heroImageUrl && (
+          <Image
+            src={profile.heroImageUrl}
+            alt=""
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+        )}
+        <div className="absolute inset-0 bg-primary/85" aria-hidden />
+        <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6">
+          <h1 className="text-3xl font-bold sm:text-4xl">ติดต่อเรา | Contact Us</h1>
+          <p className="mt-4 text-base leading-relaxed text-[#e5e7eb] sm:text-lg">
+            ส่งข้อความหาพิม หรือแอดไลน์มาได้เลยค่ะ เราตอบทุกข้อความ
+            <br />
+            Send us a message or add us on LINE — we reply to every message.
+          </p>
         </div>
-      </section>
+      </header>
 
-      {/* Main Content */}
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            {/* Left: Contact Form */}
-            <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-              <h2 className="text-foreground mb-6 text-xl font-semibold">
-                ส่งข้อความหาพิม / Send Us a Message
-              </h2>
+      <main className="mx-auto max-w-7xl px-4 pb-16 sm:px-6">
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-10">
+          {/* Left: Form */}
+          <div className="rounded-2xl border border-border bg-card p-8 shadow-[0_10px_30px_rgba(0,0,0,0.03)] sm:p-10">
+            <h2 className="mb-6 border-b-2 border-border pb-4 text-xl font-semibold text-primary">
+              ✉️ ส่งข้อความหาเรา | Send Us a Message
+            </h2>
 
-              {submitted ? (
-                <motion.div
-                  className="ring-foreground/5 rounded-2xl bg-white p-8 text-center shadow-lg ring-1"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                >
-                  <CheckCircle className="mx-auto size-12 text-green-500" />
-                  <h3 className="mt-4 text-xl font-bold text-[#1B4D3E]">
-                    ส่งข้อความเรียบร้อยแล้ว! / Message sent!
-                  </h3>
-                  <p className="mt-2 text-gray-600">
-                    พิมจะติดต่อกลับโดยเร็วที่สุดค่ะ / We&apos;ll get back to you shortly.
-                  </p>
-                  <Button
-                    className="mt-6"
-                    variant="outline"
-                    onClick={() => {
-                      setSubmitted(false)
-                      setForm({ name: "", phone: "", email: "", subject: "", message: "" })
-                    }}
-                  >
-                    ส่งข้อความอีกครั้ง / Send another
-                  </Button>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="name" className="text-foreground text-sm font-medium">
-                      ชื่อ-นามสกุล / Full Name <span className="text-destructive">*</span>
-                    </label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      placeholder="คุณชื่ออะไรคะ?"
-                      required
-                      value={form.name}
-                      onChange={handleChange}
-                      disabled={submitting}
-                      className="h-10"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="phone" className="text-foreground text-sm font-medium">
-                      เบอร์โทรศัพท์ / Phone <span className="text-destructive">*</span>
-                    </label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="0xx-xxx-xxxx"
-                      required
-                      value={form.phone}
-                      onChange={handleChange}
-                      disabled={submitting}
-                      className="h-10"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="email" className="text-foreground text-sm font-medium">
-                      อีเมล / Email
-                    </label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={form.email}
-                      onChange={handleChange}
-                      disabled={submitting}
-                      className="h-10"
-                    />
-                  </div>
-
-                  {/* Subject Dropdown */}
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="subject" className="text-foreground text-sm font-medium">
-                      หัวข้อ / Subject
-                    </label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      value={form.subject}
-                      onChange={handleChange}
-                      disabled={submitting}
-                      className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-10 w-full rounded-lg border bg-transparent px-3 text-sm focus-visible:ring-3 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
-                    >
-                      <option value="">เลือกหัวข้อ | Select Topic</option>
-                      <option value="buy">ซื้อ/เช่า | Buy / Rent Property</option>
-                      <option value="sell">ฝากขาย/เช่า | List My Property</option>
-                      <option value="loan">สินเชื่อบ้าน | Home Loan Inquiry</option>
-                      <option value="co-agent">Co-Agent | Partnership</option>
-                      <option value="other">อื่นๆ | Other</option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="message" className="text-foreground text-sm font-medium">
-                      ข้อความ / Message <span className="text-destructive">*</span>
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      placeholder="บอกพิมได้เลยค่ะ ว่าสนใจซื้อ ขาย เช่า หรือมีคำถามอะไร..."
-                      required
-                      value={form.message}
-                      onChange={handleChange}
-                      disabled={submitting}
-                      className="border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 w-full resize-none rounded-lg border bg-transparent px-3 py-2.5 text-sm leading-relaxed focus-visible:ring-3 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
-                    />
-                  </div>
-
-                  {error && (
-                    <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                      <AlertTriangle className="size-4 shrink-0" />
-                      {error}
-                    </div>
-                  )}
-
-                  <Button
-                    type="submit"
-                    size="lg"
-                    disabled={submitting}
-                    className="bg-primary hover:bg-primary/90 mt-2 gap-2 text-white disabled:opacity-50"
-                  >
-                    {submitting ? (
-                      <>
-                        <Loader2 className="size-4 animate-spin" />
-                        กำลังส่ง... / Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Mail className="size-4" />
-                        ส่งข้อความ / Send Message
-                      </>
-                    )}
-                  </Button>
-                </form>
-              )}
-            </motion.div>
-
-            {/* Right: Contact Info + Map */}
-            <motion.div
-              className="flex flex-col gap-8"
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              custom={1}
-            >
-              <div>
-                <h2 className="text-foreground mb-6 text-xl font-semibold">
-                  ช่องทางติดต่อ / Contact Channels
-                </h2>
-
-                {/* Click-to-action contact cards */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {/* Phone */}
-                  <a
-                    href={`tel:${phone.replace(/-/g, "")}`}
-                    className="ring-foreground/5 flex items-start gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 transition-all hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-700">
-                      <Phone className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                        โทรศัพท์ / Phone
-                      </p>
-                      <p className="text-foreground mt-0.5 text-sm font-medium">{phone}</p>
-                    </div>
-                  </a>
-
-                  {/* LINE */}
-                  <a
-                    href={lineUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ring-foreground/5 flex items-start gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 transition-all hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                      <MessageCircle className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                        LINE
-                      </p>
-                      <p className="text-foreground mt-0.5 truncate text-sm font-medium">{lineId}</p>
-                    </div>
-                  </a>
-
-                  {/* WhatsApp */}
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ring-foreground/5 flex items-start gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 transition-all hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366]">
-                      <WhatsAppIcon className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                        WhatsApp
-                      </p>
-                      <p className="text-foreground mt-0.5 text-sm font-medium">+66 86-414-9960</p>
-                    </div>
-                  </a>
-
-                  {/* Email */}
-                  <a
-                    href={`mailto:${email}`}
-                    className="ring-foreground/5 flex items-start gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 transition-all hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-                      <Mail className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                        อีเมล / Email
-                      </p>
-                      <p className="text-foreground mt-0.5 truncate text-sm font-medium">{email}</p>
-                    </div>
-                  </a>
-
-                  {/* Address (no link) */}
-                  <div className="ring-foreground/5 col-span-full flex items-start gap-4 rounded-xl bg-white p-4 shadow-sm ring-1">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-rose-100 text-rose-700">
-                      <MapPin className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                        ที่อยู่ / Address
-                      </p>
-                      <p className="text-foreground mt-0.5 text-sm font-medium">{address}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Google Maps Embed */}
-              <div className="overflow-hidden rounded-2xl shadow-md">
-                <iframe
-                  src={mapEmbed}
-                  width="100%"
-                  height="300"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="แผนที่ บ้านไออุ่น พร็อพเพอร์ตี้"
-                />
-              </div>
-
-              {/* Quick LINE + WhatsApp CTA */}
-              <div className="bg-primary/5 rounded-2xl p-6">
-                <h3 className="text-foreground text-base font-semibold">
-                  ต้องการคำตอบเร็วกว่านี้? / Need a Faster Reply?
+            {submitted ? (
+              <div className="py-8 text-center">
+                <CheckCircle className="mx-auto size-12 text-green-500" />
+                <h3 className="mt-4 text-xl font-bold text-primary">
+                  ส่งข้อความเรียบร้อยแล้ว! | Message sent!
                 </h3>
-                <p className="text-muted-foreground mt-2 text-sm">
-                  แอดไลน์หรือ WhatsApp หาพิมได้เลย ตอบไวกว่าค่ะ!
+                <p className="mt-2 text-muted-foreground">
+                  พิมจะติดต่อกลับโดยเร็วที่สุดค่ะ | We&apos;ll get back to you shortly.
                 </p>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <a
-                    href={lineUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-primary hover:bg-primary/90 inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white transition-colors"
+                <Button
+                  className="mt-6"
+                  variant="outline"
+                  onClick={() => {
+                    setSubmitted(false)
+                    setForm({ name: "", phone: "", email: "", subject: "", message: "" })
+                  }}
+                >
+                  ส่งข้อความอีกครั้ง | Send another
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="name" className="text-sm font-bold text-[#444]">
+                    ชื่อ-นามสกุล | Full Name <span className="text-red-600">*</span>
+                  </label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="คุณชื่ออะไรคะ?"
+                    required
+                    value={form.name}
+                    onChange={handleChange}
+                    disabled={submitting}
+                    className={inputCls}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="phone" className="text-sm font-bold text-[#444]">
+                    เบอร์โทรศัพท์ | Phone <span className="text-red-600">*</span>
+                  </label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="0xx-xxx-xxxx"
+                    required
+                    value={form.phone}
+                    onChange={handleChange}
+                    disabled={submitting}
+                    className={inputCls}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="email" className="text-sm font-bold text-[#444]">
+                    อีเมล | Email
+                  </label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    value={form.email}
+                    onChange={handleChange}
+                    disabled={submitting}
+                    className={inputCls}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="subject" className="text-sm font-bold text-[#444]">
+                    หัวข้อ | Subject
+                  </label>
+                  <select
+                    id="subject"
+                    name="subject"
+                    value={form.subject}
+                    onChange={handleChange}
+                    disabled={submitting}
+                    className={inputCls}
                   >
-                    <MessageCircle className="size-4" />
-                    แอดไลน์ {lineId}
-                  </a>
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-4 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                  >
-                    <WhatsAppIcon className="size-4" />
-                    WhatsApp
-                  </a>
+                    <option value="">เลือกหัวข้อ | Select Topic</option>
+                    <option value="buy">ซื้อ/เช่า | Buy / Rent Property</option>
+                    <option value="sell">ฝากขาย/เช่า | List My Property</option>
+                    <option value="loan">สินเชื่อบ้าน | Home Loan Inquiry</option>
+                    <option value="co-agent">Co-Agent | Partnership</option>
+                    <option value="other">อื่นๆ | Other</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="message" className="text-sm font-bold text-[#444]">
+                    ข้อความ | Message <span className="text-red-600">*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={5}
+                    placeholder="บอกพิมได้เลยค่ะ ว่าสนใจซื้อ ขาย เช่า หรือมีคำถามอะไร..."
+                    required
+                    value={form.message}
+                    onChange={handleChange}
+                    disabled={submitting}
+                    className={`${inputCls} min-h-[120px] resize-y`}
+                  />
+                </div>
+
+                {error && (
+                  <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    <AlertTriangle className="size-4 shrink-0" />
+                    {error}
+                  </div>
+                )}
+
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={submitting}
+                  className="bg-primary hover:bg-[#0f3d20] mt-2 h-auto w-full gap-2 py-4 text-base font-bold text-white disabled:opacity-50"
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="size-4 animate-spin" />
+                      กำลังส่ง... | Sending...
+                    </>
+                  ) : (
+                    <>ส่งข้อความ | Send Message 🚀</>
+                  )}
+                </Button>
+              </form>
+            )}
+          </div>
+
+          {/* Right: Map, Fast Reply, Contact Cards */}
+          <div className="flex flex-col gap-6">
+            {/* Google Maps — พิกัดจาก Admin */}
+            <div className="h-[250px] overflow-hidden rounded-xl border border-border shadow-sm">
+              <iframe
+                src={mapEmbed}
+                width="100%"
+                height="250"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="แผนที่ บ้านไออุ่น พร็อพเพอร์ตี้"
+                className="h-full w-full"
+              />
+            </div>
+
+            {/* Fast Reply */}
+            <div className="rounded-2xl border border-[#bbf7d0] bg-[#f0fdf4] p-8 text-center">
+              <h3 className="text-lg font-semibold text-primary">
+                ⚡ ต้องการคำตอบเร็วกว่านี้? | Need a Faster Reply?
+              </h3>
+              <p className="mt-2 text-sm text-[#555]">
+                แอดไลน์หรือ WhatsApp หาพิมได้เลย ตอบไวกว่าค่ะ!
+                <br />
+                Add us on LINE or WhatsApp for the fastest response!
+              </p>
+              <div className="mt-5 flex flex-wrap justify-center gap-3">
+                <a
+                  href={lineUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#00c300] px-6 py-3 text-sm font-bold text-white shadow-[0_4px_6px_rgba(0,195,0,0.2)] transition-colors hover:bg-[#00a600]"
+                >
+                  💬 แอดไลน์ {lineId}
+                </a>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#25d366] px-6 py-3 text-sm font-bold text-white shadow-[0_4px_6px_rgba(37,211,102,0.2)] transition-colors hover:bg-[#1ebc59]"
+                >
+                  <WhatsAppIcon className="size-4" />
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+
+            {/* Contact Cards */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <a
+                href={`tel:${phone.replace(/-/g, "")}`}
+                className="flex flex-col gap-2.5 rounded-xl border border-border bg-card p-5 shadow-[0_4px_6px_rgba(0,0,0,0.02)] transition-shadow hover:shadow-md"
+              >
+                <div className="flex size-10 items-center justify-center rounded-full bg-[#f0fdf4] text-lg text-primary">
+                  📱
+                </div>
+                <div>
+                  <p className="text-xs font-bold tracking-wide text-[#888] uppercase">
+                    โทรศัพท์ | Phone
+                  </p>
+                  <p className="mt-1 text-base font-medium text-foreground">{phone}</p>
+                </div>
+              </a>
+
+              <a
+                href={`mailto:${email}`}
+                className="flex flex-col gap-2.5 rounded-xl border border-border bg-card p-5 shadow-[0_4px_6px_rgba(0,0,0,0.02)] transition-shadow hover:shadow-md"
+              >
+                <div className="flex size-10 items-center justify-center rounded-full bg-[#f0fdf4] text-lg text-primary">
+                  ✉️
+                </div>
+                <div>
+                  <p className="text-xs font-bold tracking-wide text-[#888] uppercase">
+                    อีเมล | Email
+                  </p>
+                  <p className="mt-1 truncate text-base font-medium text-foreground">{email}</p>
+                </div>
+              </a>
+
+              <div className="col-span-full flex flex-col gap-2.5 rounded-xl border border-border bg-card p-5 shadow-[0_4px_6px_rgba(0,0,0,0.02)]">
+                <div className="flex size-10 items-center justify-center rounded-full bg-[#f0fdf4] text-lg text-primary">
+                  📍
+                </div>
+                <div>
+                  <p className="text-xs font-bold tracking-wide text-[#888] uppercase">
+                    ที่อยู่สำนักงาน | Address
+                  </p>
+                  <p className="mt-1 text-base font-medium text-foreground">{address}</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
-      </section>
+      </main>
     </>
   )
 }

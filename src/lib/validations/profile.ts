@@ -23,6 +23,8 @@ export const profileSchema = z.object({
   site_name: z.string().min(1, "กรุณาระบุชื่อเว็บไซต์"),
   slogan: z.string().default(""),
   address: z.string().default(""),
+  map_lat: z.string().default(""),
+  map_lng: z.string().default(""),
 })
 
 export type ProfileFormValues = z.infer<typeof profileSchema>
