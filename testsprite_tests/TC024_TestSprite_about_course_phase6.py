@@ -20,7 +20,7 @@ async def run_test() -> None:
         page = await context.new_page()
 
         await page.goto(f"{BASE_URL}/about")
-        await expect(page.get_by_text("Mission: Connecting real")).to_be_visible()
+        await expect(page.get_by_text("Connecting real estate goals")).to_be_visible()
 
         about_scripts = await page.locator('script[type="application/ld+json"]').all_inner_texts()
         assert any("LocalBusiness" in s for s in about_scripts)

@@ -54,6 +54,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
 
       <div className="mt-6">
         <SectionTitle
+          as="h1"
           title="ทรัพย์ทั้งหมด | All Properties"
           subtitle="บ้านขาย บ้านเช่า และที่ดิน จากบ้านไออุ่น พร็อพเพอร์ตี้"
         />

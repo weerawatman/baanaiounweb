@@ -22,7 +22,7 @@ async def run_test() -> None:
 
         await page.goto(BASE_URL)
         await expect(
-            page.get_by_role("heading", level=1, name=re.compile(r"นักลงทุน|investors"))
+            page.get_by_role("heading", level=1, name=re.compile(r"ครบจบเรื่องอสังหา|All-in-One"))
         ).to_be_visible()
 
         await expect(
@@ -30,7 +30,7 @@ async def run_test() -> None:
         ).to_be_visible()
 
         # Single search bar in hero only
-        search = page.get_by_placeholder(re.compile(r"Search area|project, keyword"))
+        search = page.get_by_role("searchbox")
         await expect(search).to_have_count(1)
         await search.fill("บ้านบึง")
         await page.get_by_role("button", name=re.compile(r"Search Properties")).click()
@@ -41,9 +41,9 @@ async def run_test() -> None:
         await page.get_by_role("link", name=re.compile(r"Find Your Perfect Match")).first.click()
         await page.wait_for_url(re.compile(r"/find-property"))
 
-        # Ecosystem moved to About page
+        # Ecosystem CTA moved to About page (Grow Together section)
         await page.goto(f"{BASE_URL}/about")
-        await expect(page.get_by_text("Join Our Ecosystem")).to_be_visible()
+        await expect(page.get_by_text("Grow Together with Baan Ai Oun Ecosystem")).to_be_visible()
 
         await browser.close()
         print(f"PASS — Homepage cohesion verified on {BASE_URL}")

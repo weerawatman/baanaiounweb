@@ -6,6 +6,8 @@ interface PainPointsHeroProps {
   points: string[]
   pointsEn?: string[]
   className?: string
+  /** ใช้ "h2" เมื่อหน้านั้นมี h1 ของตัวเองอยู่แล้ว (SEO: หนึ่ง h1 ต่อหน้า) */
+  headingLevel?: "h1" | "h2"
 }
 
 export default function PainPointsHero({
@@ -14,6 +16,7 @@ export default function PainPointsHero({
   points,
   pointsEn,
   className,
+  headingLevel: Heading = "h1",
 }: PainPointsHeroProps) {
   return (
     <section
@@ -21,9 +24,9 @@ export default function PainPointsHero({
     >
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="text-center" style={{ animation: "fade-up 0.5s ease both" }}>
-          <h1 className="text-3xl font-bold leading-tight tracking-tight text-[#1B4D3E] sm:text-4xl lg:text-5xl whitespace-pre-line">
+          <Heading className="text-3xl font-bold leading-tight tracking-tight text-[#1B4D3E] sm:text-4xl lg:text-5xl whitespace-pre-line">
             {headline}
-          </h1>
+          </Heading>
           {headlineEn && (
             <p className="mt-2 text-base font-medium text-[#D4A843] sm:text-lg">{headlineEn}</p>
           )}

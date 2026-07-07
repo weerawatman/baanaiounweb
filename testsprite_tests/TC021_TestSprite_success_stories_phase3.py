@@ -1,11 +1,12 @@
 """
-Phase 3 — Success stories inside unified social proof section
+Phase 3 — Homepage trust section (แทนที่ social proof slider เดิมตามดีไซน์ใหม่)
   set TESTSPRITE_BASE_URL=https://baanaiounweb.vercel.app
   python testsprite_tests/TC021_TestSprite_success_stories_phase3.py
 """
 
 import asyncio
 import os
+import re
 
 from playwright.async_api import async_playwright, expect
 
@@ -21,19 +22,15 @@ async def run_test() -> None:
 
         await page.goto(BASE_URL)
 
-        section = page.get_by_test_id("success-stories-section")
-        await expect(section).to_be_visible()
-        await expect(page.get_by_test_id("social-proof-section")).to_be_visible()
+        await expect(
+            page.get_by_role("heading", name=re.compile(r"Trusted by Our Clients"))
+        ).to_be_visible()
 
-        await expect(section.get_by_text("Real Results: Before & After Renovations")).to_be_visible()
-
-        slider = section.get_by_test_id("before-after-slider")
-        await expect(slider).to_be_visible()
-        await expect(slider.get_by_text("Before | ก่อน")).to_be_visible()
-        await expect(slider.get_by_text("After | หลัง")).to_be_visible()
+        for probe in ["Renovation Expert", "Professional Network", "Property Shopper"]:
+            await expect(page.get_by_text(probe)).to_be_visible()
 
         await browser.close()
-        print(f"PASS — Phase 3 success stories verified on {BASE_URL}")
+        print(f"PASS — Phase 3 homepage trust section verified on {BASE_URL}")
 
 
 if __name__ == "__main__":

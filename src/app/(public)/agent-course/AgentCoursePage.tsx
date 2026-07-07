@@ -45,6 +45,7 @@ export default function AgentCoursePage() {
 
       {/* Pain Points Hero */}
       <PainPointsHero
+        headingLevel="h2"
         headline={AGENT_COURSE_CONTENT.painPoints.headline.th}
         headlineEn={AGENT_COURSE_CONTENT.painPoints.headline.en}
         points={AGENT_COURSE_CONTENT.painPoints.points.map((p) => p.th)}
