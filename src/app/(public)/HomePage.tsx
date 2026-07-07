@@ -11,7 +11,7 @@ interface HomePageProps {
 }
 
 /**
- * โครงหน้าแรกตาม mockup (example_page/หน้าแรก.html):
+ * โครงหน้าแรกตาม mockup (docs/mockups/หน้าแรก.html):
  * Hero (search box + ปุ่ม CTA ใต้กล่อง) → บริการของเรา → ทรัพย์แนะนำคัดพิเศษ →
  * ความไว้วางใจจากลูกค้า
  */

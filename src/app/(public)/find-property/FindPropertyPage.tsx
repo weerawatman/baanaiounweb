@@ -25,7 +25,7 @@ interface FindPropertyPageProps {
 }
 
 /**
- * โครงหน้าตาม mockup (example_page/งานหาทรัพย์.html):
+ * โครงหน้าตาม mockup (docs/mockups/งานหาทรัพย์.html):
  * Hero 2 คอลัมน์ (เนื้อหา+รูปทีมงาน / ฟอร์ม) → Why-Us การ์ด 4 ใบ →
  * 3 ขั้นตอน → Quote section เขียวเข้ม
  */

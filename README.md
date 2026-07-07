@@ -53,36 +53,46 @@ Open [http://localhost:3000](http://localhost:3000).
 ```
 src/
   app/              # Next.js App Router pages & API routes
+    (public)/       # Public site pages
+    (admin)/        # Admin dashboard (Supabase-auth gated)
+    api/            # submit-form, upload-images, service-request
+  actions/          # Server Actions (admin mutations)
   components/
     blog/           # Blog-related components
     home/           # Homepage sections
     layout/         # Header, Footer, Breadcrumb, etc.
     property/       # Property detail components
     shared/         # Reusable form/CTA components
+    admin/          # Admin dashboard components
     ui/             # shadcn/ui primitives
   config/           # Site config & navigation
-  content/          # Page content (1 file per page)
-  data/             # Mock data (to be replaced with Supabase queries)
+  content/          # Page copy (bilingual objects, 1 file per page)
+  data/             # Static config (BLOG_CATEGORIES)
   types/            # TypeScript interfaces
-  lib/              # Utilities & services (Supabase client, LINE Notify, validation)
+  lib/              # Supabase clients, queries, validations, mappers, utils
 
 supabase/
-  setup/            # SQL files for initial database setup
-  migrations/       # Incremental database migrations
+  migrations/       # SQL migrations (applied via Supabase MCP)
 
+e2e/                # Playwright smoke tests (npm run test:e2e)
+testsprite_tests/   # Curated E2E scripts + production_audit.py
+docs/
+  mockups/          # HTML reference mockups per page
+  archive/          # Completed plans/reports (history)
 scripts/            # Dev/ops utility scripts (e.g. Supabase connection check)
+.cursor/skills/     # Project agent skills (methodology per discipline)
 ```
 
-> **Production roadmap:** see [`TODO.md`](TODO.md) — phased checklist with Definition of Done per phase.
+> **Remaining work:** see [`TODO.md`](TODO.md) · **Facts & conventions for AI agents:** see [`AGENTS.md`](AGENTS.md)
 
 ## Supabase Setup
 
-Full instructions: [`supabase/setup/README.md`](supabase/setup/README.md)
+Initial setup SQL (historical): `docs/archive/supabase-setup/` — the live schema is defined by `supabase/migrations/`.
 
 **Quick start:**
 
 1. Create a Supabase project at [supabase.com](https://supabase.com)
-2. Go to **SQL Editor** > paste contents of `supabase/setup/00_full_setup.sql` > Run
+2. Apply migrations in `supabase/migrations/` in order (SQL Editor or Supabase MCP)
 3. Copy your API keys from **Settings > API** into `.env.local`:
 
 ```env
