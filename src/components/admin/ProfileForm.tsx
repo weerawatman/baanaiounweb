@@ -6,6 +6,7 @@ import { useActionState } from "react"
 import { AlertTriangle, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { SingleImageField } from "@/components/admin/SingleImageField"
 import { MapCoordinateField } from "@/components/admin/MapCoordinateField"
 import { profileSchema, type ProfileFormValues } from "@/lib/validations/profile"
@@ -46,6 +47,10 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       about_timeline_2016_image: defaultValues.aboutTimeline2016Image,
       about_timeline_2020_image: defaultValues.aboutTimeline2020Image,
       about_timeline_2026_image: defaultValues.aboutTimeline2026Image,
+      services_hero_image: defaultValues.servicesHeroImage,
+      agent_course_hero_image: defaultValues.agentCourseHeroImage,
+      co_agent_hero_image: defaultValues.coAgentHeroImage,
+      blog_hero_image: defaultValues.blogHeroImage,
       phone: defaultValues.phone,
       line_id: defaultValues.lineId,
       line_url: defaultValues.lineUrl,
@@ -72,7 +77,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       {state.error && (
         <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           <AlertTriangle className="size-4 shrink-0" />
@@ -80,313 +85,431 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </div>
       )}
 
-      {/* ─── ข้อมูลพิม ───────────────────────────── */}
-      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
-        <h2 className="text-foreground font-semibold">ข้อมูลพิม</h2>
+      <Tabs defaultValue="general" className="w-full">
+        <TabsList className="h-auto w-full flex-wrap justify-start gap-1 bg-muted/60 p-1">
+          <TabsTrigger value="general">ข้อมูลทั่วไป</TabsTrigger>
+          <TabsTrigger value="home">หน้าแรก</TabsTrigger>
+          <TabsTrigger value="property-match">งานหาทรัพย์</TabsTrigger>
+          <TabsTrigger value="blog">บทความ</TabsTrigger>
+          <TabsTrigger value="about">เกี่ยวกับเรา</TabsTrigger>
+          <TabsTrigger value="services">บริการของเรา</TabsTrigger>
+          <TabsTrigger value="agent-course">คอร์สนายหน้า</TabsTrigger>
+          <TabsTrigger value="co-agent">Co-Agent</TabsTrigger>
+        </TabsList>
 
-        <FormField label="ชื่อเรียก" hint="เช่น พิม">
-          <Input {...register("name")} placeholder="พิม" />
-        </FormField>
+        {/* ─── Sheet 1: ข้อมูลทั่วไป ─────────────────── */}
+        <TabsContent value="general" className="flex flex-col gap-6 pt-4">
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">ข้อมูลพิม</h2>
 
-        <FormField label="ชื่อเต็ม (หัวเรื่อง)" error={errors.full_name?.message} required>
-          <Input {...register("full_name")} placeholder="คุณพิม — นายหน้าอสังหาริมทรัพย์" />
-        </FormField>
+            <FormField label="ชื่อเรียก" hint="เช่น พิม">
+              <Input {...register("name")} placeholder="พิม" />
+            </FormField>
 
-        <FormField label="ตำแหน่ง/บทบาท" hint="แสดงใต้ชื่อในหน้าเกี่ยวกับ">
-          <Input {...register("role")} placeholder="นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี" />
-        </FormField>
+            <FormField label="ชื่อเต็ม (หัวเรื่อง)" error={errors.full_name?.message} required>
+              <Input {...register("full_name")} placeholder="คุณพิม — นายหน้าอสังหาริมทรัพย์" />
+            </FormField>
 
-        <FormField label="คำบรรยาย (Bio)" error={errors.bio?.message}>
-          <textarea
-            {...register("bio")}
-            rows={4}
-            placeholder="ประวัติ/แนะนำตัวพิม..."
-            className={textareaCls}
-          />
-        </FormField>
+            <FormField label="ตำแหน่ง/บทบาท" hint="แสดงใต้ชื่อในหน้าเกี่ยวกับ">
+              <Input {...register("role")} placeholder="นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี" />
+            </FormField>
 
-        <FormField label="วิสัยทัศน์ (Vision)" error={errors.vision?.message}>
-          <textarea
-            {...register("vision")}
-            rows={3}
-            placeholder="พิมมุ่งมั่น..."
-            className={textareaCls}
-          />
-        </FormField>
-
-        <FormField label="รูป Avatar (รูปเล็ก หน้า detail ทรัพย์)">
-          <Controller
-            control={control}
-            name="avatar_url"
-            render={({ field }) => (
-              <SingleImageField
-                value={field.value}
-                onChange={field.onChange}
-                label="อัปโหลดรูป avatar"
-                aspect="square"
+            <FormField label="คำบรรยาย (Bio)" error={errors.bio?.message}>
+              <textarea
+                {...register("bio")}
+                rows={4}
+                placeholder="ประวัติ/แนะนำตัวพิม..."
+                className={textareaCls}
               />
-            )}
-          />
-        </FormField>
+            </FormField>
 
-        <FormField label="รูป Hero (รูปใหญ่ หน้าเกี่ยวกับ/บริการ)">
-          <Controller
-            control={control}
-            name="hero_image_url"
-            render={({ field }) => (
-              <SingleImageField
-                value={field.value}
-                onChange={field.onChange}
-                label="อัปโหลดรูป hero"
-                aspect="wide"
+            <FormField label="วิสัยทัศน์ (Vision)" error={errors.vision?.message}>
+              <textarea
+                {...register("vision")}
+                rows={3}
+                placeholder="พิมมุ่งมั่น..."
+                className={textareaCls}
               />
-            )}
-          />
-        </FormField>
-      </section>
+            </FormField>
 
-      {/* ─── รูปภาพประกอบหน้า Website ────────────── */}
-      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
-        <h2 className="text-foreground font-semibold">รูปภาพประกอบหน้า Website</h2>
-
-        <FormField label="รูปพื้นหลัง Hero หน้าแรก" hint="ถ้าไม่ใส่ จะใช้รูป Hero ด้านบนแทน">
-          <Controller
-            control={control}
-            name="home_hero_image"
-            render={({ field }) => (
-              <SingleImageField
-                value={field.value}
-                onChange={field.onChange}
-                label="อัปโหลดรูปพื้นหลังหน้าแรก"
-                aspect="wide"
-              />
-            )}
-          />
-        </FormField>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <FormField label="รูปผลงานรีโนเวท" hint="แนะนำภาพเปรียบเทียบ Before & After">
-            <Controller
-              control={control}
-              name="trust_renovation_image"
-              render={({ field }) => (
-                <SingleImageField
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="อัปโหลดรูป"
-                  aspect="wide"
-                />
-              )}
-            />
-          </FormField>
-          <FormField label="รูปนายหน้ามืออาชีพ" hint="ภาพบรรยากาศทีมงาน">
-            <Controller
-              control={control}
-              name="trust_network_image"
-              render={({ field }) => (
-                <SingleImageField
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="อัปโหลดรูป"
-                  aspect="wide"
-                />
-              )}
-            />
-          </FormField>
-          <FormField label="รูปบริการจัดหาบ้านฟรี" hint="ภาพลูกค้า/การให้คำปรึกษา">
-            <Controller
-              control={control}
-              name="trust_shopper_image"
-              render={({ field }) => (
-                <SingleImageField
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="อัปโหลดรูป"
-                  aspect="wide"
-                />
-              )}
-            />
-          </FormField>
-        </div>
-      </section>
-
-      {/* ─── รูปภาพหน้างานหาทรัพย์ ───────────────── */}
-      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
-        <h2 className="text-foreground font-semibold">รูปภาพหน้างานหาทรัพย์ (Property Match)</h2>
-
-        <FormField
-          label="รูปทีมงานให้คำปรึกษาลูกค้า"
-          hint="แสดงใต้ข้อความฝั่งซ้ายของหน้างานหาทรัพย์ (ยังไม่อัปโหลด = แสดงกล่องสำรองแทน)"
-        >
-          <Controller
-            control={control}
-            name="match_team_image"
-            render={({ field }) => (
-              <SingleImageField
-                value={field.value}
-                onChange={field.onChange}
-                label="อัปโหลดรูปทีมงาน"
-                aspect="wide"
-              />
-            )}
-          />
-        </FormField>
-      </section>
-
-      {/* ─── รูปภาพหน้าเกี่ยวกับเรา (Timeline) ─────── */}
-      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
-        <h2 className="text-foreground font-semibold">รูปภาพหน้าเกี่ยวกับเรา (About Us)</h2>
-        <p className="text-muted-foreground text-sm">
-          รูปประกอบไทม์ไลน์ &ldquo;จุดเริ่มต้นของเรา&rdquo; — ยังไม่อัปโหลดจะแสดงกล่องสำรองบนหน้าเว็บ
-        </p>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <FormField label="2002 — หอพักหรือกุญแจบ้าน">
-            <Controller
-              control={control}
-              name="about_timeline_2002_image"
-              render={({ field }) => (
-                <SingleImageField
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="อัปโหลดรูป"
-                  aspect="wide"
-                />
-              )}
-            />
-          </FormField>
-          <FormField label="2016 — รีโนเวทบ้าน หรือศึกษาดูงาน">
-            <Controller
-              control={control}
-              name="about_timeline_2016_image"
-              render={({ field }) => (
-                <SingleImageField
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="อัปโหลดรูป"
-                  aspect="wide"
-                />
-              )}
-            />
-          </FormField>
-          <FormField label="2020 — ทีมงานพูดคุยกับลูกค้า">
-            <Controller
-              control={control}
-              name="about_timeline_2020_image"
-              render={({ field }) => (
-                <SingleImageField
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="อัปโหลดรูป"
-                  aspect="wide"
-                />
-              )}
-            />
-          </FormField>
-          <FormField label="2026 — หน้าจอเว็บไซต์ หรือการจับมือปิดดีล">
-            <Controller
-              control={control}
-              name="about_timeline_2026_image"
-              render={({ field }) => (
-                <SingleImageField
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="อัปโหลดรูป"
-                  aspect="wide"
-                />
-              )}
-            />
-          </FormField>
-        </div>
-      </section>
-
-      {/* ─── ช่องทางติดต่อ ───────────────────────── */}
-      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
-        <h2 className="text-foreground font-semibold">ช่องทางติดต่อ</h2>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <FormField label="เบอร์โทร" error={errors.phone?.message}>
-            <Input {...register("phone")} placeholder="086-4149960" />
-          </FormField>
-          <FormField label="อีเมล" error={errors.email?.message}>
-            <Input {...register("email")} placeholder="supansa.m@baanaioun.com" />
-          </FormField>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <FormField label="LINE ID" error={errors.line_id?.message}>
-            <Input {...register("line_id")} placeholder="@baan-ai-oun" />
-          </FormField>
-          <FormField label="LINE URL" error={errors.line_url?.message}>
-            <Input {...register("line_url")} placeholder="https://line.me/ti/p/..." />
-          </FormField>
-        </div>
-
-        <FormField
-          label="ที่อยู่ (แสดงบนหน้าเว็บ)"
-          error={errors.address?.message}
-        >
-          <textarea
-            {...register("address")}
-            rows={2}
-            placeholder="107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540"
-            className={textareaCls}
-          />
-        </FormField>
-
-        <FormField
-          label="พิกัดแผนที่ Google Maps (หน้าติดต่อเรา)"
-          error={errors.map_lat?.message ?? errors.map_lng?.message}
-          hint="ใส่ lat/lng หรือเปิด Google Maps เพื่อคัดลอกพิกัด — แผนที่หน้า 'ติดต่อเรา' จะใช้ค่านี้"
-        >
-          <Controller
-            control={control}
-            name="map_lat"
-            render={({ field: latField }) => (
+            <FormField label="รูป Avatar (รูปเล็ก หน้า detail ทรัพย์)">
               <Controller
                 control={control}
-                name="map_lng"
-                render={({ field: lngField }) => (
-                  <MapCoordinateField
-                    lat={latField.value}
-                    lng={lngField.value}
-                    address={addressValue}
-                    onLatChange={latField.onChange}
-                    onLngChange={lngField.onChange}
+                name="avatar_url"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูป avatar"
+                    aspect="square"
                   />
                 )}
               />
-            )}
-          />
-        </FormField>
-      </section>
+            </FormField>
 
-      {/* ─── โซเชียล ────────────────────────────── */}
-      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
-        <h2 className="text-foreground font-semibold">โซเชียลมีเดีย</h2>
+            <FormField label="รูป Hero (รูปใหญ่ หน้าเกี่ยวกับ/บริการ)">
+              <Controller
+                control={control}
+                name="hero_image_url"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูป hero"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+          </section>
 
-        <FormField label="Facebook" error={errors.facebook?.message}>
-          <Input {...register("facebook")} placeholder="https://www.facebook.com/..." />
-        </FormField>
-        <FormField label="TikTok" error={errors.tiktok?.message}>
-          <Input {...register("tiktok")} placeholder="https://www.tiktok.com/@..." />
-        </FormField>
-        <FormField label="YouTube" error={errors.youtube?.message}>
-          <Input {...register("youtube")} placeholder="https://youtube.com/@..." />
-        </FormField>
-      </section>
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">ช่องทางติดต่อ</h2>
 
-      {/* ─── ข้อมูลเว็บ ──────────────────────────── */}
-      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
-        <h2 className="text-foreground font-semibold">ข้อมูลเว็บไซต์</h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <FormField label="เบอร์โทร" error={errors.phone?.message}>
+                <Input {...register("phone")} placeholder="086-4149960" />
+              </FormField>
+              <FormField label="อีเมล" error={errors.email?.message}>
+                <Input {...register("email")} placeholder="supansa.m@baanaioun.com" />
+              </FormField>
+            </div>
 
-        <FormField label="ชื่อเว็บไซต์" error={errors.site_name?.message} required>
-          <Input {...register("site_name")} placeholder="บ้านไออุ่น พร็อพเพอร์ตี้" />
-        </FormField>
-        <FormField label="สโลแกน" error={errors.slogan?.message}>
-          <Input {...register("slogan")} placeholder="บ้านไออุ่น: มากกว่าที่พัก..." />
-        </FormField>
-      </section>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <FormField label="LINE ID" error={errors.line_id?.message}>
+                <Input {...register("line_id")} placeholder="@baan-ai-oun" />
+              </FormField>
+              <FormField label="LINE URL" error={errors.line_url?.message}>
+                <Input {...register("line_url")} placeholder="https://line.me/ti/p/..." />
+              </FormField>
+            </div>
+
+            <FormField label="ที่อยู่ (แสดงบนหน้าเว็บ)" error={errors.address?.message}>
+              <textarea
+                {...register("address")}
+                rows={2}
+                placeholder="107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540"
+                className={textareaCls}
+              />
+            </FormField>
+
+            <FormField
+              label="พิกัดแผนที่ Google Maps (หน้าติดต่อเรา)"
+              error={errors.map_lat?.message ?? errors.map_lng?.message}
+              hint="ใส่ lat/lng หรือเปิด Google Maps เพื่อคัดลอกพิกัด — แผนที่หน้า 'ติดต่อเรา' จะใช้ค่านี้"
+            >
+              <Controller
+                control={control}
+                name="map_lat"
+                render={({ field: latField }) => (
+                  <Controller
+                    control={control}
+                    name="map_lng"
+                    render={({ field: lngField }) => (
+                      <MapCoordinateField
+                        lat={latField.value}
+                        lng={lngField.value}
+                        address={addressValue}
+                        onLatChange={latField.onChange}
+                        onLngChange={lngField.onChange}
+                      />
+                    )}
+                  />
+                )}
+              />
+            </FormField>
+          </section>
+
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">โซเชียลมีเดีย</h2>
+
+            <FormField label="Facebook" error={errors.facebook?.message}>
+              <Input {...register("facebook")} placeholder="https://www.facebook.com/..." />
+            </FormField>
+            <FormField label="TikTok" error={errors.tiktok?.message}>
+              <Input {...register("tiktok")} placeholder="https://www.tiktok.com/@..." />
+            </FormField>
+            <FormField label="YouTube" error={errors.youtube?.message}>
+              <Input {...register("youtube")} placeholder="https://youtube.com/@..." />
+            </FormField>
+          </section>
+
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">ข้อมูลเว็บไซต์</h2>
+
+            <FormField label="ชื่อเว็บไซต์" error={errors.site_name?.message} required>
+              <Input {...register("site_name")} placeholder="บ้านไออุ่น พร็อพเพอร์ตี้" />
+            </FormField>
+            <FormField label="สโลแกน" error={errors.slogan?.message}>
+              <Input {...register("slogan")} placeholder="บ้านไออุ่น: มากกว่าที่พัก..." />
+            </FormField>
+          </section>
+        </TabsContent>
+
+        {/* ─── Sheet: หน้าแรก ───────────────────────── */}
+        <TabsContent value="home" className="flex flex-col gap-6 pt-4">
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">รูปภาพประกอบหน้าแรก</h2>
+
+            <FormField label="รูปพื้นหลัง Hero หน้าแรก" hint="ถ้าไม่ใส่ จะใช้รูป Hero ด้านบนแทน">
+              <Controller
+                control={control}
+                name="home_hero_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูปพื้นหลังหน้าแรก"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <FormField label="รูปผลงานรีโนเวท" hint="แนะนำภาพเปรียบเทียบ Before & After">
+                <Controller
+                  control={control}
+                  name="trust_renovation_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="รูปนายหน้ามืออาชีพ" hint="ภาพบรรยากาศทีมงาน">
+                <Controller
+                  control={control}
+                  name="trust_network_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="รูปบริการจัดหาบ้านฟรี" hint="ภาพลูกค้า/การให้คำปรึกษา">
+                <Controller
+                  control={control}
+                  name="trust_shopper_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+            </div>
+          </section>
+        </TabsContent>
+
+        {/* ─── Sheet: งานหาทรัพย์ (Property Match) ──── */}
+        <TabsContent value="property-match" className="flex flex-col gap-6 pt-4">
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">รูปภาพหน้างานหาทรัพย์ (Property Match)</h2>
+            <p className="text-muted-foreground text-sm">
+              ทรัพย์แต่ละรายการจัดการแยกในเมนู &ldquo;ทรัพย์&rdquo; — ที่นี่เป็นรูปประกอบหน้า Property Match เท่านั้น
+            </p>
+
+            <FormField
+              label="รูปทีมงานให้คำปรึกษาลูกค้า"
+              hint="แสดงใต้ข้อความฝั่งซ้ายของหน้างานหาทรัพย์ (ยังไม่อัปโหลด = แสดงกล่องสำรองแทน)"
+            >
+              <Controller
+                control={control}
+                name="match_team_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูปทีมงาน"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+          </section>
+        </TabsContent>
+
+        {/* ─── Sheet: บทความ (Blog) ─────────────────── */}
+        <TabsContent value="blog" className="flex flex-col gap-6 pt-4">
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">รูปภาพหน้าบทความ (Blog)</h2>
+
+            <FormField
+              label="รูปพื้นหลัง Hero หน้ารวมบทความ"
+              hint="ยังไม่อัปโหลด = แสดงหัวข้อแบบข้อความล้วนเหมือนปัจจุบัน (คนละรูปกับรูปปกของแต่ละบทความ)"
+            >
+              <Controller
+                control={control}
+                name="blog_hero_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูปพื้นหลัง"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+          </section>
+        </TabsContent>
+
+        {/* ─── Sheet: เกี่ยวกับเรา ──────────────────── */}
+        <TabsContent value="about" className="flex flex-col gap-6 pt-4">
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">รูปภาพหน้าเกี่ยวกับเรา (Timeline)</h2>
+            <p className="text-muted-foreground text-sm">
+              รูปประกอบไทม์ไลน์ &ldquo;จุดเริ่มต้นของเรา&rdquo; — ยังไม่อัปโหลดจะแสดงกล่องสำรองบนหน้าเว็บ
+            </p>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <FormField label="2002 — หอพักหรือกุญแจบ้าน">
+                <Controller
+                  control={control}
+                  name="about_timeline_2002_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="2016 — รีโนเวทบ้าน หรือศึกษาดูงาน">
+                <Controller
+                  control={control}
+                  name="about_timeline_2016_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="2020 — ทีมงานพูดคุยกับลูกค้า">
+                <Controller
+                  control={control}
+                  name="about_timeline_2020_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="2026 — หน้าจอเว็บไซต์ หรือการจับมือปิดดีล">
+                <Controller
+                  control={control}
+                  name="about_timeline_2026_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+            </div>
+          </section>
+        </TabsContent>
+
+        {/* ─── Sheet: บริการของเรา ──────────────────── */}
+        <TabsContent value="services" className="flex flex-col gap-6 pt-4">
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">รูปภาพหน้าบริการของเรา</h2>
+
+            <FormField
+              label="รูปพื้นหลัง Hero หน้าบริการของเรา"
+              hint="ถ้าไม่ใส่ จะใช้รูป Hero ในแท็บ &ldquo;ข้อมูลทั่วไป&rdquo; แทน"
+            >
+              <Controller
+                control={control}
+                name="services_hero_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูปพื้นหลัง"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+          </section>
+        </TabsContent>
+
+        {/* ─── Sheet: คอร์สนายหน้า ──────────────────── */}
+        <TabsContent value="agent-course" className="flex flex-col gap-6 pt-4">
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">รูปภาพหน้าคอร์สนายหน้า</h2>
+
+            <FormField
+              label="รูปพื้นหลัง Hero หน้าคอร์สนายหน้า"
+              hint="ยังไม่อัปโหลด = แสดงพื้นหลังไล่สีเขียวแบบปัจจุบัน"
+            >
+              <Controller
+                control={control}
+                name="agent_course_hero_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูปพื้นหลัง"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+          </section>
+        </TabsContent>
+
+        {/* ─── Sheet: Co-Agent ──────────────────────── */}
+        <TabsContent value="co-agent" className="flex flex-col gap-6 pt-4">
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">รูปภาพหน้า Co-Agent</h2>
+
+            <FormField
+              label="รูปพื้นหลัง Hero หน้า Co-Agent"
+              hint="ยังไม่อัปโหลด = แสดงพื้นหลังไล่สีเขียวแบบปัจจุบัน"
+            >
+              <Controller
+                control={control}
+                name="co_agent_hero_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูปพื้นหลัง"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+          </section>
+        </TabsContent>
+      </Tabs>
 
       {/* ─── Submit ─────────────────────────────── */}
       <div className="flex justify-end gap-3">

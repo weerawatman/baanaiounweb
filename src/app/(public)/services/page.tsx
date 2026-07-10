@@ -41,6 +41,7 @@ export default async function ServicesRoute() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
       <ServicesHubPage
+        servicesHeroImage={profile.servicesHeroImage}
         heroImageUrl={profile.heroImageUrl}
         lineUrl={profile.lineUrl}
         trustImages={{

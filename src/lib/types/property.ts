@@ -132,6 +132,10 @@ export interface AgentProfile {
   about_timeline_2016_image: string
   about_timeline_2020_image: string
   about_timeline_2026_image: string
+  services_hero_image: string
+  agent_course_hero_image: string
+  co_agent_hero_image: string
+  blog_hero_image: string
   phone: string
   line_id: string
   line_url: string

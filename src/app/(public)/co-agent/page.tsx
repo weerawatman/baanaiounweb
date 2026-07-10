@@ -1,9 +1,11 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 
 export const revalidate = 1800
 import { PainPointsHero, SolutionsSection, StepsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { COAGENT_CONTENT } from "@/content/co-agent"
+import { getProfile } from "@/lib/queries/profile"
 
 export function generateMetadata(): Metadata {
   return {
@@ -16,7 +18,10 @@ export function generateMetadata(): Metadata {
   }
 }
 
-export default function CoAgentPage() {
+export default async function CoAgentPage() {
+  const profile = await getProfile()
+  const heroImage = profile.coAgentHeroImage
+
   return (
     <>
 
@@ -31,8 +36,30 @@ export default function CoAgentPage() {
         />
       </div>
 
+      {/* Hero Section */}
+      <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#1B4D3E] to-[#0d2820] py-16 text-white">
+        {heroImage && (
+          <>
+            <Image
+              src={heroImage}
+              alt=""
+              aria-hidden
+              fill
+              priority
+              sizes="100vw"
+              className="-z-20 object-cover"
+            />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1B4D3E]/85 to-[#0d2820]/90" />
+          </>
+        )}
+        <div className="container mx-auto max-w-4xl px-4 text-center">
+          <h1 className="text-3xl font-bold sm:text-4xl lg:text-5xl">{COAGENT_CONTENT.seo.title}</h1>
+        </div>
+      </section>
+
       {/* Pain Points Hero */}
       <PainPointsHero
+        headingLevel="h2"
         headline={COAGENT_CONTENT.painPoints.headline.th}
         headlineEn={COAGENT_CONTENT.painPoints.headline.en}
         points={COAGENT_CONTENT.painPoints.points.map((p) => p.th)}

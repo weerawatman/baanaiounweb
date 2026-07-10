@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import { PainPointsHero, SolutionsSection, EmotionalHook, CTAWithForm } from "@/components/shared"
 import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
+import { getProfile } from "@/lib/queries/profile"
 
 export function generateMetadata(): Metadata {
   return {
@@ -14,7 +16,10 @@ export function generateMetadata(): Metadata {
   }
 }
 
-export default function AgentCoursePage() {
+export default async function AgentCoursePage() {
+  const profile = await getProfile()
+  const heroImage = profile.agentCourseHeroImage
+
   return (
     <>
 
@@ -30,7 +35,21 @@ export default function AgentCoursePage() {
       </div>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-[#1B4D3E] to-[#0d2820] py-16 text-white">
+      <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#1B4D3E] to-[#0d2820] py-16 text-white">
+        {heroImage && (
+          <>
+            <Image
+              src={heroImage}
+              alt=""
+              aria-hidden
+              fill
+              priority
+              sizes="100vw"
+              className="-z-20 object-cover"
+            />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1B4D3E]/85 to-[#0d2820]/90" />
+          </>
+        )}
         <div className="container mx-auto max-w-4xl px-4 text-center">
           <h1 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
             {AGENT_COURSE_CONTENT.hero.h1.th}

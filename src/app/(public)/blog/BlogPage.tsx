@@ -1,18 +1,21 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { type BlogPost } from "@/types"
 import { BLOG_CATEGORIES } from "@/data/blog-posts"
 import BlogCard from "@/components/blog/BlogCard"
 import BlogCategoryFilter from "@/components/blog/BlogCategoryFilter"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import { Search } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface BlogPageProps {
   posts: BlogPost[]
+  heroImage?: string
 }
 
-export default function BlogPage({ posts }: BlogPageProps) {
+export default function BlogPage({ posts, heroImage }: BlogPageProps) {
   const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
 
@@ -32,11 +35,40 @@ export default function BlogPage({ posts }: BlogPageProps) {
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "บทความ | Blog" }]} />
 
-      <header className="mb-10 mt-5 text-center">
-        <h1 className="text-[2.2rem] font-bold leading-tight text-foreground">
+      <header
+        className={cn(
+          "mb-10 mt-5 rounded-2xl py-10 text-center",
+          heroImage && "relative isolate overflow-hidden px-4",
+        )}
+      >
+        {heroImage && (
+          <>
+            <Image
+              src={heroImage}
+              alt=""
+              aria-hidden
+              fill
+              priority
+              sizes="100vw"
+              className="-z-20 object-cover"
+            />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1B4D3E]/85 to-[#0d2820]/90" />
+          </>
+        )}
+        <h1
+          className={cn(
+            "text-[2.2rem] font-bold leading-tight",
+            heroImage ? "text-white" : "text-foreground",
+          )}
+        >
           บทความน่าอ่าน จากบ้านไออุ่น
         </h1>
-        <p className="mt-2 text-xl font-medium text-muted-foreground">
+        <p
+          className={cn(
+            "mt-2 text-xl font-medium",
+            heroImage ? "text-white/80" : "text-muted-foreground",
+          )}
+        >
           Insightful Articles by Baan Ai Oun
         </p>
         <div className="mx-auto mt-4 h-1 w-[60px] rounded-sm bg-primary" />

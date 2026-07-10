@@ -108,6 +108,10 @@ export interface Profile {
   aboutTimeline2016Image: string
   aboutTimeline2020Image: string
   aboutTimeline2026Image: string
+  servicesHeroImage: string
+  agentCourseHeroImage: string
+  coAgentHeroImage: string
+  blogHeroImage: string
   phone: string
   lineId: string
   lineUrl: string

@@ -13,17 +13,19 @@ import { Home, Search, Users, GraduationCap } from "lucide-react"
 const ICON_MAP = { Home, Search, Users, GraduationCap } as const
 
 interface ServicesHubPageProps {
+  servicesHeroImage?: string
   heroImageUrl?: string
   lineUrl?: string
   trustImages: TrustPillarImages
 }
 
 export default function ServicesHubPage({
+  servicesHeroImage,
   heroImageUrl,
   lineUrl,
   trustImages,
 }: ServicesHubPageProps) {
-  const background = heroImageUrl || SITE_CONFIG.pim.heroImage
+  const background = servicesHeroImage || heroImageUrl || SITE_CONFIG.pim.heroImage
   const lineHref = lineUrl || SITE_CONFIG.lineUrl
   const phoneHref = `tel:${SITE_CONFIG.phone.replace(/-/g, "")}`
 
