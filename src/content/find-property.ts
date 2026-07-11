@@ -1,129 +1,72 @@
 /**
- * Find Property content (Rev.00): bilingual TH/EN display
- * แสดงไทย+อังกฤษพร้อมกัน (ไม่มีปุ่มสลับภาษา)
+ * Find Property content — aligned with docs/mockups/find-property.html
+ * Bilingual TH/EN display (no language toggle)
  */
 
 export const FIND_PROPERTY_CONTENT = {
   seo: {
-    title: "งานหาทรัพย์ตรงใจโดยทีมบ้านไออุ่น | Property Match by Baan Ai Oun",
+    title:
+      "จัดหาทรัพย์ตามต้องการ | Property Match - บ้านไออุ่น พร็อพเพอร์ตี้",
     description: {
-      th: "บอกงบ ทำเล และสเปกที่ต้องการ แล้วให้ทีมบ้านไออุ่นคัดทรัพย์ที่ใช่มาให้ พร้อมช่วยประสานดูทรัพย์และปิดดีลอย่างมั่นใจ",
-      en: "Tell us your budget, location, and must-haves, and Baan Ai Oun will curate the right properties, arrange viewings, and help you move forward with confidence.",
-    }
-  },
-  hero: {
-    eyebrow: { th: "บริการของเรา", en: "Our Services" },
-    pageName: "งานหาทรัพย์ | Property Match",
-    headline: {
-      th: "บอกโจทย์ที่ใช่ แล้วให้เราหาทรัพย์ให้ตรงใจ",
-      en: "Share your brief and let us match the right property for you",
+      th: "ให้เราช่วยหาบ้าน คอนโด ที่ดิน อ่อนนุช สุขุมวิท 77 สมุทรปราการ ชลบุรี ระยอง EEC ฟรี! คัดกรองด้วยสายตานักลงทุน ประหยัดเวลา ได้ทรัพย์ที่ใช่ไม่มีบวกราคาเพิ่ม",
+      en: "Free property matchmaking in Bangkok, On Nut, Sukhumvit 77, Chonburi & EEC — investor-curated, no hidden fees.",
     },
-    description: {
-      th: "ไม่ต้องเสียเวลาหาด้วยตัวเองทุกประกาศ เราช่วยคัดทรัพย์ตามงบ ทำเล ประเภท และเงื่อนไขที่คุณต้องการ พร้อมประสานนัดดูทรัพย์ให้ครบใน flow เดียว",
-      en: "Skip the endless listing hunt. We curate properties by budget, location, type, and deal requirements, then coordinate viewings in one smooth flow.",
-    },
-    benefits: [
-      {
-        th: "คัดทรัพย์ตามโจทย์จริง ไม่โยนลิสต์กว้างๆ ให้เลือกเอง",
-        en: "Curated to your real brief, not a generic list to sort through alone.",
-      },
-      {
-        th: "ช่วยจัดลำดับตัวเลือกให้เห็นภาพก่อนนัดดูทรัพย์",
-        en: "We prioritize options so you can review the best fits before viewing.",
-      },
-      {
-        th: "เหมาะกับทั้งซื้ออยู่เอง ลงทุน หรือหาทรัพย์ให้ทีม/ครอบครัว",
-        en: "Useful for owner-occupiers, investors, and teams searching on behalf of others.",
-      },
-    ],
-    closing: {
-      th: "ส่งความต้องการด้านขวาได้เลย ทีมงานติดต่อกลับเร็วที่สุด",
-      en: "Complete the form on the right and our team will follow up quickly.",
-    },
-    teamImageAlt: "ทีมงานบ้านไออุ่นให้คำปรึกษาลูกค้าเรื่องงานหาทรัพย์",
-  },
-  solutions: {
-    headline: {
-      th: "ทำไมต้องใช้บริการงานหาทรัพย์กับบ้านไออุ่น?",
-      en: "Why use Baan Ai Oun for Property Match?"
-    },
-    description: {
-      th: "เราทำงานแบบเป็นคู่คิด ไม่ใช่แค่ส่งลิงก์ประกาศ แต่ช่วยตีโจทย์ แนะนำทำเล เปรียบเทียบตัวเลือก และดู flow การตัดสินใจให้คุณเดินเร็วขึ้นอย่างมั่นใจ",
-      en: "We work like a trusted property partner, not just a listing sender, helping refine the brief, suggest the right areas, compare options, and speed up confident decisions.",
-    },
-    features: [
-      {
-        icon: "🎯",
-        th: "เริ่มจากบรีฟสั้นๆ แล้วให้ทีมงานช่วยคัดกรองต่อได้ทันที",
-        en: "Start with a short brief and let our team handle the first round of curation.",
-      },
-      {
-        icon: "🏠",
-        th: "คัดทรัพย์ตามงบ ทำเล และประเภทที่ต้องการ",
-        en: "Shortlisted properties matched to your budget, area, and property type.",
-      },
-      {
-        icon: "📍",
-        th: "ช่วยแนะนำทำเลและแลนด์มาร์คที่ตอบโจทย์การใช้ชีวิตหรือการลงทุน",
-        en: "Guidance on areas and landmarks that fit your lifestyle or investment plan.",
-      },
-      {
-        icon: "🤝",
-        th: "ประสานนัดดูทรัพย์และคุยรายละเอียดกับทีมงานได้ต่อเนื่อง",
-        en: "Coordinated viewings and smooth follow-up with the team throughout the process.",
-      },
-    ]
   },
   hook: {
     quote: {
-      th: '"บรีฟครั้งเดียว ดีกว่าไล่ดูประกาศเองเป็นร้อยรายการ"',
-      en: '"One clear brief beats scrolling through hundreds of listings alone."'
+      th: "บรีฟโจทย์กับเราครั้งเดียว ดีกว่าไล่หาประกาศเองเป็นร้อยรายการ",
+      en: "One clear brief with us beats scrolling through hundreds of listings.",
     },
     message: {
-      th: "ลูกค้าหลายเคสมาหาเราพร้อมโจทย์ที่ยังไม่ชัด 100% เช่น อยากได้บ้านมือสองรีโนเวทพร้อมอยู่ งบประมาณจำกัด หรืออยากได้ทำเลที่ปล่อยเช่าง่าย เราจึงช่วยไล่เรียงโจทย์ คัดตัวเลือกที่มีโอกาสใช่จริง และทำให้การตัดสินใจง่ายขึ้นตั้งแต่การนัดดูทรัพย์ครั้งแรก",
-      en: "Many clients come to us with an incomplete brief, such as wanting a move-in-ready renovated home, a tight budget, or an area that rents out easily. We help clarify the brief, shortlist realistic options, and make the first viewing feel far more focused and actionable.",
-    }
+      th: "ลูกค้าหลายท่านเข้ามาพร้อมโจทย์ที่ยังไม่ชัดเจน 100% ทีมงานของเรายินดีรับฟัง ช่วยไล่เรียงความต้องการ คัดกรองตัวเลือกที่ใช่ที่สุด และทำให้การตัดสินใจซื้อหรือเช่าบ้านของคุณเป็นเรื่องง่าย ปลอดภัย และสบายใจที่สุดค่ะ",
+      en: "Many clients come with incomplete briefs. We help clarify goals, shortlist realistic options, and make your decision-making process easy, safe, and stress-free.",
+    },
   },
   formCard: {
     title: {
-      th: "ส่งบรีฟงานหาทรัพย์",
-      en: "Submit Your Property Match Brief",
+      th: "ส่งโจทย์ให้เราช่วยหา",
+      en: "Submit Your Property Brief",
     },
     description: {
-      th: "กรอกข้อมูลสำคัญให้ครบที่สุด ทีมงานจะใช้ข้อมูลนี้คัดทรัพย์และติดต่อกลับเพื่อนัดคุยต่อ",
-      en: "Share the essentials so our team can curate relevant properties and follow up with the next steps.",
+      th: "กรอกข้อมูลสำคัญ เพื่อให้ทีมงานจัดหาทรัพย์ได้ตรงใจที่สุด",
+      en: "Provide details so we can match you perfectly.",
     },
   },
   steps: {
-    headline: "เริ่มงานหาทรัพย์ง่ายๆ ใน 3 ขั้นตอน | 3 Simple Steps to Property Match",
+    headline: "เริ่มงานหาทรัพย์ง่ายๆ ใน 3 ขั้นตอน | 3 Simple Steps to Your New Property",
     items: [
       {
         number: 1,
-        title: "ส่งโจทย์ที่ต้องการ (Share Your Brief)",
-        description: "ระบุประเภททรัพย์ ทำเล และงบประมาณ เพื่อให้ทีมงานเริ่มคัดทรัพย์ได้ตรงขึ้นตั้งแต่แรก",
+        title: "ส่งโจทย์ที่ต้องการ | Share Your Brief",
+        description:
+          "ระบุประเภท ทำเล และงบประมาณ ให้เราเริ่มคัดกรองทรัพย์ให้ตรงใจคุณตั้งแต่แรก | Specify type, location, and budget so we can shortlist accurately from the start.",
       },
       {
         number: 2,
-        title: "รับลิสต์ที่คัดแล้ว (Review Curated Matches)",
-        description: "ทีมงานคัดตัวเลือกที่เหมาะกว่า ส่งให้พิจารณา และช่วยนัดดูทรัพย์ที่น่าสนใจ",
+        title: "รับลิสต์คัดพิเศษ | Review Curated Matches",
+        description:
+          "เราคัดสรรตัวเลือกที่ดีที่สุด ส่งให้พิจารณา และช่วยอำนวยความสะดวกในการนัดหมายดูหน้างาน | We present the best matches and seamlessly coordinate viewings for you.",
       },
       {
         number: 3,
-        title: "เดินหน้าต่ออย่างมั่นใจ (Move Forward with Confidence)",
-        description: "เมื่อเจอตัวเลือกที่ใช่แล้ว เราช่วยประสานงานให้คุยต่อและตัดสินใจได้ง่ายขึ้น",
+        title: "เดินหน้าต่ออย่างมั่นใจ | Move Forward Confidently",
+        description:
+          "เมื่อเจอที่ใช่แล้ว เราพร้อมดูแลเรื่องการเจรจา ดันเคสสินเชื่อฟรี และจัดการเอกสารจนถึงวันโอน | Once found, we handle negotiations, free loan processing, and paperwork.",
       },
     ],
   },
   formTag: "request-matchmaking",
   banner: {
-    titleTh: "ให้เราหาให้ ฟรี!",
+    titleTh: "ให้เราหาให้ ฟรี! (Property Match)",
     titleEn: "Free Property Matchmaking",
-    subtitleTh: "แค่บอกโจทย์ของคุณ ทีมงานผู้เชี่ยวชาญพร้อมคัดสรรบ้าน คอนโด และที่ดินที่ใช่ที่สุด",
+    subtitleTh:
+      "แค่บอกโจทย์ของคุณ ทีมงานผู้เชี่ยวชาญพร้อมคัดสรรบ้าน คอนโด และที่ดินที่ใช่ที่สุด",
     subtitleEn: "Tell us your needs, and we'll curate the best properties just for you.",
   },
   split: {
     headline: {
-      th: "บอกบ้านในฝันของคุณ ให้ทีมงานเนรมิตให้เป็นจริง ฟรี 100%",
+      th: "บอกบ้านในฝันของคุณ",
+      thLine2: "ให้ทีมงานเนรมิตให้เป็นจริง ฟรี 100%",
       en: "Tell us your dream home. We'll make it a reality for free.",
     },
     seo: {
@@ -131,31 +74,57 @@ export const FIND_PROPERTY_CONTENT = {
       en: "Personal property shopper in Bangkok, On Nut, Sukhumvit 77, Chonburi & EEC.",
     },
     lead: {
-      th: "ประหยัดเวลาอันมีค่าของคุณ ไม่ต้องเลื่อนดูประกาศเองเป็นร้อยๆ หน้า ทีมงานผู้เชี่ยวชาญของเราพร้อมทำหน้าที่เป็น \"ผู้ช่วยส่วนตัว\" ลงพื้นที่คัดกรองทรัพย์ตามงบ ทำเล และตรวจสอบสภาพแวดล้อมให้คุณก่อนเสมอ",
+      th: 'ประหยัดเวลาอันมีค่าของคุณ ไม่ต้องเลื่อนดูประกาศเองเป็นร้อยๆ หน้า ทีมงานผู้เชี่ยวชาญของเราพร้อมทำหน้าที่เป็น "ผู้ช่วยส่วนตัว" ลงพื้นที่คัดกรองทรัพย์ตามงบ ทำเล และตรวจสอบสภาพแวดล้อมให้คุณก่อนเสมอ',
       en: "Save your valuable time. Our expert team acts as your personal shopper, physically inspecting and curating properties that match your exact criteria.",
     },
     benefits: [
-      { icon: "🎯", th: "คัดกรองด้วยสายตานักลงทุน", en: "Investor-minded screening" },
-      { icon: "📍", th: "เชี่ยวชาญทำเล EEC และปริมณฑล", en: "EEC & greater Bangkok expertise" },
-      { icon: "🛡️", th: "ดูแลสินเชื่อและเอกสารฟรี", en: "Free loan and paperwork care" },
-      { icon: "⚡", th: "ส่งลิสต์คัดพิเศษภายใน 1-3 วันทำการ", en: "Curated shortlist in 1-3 business days" },
+      {
+        icon: "👁️",
+        titleTh: "คัดกรองด้วยสายตานักลงทุน (Investor's Eye)",
+        titleEn: "Investor-Curated Selection",
+        descTh:
+          "ทีมงานคัดทรัพย์ที่ตรงโจทย์จริง ตรวจสอบโครงสร้างเบื้องต้น และประเมินความคุ้มค่าให้คุณเสร็จสรรพ",
+        descEn:
+          "We don't just match locations; we evaluate structural integrity and investment value for you.",
+      },
+      {
+        icon: "📍",
+        titleTh: "เชี่ยวชาญพื้นที่ตัวจริง (Local Experts)",
+        titleEn: "Local Market Experts",
+        descTh:
+          "เรารู้ลึกถึงศักยภาพทำเล ซอกซอย และแลนด์มาร์คสำคัญ เพื่อให้ได้บ้านที่ตอบโจทย์ไลฟ์สไตล์คุณอย่างแท้จริง",
+        descEn:
+          "We know the hidden gems and neighborhood dynamics to perfectly match your lifestyle.",
+      },
+      {
+        icon: "🛡️",
+        titleTh: "ดูแลครบวงจร ไร้รอยต่อ (Seamless Experience)",
+        titleEn: "Seamless Experience",
+        descTh:
+          "ช่วยจัดลำดับตัวเลือก นัดหมายดูหน้างาน ดันเคสสินเชื่อธนาคารฟรี และจัดการสัญญาจนถึงวันรับกุญแจ",
+        descEn:
+          "From viewings to free bank loan processing and contract handling, we support you end-to-end.",
+      },
     ],
   },
   bentoSlots: [
     {
       alt: "จัดหาบ้านเดี่ยว ชลบุรี ตรงใจลูกค้า",
-      badgeTh: "✅ จัดหาได้ตรงใจ",
-      badgeEn: "Perfect Match",
+      badgeTh: "✅ หาตรงโจทย์ ภายใน 3 วัน",
+      badgeEn: "Matched in 3 Days",
+      badgeVariant: "primary" as const,
     },
     {
       alt: "จัดหาคอนโดใกล้ BTS สุขุมวิท 77",
-      badgeTh: "✅ ใกล้ BTS",
-      badgeEn: "Near BTS",
+      badgeTh: "✅ คอนโดใกล้รถไฟฟ้า",
+      badgeEn: "Near BTS Station",
+      badgeVariant: "primary" as const,
     },
     {
       alt: "บ้านมือสองรีโนเวทราคาต่ำกว่าตลาด",
-      badgeTh: "✅ รีโนเวทพร้อมอยู่",
-      badgeEn: "Renovated",
+      badgeTh: "✅ ได้ราคาต่ำกว่าตลาด 15%",
+      badgeEn: "15% Below Market",
+      badgeVariant: "orange" as const,
     },
   ],
 }

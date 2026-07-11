@@ -4,6 +4,7 @@ export interface BentoSlotMeta {
   alt: string
   badgeTh: string
   badgeEn: string
+  badgeVariant?: "primary" | "orange"
 }
 
 /** รวมรูปจาก Admin กับข้อความจาก content — ช่องว่างแสดง placeholder บนหน้าเว็บ */

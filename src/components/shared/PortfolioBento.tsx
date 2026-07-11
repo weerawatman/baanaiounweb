@@ -6,6 +6,7 @@ export interface BentoItem {
   alt: string
   badgeTh: string
   badgeEn: string
+  badgeVariant?: "primary" | "orange"
 }
 
 interface PortfolioBentoProps {
@@ -31,9 +32,21 @@ function BentoCell({
           <p className="text-xs">อัปโหลดรูปใน Admin &gt; โปรไฟล์</p>
         </div>
       )}
-      <div className="absolute bottom-2 left-2 rounded-md bg-primary/90 px-2 py-1 text-[0.65rem] font-bold text-primary-foreground sm:bottom-3 sm:left-3 sm:px-3 sm:py-1.5 sm:text-xs">
+      <div
+        className={`absolute bottom-2 left-2 rounded-full px-3 py-1.5 text-[0.65rem] font-bold shadow-sm sm:bottom-3 sm:left-3 sm:px-4 sm:py-2 sm:text-xs ${
+          item.badgeVariant === "orange"
+            ? "bg-white/95 text-[#ea580c]"
+            : "bg-white/95 text-primary"
+        }`}
+      >
         {item.badgeTh}
-        <span className="mt-0.5 block font-medium text-primary-foreground/75">{item.badgeEn}</span>
+        <span
+          className={`mt-0.5 block font-medium ${
+            item.badgeVariant === "orange" ? "text-[#ea580c]/75" : "text-primary/75"
+          }`}
+        >
+          {item.badgeEn}
+        </span>
       </div>
     </div>
   )
