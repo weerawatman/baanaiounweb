@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import BeforeAfterSlider from "@/components/shared/BeforeAfterSlider"
+import { filterDisplayableSuccessStoryViews } from "@/lib/success-stories-display"
 import { type SuccessStory } from "@/types"
 
 interface SuccessStoriesSectionProps {
@@ -10,7 +11,8 @@ interface SuccessStoriesSectionProps {
 }
 
 export default function SuccessStoriesSection({ stories }: SuccessStoriesSectionProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: stories.length > 1 })
+  const displayableStories = filterDisplayableSuccessStoryViews(stories)
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: displayableStories.length > 1 })
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
 
@@ -37,6 +39,8 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
     [emblaApi],
   )
 
+  if (displayableStories.length === 0) return null
+
   return (
     <section className="bg-[#F5F0E8] py-16" data-testid="success-stories-section">
       <div className="container mx-auto max-w-5xl px-4">
@@ -51,7 +55,7 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
 
         <div className="overflow-hidden rounded-2xl" ref={emblaRef}>
           <div className="flex">
-            {stories.map((story) => (
+            {displayableStories.map((story) => (
               <div key={story.id} className="min-w-0 flex-[0_0_100%] px-2">
                 <div className="flex flex-col gap-6 rounded-2xl bg-white p-4 shadow-sm md:p-6">
                   <BeforeAfterSlider

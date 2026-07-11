@@ -5,6 +5,7 @@ import { getFaqsByPage } from "@/lib/queries/faqs"
 import { getTestimonials } from "@/lib/queries/testimonials"
 import { getPublishedSuccessStories } from "@/lib/queries/success-stories"
 import { mapProperty, mapFaq, mapTestimonial, mapSuccessStory } from "@/lib/mappers"
+import { filterDisplayableSuccessStoryViews } from "@/lib/success-stories-display"
 import { mapFaqsToItems } from "@/lib/faq-items"
 import HomePage from "./HomePage"
 
@@ -33,7 +34,7 @@ export default async function HomeRoute() {
   const properties = propertyRows.map(mapProperty)
   const faqs = mapFaqsToItems(faqRows.map(mapFaq))
   const testimonials = testimonialRows.map(mapTestimonial)
-  const successStories = storyRows.map(mapSuccessStory)
+  const successStories = filterDisplayableSuccessStoryViews(storyRows.map(mapSuccessStory))
 
   return (
     <HomePage

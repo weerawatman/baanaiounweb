@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache"
 import { publicClient } from "@/lib/supabase/public-client"
 import { createClient } from "@/lib/supabase/server"
+import { filterDisplayableSuccessStoryRows } from "@/lib/success-stories-display"
 import type { SuccessStory } from "@/lib/types/property"
 
 const PUBLIC_FIELDS =
@@ -16,7 +17,8 @@ export const getPublishedSuccessStories = unstable_cache(
       .eq("published", true)
       .order("sort_order", { ascending: true })
     if (error) throw new Error(error.message)
-    return (data as SuccessStory[]) ?? []
+    const rows = (data as SuccessStory[]) ?? []
+    return filterDisplayableSuccessStoryRows(rows)
   },
   ["success-stories"],
   { revalidate: 3600, tags: ["success-stories"] },
@@ -25,13 +27,21 @@ export const getPublishedSuccessStories = unstable_cache(
 // ─── Admin (dynamic, requires auth) ─────────────────────────────────────────
 
 export async function getAllSuccessStories(): Promise<SuccessStory[]> {
-  const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("success_stories")
-    .select("*")
-    .order("sort_order", { ascending: true })
-  if (error) throw new Error(error.message)
-  return (data as SuccessStory[]) ?? []
+  try {
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from("success_stories")
+      .select("*")
+      .order("sort_order", { ascending: true })
+    if (error) {
+      console.error("[getAllSuccessStories]", error.message)
+      return []
+    }
+    return (data as SuccessStory[]) ?? []
+  } catch (err) {
+    console.error("[getAllSuccessStories]", err)
+    return []
+  }
 }
 
 export async function getSuccessStoryById(id: string): Promise<SuccessStory | null> {

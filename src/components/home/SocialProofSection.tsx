@@ -9,6 +9,7 @@ import PageSection from "@/components/layout/PageSection"
 import SectionTitle from "@/components/layout/SectionTitle"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { getPropertyCategoryLabelTh } from "@/content/form-options"
+import { filterDisplayableSuccessStoryViews } from "@/lib/success-stories-display"
 import { type SuccessStory, type Testimonial } from "@/types"
 import { cn } from "@/lib/utils"
 
@@ -45,8 +46,9 @@ function CarouselDots({
 }
 
 export default function SocialProofSection({ stories, testimonials }: SocialProofSectionProps) {
+  const displayableStories = filterDisplayableSuccessStoryViews(stories)
   const [storyIndex, setStoryIndex] = useState(0)
-  const activeStory = stories[storyIndex]
+  const activeStory = displayableStories[storyIndex]
 
   const [testRef, testApi] = useEmblaCarousel({ loop: testimonials.length > 1 }, [
     Autoplay({ delay: 4000, stopOnInteraction: false }),
@@ -70,21 +72,23 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
   }, [testApi, onTestSelect])
 
   useEffect(() => {
-    if (storyIndex >= stories.length) {
+    if (storyIndex >= displayableStories.length) {
       setStoryIndex(0)
     }
-  }, [stories.length, storyIndex])
+  }, [displayableStories.length, storyIndex])
 
-  const hasStories = stories.length > 0
+  const hasStories = displayableStories.length > 0
   const hasTestimonials = testimonials.length > 0
   if (!hasStories && !hasTestimonials) return null
 
+  const sectionTitle = "ความไว้วางใจจากลูกค้า | Trusted by Our Clients"
+  const sectionSubtitle = hasStories
+    ? "ผลงานจริงและเสียงจากลูกค้าที่เราดูแลจนจบ"
+    : "เสียงจากลูกค้าที่เราดูแลจนจบ"
+
   return (
     <PageSection variant="default" data-testid="social-proof-section">
-      <SectionTitle
-        title="ความไว้วางใจจากลูกค้า | Trusted by Our Clients"
-        subtitle="ผลงานจริงและเสียงจากลูกค้าที่เราดูแลจนจบ"
-      />
+      <SectionTitle title={sectionTitle} subtitle={sectionSubtitle} />
 
       {hasStories && activeStory && (
         <div className="mt-10" data-testid="success-stories-section">
@@ -112,7 +116,7 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
           </div>
 
           <CarouselDots
-            count={stories.length}
+            count={displayableStories.length}
             selectedIndex={storyIndex}
             onSelect={setStoryIndex}
           />
