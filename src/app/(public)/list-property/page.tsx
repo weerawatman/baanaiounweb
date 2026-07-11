@@ -10,7 +10,7 @@ export { generateMetadata }
 export const revalidate = 1800
 
 export default async function ListPropertyRoute() {
-  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("owners")])
+  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("list-property")])
   const faqs = mapFaqsToItems(faqRows.map(mapFaq))
   const bentoItems = buildBentoItems(
     [

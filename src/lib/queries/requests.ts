@@ -46,3 +46,24 @@ export async function getServiceRequestCounts(): Promise<Record<ServiceRequestTy
 
   return Object.fromEntries(counts) as Record<ServiceRequestType, number>
 }
+
+export async function getNewServiceRequestCount(): Promise<number | null> {
+  const supabase = await createClient()
+
+  try {
+    const counts = await Promise.all(
+      Object.values(SERVICE_REQUEST_TABLES).map(async (table) => {
+        const { count, error } = await supabase
+          .from(table)
+          .select("id", { count: "exact", head: true })
+          .eq("status", "new")
+        return error ? null : (count ?? 0)
+      }),
+    )
+
+    if (counts.some((c) => c === null)) return null
+    return counts.reduce<number>((sum, c) => sum + (c ?? 0), 0)
+  } catch {
+    return null
+  }
+}

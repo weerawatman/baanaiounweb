@@ -21,6 +21,16 @@ export const getTestimonials = unstable_cache(
 
 // ─── Admin (dynamic, requires auth) ─────────────────────────────────────────
 
+export async function getAllTestimonials(): Promise<Testimonial[]> {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from("testimonials")
+    .select("*")
+    .order("sort_order", { ascending: true })
+  if (error) throw new Error(error.message)
+  return (data as Testimonial[]) ?? []
+}
+
 export async function getTestimonialById(id: string): Promise<Testimonial | null> {
   const supabase = await createClient()
   const { data, error } = await supabase.from("testimonials").select("*").eq("id", id).single()

@@ -31,3 +31,11 @@ export async function getFaqs(): Promise<Faq[]> {
   if (error) throw new Error(error.message)
   return (data as Faq[]) ?? []
 }
+
+export function groupFaqsByPage(faqs: Faq[]): Record<string, Faq[]> {
+  return faqs.reduce<Record<string, Faq[]>>((acc, faq) => {
+    const slug = faq.page_slug ?? "home"
+    ;(acc[slug] ??= []).push(faq)
+    return acc
+  }, {})
+}

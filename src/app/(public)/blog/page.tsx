@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { getPublishedBlogPosts } from "@/lib/queries/blog"
+import { getProfile } from "@/lib/queries/profile"
 import { getFaqsByPage } from "@/lib/queries/faqs"
 import { mapBlogPost, mapFaq } from "@/lib/mappers"
 import { mapFaqsToItems } from "@/lib/faq-items"
@@ -33,8 +34,9 @@ const blogJsonLd = {
 }
 
 export default async function BlogRoute() {
-  const [rows, faqRows] = await Promise.all([
+  const [rows, profile, faqRows] = await Promise.all([
     getPublishedBlogPosts(),
+    getProfile(),
     getFaqsByPage("blog"),
   ])
   const posts = rows.map(mapBlogPost)
@@ -46,7 +48,11 @@ export default async function BlogRoute() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
       />
-      <BlogPage posts={posts} faqs={faqs} />
+      <BlogPage
+        posts={posts}
+        faqs={faqs}
+        blogHeroImage={profile.blogHeroImage || profile.heroImageUrl}
+      />
     </>
   )
 }

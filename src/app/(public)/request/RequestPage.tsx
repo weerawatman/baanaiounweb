@@ -30,8 +30,8 @@ const TAB_META: Record<
     icon: Users,
     th: "ร่วมเป็น Co-Agent",
     en: "Join as a Co-Agent",
-    taglineTh: "ส่งทรัพย์เข้าระบบ ร่วมปิดดีลไปด้วยกันแบบ Co-Broke",
-    taglineEn: "Submit your listings and close deals together, co-broke style.",
+    taglineTh: "ส่งทรัพย์เข้าระบบ ร่วมปิดดีลไปด้วยกันแบบ Co-Agent",
+    taglineEn: "Submit your listings and close deals together as Co-Agents.",
   },
 }
 

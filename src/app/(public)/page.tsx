@@ -2,7 +2,9 @@ import type { Metadata } from "next"
 import { getActiveProperties } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { getFaqsByPage } from "@/lib/queries/faqs"
-import { mapProperty, mapFaq } from "@/lib/mappers"
+import { getTestimonials } from "@/lib/queries/testimonials"
+import { getPublishedSuccessStories } from "@/lib/queries/success-stories"
+import { mapProperty, mapFaq, mapTestimonial, mapSuccessStory } from "@/lib/mappers"
 import { mapFaqsToItems } from "@/lib/faq-items"
 import HomePage from "./HomePage"
 
@@ -20,20 +22,26 @@ export const metadata: Metadata = {
 }
 
 export default async function HomeRoute() {
-  const [propertyRows, profile, faqRows] = await Promise.all([
+  const [propertyRows, profile, faqRows, testimonialRows, storyRows] = await Promise.all([
     getActiveProperties(),
     getProfile(),
     getFaqsByPage("home"),
+    getTestimonials(),
+    getPublishedSuccessStories(),
   ])
 
   const properties = propertyRows.map(mapProperty)
   const faqs = mapFaqsToItems(faqRows.map(mapFaq))
+  const testimonials = testimonialRows.map(mapTestimonial)
+  const successStories = storyRows.map(mapSuccessStory)
 
   return (
     <HomePage
       properties={properties}
       heroImage={profile.homeHeroImage || profile.heroImageUrl}
       faqs={faqs}
+      testimonials={testimonials}
+      successStories={successStories}
     />
   )
 }

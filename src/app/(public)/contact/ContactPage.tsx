@@ -13,6 +13,7 @@ import Breadcrumb from "@/components/layout/Breadcrumb"
 import WhatsAppIcon from "@/components/shared/WhatsAppIcon"
 import { SITE_CONFIG } from "@/config/site"
 import { buildGoogleMapsEmbedUrl } from "@/lib/google-maps"
+import { mapContactSubjectToFormTag } from "@/lib/form-validation"
 import type { Profile } from "@/types"
 
 interface FormState {
@@ -68,7 +69,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          formTag: form.subject || "contact",
+          formTag: mapContactSubjectToFormTag(form.subject),
           name: form.name,
           phone: form.phone || undefined,
           email: form.email || undefined,

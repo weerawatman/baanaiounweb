@@ -178,3 +178,19 @@ export function formatThaiPhone(phone: string): string {
   }
   return phone
 }
+
+/** Map contact-page subject values to valid form_submissions.form_tag values. */
+export function mapContactSubjectToFormTag(subject: string): string {
+  switch (subject) {
+    case "buy":
+      return "buyer"
+    case "sell":
+      return "owner"
+    case "loan":
+      return "buyer"
+    case "co-agent":
+      return "co-agent"
+    default:
+      return "contact"
+  }
+}

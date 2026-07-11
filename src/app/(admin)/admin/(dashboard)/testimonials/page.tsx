@@ -1,14 +1,14 @@
 import Link from "next/link"
 import { Plus } from "lucide-react"
 import { buttonVariants } from "@/lib/button-variants"
-import { getTestimonials } from "@/lib/queries/testimonials"
+import { getAllTestimonials } from "@/lib/queries/testimonials"
 import { TestimonialsTable } from "./TestimonialsTable"
 import { cn } from "@/lib/utils"
 
 export const metadata = { title: "รีวิว" }
 
 export default async function TestimonialsPage() {
-  const testimonials = await getTestimonials()
+  const testimonials = await getAllTestimonials()
 
   return (
     <div className="flex flex-col gap-6">

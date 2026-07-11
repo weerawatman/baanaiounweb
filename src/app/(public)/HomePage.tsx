@@ -2,16 +2,25 @@ import HeroSection from "@/components/home/HeroSection"
 import ServiceShortcuts from "@/components/home/ServiceShortcuts"
 import FeaturedProperties from "@/components/home/FeaturedProperties"
 import WhyChoosePillars from "@/components/home/WhyChoosePillars"
+import SocialProofSection from "@/components/home/SocialProofSection"
 import { FaqSection, type FaqItem } from "@/components/shared"
-import { type Property } from "@/types"
+import { type Property, type SuccessStory, type Testimonial } from "@/types"
 
 interface HomePageProps {
   properties: Property[]
   heroImage?: string
   faqs: FaqItem[]
+  testimonials: Testimonial[]
+  successStories: SuccessStory[]
 }
 
-export default function HomePage({ properties, heroImage, faqs }: HomePageProps) {
+export default function HomePage({
+  properties,
+  heroImage,
+  faqs,
+  testimonials,
+  successStories,
+}: HomePageProps) {
   const districts = [
     ...new Set(properties.map((p) => p.location.district).filter(Boolean)),
   ].sort()
@@ -25,6 +34,8 @@ export default function HomePage({ properties, heroImage, faqs }: HomePageProps)
       <WhyChoosePillars />
 
       <FeaturedProperties properties={properties} />
+
+      <SocialProofSection stories={successStories} testimonials={testimonials} />
 
       <FaqSection
         variant="boxed"

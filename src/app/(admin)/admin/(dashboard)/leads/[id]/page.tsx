@@ -7,7 +7,7 @@ import { getPropertyCategoryLabelTh } from "@/content/form-options"
 import { LeadStatusUpdater } from "./LeadStatusUpdater"
 import { LeadNotesEditor } from "./LeadNotesEditor"
 
-export const metadata = { title: "รายละเอียด Lead" }
+export const metadata = { title: "รายละเอียดลูกค้าติดต่อ" }
 
 const FORM_TAG_LABEL: Record<string, string> = {
   owner: "เจ้าของทรัพย์ (TH)",
@@ -15,7 +15,7 @@ const FORM_TAG_LABEL: Record<string, string> = {
   buyer: "ซื้อ/เช่า (TH)",
   "buyer-foreign": "Buyer/Renter (EN)",
   "co-agent": "Co-Agent",
-  academy: "Academy",
+  academy: "คอร์สนายหน้า | Agent Course",
   contact: "ติดต่อทั่วไป",
 }
 

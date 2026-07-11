@@ -10,7 +10,7 @@ import FindPropertyPage from "./FindPropertyPage"
 export const revalidate = 1800
 
 export default async function FindPropertyRoute() {
-  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("match")])
+  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("find-property")])
   const faqs = mapFaqsToItems(faqRows.map(mapFaq))
   const bentoItems = buildBentoItems(
     [

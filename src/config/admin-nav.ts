@@ -20,7 +20,7 @@ export interface AdminNavItem {
 export const ADMIN_NAV: AdminNavItem[] = [
   { label: "ภาพรวม", href: "/admin", icon: LayoutDashboard },
   { label: "ทรัพย์", href: "/admin/properties", icon: Home },
-  { label: "Leads", href: "/admin/leads", icon: Inbox },
+  { label: "ลูกค้าติดต่อ", href: "/admin/leads", icon: Inbox },
   { label: "คำขอบริการ", href: "/admin/requests", icon: ClipboardList },
   { label: "บทความ", href: "/admin/blog", icon: Newspaper },
   { label: "รีวิว", href: "/admin/testimonials", icon: Star },

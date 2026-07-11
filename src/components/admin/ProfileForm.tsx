@@ -9,17 +9,20 @@ import { Input } from "@/components/ui/input"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { SingleImageField } from "@/components/admin/SingleImageField"
 import { MapCoordinateField } from "@/components/admin/MapCoordinateField"
+import { ProfileTabFaqs } from "@/components/admin/ProfileFaqEditor"
 import { profileSchema, type ProfileFormValues } from "@/lib/validations/profile"
+import type { Faq } from "@/lib/types/property"
 import type { Profile } from "@/types"
 import type { ActionState } from "@/actions/properties"
 import { cn } from "@/lib/utils"
 
 interface ProfileFormProps {
   defaultValues: Profile
+  faqsByPage: Record<string, Faq[]>
   action: (prev: ActionState, formData: FormData) => Promise<ActionState>
 }
 
-export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
+export function ProfileForm({ defaultValues, faqsByPage, action }: ProfileFormProps) {
   const [state, formAction, isPending] = useActionState(action, {})
 
   const {
@@ -279,6 +282,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
               />
             </FormField>
           </section>
+          <ProfileTabFaqs tab="home" faqsByPage={faqsByPage} />
         </TabsContent>
 
         {/* ─── Sheet: งานหาทรัพย์ (Property Match) ──── */}
@@ -370,6 +374,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
               </FormField>
             </div>
           </section>
+          <ProfileTabFaqs tab="property-match" faqsByPage={faqsByPage} />
         </TabsContent>
 
         {/* ─── Sheet: ฝากขาย/เช่า ───────────────────── */}
@@ -440,6 +445,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
               </FormField>
             </div>
           </section>
+          <ProfileTabFaqs tab="list-property" faqsByPage={faqsByPage} />
         </TabsContent>
 
         {/* ─── Sheet: บทความ (Blog) ─────────────────── */}
@@ -465,6 +471,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
               />
             </FormField>
           </section>
+          <ProfileTabFaqs tab="blog" faqsByPage={faqsByPage} />
         </TabsContent>
 
         {/* ─── Sheet: เกี่ยวกับเรา ──────────────────── */}
@@ -552,6 +559,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
               />
             </FormField>
           </section>
+          <ProfileTabFaqs tab="about" faqsByPage={faqsByPage} />
         </TabsContent>
         {/* ─── Sheet: บริการของเรา ──────────────────── */}
         <TabsContent value="services" className="flex flex-col gap-6 p-4 sm:p-6">
@@ -639,6 +647,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
               </FormField>
             </div>
           </section>
+          <ProfileTabFaqs tab="services" faqsByPage={faqsByPage} />
         </TabsContent>
 
         {/* ─── Sheet: คอร์สนายหน้า ──────────────────── */}
@@ -682,6 +691,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
               />
             </FormField>
           </section>
+          <ProfileTabFaqs tab="agent-course" faqsByPage={faqsByPage} />
         </TabsContent>
         <TabsContent value="co-agent" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
@@ -723,6 +733,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
               />
             </FormField>
           </section>
+          <ProfileTabFaqs tab="co-agent" faqsByPage={faqsByPage} />
         </TabsContent>
       </Tabs>
 

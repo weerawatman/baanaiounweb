@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { type BlogPost } from "@/types"
 import { BLOG_CATEGORIES } from "@/data/blog-posts"
 import { BLOG_PAGE_CONTENT } from "@/content/blog"
@@ -16,9 +17,10 @@ import { Search } from "lucide-react"
 interface BlogPageProps {
   posts: BlogPost[]
   faqs: FaqItem[]
+  blogHeroImage?: string
 }
 
-export default function BlogPage({ posts, faqs }: BlogPageProps) {
+export default function BlogPage({ posts, faqs, blogHeroImage }: BlogPageProps) {
   const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
   const { header, searchPlaceholder, faq } = BLOG_PAGE_CONTENT
@@ -44,13 +46,49 @@ export default function BlogPage({ posts, faqs }: BlogPageProps) {
       </div>
 
       <PageSection variant="default" className="pt-6 pb-10">
-        <header className="mb-10 text-center">
-          <h1 className="text-3xl font-bold text-primary sm:text-4xl">{header.titleTh}</h1>
-          <p className="mt-1 text-xl font-medium text-muted-foreground sm:text-2xl">
-            {header.titleEn}
-          </p>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-foreground/90">{header.subtitleTh}</p>
-          <p className="mx-auto mt-1 max-w-2xl text-sm text-muted-foreground">{header.subtitleEn}</p>
+        <header
+          className={
+            blogHeroImage
+              ? "relative isolate mb-10 overflow-hidden rounded-2xl bg-primary py-14 text-center text-primary-foreground sm:py-16"
+              : "mb-10 text-center"
+          }
+        >
+          {blogHeroImage && (
+            <>
+              <Image
+                src={blogHeroImage}
+                alt=""
+                aria-hidden
+                fill
+                priority
+                sizes="100vw"
+                className="-z-10 object-cover grayscale-[50%] brightness-[0.8]"
+              />
+              <div className="absolute inset-0 -z-10 bg-primary/85" />
+            </>
+          )}
+          <div className={blogHeroImage ? "relative z-10 px-4" : undefined}>
+            <h1
+              className={`text-3xl font-bold sm:text-4xl ${blogHeroImage ? "text-primary-foreground" : "text-primary"}`}
+            >
+              {header.titleTh}
+            </h1>
+            <p
+              className={`mt-1 text-xl font-medium sm:text-2xl ${blogHeroImage ? "text-primary-foreground/95" : "text-muted-foreground"}`}
+            >
+              {header.titleEn}
+            </p>
+            <p
+              className={`mx-auto mt-4 max-w-2xl text-base ${blogHeroImage ? "text-primary-foreground/90" : "text-foreground/90"}`}
+            >
+              {header.subtitleTh}
+            </p>
+            <p
+              className={`mx-auto mt-1 max-w-2xl text-sm ${blogHeroImage ? "text-primary-foreground/80" : "text-muted-foreground"}`}
+            >
+              {header.subtitleEn}
+            </p>
+          </div>
         </header>
 
         <div

@@ -11,7 +11,7 @@ const FORM_TAG_LABEL: Record<string, string> = {
   buyer: "ซื้อ/เช่า (TH)",
   "buyer-foreign": "ซื้อ/เช่า (EN)",
   "co-agent": "Co-Agent",
-  academy: "Academy",
+  academy: "คอร์สนายหน้า | Agent Course",
   contact: "ติดต่อ",
 }
 

@@ -2,7 +2,7 @@ import { StatusBadge } from "@/components/admin/StatusBadge"
 import { getLeads } from "@/lib/queries/leads"
 import { LeadsTable } from "./LeadsTable"
 
-export const metadata = { title: "Leads" }
+export const metadata = { title: "ลูกค้าติดต่อ" }
 
 export default async function LeadsPage() {
   const leads = await getLeads()
@@ -10,8 +10,10 @@ export default async function LeadsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-foreground text-2xl font-bold">Leads</h1>
-        <p className="text-muted-foreground mt-1 text-sm">ผู้ที่ส่งฟอร์มเข้ามาทั้งหมด</p>
+        <h1 className="text-foreground text-2xl font-bold">ลูกค้าติดต่อ</h1>
+        <p className="text-muted-foreground mt-1 text-sm">
+          ผู้ที่ส่งฟอร์มจากหน้าเว็บ (Co-Agent, คอร์สนายหน้า, ติดต่อเรา ฯลฯ)
+        </p>
       </div>
 
       <div className="flex flex-wrap gap-3">

@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { Home, Inbox, Newspaper, AlertTriangle, ArrowRight } from "lucide-react"
+import { Home, Inbox, Newspaper, AlertTriangle, ArrowRight, ClipboardList } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
+import { getNewServiceRequestCount } from "@/lib/queries/requests"
 
 export const metadata = { title: "ภาพรวม" }
 
@@ -26,7 +27,7 @@ async function getCount(build: () => CountQuery): Promise<number | null> {
 export default async function AdminDashboardPage() {
   const supabase = await createClient()
 
-  const [properties, newLeads, posts] = await Promise.all([
+  const [properties, newLeads, newRequests, posts] = await Promise.all([
     getCount(() =>
       supabase
         .from("properties")
@@ -40,6 +41,7 @@ export default async function AdminDashboardPage() {
         .select("*", { count: "exact", head: true })
         .eq("status", "new"),
     ),
+    getNewServiceRequestCount(),
     getCount(() => supabase.from("blog_posts").select("*", { count: "exact", head: true })),
   ])
 
@@ -52,11 +54,18 @@ export default async function AdminDashboardPage() {
       accent: "bg-green-100 text-green-700",
     },
     {
-      label: "Leads ใหม่",
+      label: "ลูกค้าติดต่อใหม่",
       value: newLeads,
       href: "/admin/leads",
       icon: Inbox,
       accent: "bg-blue-100 text-blue-700",
+    },
+    {
+      label: "คำขอบริการใหม่",
+      value: newRequests,
+      href: "/admin/requests",
+      icon: ClipboardList,
+      accent: "bg-violet-100 text-violet-700",
     },
     {
       label: "บทความ",
@@ -90,7 +99,7 @@ export default async function AdminDashboardPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
           <Link
             key={stat.label}

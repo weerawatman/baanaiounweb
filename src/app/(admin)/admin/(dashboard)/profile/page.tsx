@@ -1,13 +1,15 @@
 import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 import { getProfile } from "@/lib/queries/profile"
+import { getFaqs, groupFaqsByPage } from "@/lib/queries/faqs"
 import { ProfileForm } from "@/components/admin/ProfileForm"
 import { upsertProfile } from "@/actions/profile"
 
 export const metadata = { title: "โปรไฟล์" }
 
 export default async function ProfilePage() {
-  const profile = await getProfile()
+  const [profile, faqs] = await Promise.all([getProfile(), getFaqs()])
+  const faqsByPage = groupFaqsByPage(faqs)
 
   return (
     <div className="flex max-w-5xl flex-col gap-6">
@@ -21,11 +23,11 @@ export default async function ProfilePage() {
         </Link>
         <h1 className="text-foreground text-2xl font-bold">โปรไฟล์</h1>
         <p className="text-muted-foreground mt-1 text-sm">
-          ข้อมูลพิม + ช่องทางติดต่อ + โซเชียล + ข้อมูลเว็บ แก้แล้วอัปเดตทุกหน้าทันที
+          ข้อมูลพิม + รูปภาพ + FAQ ต่อหน้าเว็บ — แก้แล้วอัปเดตทุกหน้าทันที
         </p>
       </div>
 
-      <ProfileForm defaultValues={profile} action={upsertProfile} />
+      <ProfileForm defaultValues={profile} faqsByPage={faqsByPage} action={upsertProfile} />
     </div>
   )
 }
