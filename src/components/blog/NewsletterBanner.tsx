@@ -58,7 +58,7 @@ export default function NewsletterBanner() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="กรอกอีเมลของคุณ... | Your email"
-          className="min-h-[52px] flex-1 rounded-full border-0 px-5 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-secondary"
+          className="min-h-[52px] flex-1 rounded-full border border-white/30 bg-white px-5 py-3 text-sm text-foreground shadow-sm placeholder:text-muted-foreground focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/40"
         />
         <button
           type="submit"
