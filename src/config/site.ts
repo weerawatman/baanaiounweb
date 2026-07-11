@@ -16,10 +16,18 @@ export const SITE_CONFIG = {
   email: "supansa.m@baanaioun.com",
 
   // ─── Social ────────────────────────────────────────────────────────────
-  // facebook: มี 2 หน้า — ใช้หน้าแรกเป็นหลัก หน้าที่สอง: https://www.facebook.com/share/1GgLj8c2AX/
+  // facebook: Fanpage หลัก — หน้าส่วนตัว: facebookPersonal
   facebook: "https://www.facebook.com/share/18EEmsWiKy/",
+  facebookPersonal: "https://www.facebook.com/share/1GgLj8c2AX/",
+  facebookPersonalLabel: "คุณพิม — บ้านไออุ่น",
+  instagram: "https://www.instagram.com/baan_ai_oun",
+  instagramHandle: "@baan_ai_oun",
   tiktok: "https://www.tiktok.com/@baan_ai_oun",
+  tiktokHandle: "@baan_ai_oun",
   youtube: "https://youtube.com/@baanaioun", // TODO: อัปเดต URL จริง
+  youtubeLabel: "Baan Ai Oun",
+  /** แสดงใน Footer เมื่อกรอก — ว่างไว้จะไม่แสดงแถว LINE ส่วนตัว */
+  linePersonalId: "",
 
   // ─── Location ──────────────────────────────────────────────────────────
   address: "107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540",

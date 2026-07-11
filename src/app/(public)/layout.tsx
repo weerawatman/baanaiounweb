@@ -59,7 +59,14 @@ export default async function PublicLayout({
       postalCode: "10540",
       addressCountry: "TH",
     },
-    sameAs: [profile.facebook, profile.tiktok, profile.youtube, profile.lineUrl],
+    sameAs: [
+      profile.facebook,
+      SITE_CONFIG.facebookPersonal,
+      SITE_CONFIG.instagram,
+      profile.tiktok,
+      profile.youtube,
+      profile.lineUrl,
+    ].filter(Boolean),
     areaServed: {
       "@type": "City",
       name: SITE_CONFIG.areaServed,

@@ -50,3 +50,22 @@ export const NAV_ITEMS: NavItem[] = [
   { th: "เกี่ยวกับเรา", en: "About Us", href: "/about" },
   { th: "ติดต่อเรา", en: "Contact Us", href: "/contact" },
 ]
+
+// ─── Footer quick links (เมนูลัด) ───────────────────────────────────────
+
+export const FOOTER_QUICK_LINKS: NavItem[] = [
+  { th: "ฝากขาย/ปล่อยเช่า", en: "List Property", href: "/list-property" },
+  { th: "ค้นหาทรัพย์", en: "Find Properties", href: "/find-property" },
+  { th: "ร่วมเป็น Co-Agent", en: "Co-Agent Program", href: "/co-agent" },
+  { th: "คอร์สนายหน้าอสังหาฯ", en: "Real Estate Course", href: "/agent-course" },
+]
+
+/** Popular search pills in the footer — links to property search. */
+export const FOOTER_SEO_TAGS: { label: string; href: string }[] = [
+  { label: "บ้านมือสอง ชลบุรี", href: "/properties?query=บ้านมือสอง+ชลบุรี" },
+  { label: "คอนโด อ่อนนุช", href: "/properties?query=คอนโด+อ่อนนุช" },
+  { label: "คอนโด สุขุมวิท 77", href: "/properties?query=คอนโด+สุขุมวิท+77" },
+  { label: "คอนโดใกล้นิคม EEC", href: "/properties?query=คอนโด+EEC" },
+  { label: "ทาวน์โฮม สมุทรปราการ", href: "/properties?query=ทาวน์โฮม+สมุทรปราการ" },
+  { label: "หาบ้านเช่า ฟรี", href: "/properties?purpose=RENT" },
+]
