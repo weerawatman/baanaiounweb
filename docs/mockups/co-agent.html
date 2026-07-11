@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ร่วมเป็น Co-Agent | Partner with Us - บ้านไออุ่น พร็อพเพอร์ตี้</title>
+    <meta name="description" content="ร่วมเป็น Co-Agent อสังหาฯ โซนชลบุรี สมุทรปราการ EEC กับบ้านไออุ่น เรามีฐานลูกค้าพร้อมซื้อ ทำการตลาดให้ฟรี แบ่งคอมมิชชันโปร่งใส เติบโตไปด้วยกัน">
+    <style>
+        /* 📌 Box Sizing ป้องกันหน้าจอล้นบนมือถือ */
+        * { box-sizing: border-box; }
+
+        /* 📌 Theme Variables */
+        :root {
+            --primary-green: #14532d;
+            --accent-orange: #ea580c;
+            --accent-yellow: #eab308;
+            --bg-light: #f8f6f0;
+            --text-dark: #333333;
+            --footer-bg: #14532d;
+            --border-color: #e5e7eb;
+        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.6;}
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* 📌 Navbar */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05);}
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: color 0.2s;}
+        .nav-links a:hover { color: var(--primary-green); }
+        .lang-switch { background: #eee; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; border: 1px solid #ccc; display: flex; gap: 5px; align-items: center;}
+        .btn-contact { background: var(--primary-green); color: white !important; padding: 8px 20px; border-radius: 5px; font-weight: bold;}
+        
+        /* 📌 Hero Section (แบนเนอร์ภาษาเชิงบวก 2 ภาษา) */
+        .hero { 
+            position: relative; 
+            background-color: #111827;
+            padding: 100px 20px 120px; 
+            text-align: center; 
+            color: white;
+            overflow: hidden; 
+        }
+        .hero-bg-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(17, 24, 39, 0.6), rgba(20, 83, 45, 0.85)); /* เข้มไปหาเขียวบ้านไออุ่น */
+            z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+        .hero-content h1 { font-size: 2.8em; margin-top: 0; margin-bottom: 15px; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
+        .hero-content p { font-size: 1.2em; color: var(--accent-yellow); margin-bottom: 0; text-shadow: 0 1px 2px rgba(0,0,0,0.5); font-weight: bold;}
+
+        /* 📌 4 Value Boxes (เปลี่ยนจากข้อความเชิงลบ เป็นเชิงบวก) */
+        .value-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: -50px auto 60px; position: relative; z-index: 10;}
+        .value-card { background: white; padding: 25px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; gap: 15px; align-items: flex-start; transition: transform 0.3s;}
+        .value-card:hover { transform: translateY(-5px); border-color: var(--primary-green);}
+        .value-icon { font-size: 1.8em; background: #f0fdf4; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;}
+        .value-text h4 { margin: 0 0 5px 0; color: var(--primary-green); font-size: 1.1em;}
+        .value-text p { margin: 0; color: #666; font-size: 0.9em; line-height: 1.5;}
+
+        /* 📌 Split Section: Why Co-Broke? */
+        .split-section { display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px; align-items: center; margin-top: 80px; margin-bottom: 80px;}
+        .split-img-wrapper { border-radius: 20px; overflow: hidden; height: 450px; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.1);}
+        .split-img-wrapper img { width: 100%; height: 100%; object-fit: cover;}
+        
+        .split-content h2 { font-size: 2.2em; color: var(--text-dark); margin-top: 0; margin-bottom: 10px; line-height: 1.3;}
+        .seo-heading { color: var(--primary-green); font-weight: bold; font-size: 1.05em; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--accent-yellow); display: inline-block;}
+        
+        .reason-list { display: flex; flex-direction: column; gap: 20px;}
+        .reason-card { background: white; border: 1px solid #e5e7eb; border-left: 4px solid var(--primary-green); padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);}
+        .reason-card h4 { margin: 0 0 5px 0; font-size: 1.1em; color: var(--text-dark); display: flex; align-items: center; gap: 10px;}
+        .reason-card p { margin: 0; color: #555; font-size: 0.95em; padding-left: 32px;}
+
+        /* 📌 Quote Box (สีเขียวดูพรีเมียม พักสายตา) */
+        .quote-section { background: var(--primary-green); color: white; padding: 60px 20px; text-align: center; border-radius: 20px; margin: 80px 0; box-shadow: 0 15px 30px rgba(20, 83, 45, 0.2);}
+        .quote-icon { font-size: 2.5em; color: var(--accent-yellow); margin-bottom: 15px;}
+        .quote-section h3 { font-size: 1.8em; margin: 0 0 20px 0; font-style: italic; font-weight: 600; color: var(--accent-yellow);}
+        .quote-section p { font-size: 1.15em; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e5e7eb;}
+
+        /* 📌 FAQ Section (ดึงดูด AI & Google) */
+        .faq-section { margin-top: 80px; background: white; padding: 50px 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0,0,0,0.04);}
+        .faq-title { text-align: center; margin-bottom: 40px;}
+        .faq-title h2 { color: var(--text-dark); margin-bottom: 10px; font-size: 2em;}
+        .faq-title p { color: #666; font-size: 1.1em;}
+        .faq-grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+        .faq-item { background: #f8fafc; border: 1px solid #e2e8f0; padding: 25px 30px; border-radius: 12px;}
+        .faq-q { font-weight: bold; color: var(--primary-green); font-size: 1.1em; margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start;}
+        .faq-q::before { content: 'Q:'; color: var(--accent-orange); font-weight: bold;}
+        .faq-a { color: #475569; font-size: 0.95em; line-height: 1.6; padding-left: 28px;}
+
+        /* 📌 Bottom CTA (เน้นปุ่มกดง่ายบนมือถือ) */
+        .cta-section { text-align: center; margin: 80px 0 40px;}
+        .cta-section h2 { font-size: 2em; color: var(--text-dark); margin-bottom: 10px;}
+        .cta-section p { color: #666; font-size: 1.1em; margin-bottom: 30px;}
+        .cta-buttons { display: flex; justify-content: center; gap: 15px; }
+        .btn-primary { background: var(--primary-green); color: white; border: none; padding: 16px 35px; border-radius: 8px; font-weight: bold; font-size: 1.1em; cursor: pointer; text-decoration: none; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px;} /* 48px+ for mobile touch */
+        .btn-primary:hover { background: #0f3d20; box-shadow: 0 4px 10px rgba(0,0,0,0.15);}
+        .btn-outline { background: transparent; color: var(--primary-green); border: 2px solid var(--primary-green); padding: 14px 35px; border-radius: 8px; font-weight: bold; font-size: 1.1em; cursor: pointer; text-decoration: none; transition: 0.2s; display: flex; align-items: center; justify-content: center; min-height: 52px;}
+        .btn-outline:hover { background: #f0fdf4;}
+
+        /* 📌 Footer */
+        .footer { background: var(--footer-bg); color: #f9fafb; padding: 60px 20px 20px; margin-top: 80px; font-size: 14px; border-top: 5px solid var(--accent-yellow);}
+        .footer-grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 1200px; margin: 0 auto 30px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .footer-col h4 { font-size: 1.2em; margin-top: 0; margin-bottom: 20px; color: var(--accent-yellow);}
+        .footer-col p { color: #d1d5db; line-height: 1.6; margin: 0 0 10px 0;}
+        .footer-col a { color: #d1d5db; text-decoration: none; display: block; margin-bottom: 12px; transition: color 0.2s;}
+        .footer-col a:hover { color: white; }
+        .seo-links-section { max-width: 1200px; margin: 0 auto; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center;}
+        .seo-links-section h4 { color: #888; font-size: 0.9em; margin-bottom: 15px; text-transform: uppercase;}
+        .seo-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;}
+        .seo-tags a { color: #aaa; text-decoration: none; font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px;}
+        .seo-tags a:hover { background: rgba(255,255,255,0.1); color: white;}
+        .footer-bottom { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 20px; }
+        
+        .lang-en { display: none; }
+
+        /* 🌟 MOBILE OPTIMIZATION 🌟 */
+        @media (max-width: 900px) {
+            .split-section { grid-template-columns: 1fr; gap: 30px;}
+            .split-img-wrapper { height: 300px; } /* ลดขนาดรูปบนมือถือ */
+        }
+        @media (max-width: 768px) {
+            .value-grid { grid-template-columns: 1fr; margin-top: -30px; padding: 0 15px;} /* เรียง 1 คอลัมน์ */
+            .cta-buttons { flex-direction: column; } /* ปุ่มเรียงแนวตั้งบนมือถือ */
+            .btn-primary, .btn-outline { width: 100%; } /* ปุ่มกว้างเต็มจอ กดง่าย */
+            
+            .container { padding: 30px 15px; }
+            .quote-section { padding: 40px 20px; }
+            .faq-section { padding: 30px 20px; }
+            .faq-item { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 📌 Navbar -->
+    <nav class="navbar">
+        <div style="font-weight: bold; color: var(--primary-green); font-size: 1.5em;">Baan Ai Oun</div>
+        <div class="nav-links">
+            <a href="index.html" class="lang-th">หน้าแรก</a><a href="index.html" class="lang-en">Home</a>
+            <a href="match.html" class="lang-th">งานหาทรัพย์</a><a href="match.html" class="lang-en">Property Match</a>
+            <a href="services.html" class="lang-th" style="color:var(--primary-green); font-weight:bold;">บริการของเรา</a><a href="services.html" class="lang-en" style="color:var(--primary-green); font-weight:bold;">Our Services</a>
+            <a href="blog.html" class="lang-th">บทความ</a><a href="blog.html" class="lang-en">Blog</a>
+            <a href="about.html" class="lang-th">เกี่ยวกับเรา</a><a href="about.html" class="lang-en">About Us</a>
+            
+            <button class="lang-switch" onclick="toggleLanguage()"><span id="current-lang-text">🌐 EN</span></button>
+            <a href="contact.html" class="btn-contact lang-th">ติดต่อเรา</a><a href="contact.html" class="btn-contact lang-en">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- 📌 Hero Section (แบนเนอร์ภาษาเชิงบวก โชว์ 2 ภาษาเสมอ) -->
+    <header class="hero">
+        <!-- ========================================================================= -->
+        <!-- 🛠️ ADMIN: เปลี่ยนรูปภาพพื้นหลังแบนเนอร์ Co-Agent ตรงนี้ 🛠️ -->
+        <!-- ========================================================================= -->
+        <img class="hero-bg-img" src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="ภาพนายหน้าอสังหาริมทรัพย์จับมือร่วมงานกัน">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>ขยายโอกาสปิดการขายให้ไวขึ้น<br>ด้วยเครือข่าย Co-Agent ที่แข็งแกร่งของเรา</h1>
+            <p>Expand your closing opportunities faster with our strong Co-Agent network.</p>
+        </div>
+    </header>
+
+    <!-- 📌 4 Value Boxes (เปลี่ยนเป็นข้อความเชิงบวกทั้งหมด) -->
+    <div class="container" style="padding-top: 0;">
+        <div class="value-grid">
+            <div class="value-card">
+                <div class="value-icon">🤝</div>
+                <div class="value-text">
+                    <h4 class="lang-th">ทำงานเป็นทีมเวิร์ก ปิดดีลได้เร็วกว่า</h4>
+                    <h4 class="lang-en">Teamwork Closes Deals Faster</h4>
+                    <p class="lang-th">ไม่เหนื่อยคนเดียว เราช่วยแมตช์ทรัพย์ของคุณกับผู้ซื้อตัวจริงทันที</p>
+                    <p class="lang-en">Don't work alone. We instantly match your listings with real buyers.</p>
+                </div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">📢</div>
+                <div class="value-text">
+                    <h4 class="lang-th">ประหยัดงบโฆษณา ทำการตลาดให้ฟรี</h4>
+                    <h4 class="lang-en">Save on Ads, Free Marketing</h4>
+                    <p class="lang-th">ลดภาระต้นทุน เรากระจายประกาศลงทุกสื่อของเราให้โดยไม่มีค่าใช้จ่ายแฝง</p>
+                    <p class="lang-en">Cut your costs. We distribute your listings across our channels for free.</p>
+                </div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">✅</div>
+                <div class="value-text">
+                    <h4 class="lang-th">หมดห่วงเรื่องคัดกรอง มีฐานลูกค้าพร้อม</h4>
+                    <h4 class="lang-en">Ready Clients, No Screening Worries</h4>
+                    <p class="lang-th">ไม่ต้องเสียเวลากับเคสที่ยังไม่พร้อม เรามีฐานลูกค้า (Ready Clients) ในมือแล้ว</p>
+                    <p class="lang-en">Skip the unready prospects. We have a solid base of ready-to-buy clients.</p>
+                </div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🌐</div>
+                <div class="value-text">
+                    <h4 class="lang-th">เชื่อมต่อเครือข่ายคุณภาพ ดันทรัพย์ทันที</h4>
+                    <h4 class="lang-en">Connect with a Quality Network</h4>
+                    <p class="lang-th">เข้าถึงเครือข่ายเอเจนต์กว่า 50+ ท่านที่พร้อมนำทรัพย์คุณไปเสนอขายทันที</p>
+                    <p class="lang-en">Access 50+ partner agents ready to actively promote your listings.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📌 Split Section: Why Co-Broke -->
+        <section class="split-section">
+            <div class="split-img-wrapper">
+                <!-- ========================================================================= -->
+                <!-- 🛠️ ADMIN: เปลี่ยนรูปภาพประกอบ (เช่น รูปทีมงานจับมือ) ตรงนี้ 🛠️ -->
+                <!-- ========================================================================= -->
+                <img src="https://images.pexels.com/photos/8293778/pexels-photo-8293778.jpeg?auto=compress&cs=tinysrgb&w=800&q=80" alt="ทีมงานนายหน้าบ้านไออุ่นร่วมมือกับพาร์ทเนอร์">
+            </div>
+            <div class="split-content">
+                <h2 class="lang-th">ทำไมถึงควร Co-Broke กับบ้านไออุ่น?</h2>
+                <h2 class="lang-en">Why Co-Broke with Baan Ai Oun?</h2>
+                
+                <!-- SEO Heading เน้นคีย์เวิร์ดพื้นที่ -->
+                <div class="seo-heading lang-th">รับ Co-Broke อสังหาฯ โซนกรุงเทพฯ สมุทรปราการ ชลบุรี ฉะเชิงเทรา ระยอง และ EEC แบบแบ่งคอมมิชชันโปร่งใส</div>
+                <div class="seo-heading lang-en">Transparent Co-Broke network in Bangkok, Samut Prakan, Chonburi, Rayong & EEC.</div>
+                
+                <div class="reason-list">
+                    <div class="reason-card">
+                        <h4 class="lang-th">👥 เรามีฐานลูกค้าพร้อมซื้อ-เช่า</h4><h4 class="lang-en">👥 Access to Ready Clients</h4>
+                        <p class="lang-th">ด้วยฐานข้อมูลลูกค้าที่อัปเดตเสมอ ทรัพย์ที่คุณนำมาฝากจะถูกจับคู่กับลูกค้าที่กำลังมองหาบ้านสเปกนั้นๆ ทันที ไม่ต้องรอคอยอย่างไร้จุดหมาย</p>
+                        <p class="lang-en">Your listings are instantly matched with our active database of clients actively looking for specific properties.</p>
+                    </div>
+                    <div class="reason-card">
+                        <h4 class="lang-th">📈 ทำการตลาดเชิงรุกให้ฟรี</h4><h4 class="lang-en">📈 Zero Marketing Costs</h4>
+                        <p class="lang-th">สำหรับเพื่อนร่วมอาชีพ เราถือเป็นทีมเดียวกัน! นำทรัพย์เข้าระบบเราฟรี ไม่มีค่าบริการรายเดือน เราช่วยดันประกาศให้เข้าถึงกลุ่มเป้าหมาย</p>
+                        <p class="lang-en">Bring your listings to our system for free! We actively promote your properties without any hidden or monthly fees.</p>
+                    </div>
+                    <div class="reason-card">
+                        <h4 class="lang-th">📑 โปร่งใส แบ่งคอมมิชชันชัดเจน</h4><h4 class="lang-en">📑 Transparent Commission Split</h4>
+                        <p class="lang-th">ทำงานด้วยความสบายใจ เรายึดหลักการแบ่งคอมมิชชันที่เป็นธรรมตามมาตรฐานสากล พร้อมทำข้อตกลงเป็นลายลักษณ์อักษรทุกเคส</p>
+                        <p class="lang-en">Work with peace of mind. We adhere to fair, standard commission splits with clear written agreements for every case.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📌 Quote Section (เปลี่ยน "พิม" เป็น "เรา" และใช้ภาษาเชิงบวก) -->
+        <section class="quote-section">
+            <div class="quote-icon">💛</div>
+            <h3 class="lang-th">"เติบโตไปพร้อมกันในสายอาชีพอสังหาฯ"</h3>
+            <h3 class="lang-en">"Grow together in the real estate profession"</h3>
+            <p class="lang-th">ให้ "บ้านไออุ่น" เป็นพาร์ทเนอร์ที่ช่วยดูแลทุกเคสของคุณด้วยความจริงใจ คุยง่าย ตรงไปตรงมา เราไม่เคยมองคุณเป็นคู่แข่ง แต่เราคือพันธมิตรที่พร้อมจะนำพาทุกดีลไปสู่ความสำเร็จร่วมกัน</p>
+            <p class="lang-en">Let "Baan Ai Oun" be your sincere partner. Easy communication, straightforward, and dedicated to mutual success in every deal.</p>
+        </section>
+
+        <!-- 📌 FAQ Section (อาวุธลับดึงดูด AI & Google) -->
+        <section class="faq-section lang-th">
+            <div class="faq-title">
+                <h2>คำถามที่พบบ่อย (FAQ)</h2>
+                <p>เรื่องที่เพื่อนร่วมอาชีพมักสอบถามเกี่ยวกับการทำงานร่วมกับเรา</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-q">การร่วมเป็น Co-Agent กับบ้านไออุ่น มีข้อดีอย่างไร?</div>
+                    <div class="faq-a">เรามีฐานลูกค้า (Ready Clients) ที่พร้อมซื้อ-เช่าในมือ และช่วยคุณทำการตลาดแบบเข้าถึงกลุ่มเป้าหมาย (Omnichannel) โดยที่คุณไม่ต้องเสียค่าโฆษณาหรือค่าใช้จ่ายใดๆ ล่วงหน้า ทำให้ช่วยกันปิดดีลได้ไวขึ้นค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">รับ Co-Broke อสังหาริมทรัพย์ในพื้นที่ไหนบ้าง?</div>
+                    <div class="faq-a">เครือข่ายและฐานลูกค้าของเราเน้นความเชี่ยวชาญในทำเลศักยภาพ ได้แก่ <strong>กรุงเทพมหานคร, สมุทรปราการ, ชลบุรี, ฉะเชิงเทรา, ระยอง และพื้นที่เศรษฐกิจ โซน EEC ทั้งหมด</strong> ค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">นโยบายการแบ่งคอมมิชชัน (Commission Split) เป็นอย่างไร?</div>
+                    <div class="faq-a">เราเน้นการทำงานแบบพาร์ทเนอร์ที่จริงใจและตรงไปตรงมา การแบ่งคอมมิชชันจะเป็นไปตามมาตรฐานสากล (เช่น 50:50 หรือตามแต่ตกลงกันก่อนเริ่มงาน) โดยเน้นความโปร่งใส ชัดเจน และมีการทำสัญญาเป็นลายลักษณ์อักษรทุกเคสเพื่อความสบายใจค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">หากสนใจส่งทรัพย์เพื่อ Co-Broke ต้องเริ่มต้นอย่างไร?</div>
+                    <div class="faq-a">ง่ายมากค่ะ! เพียงคลิกปุ่ม <strong>"ส่งทรัพย์ Co-Agent"</strong> ด้านล่าง แล้วกรอกรายละเอียดทรัพย์เบื้องต้น ทีมงานของเราจะรีบติดต่อกลับเพื่อพูดคุยรายละเอียดและเริ่มจับคู่ทรัพย์ของคุณกับลูกค้าในระบบทันที</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section lang-en">
+            <div class="faq-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-q">What are the benefits of co-broking with Baan Ai Oun?</div>
+                    <div class="faq-a">We have ready-to-buy clients and provide free omnichannel marketing for your listings, helping you close deals faster without upfront ad costs.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Which locations do you accept for co-broking?</div>
+                    <div class="faq-a">We specialize in Bangkok, Samut Prakan, Chonburi, Chachoengsao, Rayong, and all EEC economic zones.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">What is your commission split policy?</div>
+                    <div class="faq-a">We believe in transparent, standard commission splits (e.g., 50:50). Everything is clearly agreed upon and put in writing before we begin.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📌 Bottom CTA (ปุ่มขยายใหญ่ กดง่ายบนมือถือ) -->
+        <section class="cta-section">
+            <h2 class="lang-th">พร้อมเริ่มต้นหรือยัง?</h2>
+            <h2 class="lang-en">Ready to Get Started?</h2>
+            <p class="lang-th">คุยง่าย ตรงไปตรงมา พร้อมดูแลทุกเคสด้วยความจริงใจ</p>
+            <p class="lang-en">Straightforward communication, handling every case with sincerity.</p>
+            
+            <div class="cta-buttons">
+                <!-- ใส่ลิงก์ไปหน้าฟอร์ม หรือ LINE OA ได้เลย -->
+                <a href="contact.html" class="btn-primary">
+                    <span class="lang-th">📝 ส่งทรัพย์ Co-Agent ทันที</span><span class="lang-en">📝 Submit Co-Agent Listing</span>
+                </a>
+                <a href="#" class="btn-outline">
+                    <span class="lang-th">💬 สอบถามรายละเอียดเพิ่มเติม</span><span class="lang-en">💬 Learn More via LINE</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 📌 Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 class="lang-th">Baan Ai Oun Property</h4><h4 class="lang-en">Baan Ai Oun Property</h4>
+                <p class="lang-th">บ้านไออุ่น: มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ</p>
+                <p class="lang-en">More than just a house, it's the energy to keep you moving forward.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">เมนูลัด</h4><h4 class="lang-en">Quick Links</h4>
+                <a href="list-property.html" class="lang-th">- ฝากขาย/ปล่อยเช่า</a><a href="list-property.html" class="lang-en">- List Your Property</a>
+                <a href="match.html" class="lang-th">- ให้เราหาให้ฟรี</a><a href="match.html" class="lang-en">- Find Properties</a>
+                <a href="#" class="lang-th">- ร่วมเป็น Co-Agent</a><a href="#" class="lang-en">- Co-Agent Program</a>
+                <a href="#" class="lang-th">- คอร์สนายหน้าอสังหาฯ</a><a href="#" class="lang-en">- Real Estate Course</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">ติดต่อเรา</h4><h4 class="lang-en">Contact Us</h4>
+                <p>📞 โทร (Tel): 086-4149960</p>
+                <p>🟢 LINE: @baan-ai-oun</p>
+                <p>✉️ Email: supansa.m@baanaioun.com</p>
+                <p style="margin-top: 15px;">
+                    <span class="lang-th">📍 ที่ตั้งสำนักงาน: 107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540</span>
+                    <span class="lang-en">📍 Office: 107/57 The Colors Leisure, Soi Mahachai, Moo 13, Bang Phli Yai, Bang Phli, Samut Prakan 10540</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="seo-links-section">
+            <h4 class="lang-th">ค้นหาทำเลยอดฮิต</h4><h4 class="lang-en">Popular Searches</h4>
+            <div class="seo-tags">
+                <a href="#" class="lang-th">บ้านมือสอง ชลบุรี</a><a href="#" class="lang-en">Houses in Chonburi</a>
+                <a href="#" class="lang-th">คอนโดใกล้นิคม EEC</a><a href="#" class="lang-en">Condos near EEC</a>
+                <a href="#" class="lang-th">บ้านรีโนเวทพร้อมอยู่</a><a href="#" class="lang-en">Renovated Homes</a>
+                <a href="#" class="lang-th">ทาวน์โฮม สมุทรปราการ</a><a href="#" class="lang-en">Townhomes Samut Prakan</a>
+                <a href="#" class="lang-th">บ้านเช่า ระยอง</a><a href="#" class="lang-en">Houses for Rent Rayong</a>
+                <a href="#" class="lang-th">รับ Co-Broke อสังหา</a><a href="#" class="lang-en">Co-Broke Real Estate</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="lang-th">&copy; 2026 บ้านไออุ่น พร็อพเพอร์ตี้ สงวนลิขสิทธิ์ทุกประการ | นโยบายความเป็นส่วนตัว</p>
+            <p class="lang-en">&copy; 2026 Baan Ai Oun Property. All rights reserved. | Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        let isEnglish = false;
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            document.querySelectorAll('.lang-th').forEach(el => el.style.display = isEnglish ? 'none' : 'block');
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = isEnglish ? 'block' : 'none');
+            document.getElementById('current-lang-text').innerText = isEnglish ? '🌐 TH' : '🌐 EN';
+        }
+    </script>
+</body>
+</html>

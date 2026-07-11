@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ฝากขาย-ปล่อยเช่าอสังหาฯ | List Your Property - บ้านไออุ่น พร็อพเพอร์ตี้</title>
+    <meta name="description" content="บริการรับฝากขาย ปล่อยเช่า บ้าน คอนโด ที่ดิน ชลบุรี สมุทรปราการ EEC ประเมินราคาฟรี ปิดดีลไวด้วยเครือข่ายนายหน้า Co-Agent">
+    <style>
+        /* 📌 Theme Variables */
+        :root {
+            --primary-green: #14532d;
+            --accent-orange: #ea580c;
+            --accent-yellow: #eab308;
+            --bg-light: #f8f6f0;
+            --text-dark: #333333;
+            --footer-bg: #14532d;
+            --border-color: #e5e7eb;
+        }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.6;}
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* 📌 Navbar */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05);}
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: color 0.2s;}
+        .nav-links a:hover { color: var(--primary-green); }
+        .lang-switch { background: #eee; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; border: 1px solid #ccc; display: flex; gap: 5px; align-items: center;}
+        .btn-contact { background: var(--primary-green); color: white !important; padding: 8px 20px; border-radius: 5px; font-weight: bold;}
+        
+        /* 📌 Hero Image Banner (เพิ่มความสวยงามดึงดูดสายตา) */
+        .hero { 
+            position: relative; 
+            padding: 80px 20px 100px; 
+            text-align: center; 
+            color: white;
+            overflow: hidden; 
+        }
+        .hero-bg-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: brightness(0.6) grayscale(20%);
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(20, 83, 45, 0.7), rgba(20, 83, 45, 0.9)); z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+        .hero-content h1 { font-size: 2.8em; margin-top: 0; margin-bottom: 10px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.3);}
+        .hero-content p { font-size: 1.2em; color: var(--accent-yellow); font-weight: bold; margin-bottom: 0;}
+
+        /* 📌 Service Tabs (วางซ้อนทับแบนเนอร์) */
+        .service-tabs { display: flex; justify-content: center; gap: 15px; margin-top: -30px; margin-bottom: 50px; flex-wrap: wrap; position: relative; z-index: 10;}
+        .tab-btn { background: white; border: 1px solid var(--border-color); padding: 15px 30px; border-radius: 12px; font-weight: bold; color: var(--text-dark); text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 180px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s;}
+        .tab-btn:hover { border-color: var(--primary-green); transform: translateY(-3px);}
+        .tab-btn.active { background: var(--primary-green); color: white; border-color: var(--primary-green); box-shadow: 0 10px 25px rgba(20, 83, 45, 0.25);}
+        .tab-icon { font-size: 1.5em; }
+
+        /* 📌 Split Layout */
+        .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+        
+        /* 🌟 Left Side: Positive Content & USPs */
+        .content-area h2 { font-size: 2.2em; margin-top: 0; margin-bottom: 15px; color: var(--text-dark); line-height: 1.3;}
+        .seo-heading { color: var(--primary-green); font-weight: bold; font-size: 1.1em; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid var(--accent-yellow); display: inline-block;}
+        
+        /* 4 Positive Boxes */
+        .benefit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px;}
+        .benefit-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.02); display: flex; gap: 15px; align-items: flex-start;}
+        .benefit-icon { background: #f0fdf4; color: var(--primary-green); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2em;}
+        .benefit-text h4 { margin: 0 0 5px 0; color: var(--text-dark); font-size: 1em; line-height: 1.3;}
+        .benefit-text p { margin: 0; color: #666; font-size: 0.9em; line-height: 1.4;}
+
+        /* Why Choose Us List */
+        .why-us-box { background: white; border-radius: 16px; border: 1px solid var(--border-color); padding: 30px; margin-bottom: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);}
+        .why-us-box h3 { margin-top: 0; color: var(--primary-green); font-size: 1.5em; margin-bottom: 20px;}
+        .why-list { list-style: none; padding: 0; margin: 0;}
+        .why-list li { margin-bottom: 15px; display: flex; gap: 12px; align-items: flex-start;}
+        .why-list li i { color: #22c55e; font-size: 1.2em; font-style: normal;}
+        .why-text strong { display: block; color: var(--text-dark); font-size: 1.05em; margin-bottom: 3px;}
+        .why-text span { color: #666; font-size: 0.95em;}
+
+        /* 🌟 Portfolio Bento Grid (เลย์เอาต์รูปภาพโชว์ผลงาน) */
+        .portfolio-bento { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 150px 150px; gap: 15px; margin-bottom: 40px;}
+        .bento-item { border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.05);}
+        .bento-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;}
+        .bento-item:hover img { transform: scale(1.05);}
+        .bento-main { grid-row: span 2; }
+        .bento-badge { position: absolute; bottom: 15px; left: 15px; background: rgba(255,255,255,0.9); padding: 8px 15px; border-radius: 30px; font-size: 0.85em; font-weight: bold; color: var(--primary-green); box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 5px;}
+
+        /* 3 Steps */
+        .steps-box { margin-bottom: 40px;}
+        .steps-box h3 { margin-top: 0; color: var(--primary-green); font-size: 1.5em; margin-bottom: 20px; text-align: center;}
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;}
+        .step-card { background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px 15px; text-align: center;}
+        .step-num { width: 35px; height: 35px; background: var(--primary-green); color: white; font-weight: bold; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 1.1em;}
+        .step-card h4 { margin: 0 0 8px 0; color: var(--text-dark); font-size: 1em;}
+        .step-card p { margin: 0; color: #666; font-size: 0.85em;}
+
+        /* Quote Box with Image Background */
+        .quote-box { position: relative; padding: 50px 40px; border-radius: 20px; text-align: center; overflow: hidden; margin-bottom: 40px; box-shadow: 0 15px 30px rgba(20,83,45,0.15);}
+        .quote-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: grayscale(50%);}
+        .quote-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(20, 83, 45, 0.9); z-index: 1;}
+        .quote-content { position: relative; z-index: 2; color: white;}
+        .quote-icon { font-size: 2.5em; margin-bottom: 10px; color: var(--accent-yellow);}
+        .quote-content h3 { color: var(--accent-yellow); font-size: 1.5em; font-style: italic; margin-top: 0; margin-bottom: 15px; line-height: 1.4;}
+        .quote-content p { font-size: 1em; color: #e5e7eb; margin: 0; line-height: 1.6;}
+
+        /* 🌟 Right Side: Sticky Mobile-Friendly Form */
+        .form-area { background: white; padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 15px 40px rgba(0,0,0,0.06); position: sticky; top: 100px;}
+        .form-header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px;}
+        .form-header h3 { margin: 0 0 10px 0; font-size: 1.5em; color: var(--primary-green);}
+        .form-header p { margin: 0; color: #666; font-size: 0.95em;}
+        
+        .form-group { margin-bottom: 25px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #444; font-size: 0.95em;}
+        .required { color: #dc2626; }
+        
+        /* Anti-Zoom 16px inputs */
+        input[type="text"], input[type="tel"], input[type="email"], select { width: 100%; padding: 14px 15px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; background: #fafafa; transition: 0.2s;}
+        input:focus, select:focus { outline: none; border-color: var(--primary-green); background: white; box-shadow: 0 0 0 3px rgba(20, 83, 45, 0.1);}
+        
+        /* Visual Buttons for Property Type (Tap-Friendly) */
+        .type-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .type-card { display: block; cursor: pointer; }
+        .type-card input { display: none; }
+        .type-content { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 15px; border: 1px solid #ccc; border-radius: 8px; background: #fafafa; transition: 0.2s; color: #555; font-size: 0.9em; font-weight: bold;}
+        .type-card input:checked + .type-content { background: #f0fdf4; border-color: var(--primary-green); color: var(--primary-green); box-shadow: 0 4px 6px rgba(20, 83, 45, 0.1);}
+        .type-content .icon { font-size: 1.5em; }
+
+        .upload-box { border: 2px dashed #ccc; padding: 25px 20px; text-align: center; border-radius: 8px; background: #fafafa; cursor: pointer; transition: 0.2s;}
+        .upload-box:hover { border-color: var(--primary-green); background: #f0fdf4; }
+        
+        .btn-submit { background: var(--primary-green); color: white; border: none; padding: 16px 30px; border-radius: 8px; cursor: pointer; font-size: 1.1em; font-weight: bold; width: 100%; transition: background 0.3s; min-height: 54px;}
+        .btn-submit:hover { background: #0f3d20; }
+        
+        .trust-badge { display: flex; align-items: flex-start; gap: 10px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; margin-top: 20px;}
+        .trust-badge-text { font-size: 0.85em; color: #64748b; line-height: 1.5;}
+
+        /* 🌟 FAQ Section (สำหรับดัน AI Search & SEO) */
+        .faq-section { background: white; padding: 50px 40px; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0,0,0,0.03); margin-top: 60px;}
+        .faq-title { text-align: center; margin-bottom: 40px;}
+        .faq-title h2 { color: var(--primary-green); font-size: 2em; margin-bottom: 10px;}
+        .faq-grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+        .faq-item { background: #fafafa; border: 1px solid #eee; padding: 25px; border-radius: 12px;}
+        .faq-q { font-weight: bold; color: var(--text-dark); font-size: 1.1em; margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start;}
+        .faq-q::before { content: 'Q:'; color: var(--accent-orange); font-weight: bold;}
+        .faq-a { color: #555; font-size: 0.95em; line-height: 1.6; padding-left: 28px;}
+
+        /* 📌 Footer */
+        .footer { background: var(--footer-bg); color: #f9fafb; padding: 60px 20px 20px; margin-top: 80px; font-size: 14px; border-top: 5px solid var(--accent-yellow);}
+        .footer-grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 1200px; margin: 0 auto 30px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .footer-col h4 { font-size: 1.2em; margin-top: 0; margin-bottom: 20px; color: var(--accent-yellow);}
+        .footer-col a { color: #d1d5db; text-decoration: none; display: block; margin-bottom: 12px; transition: color 0.2s;}
+        .footer-col a:hover { color: white; }
+        .seo-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;}
+        .seo-tags a { color: #aaa; text-decoration: none; font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; transition: 0.2s;}
+        .seo-tags a:hover { background: rgba(255,255,255,0.1); color: white;}
+        .footer-bottom { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 20px; }
+        
+        .lang-en { display: none; }
+
+        /* 🌟 MOBILE OPTIMIZATION 🌟 */
+        @media (max-width: 900px) {
+            .split-layout { grid-template-columns: 1fr; gap: 30px;} 
+            .form-area { position: static; margin-top: 20px; } 
+        }
+        @media (max-width: 600px) {
+            .hero { padding: 60px 15px 80px; }
+            .hero-content h1 { font-size: 2em; }
+            
+            .benefit-grid { grid-template-columns: 1fr; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .portfolio-bento { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 150px; }
+            .bento-main { grid-column: span 2; grid-row: 1; }
+            
+            .content-area h2 { font-size: 1.8em; }
+            .form-area { padding: 30px 20px; }
+            .faq-section { padding: 40px 20px; }
+            .faq-item { padding: 20px 15px; }
+            
+            .service-tabs { flex-direction: column; gap: 10px; margin-top: -20px;}
+            .tab-btn { width: 100%; max-width: 100%; flex-direction: row; justify-content: center; padding: 12px;}
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div style="font-weight: bold; color: var(--primary-green); font-size: 1.5em;">Baan Ai Oun</div>
+        <div class="nav-links">
+            <a href="index.html" class="lang-th">หน้าแรก</a><a href="index.html" class="lang-en">Home</a>
+            <a href="match.html" class="lang-th">งานหาทรัพย์</a><a href="match.html" class="lang-en">Property Match</a>
+            <a href="services.html" class="lang-th" style="color:var(--primary-green); font-weight:bold;">บริการของเรา</a><a href="services.html" class="lang-en" style="color:var(--primary-green); font-weight:bold;">Our Services</a>
+            <a href="blog.html" class="lang-th">บทความ</a><a href="blog.html" class="lang-en">Blog</a>
+            <a href="about.html" class="lang-th">เกี่ยวกับเรา</a><a href="about.html" class="lang-en">About Us</a>
+            
+            <button class="lang-switch" onclick="toggleLanguage()"><span id="current-lang-text">🌐 EN</span></button>
+            <a href="contact.html" class="btn-contact lang-th">ติดต่อเรา</a><a href="contact.html" class="btn-contact lang-en">Contact Us</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <img class="hero-bg-img" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="ฝากขายบ้าน ปล่อยเช่า กับทีมงานบ้านไออุ่น">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="lang-th">ฝากขาย / ปล่อยเช่า อสังหาฯ</h1>
+            <h1 class="lang-en">List Your Property</h1>
+            <p class="lang-th">เปลี่ยนเรื่องขายบ้านให้เป็นเรื่องง่าย ปิดดีลไว ได้ราคาที่ใช่</p>
+            <p class="lang-en">Make selling easy, close deals faster, at the right price.</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <div class="service-tabs">
+            <a href="list-property.html" class="tab-btn active">
+                <span class="tab-icon">🏠</span>
+                <span class="lang-th">ฝากขาย/ปล่อยเช่า</span><span class="lang-en">List Property</span>
+            </a>
+            <a href="match.html" class="tab-btn">
+                <span class="tab-icon">🔍</span>
+                <span class="lang-th">จัดหาทรัพย์ตามต้องการ</span><span class="lang-en">Property Match</span>
+            </a>
+            <a href="co-agent.html" class="tab-btn">
+                <span class="tab-icon">🤝</span>
+                <span class="lang-th">ร่วมเป็น Co-Agent</span><span class="lang-en">Join Co-Agent</span>
+            </a>
+        </div>
+
+        <div class="split-layout">
+            
+            <div class="content-area">
+                <h2 class="lang-th">หมดทุกความกังวลเรื่องฝากขาย-ปล่อยเช่า<br>เราพร้อมเปลี่ยนให้เป็นเรื่องง่ายและปิดดีลไว</h2>
+                <h2 class="lang-en">Turn selling worries into a fast and successful close.</h2>
+                
+                <div class="seo-heading lang-th">บริการรับฝากขาย-ปล่อยเช่า อสังหาฯ โซนชลบุรี สมุทรปราการ ฉะเชิงเทรา ระยอง และ EEC</div>
+                <div class="seo-heading lang-en">Full-service property listing in Chonburi, Samut Prakan, Rayong & EEC.</div>
+                
+                <div class="benefit-grid lang-th">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🚀</div>
+                        <div class="benefit-text">
+                            <h4>ปิดดีลไว ไม่ต้องรอนาน</h4>
+                            <p>ทำการตลาดตรงจุด เข้าถึงกลุ่มผู้ซื้อตัวจริง</p>
+                        </div>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">📑</div>
+                        <div class="benefit-text">
+                            <h4>หมดปวดหัวเรื่องเอกสาร</h4>
+                            <p>ทีมงานจัดการสัญญาและขั้นตอนให้ครบจบ</p>
+                        </div>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🛡️</div>
+                        <div class="benefit-text">
+                            <h4>ปลอดภัย โปร่งใส 100%</h4>
+                            <p>ดูแลทุกขั้นตอนอย่างรัดกุม ไว้ใจได้แน่นอน</p>
+                        </div>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🌐</div>
+                        <div class="benefit-text">
+                            <h4>เครือข่าย Co-Agent</h4>
+                            <p>กระจายทรัพย์ให้พาร์ทเนอร์กว่า 50+ ท่านช่วยขาย</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="benefit-grid lang-en">
+                    <div class="benefit-card"><div class="benefit-icon">🚀</div><div class="benefit-text"><h4>Fast Closing</h4><p>Targeted marketing to real buyers.</p></div></div>
+                    <div class="benefit-card"><div class="benefit-icon">📑</div><div class="benefit-text"><h4>Hassle-Free</h4><p>We handle all contracts and processes.</p></div></div>
+                    <div class="benefit-card"><div class="benefit-icon">🛡️</div><div class="benefit-text"><h4>100% Secure</h4><p>Transparent and safe at every step.</p></div></div>
+                    <div class="benefit-card"><div class="benefit-icon">🌐</div><div class="benefit-text"><h4>Co-Agent Network</h4><p>Distributed to 50+ partners instantly.</p></div></div>
+                </div>
+
+                <div class="why-us-box">
+                    <h3 class="lang-th">ทำไมเจ้าของทรัพย์ถึงเลือก บ้านไออุ่น?</h3>
+                    <h3 class="lang-en">Why Choose Baan Ai Oun?</h3>
+                    <ul class="why-list lang-th">
+                        <li><i>✅</i> <div class="why-text"><strong>ประเมินศักยภาพด้วยสายตานักลงทุน (Investor's Valuation)</strong><span>เราไม่ได้แค่รับฝากโพสต์ แต่ลงพื้นที่ตรวจเช็ก และแนะนำการปรับปรุงทรัพย์เพื่ออัปราคาขายให้คุณก่อนเสมอ</span></div></li>
+                        <li><i>✅</i> <div class="why-text"><strong>ทำการตลาดเชิงรุก ครบทุกช่องทาง (Omnichannel Marketing)</strong><span>ทั้งสื่อออนไลน์ ป้ายหน้าทรัพย์ และเครือข่ายออฟไลน์</span></div></li>
+                        <li><i>✅</i> <div class="why-text"><strong>คัดกรองผู้ซื้อและผู้เช่าตัวจริง (Verified Clients Only)</strong><span>ช่วยประหยัดเวลา ไม่ต้องเหนื่อยเปิดบ้านให้คนที่ยังไม่พร้อม</span></div></li>
+                    </ul>
+                </div>
+
+                <div class="portfolio-bento">
+                    <div class="bento-item bento-main">
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="ผลงานขายบ้านเดี่ยวชลบุรี">
+                        <div class="bento-badge lang-th">✅ ปิดดีลแล้ว ภายใน 14 วัน</div>
+                        <div class="bento-badge lang-en">✅ Sold in 14 Days</div>
+                    </div>
+                    <div class="bento-item">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="ผลงานปล่อยเช่าคอนโด">
+                        <div class="bento-badge lang-th">✅ ปล่อยเช่าแล้ว</div>
+                        <div class="bento-badge lang-en">✅ Rented</div>
+                    </div>
+                    <div class="bento-item">
+                        <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="ผลงานขายทาวน์โฮมสมุทรปราการ">
+                        <div class="bento-badge lang-th">✅ โอนสำเร็จ</div>
+                        <div class="bento-badge lang-en">✅ Transferred</div>
+                    </div>
+                </div>
+
+                <div class="steps-box">
+                    <h3 class="lang-th">ฝากทรัพย์ง่ายๆ ใน 3 ขั้นตอน</h3>
+                    <h3 class="lang-en">3 Simple Steps to List</h3>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-num">1</div>
+                            <h4 class="lang-th">ส่งข้อมูลเบื้องต้น</h4><h4 class="lang-en">Submit Info</h4>
+                            <p class="lang-th">กรอกฟอร์มด้านข้าง ทีมงานพร้อมติดต่อกลับทันที</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">2</div>
+                            <h4 class="lang-th">ประเมินราคาและถ่ายทำ</h4><h4 class="lang-en">Valuation & Media</h4>
+                            <p class="lang-th">ทีมลงพื้นที่ประเมินราคาตลาด พร้อมถ่ายภาพอย่างมืออาชีพ</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">3</div>
+                            <h4 class="lang-th">ทำการตลาดและปิดดีล</h4><h4 class="lang-en">Market & Close</h4>
+                            <p class="lang-th">หาลูกค้าจริง เจรจาต่อรอง และจัดการเอกสารจนถึงวันโอน</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    <img class="quote-bg" src="https://images.unsplash.com/photo-1560520031-3a4fc4e95221?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="บริการด้วยใจ">
+                    <div class="quote-overlay"></div>
+                    <div class="quote-content">
+                        <div class="quote-icon">💛</div>
+                        <h3 class="lang-th">"คุณไม่ต้องเหนื่อยทำเองค่ะ ทีมงานเราดูแลให้ครบทุกขั้นตอน"</h3>
+                        <h3 class="lang-en">"You don't have to do it alone, our team handles every step."</h3>
+                        <p class="lang-th">เจ้าของทรัพย์หลายท่านทึ่งกับความไว... ทีมงานช่วยประเมินราคาใหม่ ถ่ายรูปมุมสวยๆ โพสต์ขายครบทุกช่องทาง คัดกรองลูกค้าจริง จัดการเอกสารจนถึงวันโอน เจ้าของทรัพย์ต่างยืนยันว่า 'ไม่เชื่อว่าจะปิดดีลได้เร็วขนาดนี้!'</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-area">
+                <div class="form-header">
+                    <h3 class="lang-th">ฝากขาย/ปล่อยเช่า</h3>
+                    <h3 class="lang-en">List Your Property</h3>
+                    <p class="lang-th">กรอกข้อมูล 1 นาที ทีมงานพร้อมดูแลทันที</p>
+                    <p class="lang-en">Quick 1-minute form, immediate service.</p>
+                </div>
+
+                <form action="#">
+                    
+                    <div class="form-group">
+                        <label class="lang-th">ความต้องการ <span class="required">*</span></label>
+                        <div class="type-selector">
+                            <label class="type-card">
+                                <input type="radio" name="list_type" value="sell" checked>
+                                <div class="type-content"><span class="icon">💰</span><span class="lang-th">ฝากขาย</span></div>
+                            </label>
+                            <label class="type-card">
+                                <input type="radio" name="list_type" value="rent">
+                                <div class="type-content"><span class="icon">🔑</span><span class="lang-th">ปล่อยเช่า</span></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="lang-th">ประเภททรัพย์ <span class="required">*</span></label>
+                        <div class="type-selector">
+                            <label class="type-card">
+                                <input type="radio" name="property_type" value="house" checked>
+                                <div class="type-content"><span class="icon">🏠</span><span class="lang-th">บ้าน/แฝด</span></div>
+                            </label>
+                            <label class="type-card">
+                                <input type="radio" name="property_type" value="condo">
+                                <div class="type-content"><span class="icon">🏢</span><span class="lang-th">คอนโด</span></div>
+                            </label>
+                            <label class="type-card">
+                                <input type="radio" name="property_type" value="townhome">
+                                <div class="type-content"><span class="icon">🏡</span><span class="lang-th">ทาวน์โฮม</span></div>
+                            </label>
+                            <label class="type-card">
+                                <input type="radio" name="property_type" value="land">
+                                <div class="type-content"><span class="icon">🌳</span><span class="lang-th">ที่ดิน</span></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="lang-th">ทำเลที่ตั้ง / แลนด์มาร์คใกล้เคียง <span class="required">*</span></label>
+                        <input type="text" placeholder="เช่น ซอยมหาชัย บางพลีใหญ่..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="lang-th">ราคาที่ต้องการขาย/ปล่อยเช่า</label>
+                        <input type="text" placeholder="เช่น 2,500,000 บาท หรือ 15,000/เดือน">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="lang-th">แนบรูปถ่ายทรัพย์ (เพื่อทีมงานประเมินเบื้องต้น)</label>
+                        <div class="upload-box">
+                            <div class="upload-icon">📸</div>
+                            <div class="lang-th" style="color:var(--primary-green); font-weight:bold;">คลิกเลือกรูป หรือลากไฟล์มาวาง</div>
+                            <div style="font-size: 0.85em; color: #888; margin-top: 5px;">JPG, PNG (สูงสุด 5 รูป)</div>
+                        </div>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid #eee; margin: 30px 0;">
+
+                    <div class="form-group">
+                        <label class="lang-th">ชื่อ-นามสกุล <span class="required">*</span></label>
+                        <input type="text" placeholder="คุณชื่ออะไรคะ?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="lang-th">เบอร์โทร / LINE ID <span class="required">*</span></label>
+                        <input type="tel" placeholder="08x-xxx-xxxx" required>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <span class="lang-th">ส่งคำขอ | Submit Request</span> 🚀
+                    </button>
+
+                    <div class="trust-badge">
+                        <div class="trust-badge-text">
+                            <span class="lang-th">🛡️ <strong>ปลอดภัย 100%</strong> ข้อมูลของคุณจะถูกเก็บเป็นความลับตามมาตรฐาน PDPA ทีมงานบ้านไออุ่นจะรีบติดต่อกลับโดยไม่มีค่าใช้จ่ายแอบแฝง</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <section class="faq-section lang-th">
+            <div class="faq-title">
+                <h2>คำถามที่พบบ่อยเกี่ยวกับการฝากทรัพย์ (FAQ)</h2>
+                <p>เปลี่ยนความกังวลให้เป็นความมั่นใจ ทุกข้อสงสัยเรามีคำตอบให้ค่ะ</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-q">ฝากขายบ้าน คอนโด กับบ้านไออุ่น มีค่าใช้จ่ายล่วงหน้าไหม?</div>
+                    <div class="faq-a">ไม่มีค่าใช้จ่ายล่วงหน้าค่ะ! บริการประเมินศักยภาพทรัพย์ ถ่ายภาพ และทำการตลาดครบวงจร <strong>ฟรีทั้งหมด</strong> เราจะคิดค่าคอมมิชชันก็ต่อเมื่อสามารถช่วยคุณขายหรือปล่อยเช่าได้สำเร็จแล้วเท่านั้นค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">ต้องการฝากขายบ้านด่วน โซนชลบุรี สมุทรปราการ EEC ใช้เวลาประเมินราคากี่วัน?</div>
+                    <div class="faq-a">ทีมงานผู้เชี่ยวชาญในพื้นที่ของเราพร้อมลงพื้นที่จริง และช่วยประเมินราคาตามฐานข้อมูลตลาด (CMA) อย่างแม่นยำภายใน <strong>1-3 วันทำการ</strong> เพื่อให้ทรัพย์ของคุณพร้อมทำการตลาดและปิดดีลได้เร็วที่สุดค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">บริการฝากขาย-ปล่อยเช่าอสังหาฯ ของบ้านไออุ่น ดูแลครอบคลุมขั้นตอนไหนบ้าง?</div>
+                    <div class="faq-a">เราดูแลครบวงจรแบบ <strong>End-to-End</strong> ตั้งแต่ให้คำปรึกษาการตั้งราคา คัดกรองผู้ซื้อตัวจริง จัดการเรื่องสินเชื่อธนาคาร ดูแลสัญญา และประสานงานจนจบที่กรมที่ดิน เพื่อให้เจ้าของทรัพย์สะดวกสบายที่สุดค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">ทำไมการฝากขายบ้านผ่านเครือข่าย Co-Agent ถึงช่วยให้ปิดดีลได้เร็วกว่า?</div>
+                    <div class="faq-a">เพราะเราไม่ได้เพียงแค่โพสต์ประกาศลงเว็บไซต์ แต่เรากระจายทรัพย์ของคุณเข้าสู่ <strong>เครือข่ายนายหน้าพันธมิตรกว่า 50+ ท่าน</strong> เพื่อนำไปเสนอตรงต่อฐานลูกค้าที่มีกำลังซื้อและพร้อมตัดสินใจทันทีค่ะ</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 class="lang-th">Baan Ai Oun Property</h4><h4 class="lang-en">Baan Ai Oun Property</h4>
+                <p class="lang-th">บ้านไออุ่น: มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ</p>
+                <p class="lang-en">More than just a house, it's the energy to keep you moving forward.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="lang-th">เมนูลัด</h4><h4 class="lang-en">Quick Links</h4>
+                <a href="list-property.html" class="lang-th">- ฝากขาย/ปล่อยเช่า</a>
+                <a href="match.html" class="lang-th">- ค้นหาทรัพย์</a>
+                <a href="co-agent.html" class="lang-th">- ร่วมเป็น Co-Agent</a>
+                <a href="agent-course.html" class="lang-th">- คอร์สนายหน้าอสังหาฯ</a>
+            </div>
+            <div class="footer-col">
+                <h4 class="lang-th">ติดต่อเรา</h4><h4 class="lang-en">Contact Us</h4>
+                <p>📞 โทร (Tel): 086-4149960</p>
+                <p>🟢 LINE: @baan-ai-oun</p>
+                <p>✉️ Email: supansa.m@baanaioun.com</p>
+                <p style="margin-top: 15px;">
+                    <span class="lang-th">📍 ที่ตั้งสำนักงาน: 107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="seo-links-section">
+            <h4 class="lang-th">ค้นหาทำเลยอดฮิต</h4>
+            <div class="seo-tags">
+                <a href="#" class="lang-th">บ้านมือสอง ชลบุรี</a>
+                <a href="#" class="lang-th">คอนโดใกล้นิคม EEC</a>
+                <a href="#" class="lang-th">บ้านรีโนเวทพร้อมอยู่</a>
+                <a href="#" class="lang-th">ฝากขายบ้านด่วน</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="lang-th">&copy; 2026 บ้านไออุ่น พร็อพเพอร์ตี้ สงวนลิขสิทธิ์ทุกประการ | นโยบายความเป็นส่วนตัว</p>
+        </div>
+    </footer>
+
+    <script>
+        let isEnglish = false;
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            document.querySelectorAll('.lang-th').forEach(el => el.style.display = isEnglish ? 'none' : 'block');
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = isEnglish ? 'block' : 'none');
+            document.getElementById('current-lang-text').innerText = isEnglish ? '🌐 TH' : '🌐 EN';
+        }
+    </script>
+</body>
+</html>

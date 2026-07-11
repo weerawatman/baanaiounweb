@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>คอร์สนายหน้าอสังหาฯ Workshop พลิกชีวิต | Agent Course - บ้านไออุ่น พร็อพเพอร์ตี้</title>
+    <meta name="description" content="คอร์สอบรมนายหน้าอสังหาริมทรัพย์ระดับมืออาชีพ เรียนลัดจากประสบการณ์นักลงทุนตัวจริง สอนจับมือทำปูพื้นฐานแน่น พร้อมมีทรัพย์ให้ขายทันทีหลังเรียนจบ">
+    <style>
+        /* 📌 Box Sizing ป้องกันหน้าจอล้นบนมือถือ */
+        * { box-sizing: border-box; }
+
+        /* 📌 Theme Variables */
+        :root {
+            --primary-green: #14532d;
+            --accent-orange: #ea580c;
+            --accent-yellow: #eab308;
+            --bg-light: #f8f6f0;
+            --text-dark: #333333;
+            --footer-bg: #14532d;
+            --border-color: #e5e7eb;
+        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.6;}
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* 📌 Navbar */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05);}
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: color 0.2s;}
+        .nav-links a:hover { color: var(--primary-green); }
+        .lang-switch { background: #eee; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; border: 1px solid #ccc; display: flex; gap: 5px; align-items: center;}
+        .btn-contact { background: var(--primary-green); color: white !important; padding: 8px 20px; border-radius: 5px; font-weight: bold;}
+        
+        /* 📌 Hero Section (แบนเนอร์คงไว้ 2 ภาษา) */
+        .hero { 
+            position: relative; 
+            background-color: #111827;
+            padding: 100px 20px 120px; 
+            text-align: center; 
+            color: white;
+            overflow: hidden; 
+        }
+        .hero-bg-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(17, 24, 39, 0.7), rgba(20, 83, 45, 0.9));
+            z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+        .hero-content h1 { font-size: 2.8em; margin-top: 0; margin-bottom: 15px; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
+        .hero-content p { font-size: 1.2em; color: var(--accent-yellow); margin-bottom: 0; text-shadow: 0 1px 2px rgba(0,0,0,0.5); font-weight: bold;}
+
+        /* 📌 4 Success Boxes (ปรับเป็นเชิงบวกทั้งหมด) */
+        .success-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 1100px; margin: -40px auto 60px; position: relative; z-index: 10; padding: 0 20px;}
+        .success-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.06); text-align: center; transition: 0.3s;}
+        .success-card:hover { transform: translateY(-5px); border-color: var(--primary-green);}
+        .success-icon { font-size: 2em; margin-bottom: 10px; display: block;}
+        .success-card h4 { margin: 0 0 8px 0; color: var(--primary-green); font-size: 1em; font-weight: bold; line-height: 1.4;}
+        .success-card p { margin: 0; color: #666; font-size: 0.85em; line-height: 1.5;}
+
+        /* 📌 Section Titles */
+        .section-title { text-align: center; margin: 60px 0 40px; }
+        .section-title h2 { color: var(--text-dark); margin-bottom: 10px; font-size: 2em;}
+        .section-title p { color: #666; font-size: 1.1em;}
+
+        /* 📌 Curriculum Layout (Day 1 & Day 2) */
+        .curriculum-section { background: white; border-radius: 20px; border: 1px solid var(--border-color); padding: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.02);}
+        .day-header { display: flex; align-items: center; gap: 15px; border-bottom: 2px solid var(--accent-yellow); padding-bottom: 15px; margin-bottom: 30px;}
+        .day-badge { background: var(--primary-green); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9em;}
+        .day-header h3 { margin: 0; font-size: 1.4em; color: var(--primary-green);}
+        
+        .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;}
+        .curriculum-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 20px;}
+        .curriculum-item { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; display: flex; gap: 15px;}
+        .item-num { background: var(--primary-green); color: white; width: 28px; height: 38px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;}
+        .item-text h4 { margin: 0 0 5px 0; color: var(--text-dark); font-size: 1.05em;}
+        .item-text p { margin: 0; color: #666; font-size: 0.9em; line-height: 1.5;}
+
+        /* Mid-course Image Callout */
+        .mid-banner { border-radius: 16px; overflow: hidden; height: 250px; margin: 60px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative;}
+        .mid-banner img { width: 100%; height: 100%; object-fit: cover;}
+
+        /* 📌 Quote Box (ผลลัพธ์ที่คุณจะได้รับ) */
+        .result-quote { background: var(--primary-green); color: white; padding: 60px 40px; border-radius: 20px; text-align: center; margin: 80px 0; box-shadow: 0 15px 30px rgba(20, 83, 45, 0.15);}
+        .result-quote h3 { color: var(--accent-yellow); font-size: 1.8em; margin-top: 0; margin-bottom: 20px;}
+        .result-quote p { font-size: 1.1em; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #e5e7eb;}
+
+        /* 📌 FAQ Section (สำหรับดัน AI Search & SEO) */
+        .faq-section { background: white; padding: 50px 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0,0,0,0.04); margin-top: 80px;}
+        .faq-title { text-align: center; margin-bottom: 40px;}
+        .faq-title h2 { color: var(--primary-green); font-size: 2em; margin-bottom: 10px;}
+        .faq-grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+        .faq-item { background: #fafafa; border: 1px solid #eee; padding: 25px; border-radius: 12px;}
+        .faq-q { font-weight: bold; color: var(--text-dark); font-size: 1.1em; margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start;}
+        .faq-q::before { content: 'Q:'; color: var(--accent-orange); font-weight: bold;}
+        .faq-a { color: #555; font-size: 0.95em; line-height: 1.6; padding-left: 28px;}
+
+        /* 📌 Bottom CTA (ปุ่มใหญ่กดง่ายบนมือถือ) */
+        .cta-section { text-align: center; margin: 80px 0 40px;}
+        .cta-section h2 { font-size: 2.2em; color: var(--text-dark); margin-bottom: 10px;}
+        .cta-section p { color: #666; font-size: 1.15em; margin-bottom: 35px;}
+        .cta-buttons { display: flex; justify-content: center; gap: 15px; }
+        .btn-primary { background: var(--primary-green); color: white; border: none; padding: 16px 40px; border-radius: 8px; font-weight: bold; font-size: 1.1em; cursor: pointer; text-decoration: none; transition: 0.2s; display: flex; align-items: center; justify-content: center; min-height: 54px;}
+        .btn-primary:hover { background: #0f3d20; box-shadow: 0 4px 12px rgba(0,0,0,0.15);}
+        .btn-outline { background: transparent; color: var(--primary-green); border: 2px solid var(--primary-green); padding: 14px 40px; border-radius: 8px; font-weight: bold; font-size: 1.1em; cursor: pointer; text-decoration: none; transition: 0.2s; display: flex; align-items: center; justify-content: center; min-height: 54px;}
+        .btn-outline:hover { background: #f0fdf4;}
+
+        /* 📌 Footer */
+        .footer { background: var(--footer-bg); color: #f9fafb; padding: 60px 20px 20px; margin-top: 80px; font-size: 14px; border-top: 5px solid var(--accent-yellow);}
+        .footer-grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 1200px; margin: 0 auto 30px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .footer-col h4 { font-size: 1.2em; margin-top: 0; margin-bottom: 20px; color: var(--accent-yellow);}
+        .footer-col p { color: #d1d5db; line-height: 1.6; margin: 0 0 10px 0;}
+        .footer-col a { color: #d1d5db; text-decoration: none; display: block; margin-bottom: 12px; transition: color 0.2s;}
+        .footer-col a:hover { color: white; }
+        .seo-links-section { max-width: 1200px; margin: 0 auto; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center;}
+        .seo-links-section h4 { color: #888; font-size: 0.9em; margin-bottom: 15px; text-transform: uppercase;}
+        .seo-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;}
+        .seo-tags a { color: #aaa; text-decoration: none; font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px;}
+        .seo-tags a:hover { background: rgba(255,255,255,0.1); color: white;}
+        .footer-bottom { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 20px; }
+        
+        .lang-en { display: none; }
+
+        /* 🌟 RESPONSIVE MEDIA QUERIES 🌟 */
+        @media (max-width: 1024px) {
+            .success-grid { grid-template-columns: 1fr 1fr; gap: 15px; margin-top: -20px; }
+            .grid-2col { grid-template-columns: 1fr; gap: 30px; }
+        }
+        @media (max-width: 768px) {
+            .success-grid { grid-template-columns: 1fr; padding: 0 15px; }
+            .curriculum-section { padding: 25px 20px; }
+            .mid-banner { height: 180px; margin: 40px 0; }
+            .faq-section { padding: 35px 20px; }
+            .cta-buttons { flex-direction: column; }
+            .btn-primary, .btn-outline { width: 100%; }
+            .hero-content h1 { font-size: 2em; }
+            .page-header h1 { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div style="font-weight: bold; color: var(--primary-green); font-size: 1.5em;">Baan Ai Oun</div>
+        <div class="nav-links">
+            <a href="index.html" class="lang-th">หน้าแรก</a><a href="index.html" class="lang-en">Home</a>
+            <a href="match.html" class="lang-th">งานหาทรัพย์</a><a href="match.html" class="lang-en">Property Match</a>
+            <a href="services.html" class="lang-th" style="color:var(--primary-green); font-weight:bold;">บริการของเรา</a><a href="services.html" class="lang-en" style="color:var(--primary-green); font-weight:bold;">Our Services</a>
+            <a href="blog.html" class="lang-th">บทความ</a><a href="blog.html" class="lang-en">Blog</a>
+            <a href="about.html" class="lang-th">เกี่ยวกับเรา</a><a href="about.html" class="lang-en">About Us</a>
+            
+            <button class="lang-switch" onclick="toggleLanguage()"><span id="current-lang-text">🌐 EN</span></button>
+            <a href="contact.html" class="btn-contact lang-th">ติดต่อเรา</a><a href="contact.html" class="btn-contact lang-en">Contact Us</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <img class="hero-bg-img" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="บรรยากาศการอบรมสัมมนานายหน้าอสังหาริมทรัพย์ระดับพรีเมียม">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="lang-th">2 วันนี้...คุณจะได้อะไรกลับไปบ้าง?<br>คอร์ส Workshop พพลิกชีวิตนายหน้าอสังหาฯ</h1>
+            <p>What Will You Get From These 2 Days? — A Life-Changing Real Estate Workshop</p>
+        </div>
+    </header>
+
+    <div class="container" style="padding-top: 0;">
+        <div class="success-grid">
+            <div class="success-card">
+                <span class="success-icon">💰</span>
+                <h4>สร้างรายได้เสริมหลักแสน<br>เริ่มต้นด้วยต้นทุน 0 บาท</h4>
+                <p>คว้าโอกาสสร้างเม็ดเงินมหาศาลจากอสังหาฯ ได้ทันทีโดยไม่จำเป็นต้องมีทุนสำรองจำนวนมาก</p>
+            </div>
+            <div class="success-card">
+                <span class="success-icon">🗺️</span>
+                <h4>มี Roadmap จับมือทำ<br>จากศูนย์สู่มืออาชีพ</h4>
+                <p>เรียนลัดจากเส้นทางจริง มีแผนที่นำทางบอกชัดเจนทีละสเต็ป เข้าใจง่าย ลงมือทำได้ทันที</p>
+            </div>
+            <div class="success-card">
+                <span class="success-icon">🔥</span>
+                <h4>ติดอาวุธทักษะเจรจา<br>สร้างความมั่นใจเกินร้อย</h4>
+                <p>ทลายความกลัว ทลายความไม่มั่นใจ ด้วยเทคนิคจิตวิทยาการสื่อสารที่ปิดดีลได้จริงทุกสถานการณ์</p>
+            </div>
+            <div class="success-card">
+                <span class="success-icon">✨</span>
+                <h4>ย่อยเรื่องอสังหาฯ ให้ง่าย<br>ทำได้จริงและสนุก</h4>
+                <p>เปลี่ยนมุมมองอสังหาฯ ชิ้นใหญ่ที่ดูยาก ให้กลายเป็นกระบวนการที่สนุก ท้าทาย และทำตามได้จริง</p>
+            </div>
+        </div>
+
+        <section>
+            <div class="section-title">
+                <h2 class="lang-th">เจาะลึกเนื้อหาหลักสูตรเข้มข้น 2 วันเต็ม</h2>
+                <p class="lang-th">ไม่ใช่แค่หลักสูตรทฤษฎีทั่วไป แต่คือ Workshop ลงมือทำจริงเพื่อสร้างรายได้</p>
+            </div>
+
+            <div class="curriculum-section">
+                <div class="day-header">
+                    <span class="day-badge">DAY 1</span>
+                    <h3>'รากฐานความคิด' ที่ถูกต้อง (THE FOUNDATION & THE MINDSET)</h3>
+                </div>
+                <div class="grid-2col">
+                    <ul class="curriculum-list">
+                        <li class="curriculum-item">
+                            <div class="item-num">1</div>
+                            <div class="item-text">
+                                <h4>ค้นพบเป้าหมาย 'WHY' ที่ทรงพลังของคุณ</h4>
+                                <p>จุดประกายแรงผลักดันภายใน ปลดล็อกศักยภาพเพื่อสร้างอิสรภาพทางการเงินเพื่อครอบครัวและคนที่คุณรัก</p>
+                            </div>
+                        </li>
+                        <li class="curriculum-item">
+                            <div class="item-num">2</div>
+                            <div class="item-text">
+                                <h4>เห็น 'แผนที่' สร้างเงินล้านจากอสังหาฯ</h4>
+                                <p>กาง Roadmap 7 วิธีสร้างรายได้จากธุรกิจนายหน้า ค้นพบสไตล์และโมเดลที่เหมาะกับตัวคุณที่สุด</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="curriculum-list">
+                        <li class="curriculum-item">
+                            <div class="item-num">3</div>
+                            <div class="item-text">
+                                <h4>ติดตั้ง 'MINDSET เศรษฐี' ฉบับคนเคยล้ม</h4>
+                                <p>เปลี่ยนทุกความท้าทายและความกลัวให้กลายเป็นเชื้อเพลิงขับเคลื่อนความสำเร็จ พร้อมกลยุทธ์พลิกวิกฤตเป็นโอกาส</p>
+                            </div>
+                        </li>
+                        <li class="curriculum-item">
+                            <div class="item-num">4</div>
+                            <div class="item-text">
+                                <h4>ได้ 'คลังอาวุธ' นายหน้ามือใหม่</h4>
+                                <p>ฝึกฝนทักษะหัวใจสำคัญอย่างการฟังอย่างเข้าอกเข้าใจ (Empathy Listening) การเจรจาต่อรอง และการสร้างความน่าเชื่อถือ</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mid-banner">
+                <img src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="ภาพบรรยากาศการทำเวิร์กชอปกลุ่มอย่างสนุกสนาน">
+            </div>
+
+            <div class="curriculum-section">
+                <div class="day-header">
+                    <span class="day-badge">DAY 2</span>
+                    <h3>'ลงมือทำ' จริงในสนาม! (THE AGENT'S GAME & ACTION)</h3>
+                </div>
+                <div class="grid-2col">
+                    <ul class="curriculum-list">
+                        <li class="curriculum-item">
+                            <div class="item-num">1</div>
+                            <div class="item-text">
+                                <h4>ฝึกฝนเป็น 'นักประเมินทรัพย์' ในครึ่งวัน</h4>
+                                <p>ลงลึกเทคนิคการสำรวจทรัพย์ในพื้นที่จริง พร้อมรับฟรี Checklist ตรวจสอบสภาพบ้านแบบมืออาชีพ</p>
+                            </div>
+                        </li>
+                        <li class="curriculum-item">
+                            <div class="item-num">2</div>
+                            <div class="item-text">
+                                <h4>สร้าง 'การตลาดที่โดนใจ' ด้วยพลัง AI</h4>
+                                <p>Workshop ฝึกเขียนคำโฆษณาชวนมอง และการประยุกต์ใช้เทคโนโลยี AI เข้ามาช่วยทำการตลาดเชิงรุกแบบทุ่นแรง</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="curriculum-list">
+                        <li class="curriculum-item">
+                            <div class="item-num">3</div>
+                            <div class="item-text">
+                                <h4>'ปิดการขาย' อย่างมั่นใจผ่าน Role Play</h4>
+                                <p>จำลองสถานการณ์จริง ฝึกฝนการตอบข้อโต้แย้ง และเทคนิคการปิดดีลต่อหน้าลูกค้าอย่างเป็นธรรมชาติ</p>
+                            </div>
+                        </li>
+                        <li class="curriculum-item">
+                            <div class="item-num">4</div>
+                            <div class="item-text">
+                                <h4>เห็นภาพ 'อิสรภาพที่เป็นจริง'</h4>
+                                <p>Workshop วางแผนการเงินล่วงหน้า บริหารจัดการส่วนแบ่งคอมมิชชันก้อนแรก เพื่อต่อยอดสู่การเป็นนักลงทุน</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="result-quote">
+            <div style="font-size: 2.5em; margin-bottom: 10px;">🚀</div>
+            <h3>ผลลัพธ์ที่คุณจะได้รับ</h3>
+            <p>ให้ "บ้านไออุ่น" ช่วยวางรากฐานและเปิดประตูสู่โอกาสใหม่ๆ ในชีวิต เราพร้อมดูแลและผลักดันคุณด้วยความจริงใจ หลังเรียนจบคุณจะเดินออกไปพร้อมความรู้ ความมั่นใจ แผนลงมือทำที่ชัดเจน และพิเศษที่สุด! คุณจะมีทรัพย์คุณภาพในระบบของเราพร้อมให้เริ่มสร้างรายได้ได้ทันทีตั้งแต่วันแรกค่ะ</p>
+        </section>
+
+        <section class="faq-section lang-th">
+            <div class="faq-title">
+                <h2>คำถามที่พบบ่อย (FAQ)</h2>
+                <p>เคลียร์ทุกข้อสงสัย เพื่อให้คุณตัดสินใจก้าวสู่ความสำเร็จได้อย่างมั่นใจค่ะ</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-q">ไม่มีประสบการณ์เลย สามารถเรียนคอร์สนายหน้าอสังหาฯ ของบ้านไออุ่นได้ไหม?</div>
+                    <div class="faq-a">เรียนได้แน่นอนค่ะ! คอร์สนี้ออกแบบมาเพื่อจับมือทำตั้งแต่ศูนย์ เราปูรากฐานให้ใหม่ทั้งหมด ทั้งกระบวนการคิด ทักษะการเจรจา และขั้นตอนเอกสาร เพื่อให้คุณพร้อมลงสนามจริงได้อย่างมั่นใจค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">เรียนจบแล้ว มีทรัพย์ให้เริ่มต้นทำการตลาดเลยไหม หรือต้องไปหาเอง?</div>
+                    <div class="faq-a">นี่คือสิทธิพิเศษที่เหนือกว่าของการเรียนกับเราค่ะ! เรียนจบปุ๊บ คุณสามารถนำทรัพย์คุณภาพสูงในเครือข่าย Co-Agent ของบ้านไออุ่น ไปเริ่มต้นทำการตลาดเชิงรุกและรับส่วนแบ่งคอมมิชชันได้ทันทีโดยไม่ต้องเสียเวลาเดินหาเองค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">คอร์ส Workshop อบรมนายหน้าอสังหาฯ จัดขึ้นที่ไหน และใช้เวลากี่วัน?</div>
+                    <div class="faq-a">เราจัดหลักสูตรแบบ Workshop เข้มข้น 2 วันเต็ม ในพื้นที่ทำเลทอง [ใส่ชื่อทำเล/จังหวัด เช่น ชลบุรี สมุทรปราการ] เพื่อให้ผู้เรียนทุกคนได้รับความรู้ทางทฤษฎีควบคู่กับการลงมือปฏิบัติลงพื้นที่จริงแบบเจาะลึกค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">หากมีข้อสงสัยหรือติดปัญหาหลังเรียนจบ จะมีทีมงานคอยให้คำปรึกษาไหม?</div>
+                    <div class="faq-a">แน่นอนที่สุดค่ะ! เราถือว่าผู้เรียนทุกคนคือครอบครัวและพาร์ทเนอร์ของเรา ทีมงานบ้านไออุ่นพร้อมเป็นพี่เลี้ยง (Mentor) คอยให้คำปรึกษา แนะนำการแก้ปัญหาหน้างาน และสนับสนุนคุณในทุกๆ เคสการขายอย่างต่อเนื่องค่ะ</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section lang-en">
+            <div class="faq-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-q">Can beginners without experience join this course?</div>
+                    <div class="faq-a">Absolutely! This course is designed from the ground up to guide you step-by-step, ensuring you build a solid foundation and confidence to enter the market.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Are there ready listings available after graduation?</div>
+                    <div class="faq-a">Yes! You can instantly start marketing premium curated listings from Baan Ai Oun's active Co-Agent network and earn commissions right away.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2 class="lang-th">พร้อมเริ่มต้นเส้นทางสำเร็จหรือยัง?</h2>
+            <h2 class="lang-en">Ready to Begin Your Success Journey?</h2>
+            <p class="lang-th">คุยง่าย ตรงไปตรงมา พร้อมดูแลและดันทุกเคสด้วยความจริงใจ</p>
+            <p class="lang-en">Easy communication, straightforward, and genuinely supporting your career growth.</p>
+            
+            <div class="cta-buttons">
+                <a href="contact.html" class="btn-primary">
+                    <span class="lang-th">🔥 สมัครคอร์สเรียนพลิกชีวิต</span><span class="lang-en">🔥 Register for Course Now</span>
+                </a>
+                <a href="#" class="btn-outline">
+                    <span class="lang-th">💬 สอบถามรายละเอียดหลักสูตร</span><span class="lang-en">💬 Chat to Learn More</span>
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 class="lang-th">Baan Ai Oun Property</h4><h4 class="lang-en">Baan Ai Oun Property</h4>
+                <p class="lang-th">บ้านไออุ่น: มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ</p>
+                <p class="lang-en">More than just a house, it's the energy to keep you moving forward.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">เมนูลัด</h4><h4 class="lang-en">Quick Links</h4>
+                <a href="list-property.html" class="lang-th">- ฝากขาย/ปล่อยเช่า</a><a href="list-property.html" class="lang-en">- List Your Property</a>
+                <a href="match.html" class="lang-th">- ให้เราหาให้ฟรี</a><a href="match.html" class="lang-en">- Find Properties</a>
+                <a href="co-agent.html" class="lang-th">- ร่วมเป็น Co-Agent</a><a href="co-agent.html" class="lang-en">- Co-Agent Program</a>
+                <a href="#" class="lang-th">- คอร์สนายหน้าอสังหาฯ</a><a href="#" class="lang-en">- Real Estate Course</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">ติดต่อเรา</h4><h4 class="lang-en">Contact Us</h4>
+                <p>📞 โทร (Tel): 086-4149960</p>
+                <p>🟢 LINE: @baan-ai-oun</p>
+                <p>✉️ Email: supansa.m@baanaioun.com</p>
+                <p style="margin-top: 15px;">
+                    <span class="lang-th">📍 ที่ตั้งสำนักงาน: 107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ 10540</span>
+                    <span class="lang-en">📍 Office: 107/57 The Colors Leisure, Soi Mahachai, Moo 13, Bang Phli Yai, Bang Phli, Samut Prakan 10540</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="seo-links-section">
+            <h4 class="lang-th">ค้นหาทำเลยอดฮิต</h4><h4 class="lang-en">Popular Searches</h4>
+            <div class="seo-tags">
+                <a href="#" class="lang-th">บ้านมือสอง ชลบุรี</a><a href="#" class="lang-en">Houses in Chonburi</a>
+                <a href="#" class="lang-th">คอนโดใกล้นิคม EEC</a><a href="#" class="lang-en">Condos near EEC</a>
+                <a href="#" class="lang-th">บ้านรีโนเวทพร้อมอยู่</a><a href="#" class="lang-en">Renovated Homes</a>
+                <a href="#" class="lang-th">ทาวน์โฮม สมุทรปราการ</a><a href="#" class="lang-en">Townhomes Samut Prakan</a>
+                <a href="#" class="lang-th">เรียนนายหน้าอสังหา ฟรี</a><a href="#" class="lang-en">Real Estate Agent Course</a>
+                <a href="#" class="lang-th">ฝากขายบ้านด่วน</a><a href="#" class="lang-en">Sell House Quickly</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="lang-th">&copy; 2026 บ้านไออุ่น พร็อพเพอร์ตี้ สงวนลิขสิทธิ์ทุกประการ | นโยบายความเป็นส่วนตัว</p>
+            <p class="lang-en">&copy; 2026 Baan Ai Oun Property. All rights reserved. | Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        let isEnglish = false;
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            document.querySelectorAll('.lang-th').forEach(el => el.style.display = isEnglish ? 'none' : 'block');
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = isEnglish ? 'block' : 'none');
+            document.getElementById('current-lang-text').innerText = isEnglish ? '🌐 TH' : '🌐 EN';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>บ้านไออุ่น พร็อพเพอร์ตี้ | ศูนย์รวมอสังหาฯ ซื้อ-ขาย-เช่า</title>
+    <meta name="description" content="บ้านไออุ่น พร็อพเพอร์ตี้ พันธมิตรด้านอสังหาฯ ของคุณ บริการซื้อ-ขาย-เช่า หาบ้านตรงใจฟรี เจาะลึกทำเลชลบุรี สมุทรปราการ EEC ด้วยสายตานักลงทุน">
+    <style>
+        /* 📌 Theme Variables */
+        :root {
+            --primary-green: #14532d;
+            --accent-orange: #ea580c;
+            --accent-yellow: #eab308;
+            --bg-light: #f8f6f0;
+            --text-dark: #333333;
+            --footer-bg: #14532d;
+            --border-color: #e5e7eb;
+        }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.6;}
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* 📌 Navbar */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05);}
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: color 0.2s;}
+        .nav-links a:hover { color: var(--primary-green); }
+        .lang-switch { background: #eee; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; border: 1px solid #ccc; display: flex; gap: 5px; align-items: center;}
+        .btn-contact { background: var(--primary-green); color: white !important; padding: 8px 20px; border-radius: 5px; font-weight: bold;}
+        
+        /* 📌 Hero Section */
+        .hero { 
+            position: relative; 
+            padding: 100px 20px 120px; 
+            text-align: center; 
+            color: white;
+            overflow: hidden; 
+        }
+        .hero-bg-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(17, 24, 39, 0.4), rgba(17, 24, 39, 0.85));
+            z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+        .hero-content h1 { font-size: 2.8em; margin-top: 0; margin-bottom: 15px; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
+        .hero-content p { font-size: 1.2em; color: var(--accent-yellow); font-weight: bold; margin-bottom: 35px; text-shadow: 0 1px 2px rgba(0,0,0,0.5);}
+        
+        /* 📌 Search Box (Glassmorphism) */
+        .search-box { 
+            background: rgba(255, 255, 255, 0.15); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.3); 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); text-align: left; max-width: 800px; margin: 0 auto;
+        }
+        .search-title { color: white; font-weight: bold; font-size: 1.1em; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px;}
+        .search-tabs { display: flex; gap: 8px; margin-bottom: 15px; }
+        .search-tab { flex: 1; padding: 10px; background: rgba(255,255,255,0.15); color: white; text-align: center; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.2s; font-size: 0.95em;}
+        .search-tab:hover { background: rgba(255,255,255,0.25);}
+        .search-tab.active { background: var(--accent-yellow); color: var(--text-dark);}
+        
+        .search-inputs { display: flex; gap: 10px; margin-bottom: 20px;}
+        .search-inputs input, .search-inputs select { flex: 1; padding: 14px 15px; border: none; border-radius: 8px; font-size: 16px; background: white; color: var(--text-dark);}
+        
+        .hero-actions { display: flex; gap: 15px;}
+        .btn-action { flex: 1; padding: 15px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1.05em; transition: 0.2s; min-height: 50px;}
+        .btn-action.orange { background: var(--accent-orange); color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.2);}
+        .btn-action.orange:hover { background: #d04d08; }
+        .btn-action.green { background: rgba(20, 83, 45, 0.8); color: white; border: 1px solid #4ade80; backdrop-filter: blur(4px);}
+        .btn-action.green:hover { background: var(--primary-green); }
+
+        /* 📌 Section Globals */
+        .section-title { text-align: center; margin: 80px 0 40px; }
+        .section-title h2 { color: var(--text-dark); margin-bottom: 10px; font-size: 2.2em;}
+        .section-title p { color: #666; font-size: 1.1em;}
+
+        /* 📌 Services Section (ตามภาพตัวอย่างคุณพิม) */
+        .service-grid { display: grid; gap: 20px; grid-template-columns: repeat(4, 1fr); margin-top: 20px;}
+        .service-card { background: var(--primary-green); border-radius: 20px; padding: 35px 25px; box-shadow: 0 10px 25px rgba(20,83,45,0.15); color: white; display: flex; flex-direction: column; text-align: center; transition: transform 0.3s;}
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(20,83,45,0.25);}
+        
+        .service-icon { font-size: 3em; margin-bottom: 15px; }
+        .service-card h3 { margin-top: 0; font-size: 1.4em; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; font-weight: bold;}
+        .service-card p { font-size: 0.95em; color: #f0fdf4; margin-bottom: 30px; flex: 1; line-height: 1.6;}
+        
+        .service-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: auto;}
+        .btn-service-primary { background: var(--accent-orange); color: white; text-decoration: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 1.05em; transition: 0.2s; min-height: 48px; display: flex; align-items: center; justify-content: center;}
+        .btn-service-primary:hover { background: #d04d08; }
+        .btn-service-secondary { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.6); text-decoration: none; padding: 12px; border-radius: 8px; font-size: 0.95em; transition: 0.2s; min-height: 48px; display: flex; align-items: center; justify-content: center;}
+        .btn-service-secondary:hover { background: rgba(255,255,255,0.1); border-color: white;}
+
+        /* 📌 Featured Properties */
+        .property-grid { display: grid; gap: 25px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+        .property-card { background: white; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.3s;}
+        .property-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.08);}
+        .property-img { width: 100%; height: 240px; background: #e2e8f0; position: relative; border-bottom: 1px solid #eee; overflow: hidden;}
+        .property-img img { width: 100%; height: 100%; object-fit: cover;}
+        .badge-status { position: absolute; top: 12px; left: 12px; background: #22c55e; color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.85em; font-weight: bold; z-index: 2;}
+        .trust-badges { position: absolute; bottom: 12px; left: 12px; display: flex; gap: 8px; flex-wrap: wrap; z-index: 2;}
+        .badge { background: var(--primary-green); color: white; padding: 5px 12px; font-size: 0.8em; border-radius: 6px; font-weight: bold; }
+        .badge-orange { background: var(--accent-orange); }
+        .prop-details { padding: 25px; }
+        .prop-details h4 { margin: 0 0 10px 0; font-size: 1.2em; color: var(--text-dark); line-height: 1.4; }
+        .prop-price { color: var(--primary-green); font-size: 1.5em; font-weight: bold; margin-bottom: 12px; }
+        .prop-stats { font-size: 0.95em; color: #666; margin-bottom: 12px; }
+        .prop-loc { font-size: 0.95em; color: #888; display: flex; align-items: center; gap: 5px;}
+
+        /* 📌 Trusted by Clients / Unfair Advantage */
+        .pillar-grid { display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .pillar-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.03); display: flex; flex-direction: column; text-align: center; padding: 40px 30px;}
+        .pillar-icon { font-size: 3.5em; margin-bottom: 20px;}
+        .pillar-card h3 { color: var(--primary-green); margin-top: 0; font-size: 1.3em; margin-bottom: 15px;}
+        .pillar-card p { font-size: 1em; color: #555; margin: 0; line-height: 1.6;}
+
+        /* 📌 FAQ Section (อาวุธดักจับ AI Search) */
+        .faq-section { background: white; padding: 60px 40px; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0,0,0,0.03); margin-top: 80px;}
+        .faq-title { text-align: center; margin-bottom: 40px;}
+        .faq-title h2 { color: var(--primary-green); font-size: 2.2em; margin-bottom: 10px;}
+        .faq-title p { color: #666; font-size: 1.1em;}
+        .faq-grid { display: grid; gap: 20px; grid-template-columns: 1fr; max-width: 900px; margin: 0 auto;}
+        .faq-item { background: #f8fafc; border: 1px solid #e2e8f0; padding: 25px 30px; border-radius: 12px;}
+        .faq-q { font-weight: bold; color: var(--text-dark); font-size: 1.1em; margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start;}
+        .faq-q::before { content: 'Q:'; color: var(--accent-orange); font-weight: bold;}
+        .faq-a { color: #555; font-size: 0.95em; line-height: 1.6; padding-left: 28px;}
+
+        /* 📌 Footer */
+        .footer { background: var(--footer-bg); color: #f9fafb; padding: 60px 20px 20px; margin-top: 80px; font-size: 14px; border-top: 5px solid var(--accent-yellow);}
+        .footer-grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 1200px; margin: 0 auto 30px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .footer-col h4 { font-size: 1.2em; margin-top: 0; margin-bottom: 20px; color: var(--accent-yellow);}
+        .footer-col p { color: #d1d5db; line-height: 1.6; margin: 0 0 10px 0;}
+        .footer-col a { color: #d1d5db; text-decoration: none; display: block; margin-bottom: 12px; transition: color 0.2s;}
+        .footer-col a:hover { color: white; }
+        
+        .seo-links-section { max-width: 1200px; margin: 0 auto; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center;}
+        .seo-links-section h4 { color: #888; font-size: 0.9em; margin-bottom: 15px; text-transform: uppercase;}
+        .seo-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;}
+        .seo-tags a { color: #aaa; text-decoration: none; font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; transition: 0.2s;}
+        .seo-tags a:hover { background: rgba(255,255,255,0.1); color: white;}
+
+        .footer-bottom { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 20px; }
+        
+        .lang-en { display: none; }
+
+        /* 🌟 MOBILE OPTIMIZATION 🌟 */
+        @media (max-width: 1024px) {
+            .service-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .hero { padding: 60px 15px 80px; }
+            .hero-content h1 { font-size: 2.2em; }
+            .hero-content p { font-size: 1.05em; }
+            
+            .search-inputs { flex-direction: column; }
+            .hero-actions { flex-direction: column; }
+            
+            .service-grid { grid-template-columns: 1fr; } /* ยุบ 1 คอลัมน์บนมือถือ */
+            
+            .faq-section { padding: 40px 20px; }
+            .faq-item { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 📌 Navbar -->
+    <nav class="navbar">
+        <div style="font-weight: bold; color: var(--primary-green); font-size: 1.5em;">Baan Ai Oun</div>
+        <div class="nav-links">
+            <a href="index.html" class="lang-th" style="color:var(--primary-green); font-weight:bold;">หน้าแรก</a><a href="index.html" class="lang-en" style="color:var(--primary-green); font-weight:bold;">Home</a>
+            <a href="match.html" class="lang-th">งานหาทรัพย์</a><a href="match.html" class="lang-en">Property Match</a>
+            <a href="services.html" class="lang-th">บริการของเรา</a><a href="services.html" class="lang-en">Our Services</a>
+            <a href="blog.html" class="lang-th">บทความ</a><a href="blog.html" class="lang-en">Blog</a>
+            <a href="about.html" class="lang-th">เกี่ยวกับเรา</a><a href="about.html" class="lang-en">About Us</a>
+            
+            <button class="lang-switch" onclick="toggleLanguage()"><span id="current-lang-text">🌐 EN</span></button>
+            <a href="contact.html" class="btn-contact lang-th">ติดต่อเรา</a><a href="contact.html" class="btn-contact lang-en">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- 📌 Hero Section (แสดง 2 ภาษาเพื่อต้อนรับสากล) -->
+    <header class="hero">
+        <img class="hero-bg-img" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="ทีมงานบ้านไออุ่นส่งมอบความสุขให้ลูกค้า">
+        
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="lang-th">ครบจบเรื่องอสังหาฯ ซื้อ-ขาย-เช่า<br>ดูแลด้วยสายตานักลงทุน</h1>
+            <h1 class="lang-en">Your All-in-One Real Estate Partner</h1>
+            <p class="lang-th">ปิดดีลไว ได้ราคาที่ใช่ พร้อมทีมงานดูแลครบวงจรเพื่อคนไทยและต่างชาติ</p>
+            <p class="lang-en">Expert services for buyers, sellers, and renters. Serving local and international clients.</p>
+            
+            <!-- กล่องค้นหา (Glassmorphism) -->
+            <div class="search-box">
+                <div class="search-title">
+                    <span class="lang-th">ค้นหาทรัพย์ที่ใช่สำหรับคุณ</span><span class="lang-en">Find Your Perfect Property</span>
+                </div>
+                
+                <div class="search-tabs">
+                    <div class="search-tab active lang-th">ทั้งหมด</div><div class="search-tab active lang-en">All</div>
+                    <div class="search-tab lang-th">ซื้อ</div><div class="search-tab lang-en">Buy</div>
+                    <div class="search-tab lang-th">เช่า</div><div class="search-tab lang-en">Rent</div>
+                </div>
+                
+                <div class="search-inputs">
+                    <input type="text" class="lang-th" placeholder="กรุงเทพฯ, สุขุมวิท 77, ชลบุรี, EEC...">
+                    <input type="text" class="lang-en" placeholder="Bangkok, Sukhumvit 77, Chonburi, EEC...">
+                    <select>
+                        <option class="lang-th">ทุกประเภท</option><option class="lang-en">All Types</option>
+                        <option class="lang-th">บ้านเดี่ยว/แฝด</option><option class="lang-en">House</option>
+                        <option class="lang-th">คอนโดมิเนียม</option><option class="lang-en">Condo</option>
+                    </select>
+                    <select><option class="lang-th">ทุกช่วงราคา</option><option class="lang-en">All Prices</option></select>
+                </div>
+                
+                <div class="hero-actions">
+                    <button class="btn-action orange">
+                        🏠 <span class="lang-th">ฝากขาย / ปล่อยเช่า</span><span class="lang-en">List Your Property</span>
+                    </button>
+                    <button class="btn-action green">
+                        🔍 <span class="lang-th">ค้นหาทรัพย์</span><span class="lang-en">Search Properties</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- 📌 Services Section (ดีไซน์อัปเกรดตามภาพตัวอย่างคุณพิม) -->
+        <section>
+            <div class="section-title">
+                <h2 class="lang-th">บริการของเรา | Our Services</h2>
+                <h2 class="lang-en">Our Services</h2>
+                <p class="lang-th">เราไม่ใช่แค่กระดานประกาศ แต่เราคือ "พาร์ทเนอร์" ที่เข้าใจคุณ</p>
+                <p class="lang-en">More than just listings, we are your real estate partners.</p>
+            </div>
+            
+            <div class="service-grid">
+                <!-- Card 1 -->
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h3 class="lang-th">สำหรับเจ้าของทรัพย์</h3><h3 class="lang-en">Property Owners</h3>
+                    <p class="lang-th">ประเมินศักยภาพทรัพย์ฟรี คัดกรองผู้ซื้อตัวจริง และทำการตลาดเชิงรุกจนปิดดีล</p>
+                    <p class="lang-en">Free property assessment and proactive full-service marketing until closed.</p>
+                    <div class="service-buttons">
+                        <a href="contact.html" class="btn-service-primary"><span class="lang-th">ฝากทรัพย์ทันที</span><span class="lang-en">List Property Now</span></a>
+                        <a href="services.html" class="btn-service-secondary"><span class="lang-th">อ่านรายละเอียด</span><span class="lang-en">Learn More</span></a>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3 class="lang-th">สำหรับผู้ซื้อ-เช่า</h3><h3 class="lang-en">Buyers & Renters</h3>
+                    <p class="lang-th">คัดสรรทรัพย์ทำเลทอง รีโนเวทพร้อมอยู่ พร้อมบริการดูแลด้านสินเชื่อให้ฟรี 100%</p>
+                    <p class="lang-en">Curated prime locations and renovated homes with free loan care.</p>
+                    <div class="service-buttons">
+                        <a href="match.html" class="btn-service-primary"><span class="lang-th">ให้เราหาให้ฟรี</span><span class="lang-en">Find Property Free</span></a>
+                        <a href="services.html" class="btn-service-secondary"><span class="lang-th">อ่านรายละเอียด</span><span class="lang-en">Learn More</span></a>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="service-card">
+                    <div class="service-icon">🤝</div>
+                    <h3 class="lang-th">เครือข่าย Co-Agent</h3><h3 class="lang-en">Co-Agent Network</h3>
+                    <p class="lang-th">ขยายโอกาส ปิดดีลไว ฝากทรัพย์เข้าระบบฟรี เราช่วยดันการตลาด แบ่งคอมมิชชันโปร่งใส</p>
+                    <p class="lang-en">Expand your reach. Free listing with transparent commission splits.</p>
+                    <div class="service-buttons">
+                        <a href="co-agent.html" class="btn-service-primary"><span class="lang-th">ร่วมเครือข่าย</span><span class="lang-en">Join Network</span></a>
+                        <a href="services.html" class="btn-service-secondary"><span class="lang-th">อ่านรายละเอียด</span><span class="lang-en">Learn More</span></a>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="service-card">
+                    <div class="service-icon">🎓</div>
+                    <h3 class="lang-th">คอร์สนายหน้าอสังหาฯ</h3><h3 class="lang-en">Real Estate Course</h3>
+                    <p class="lang-th">คอร์สเวิร์กชอปจับมือทำ ถ่ายทอดประสบการณ์จริงจากนักลงทุนและผู้เชี่ยวชาญตัวจริง</p>
+                    <p class="lang-en">Hands-on workshop taught by real investors and industry experts.</p>
+                    <div class="service-buttons">
+                        <a href="agent-course.html" class="btn-service-primary"><span class="lang-th">สมัครคอร์สเรียน</span><span class="lang-en">Enroll Now</span></a>
+                        <a href="services.html" class="btn-service-secondary"><span class="lang-th">อ่านรายละเอียด</span><span class="lang-en">Learn More</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📌 Why Choose Us (Unfair Advantage) -->
+        <section>
+            <div class="section-title" style="margin-top:100px;">
+                <h2 class="lang-th">ทำไมต้องเลือก บ้านไออุ่น?</h2>
+                <h2 class="lang-en">Why Choose Us?</h2>
+            </div>
+            <div class="pillar-grid lang-th">
+                <div class="pillar-card">
+                    <div class="pillar-icon">👁️</div>
+                    <h3>คัดกรองด้วยสายตานักลงทุน</h3>
+                    <p>ทีมงานของเราลงพื้นที่ตรวจเช็กโครงสร้างและประเมินความคุ้มค่าให้คุณก่อนเสมอ เพื่อให้มั่นใจว่าทรัพย์ทุกชิ้นมีคุณภาพสูงสุด</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon">🌐</div>
+                    <h3>ระบบนิเวศที่มีชีวิต</h3>
+                    <p>ศูนย์รวมผู้ซื้อ ผู้ขาย และเครือข่าย Co-Agent ทั่วประเทศ ที่ทำงานร่วมกันอย่างมีชีวิตชีวา ช่วยเพิ่มโอกาสปิดดีลให้ไวขึ้น</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon">🛡️</div>
+                    <h3>ดูแลเอกสารและสินเชื่อฟรี</h3>
+                    <p>เราให้บริการแบบ End-to-End ตั้งแต่หาสินเชื่อ ตรวจสัญญา จนถึงวันโอนกรรมสิทธิ์ โดยไม่มีค่าใช้จ่ายแอบแฝง</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📌 Featured Properties -->
+        <section>
+            <div class="section-title" style="margin-top:100px;">
+                <h2 class="lang-th">ทรัพย์แนะนำคัดพิเศษ | Featured Properties</h2>
+                <h2 class="lang-en">Featured Properties</h2>
+                <p class="lang-th">คัดสรรโดยทีมนักลงทุน — คุ้มค่าทั้งการอยู่อาศัยและการลงทุน</p>
+                <p class="lang-en">Curated by our investor team for ultimate value and livability.</p>
+            </div>
+            
+            <div class="property-grid">
+                <article class="property-card">
+                    <div class="property-img">
+                        <!-- 🛠️ ADMIN: ใส่รูปภาพบ้านที่ต้องการแนะนำ ตรงนี้ 🛠️ -->
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="บ้านแฝดรีโนเวทใหม่ หมู่บ้านปภาดา ชลบุรี">
+                        <div class="badge-status lang-th">ขาย</div><div class="badge-status lang-en">For Sale</div>
+                        <div class="trust-badges">
+                            <span class="badge lang-th">คัดกรองโดยนักลงทุน</span><span class="badge lang-en">Investor Curated</span>
+                            <span class="badge badge-orange lang-th">รีโนเวทใหม่พร้อมอยู่</span><span class="badge badge-orange lang-en">Newly Renovated</span>
+                        </div>
+                    </div>
+                    <div class="prop-details">
+                        <h4 class="lang-th">บ้านแฝด 34 ตรว. หมู่บ้านปภาดา บ้านบึง ชลบุรี (ต่อเติมเต็ม)</h4>
+                        <h4 class="lang-en">34 Sq.wa Semi-Detached, Paphada Ban Bueng</h4>
+                        <div class="prop-price">1,990,000 บาท</div>
+                        <div class="prop-stats">🛏️ 2 นอน &nbsp; 🛁 1 น้ำ &nbsp; 📐 135.5 ตร.ม.</div>
+                        <div class="prop-loc">📍 บ้านบึง, ชลบุรี</div>
+                    </div>
+                </article>
+                <article class="property-card">
+                    <div class="property-img">
+                        <!-- 🛠️ ADMIN: ใส่รูปภาพคอนโดที่ต้องการแนะนำ ตรงนี้ 🛠️ -->
+                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="คอนโดให้เช่าใกล้รถไฟฟ้าอ่อนนุช สุขุมวิท 77">
+                        <div class="badge-status" style="background:#0284c7;">เช่า</div>
+                        <div class="trust-badges">
+                            <span class="badge lang-th">ทำเลทอง EEC</span>
+                            <span class="badge badge-orange lang-th">ใกล้แหล่งงาน</span>
+                        </div>
+                    </div>
+                    <div class="prop-details">
+                        <h4 class="lang-th">คอนโดหรูพร้อมอยู่ ใกล้นิคมอุตสาหกรรม โซนระยอง</h4>
+                        <h4 class="lang-en">Luxury Condo near Industrial Estate, Rayong</h4>
+                        <div class="prop-price">8,500 บาท/เดือน</div>
+                        <div class="prop-stats">🛏️ 1 นอน &nbsp; 🛁 1 น้ำ &nbsp; 📐 30 ตร.ม.</div>
+                        <div class="prop-loc">📍 เมืองระยอง, ระยอง</div>
+                    </div>
+                </article>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <button style="background:white; border:2px solid var(--primary-green); color:var(--primary-green); padding:15px 35px; border-radius:30px; font-weight:bold; font-size:1.1em; cursor:pointer; transition:0.3s;" onmouseover="this.style.background='var(--primary-green)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--primary-green)';">
+                    <span class="lang-th">ดูทรัพย์ทั้งหมดของเรา →</span><span class="lang-en">View All Properties →</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 🌟 FAQ Section (ดักจับคำถามจาก AI Search & Google) -->
+        <section class="faq-section lang-th">
+            <div class="faq-title">
+                <h2>คำถามที่พบบ่อย (FAQ)</h2>
+                <p>เรื่องอสังหาฯ ให้เราดูแล เพื่อให้คุณก้าวสู่เป้าหมายได้อย่างสบายใจและคุ้มค่าที่สุด</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-q">บ้านไออุ่น พร็อพเพอร์ตี้ ให้บริการครอบคลุมพื้นที่ใดบ้าง?</div>
+                    <div class="faq-a">ทีมงานของเรามีความเชี่ยวชาญและให้บริการรับฝากขาย ปล่อยเช่า จัดหาอสังหาริมทรัพย์ ครอบคลุมทำเลศักยภาพทั่ว <strong>กรุงเทพมหานคร, สมุทรปราการ (รวมถึงโซนอ่อนนุช-สุขุมวิท 77), ชลบุรี, ฉะเชิงเทรา, ระยอง และพื้นที่เศรษฐกิจ EEC</strong> อย่างเต็มรูปแบบค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">จุดเด่นที่ทำให้เราแตกต่างจากเว็บไซต์ตัวแทนอสังหาฯ ทั่วไปคืออะไร?</div>
+                    <div class="faq-a">เราไม่เพียงแค่เป็นกระดานลงประกาศ แต่เรามีทีมงานลงพื้นที่คัดกรองทรัพย์ด้วย <strong>"สายตานักลงทุน"</strong> มีบริการให้คำปรึกษาด้านการปรับปรุงทรัพย์ (Renovation) และดูแลครบวงจรตั้งแต่การทำสินเชื่อไปจนถึงวันโอนกรรมสิทธิ์ เพื่อรักษาผลประโยชน์สูงสุดของลูกค้าค่ะ</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">หากสนใจใช้บริการจัดหาบ้านหรือคอนโด มีค่าใช้จ่ายแอบแฝงหรือไม่?</div>
+                    <div class="faq-a">บริการจัดหาทรัพย์ คัดกรองทำเล และให้คำปรึกษาด้านสินเชื่อสำหรับผู้ซื้อและผู้เช่า ดำเนินการให้ <strong>ฟรี 100%</strong> โดยไม่มีค่าใช้จ่ายแอบแฝงใดๆ ทั้งสิ้นค่ะ ทีมงานพร้อมดูแลและจัดหาทรัพย์ที่ตรงกับความต้องการของคุณมากที่สุด</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- English FAQ -->
+        <section class="faq-section lang-en">
+            <div class="faq-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-q">Which areas does Baan Ai Oun cover?</div>
+                    <div class="faq-a">We cover prime locations across Bangkok, Samut Prakan, Chonburi, Rayong, and the entire EEC economic zone.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Is the property finding service free?</div>
+                    <div class="faq-a">Yes! Our property finding, screening, and loan consultation services for buyers and renters are completely free with no hidden charges.</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 📌 Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 class="lang-th">Baan Ai Oun Property</h4><h4 class="lang-en">Baan Ai Oun Property</h4>
+                <p class="lang-th">บ้านไออุ่น: มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ</p>
+                <p class="lang-en">More than just a house, it's the energy to keep you moving forward.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">เมนูลัด</h4><h4 class="lang-en">Quick Links</h4>
+                <a href="services.html" class="lang-th">- ฝากขาย/ปล่อยเช่า</a><a href="services.html" class="lang-en">- List Your Property</a>
+                <a href="match.html" class="lang-th">- ค้นหาทรัพย์</a><a href="match.html" class="lang-en">- Find Properties</a>
+                <a href="co-agent.html" class="lang-th">- ร่วมเป็น Co-Agent</a><a href="co-agent.html" class="lang-en">- Co-Agent Program</a>
+                <a href="agent-course.html" class="lang-th">- คอร์สนายหน้าอสังหาฯ</a><a href="agent-course.html" class="lang-en">- Real Estate Course</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4 class="lang-th">ติดต่อเรา</h4><h4 class="lang-en">Contact Us</h4>
+                <p>📞 โทร (Tel): 086-4149960</p>
+                <p>🟢 LINE: @baan-ai-oun</p>
+                <p>✉️ Email: supansa.m@baanaioun.com</p>
+                <p style="margin-top: 15px;">
+                    <span class="lang-th">📍 สำนักงาน: 107/57 เดอะคัลเลอร์เลคเชอร์ ซ.มหาชัย ม.13 ต.บางพลีใหญ่ อ.บางพลี จ.สมุทรปราการ</span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 🌟 SEO Popular Searches Section -->
+        <div class="seo-links-section">
+            <h4 class="lang-th">ค้นหาทำเลยอดฮิต</h4><h4 class="lang-en">Popular Searches</h4>
+            <div class="seo-tags">
+                <a href="#" class="lang-th">บ้านมือสอง ชลบุรี</a><a href="#" class="lang-en">Houses in Chonburi</a>
+                <a href="#" class="lang-th">คอนโด สุขุมวิท 77</a><a href="#" class="lang-en">Condos Sukhumvit 77</a>
+                <a href="#" class="lang-th">คอนโดใกล้นิคม EEC</a><a href="#" class="lang-en">Condos near EEC</a>
+                <a href="#" class="lang-th">บ้านรีโนเวทพร้อมอยู่</a><a href="#" class="lang-en">Renovated Homes</a>
+                <a href="#" class="lang-th">ทาวน์โฮม สมุทรปราการ</a><a href="#" class="lang-en">Townhomes Samut Prakan</a>
+                <a href="#" class="lang-th">ฝากขายบ้านด่วน</a><a href="#" class="lang-en">Sell House Quickly</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="lang-th">&copy; 2026 บ้านไออุ่น พร็อพเพอร์ตี้ สงวนลิขสิทธิ์ทุกประการ | นโยบายความเป็นส่วนตัว</p>
+            <p class="lang-en">&copy; 2026 Baan Ai Oun Property. All rights reserved. | Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        let isEnglish = false;
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            document.querySelectorAll('.lang-th').forEach(el => el.style.display = isEnglish ? 'none' : 'block');
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = isEnglish ? 'block' : 'none');
+            document.getElementById('current-lang-text').innerText = isEnglish ? '🌐 TH' : '🌐 EN';
+        }
+    </script>
+</body>
+</html>
