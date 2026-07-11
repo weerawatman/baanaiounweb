@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
 import {
+  StepsSection,
   PageHeroBanner,
   ServiceLeadTabs,
   PortfolioBento,
@@ -66,16 +67,22 @@ export default function ListPropertyPage({
 
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
           <div>
-            <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
-              {split.headline.th}
-              <br />
-              {split.headline.thLine2}
+            <h2 className="text-pretty text-xl font-bold leading-snug text-foreground sm:text-2xl lg:text-[1.75rem] xl:text-3xl">
+              {split.headline.thLines.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
             </h2>
-            <p className="mt-2 text-lg font-medium text-secondary">{split.headline.en}</p>
+            <p className="mt-2 text-base font-medium text-secondary sm:text-lg">{split.headline.en}</p>
 
-            <p className="mt-5 inline-block border-b-2 border-[#eab308] pb-3 text-sm font-bold text-primary">
-              {split.seo.th}
-            </p>
+            <div className="mt-5 inline-block border-b-2 border-[#eab308] pb-3">
+              {split.seo.thLines.map((line) => (
+                <p key={line} className="text-sm font-bold leading-snug text-primary">
+                  {line}
+                </p>
+              ))}
+            </div>
             <p className="mt-1 text-xs font-medium text-muted-foreground">{split.seo.en}</p>
 
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -121,33 +128,6 @@ export default function ListPropertyPage({
             </div>
 
             <PortfolioBento items={bentoItems} />
-
-            <div className="mt-8">
-              <h3 className="text-center text-lg font-bold text-primary sm:text-xl">
-                {steps.headlineTh}
-              </h3>
-              <p className="mt-1 text-center text-sm font-medium text-muted-foreground">
-                {steps.headlineEn}
-              </p>
-              <div className="mt-5 grid gap-4 sm:grid-cols-3">
-                {steps.items.map((step) => (
-                  <div
-                    key={step.number}
-                    className="flex h-full min-w-0 flex-col items-center rounded-2xl border border-border bg-card p-5 text-center shadow-sm"
-                  >
-                    <div className="flex size-10 items-center justify-center rounded-full border-[3px] border-[#eab308] bg-primary text-sm font-bold text-primary-foreground">
-                      {step.number}
-                    </div>
-                    <p className="mt-3 text-sm font-bold text-primary">{step.titleTh}</p>
-                    <p className="text-xs font-medium text-muted-foreground">{step.titleEn}</p>
-                    <p className="mt-2 text-xs leading-relaxed text-foreground/80">{step.descriptionTh}</p>
-                    <p className="mt-1 text-[0.65rem] leading-relaxed text-muted-foreground">
-                      {step.descriptionEn}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
 
             <div className="relative isolate mt-8 overflow-hidden rounded-2xl px-6 py-12 text-center shadow-lg sm:px-10">
               {quoteImage ? (
@@ -201,6 +181,8 @@ export default function ListPropertyPage({
           </div>
         </div>
       </PageSection>
+
+      <StepsSection headline={steps.headline} steps={steps.items} />
 
       <FaqSection
         title="คำถามที่พบบ่อยเกี่ยวกับการฝากทรัพย์ (FAQ)"

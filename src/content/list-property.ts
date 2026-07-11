@@ -81,29 +81,25 @@ export const LIST_PROPERTY_CONTENT = {
     }
   },
   steps: {
-    headlineTh: "ฝากทรัพย์ง่ายๆ ใน 3 ขั้นตอน",
-    headlineEn: "3 Simple Steps to List",
+    headline: "ฝากทรัพย์ง่ายๆ ใน 3 ขั้นตอน | 3 Simple Steps to List",
     items: [
       {
         number: 1,
-        titleTh: "ส่งข้อมูลเบื้องต้น",
-        titleEn: "Submit Info",
-        descriptionTh: "กรอกฟอร์มด้านข้าง ทีมงานพร้อมติดต่อกลับทันที",
-        descriptionEn: "Fill in the form — our team will contact you right away.",
+        title: "ส่งข้อมูลเบื้องต้น | Submit Info",
+        description:
+          "กรอกฟอร์มด้านบน ทีมงานพร้อมติดต่อกลับทันที | Fill in the form above — our team will contact you right away.",
       },
       {
         number: 2,
-        titleTh: "ประเมินราคาและถ่ายทำ",
-        titleEn: "Valuation & Media",
-        descriptionTh: "ทีมลงพื้นที่ประเมินราคาตลาด พร้อมถ่ายภาพอย่างมืออาชีพ",
-        descriptionEn: "On-site market valuation and professional photography.",
+        title: "ประเมินราคาและถ่ายทำ | Valuation & Media",
+        description:
+          "ทีมลงพื้นที่ประเมินราคาตลาด พร้อมถ่ายภาพอย่างมืออาชีพ | On-site market valuation and professional photography.",
       },
       {
         number: 3,
-        titleTh: "ทำการตลาดและปิดดีล",
-        titleEn: "Market & Close",
-        descriptionTh: "หาลูกค้าจริง เจรจาต่อรอง และจัดการเอกสารจนถึงวันโอน",
-        descriptionEn: "Find real buyers, negotiate, and handle paperwork through transfer day.",
+        title: "ทำการตลาดและปิดดีล | Market & Close",
+        description:
+          "หาลูกค้าจริง เจรจาต่อรอง และจัดการเอกสารจนถึงวันโอน | Find real buyers, negotiate, and handle paperwork through transfer day.",
       },
     ],
   },
@@ -116,12 +112,19 @@ export const LIST_PROPERTY_CONTENT = {
   },
   split: {
     headline: {
-      th: "หมดทุกความกังวลเรื่องฝากขาย-ปล่อยเช่า",
-      thLine2: "เราพร้อมเปลี่ยนให้เป็นเรื่องง่ายและปิดดีลไว",
+      thLines: [
+        "หมดทุกความกังวลเรื่อง",
+        "ฝากขาย-ปล่อยเช่า",
+        "เราพร้อมเปลี่ยนให้เป็นเรื่องง่าย",
+        "และปิดดีลไว",
+      ],
       en: "Turn selling worries into a fast and successful close.",
     },
     seo: {
-      th: "บริการรับฝากขาย-ปล่อยเช่า อสังหาฯ โซนชลบุรี สมุทรปราการ ฉะเชิงเทรา ระยอง และ EEC",
+      thLines: [
+        "บริการรับฝากขาย-ปล่อยเช่า อสังหาฯ",
+        "โซนชลบุรี สมุทรปราการ ฉะเชิงเทรา ระยอง และ EEC",
+      ],
       en: "Full-service property listing in Chonburi, Samut Prakan, Rayong & EEC.",
     },
     benefits: [
