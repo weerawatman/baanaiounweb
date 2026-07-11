@@ -1,4 +1,5 @@
 import type { Property } from "@/types"
+import { PROPERTY_CATEGORY_OPTIONS, type PropertyCategory } from "@/content/form-options"
 
 /**
  * Shared property search/filter logic — single source for the homepage hero
@@ -12,7 +13,7 @@ export interface PropertyFilters {
   purpose: PurposeTab
   district: string
   maxPrice: string
-  subType: string
+  propertyType: "" | PropertyCategory
 }
 
 export const EMPTY_FILTERS: PropertyFilters = {
@@ -20,7 +21,7 @@ export const EMPTY_FILTERS: PropertyFilters = {
   purpose: "all",
   district: "",
   maxPrice: "",
-  subType: "",
+  propertyType: "",
 }
 
 export const PURPOSE_TABS: { value: PurposeTab; th: string; en: string }[] = [
@@ -38,13 +39,9 @@ export const PRICE_OPTIONS = [
   { label: "≤ 5 ล้าน | Under 5M", value: "5000000" },
 ]
 
-export const SUB_TYPE_OPTIONS: { label: string; value: "" | Property["subType"] }[] = [
+export const PROPERTY_TYPE_FILTER_OPTIONS: { label: string; value: "" | PropertyCategory }[] = [
   { label: "ทุกประเภท | All Types", value: "" },
-  { label: "บ้านใหม่ | Brand New", value: "new" },
-  { label: "รีโนเวทใหม่ | Renovated", value: "renovated" },
-  { label: "ทาวน์โฮม | Townhome", value: "townhome" },
-  { label: "บ้านพักอาศัย | Residential", value: "residential" },
-  { label: "ทรัพย์ลงทุน | Investment", value: "investment" },
+  ...PROPERTY_CATEGORY_OPTIONS.map((opt) => ({ label: opt.label, value: opt.value })),
 ]
 
 export function filterProperties(properties: Property[], filters: PropertyFilters): Property[] {
@@ -66,7 +63,7 @@ export function filterProperties(properties: Property[], filters: PropertyFilter
     if (filters.purpose !== "all" && p.type !== filters.purpose) return false
     if (filters.district && p.location.district !== filters.district) return false
     if (filters.maxPrice && p.price > Number(filters.maxPrice)) return false
-    if (filters.subType && p.subType !== filters.subType) return false
+    if (filters.propertyType && p.subType !== filters.propertyType) return false
     return true
   })
 }
@@ -75,13 +72,15 @@ export function filterProperties(properties: Property[], filters: PropertyFilter
 export function parseFilters(params: URLSearchParams): PropertyFilters {
   const purpose = params.get("purpose") ?? ""
   const maxPrice = params.get("maxPrice") ?? ""
-  const subType = params.get("subType") ?? ""
+  const propertyType = params.get("propertyType") ?? ""
   return {
     query: params.get("query") ?? "",
     purpose: PURPOSE_TABS.some((t) => t.value === purpose) ? (purpose as PurposeTab) : "all",
     district: params.get("district") ?? "",
     maxPrice: PRICE_OPTIONS.some((o) => o.value === maxPrice) ? maxPrice : "",
-    subType: SUB_TYPE_OPTIONS.some((o) => o.value === subType) ? subType : "",
+    propertyType: PROPERTY_TYPE_FILTER_OPTIONS.some((o) => o.value === propertyType)
+      ? (propertyType as PropertyCategory | "")
+      : "",
   }
 }
 
@@ -92,6 +91,6 @@ export function buildQueryString(filters: PropertyFilters): string {
   if (filters.purpose !== "all") params.set("purpose", filters.purpose)
   if (filters.district) params.set("district", filters.district)
   if (filters.maxPrice) params.set("maxPrice", filters.maxPrice)
-  if (filters.subType) params.set("subType", filters.subType)
+  if (filters.propertyType) params.set("propertyType", filters.propertyType)
   return params.toString()
 }

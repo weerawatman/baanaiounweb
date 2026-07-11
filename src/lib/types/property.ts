@@ -1,13 +1,15 @@
 export type PropertyStatus = "ACTIVE" | "SOLD" | "RENTED"
 export type PropertyType = "SALE" | "RENT" | "LAND"
-export type PropertySubType = "new" | "renovated" | "townhome" | "residential" | "investment"
+export type PropertyCategory = "house" | "townhome" | "condo" | "land"
+/** @deprecated Use PropertyCategory — kept as alias for DB column sub_type */
+export type PropertySubType = PropertyCategory
 
 export interface Property {
   id: string
   slug: string
   title: string
   type: PropertyType
-  sub_type: PropertySubType | null
+  sub_type: PropertyCategory | null
   price: number
   price_label: string
   area_sqm: number

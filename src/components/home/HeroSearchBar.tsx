@@ -5,10 +5,12 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
   PRICE_OPTIONS,
+  PROPERTY_TYPE_FILTER_OPTIONS,
   PURPOSE_TABS,
   buildQueryString,
   type PurposeTab,
 } from "@/lib/search"
+import type { PropertyCategory } from "@/content/form-options"
 
 interface HeroSearchBarProps {
   districts: string[]
@@ -32,13 +34,14 @@ export default function HeroSearchBar({
   const [purpose, setPurpose] = useState<PurposeTab>("all")
   const [district, setDistrict] = useState("")
   const [maxPrice, setMaxPrice] = useState("")
+  const [propertyType, setPropertyType] = useState<"" | PropertyCategory>("")
 
   const selectClass =
     "w-full rounded-lg border-0 bg-white px-4 py-3.5 text-base text-[#333] focus:outline-none focus:ring-2 focus:ring-[#eab308]"
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
-    const qs = buildQueryString({ query, purpose, district, maxPrice, subType: "" })
+    const qs = buildQueryString({ query, purpose, district, maxPrice, propertyType })
     router.push(qs ? `/properties?${qs}` : "/properties")
   }
 
@@ -91,6 +94,19 @@ export default function HeroSearchBar({
           {districts.map((d) => (
             <option key={d} value={d}>
               {d}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={propertyType}
+          onChange={(e) => setPropertyType(e.target.value as "" | PropertyCategory)}
+          className={selectClass}
+          aria-label="เลือกประเภททรัพย์"
+        >
+          {PROPERTY_TYPE_FILTER_OPTIONS.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
             </option>
           ))}
         </select>

@@ -8,11 +8,13 @@ import PropertyCard from "@/components/property/PropertyCard"
 import type { Property } from "@/types"
 import {
   PRICE_OPTIONS,
+  PROPERTY_TYPE_FILTER_OPTIONS,
   PURPOSE_TABS,
   filterProperties,
   parseFilters,
   type PurposeTab,
 } from "@/lib/search"
+import type { PropertyCategory } from "@/content/form-options"
 
 export default function PropertiesPage({ properties }: { properties: Property[] }) {
   const searchParams = useSearchParams()
@@ -22,12 +24,14 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
   const [purpose, setPurpose] = useState<PurposeTab>(urlFilters.purpose)
   const [district, setDistrict] = useState(urlFilters.district)
   const [maxPrice, setMaxPrice] = useState(urlFilters.maxPrice)
+  const [propertyType, setPropertyType] = useState<"" | PropertyCategory>(urlFilters.propertyType)
 
   useEffect(() => {
     setQuery(urlFilters.query)
     setPurpose(urlFilters.purpose)
     setDistrict(urlFilters.district)
     setMaxPrice(urlFilters.maxPrice)
+    setPropertyType(urlFilters.propertyType)
   }, [urlFilters])
 
   const districts = useMemo(
@@ -36,8 +40,8 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
   )
 
   const filtered = useMemo(
-    () => filterProperties(properties, { query, purpose, district, maxPrice, subType: "" }),
-    [properties, query, purpose, district, maxPrice],
+    () => filterProperties(properties, { query, purpose, district, maxPrice, propertyType }),
+    [properties, query, purpose, district, maxPrice, propertyType],
   )
 
   const selectClass =
@@ -79,7 +83,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
           ))}
         </div>
 
-        {/* Query + District + Price */}
+        {/* Query + District + Type + Price */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <input
             type="search"
@@ -99,6 +103,18 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
             {districts.map((d) => (
               <option key={d} value={d}>
                 {d}
+              </option>
+            ))}
+          </select>
+          <select
+            value={propertyType}
+            onChange={(e) => setPropertyType(e.target.value as "" | PropertyCategory)}
+            className={selectClass}
+            aria-label="เลือกประเภททรัพย์"
+          >
+            {PROPERTY_TYPE_FILTER_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
               </option>
             ))}
           </select>

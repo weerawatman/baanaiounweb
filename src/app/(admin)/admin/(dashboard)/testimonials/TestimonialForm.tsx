@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { testimonialSchema, type TestimonialFormValues } from "@/lib/validations/testimonial"
 import type { Testimonial } from "@/lib/types/property"
 import type { ActionState } from "@/actions/properties"
+import { PROPERTY_CATEGORY_OPTIONS } from "@/content/form-options"
 import { cn } from "@/lib/utils"
 
 interface TestimonialFormProps {
@@ -77,7 +78,14 @@ export function TestimonialForm({
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium">ประเภททรัพย์</label>
-            <Input {...register("property_type")} placeholder="บ้านเดี่ยว 2 ชั้น" />
+            <select {...register("property_type")} className={selectCls}>
+              <option value="">— เลือก —</option>
+              {PROPERTY_CATEGORY_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.labelTh}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -168,4 +176,9 @@ export function TestimonialForm({
 const textareaCls = cn(
   "w-full rounded-md border border-input bg-background px-3 py-2",
   "text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-y",
+)
+
+const selectCls = cn(
+  "w-full rounded-md border border-input bg-background px-3 py-2",
+  "text-sm focus:outline-none focus:ring-2 focus:ring-ring",
 )

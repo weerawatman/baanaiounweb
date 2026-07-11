@@ -3,26 +3,78 @@
  * Bilingual TH/EN options for Rev.00 implementation
  */
 
-export const PROPERTY_TYPE_OPTIONS = [
-  { value: "house", label: "บ้านเดี่ยว | House", labelTh: "บ้านเดี่ยว", labelEn: "House" },
-  { value: "townhome", label: "ทาวน์โฮม | Townhome", labelTh: "ทาวน์โฮม", labelEn: "Townhome" },
-  { value: "condo", label: "คอนโด | Condo", labelTh: "คอนโด", labelEn: "Condo" },
-  { value: "land", label: "ที่ดิน | Land", labelTh: "ที่ดิน", labelEn: "Land" },
-  { value: "commercial", label: "อาคารพาณิชย์ | Commercial", labelTh: "อาคารพาณิชย์", labelEn: "Commercial" },
-  { value: "other", label: "อื่นๆ | Other", labelTh: "อื่นๆ", labelEn: "Other" },
+/** Standard property categories — single source of truth for the whole site */
+export type PropertyCategory = "house" | "townhome" | "condo" | "land"
+
+export interface PropertyCategoryOption {
+  value: PropertyCategory
+  label: string
+  labelTh: string
+  labelEn: string
+}
+
+export const PROPERTY_CATEGORY_OPTIONS: PropertyCategoryOption[] = [
+  {
+    value: "house",
+    label: "บ้านเดี่ยว/บ้านแฝด | House/Twin House",
+    labelTh: "บ้านเดี่ยว/บ้านแฝด",
+    labelEn: "House/Twin House",
+  },
+  {
+    value: "townhome",
+    label: "ทาวโฮม | Townhome",
+    labelTh: "ทาวโฮม",
+    labelEn: "Townhome",
+  },
+  {
+    value: "condo",
+    label: "คอนโดมิเนียม | Condominium",
+    labelTh: "คอนโดมิเนียม",
+    labelEn: "Condominium",
+  },
+  {
+    value: "land",
+    label: "ที่ดิน | Land",
+    labelTh: "ที่ดิน",
+    labelEn: "Land",
+  },
 ]
 
-/**
- * Property types for the /request service-request forms (per owner's spec):
- * บ้านเดี่ยว, บ้านแฝด, ทาวน์โฮม, คอนโด, ที่ดิน
- */
-export const REQUEST_PROPERTY_TYPE_OPTIONS = [
-  { value: "house", label: "บ้านเดี่ยว | Single House", labelTh: "บ้านเดี่ยว", labelEn: "Single House" },
-  { value: "twin-house", label: "บ้านแฝด | Twin House", labelTh: "บ้านแฝด", labelEn: "Twin House" },
-  { value: "townhome", label: "ทาวน์โฮม | Townhome", labelTh: "ทาวน์โฮม", labelEn: "Townhome" },
-  { value: "condo", label: "คอนโด | Condo", labelTh: "คอนโด", labelEn: "Condo" },
-  { value: "land", label: "ที่ดิน | Land", labelTh: "ที่ดิน", labelEn: "Land" },
-]
+/** Lead / contact form property-type dropdown */
+export const PROPERTY_TYPE_OPTIONS = PROPERTY_CATEGORY_OPTIONS
+
+/** Service-request forms (/request) — same 4 categories */
+export const REQUEST_PROPERTY_TYPE_OPTIONS = PROPERTY_CATEGORY_OPTIONS
+
+const LEGACY_PROPERTY_CATEGORY_LABELS: Record<string, string> = {
+  "twin-house": "บ้านเดี่ยว/บ้านแฝด",
+  commercial: "อาคารพาณิชย์",
+  other: "อื่นๆ",
+  new: "บ้านเดี่ยว/บ้านแฝด",
+  renovated: "บ้านเดี่ยว/บ้านแฝด",
+  residential: "บ้านเดี่ยว/บ้านแฝด",
+  investment: "บ้านเดี่ยว/บ้านแฝด",
+}
+
+const CATEGORY_LABEL_TH = Object.fromEntries(
+  PROPERTY_CATEGORY_OPTIONS.map((opt) => [opt.value, opt.labelTh]),
+) as Record<PropertyCategory, string>
+
+const CATEGORY_LABEL_BILINGUAL = Object.fromEntries(
+  PROPERTY_CATEGORY_OPTIONS.map((opt) => [opt.value, opt.label]),
+) as Record<PropertyCategory, string>
+
+/** Resolve stored value to Thai label (admin tables, legacy records). */
+export function getPropertyCategoryLabelTh(value: string | null | undefined): string {
+  if (!value) return "—"
+  return CATEGORY_LABEL_TH[value as PropertyCategory] ?? LEGACY_PROPERTY_CATEGORY_LABELS[value] ?? value
+}
+
+/** Resolve stored value to bilingual label (admin detail views). */
+export function getPropertyCategoryLabel(value: string | null | undefined): string {
+  if (!value) return "—"
+  return CATEGORY_LABEL_BILINGUAL[value as PropertyCategory] ?? LEGACY_PROPERTY_CATEGORY_LABELS[value] ?? value
+}
 
 export const OWNER_PURPOSE_OPTIONS = [
   { value: "sale", label: "ฝากขาย | For Sale", labelTh: "ฝากขาย", labelEn: "For Sale" },
@@ -60,10 +112,10 @@ export const REGION_OPTIONS = [
 
 export const FORM_PRIVACY_NOTICE = {
   th: "ข้อมูลของคุณจะถูกเก็บเป็นความลับสูงสุด ทีมงานบ้านไออุ่นจะรีบติดต่อกลับโดยเร็วที่สุดค่ะ",
-  en: "Your information is kept strictly confidential. Our team will contact you as soon as possible."
+  en: "Your information is kept strictly confidential. Our team will contact you as soon as possible.",
 }
 
 export const COAGENT_RIGHTS_NOTICE = {
   th: "เราเคารพสิทธิ์การดูแลทรัพย์ของคุณ ข้อมูลใช้เพื่อ Co-Broke เท่านั้น",
-  en: "We respect your listing rights. This information is used for Co-Broke purposes only."
+  en: "We respect your listing rights. This information is used for Co-Broke purposes only.",
 }

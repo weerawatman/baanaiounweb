@@ -5,7 +5,7 @@ export interface Property {
   slug: string
   title: string
   type: "SALE" | "RENT" | "LAND"
-  subType: "new" | "renovated" | "townhome" | "residential" | "investment"
+  subType: "house" | "townhome" | "condo" | "land"
   price: number
   priceLabel: string
   areaSqm: number

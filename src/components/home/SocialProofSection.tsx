@@ -8,6 +8,7 @@ import BeforeAfterSlider from "@/components/shared/BeforeAfterSlider"
 import PageSection from "@/components/layout/PageSection"
 import SectionTitle from "@/components/layout/SectionTitle"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { getPropertyCategoryLabelTh } from "@/content/form-options"
 import { type SuccessStory, type Testimonial } from "@/types"
 import { cn } from "@/lib/utils"
 
@@ -152,7 +153,9 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
                         <p className="text-sm font-semibold text-primary">
                           {testimonial.clientName}
                         </p>
-                        <p className="text-xs text-muted-foreground">{testimonial.propertyType}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {getPropertyCategoryLabelTh(testimonial.propertyType)}
+                        </p>
                       </div>
                     </div>
                   </div>

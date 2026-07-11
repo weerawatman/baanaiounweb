@@ -4,12 +4,7 @@ import Link from "next/link"
 import { DataTable, type Column } from "@/components/admin/DataTable"
 import { StatusBadge } from "@/components/admin/StatusBadge"
 import type { ServiceRequest, ServiceRequestType } from "@/lib/types/service-request"
-import { REQUEST_PROPERTY_TYPE_OPTIONS } from "@/content/form-options"
-
-const PROPERTY_TYPE_LABEL: Record<string, string> = Object.fromEntries(
-  REQUEST_PROPERTY_TYPE_OPTIONS.map((opt) => [opt.value, opt.labelTh]),
-)
-
+import { getPropertyCategoryLabelTh } from "@/content/form-options"
 function buildColumns(type: ServiceRequestType): Column<ServiceRequest>[] {
   return [
     {
@@ -35,7 +30,7 @@ function buildColumns(type: ServiceRequestType): Column<ServiceRequest>[] {
     {
       key: "property_type",
       label: "ประเภททรัพย์",
-      render: (row) => PROPERTY_TYPE_LABEL[row.property_type] ?? row.property_type,
+      render: (row) => getPropertyCategoryLabelTh(row.property_type),
     },
     {
       key: "location",

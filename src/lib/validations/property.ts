@@ -1,4 +1,12 @@
 import { z } from "zod"
+import { PROPERTY_CATEGORY_OPTIONS } from "@/content/form-options"
+
+const propertyCategoryValues = PROPERTY_CATEGORY_OPTIONS.map((opt) => opt.value) as [
+  "house",
+  "townhome",
+  "condo",
+  "land",
+]
 
 export const propertySchema = z.object({
   title: z.string().min(1, "กรุณาระบุชื่อทรัพย์"),
@@ -9,7 +17,7 @@ export const propertySchema = z.object({
   type: z.enum(["SALE", "RENT", "LAND"]),
   sub_type: z.preprocess(
     (v) => (v === "" || v == null ? undefined : v),
-    z.enum(["new", "renovated", "townhome", "residential", "investment"]).optional().nullable(),
+    z.enum(propertyCategoryValues).optional().nullable(),
   ),
   price: z.coerce.number().min(0, "ราคาต้องไม่ต่ำกว่า 0"),
   price_label: z.string().default(""),

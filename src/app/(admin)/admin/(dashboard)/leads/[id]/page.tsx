@@ -3,6 +3,7 @@ import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 import { StatusBadge } from "@/components/admin/StatusBadge"
 import { getLeadById } from "@/lib/queries/leads"
+import { getPropertyCategoryLabelTh } from "@/content/form-options"
 import { LeadStatusUpdater } from "./LeadStatusUpdater"
 import { LeadNotesEditor } from "./LeadNotesEditor"
 
@@ -77,7 +78,10 @@ export default async function LeadDetailPage({ params }: Props) {
             รายละเอียดทรัพย์ / ความต้องการ
           </p>
           <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-            <Row label="ประเภท" value={lead.property_type} />
+            <Row
+              label="ประเภท"
+              value={getPropertyCategoryLabelTh(lead.property_type)}
+            />
             <Row label="ขนาด" value={lead.property_size} />
             <Row label="ทำเล" value={lead.location} />
             <Row label="ราคา" value={lead.price} />

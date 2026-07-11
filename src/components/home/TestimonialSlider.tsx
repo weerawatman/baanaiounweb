@@ -5,6 +5,7 @@ import useEmblaCarousel from "embla-carousel-react"
 import Autoplay from "embla-carousel-autoplay"
 import { Star } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { getPropertyCategoryLabelTh } from "@/content/form-options"
 import { type Testimonial } from "@/types"
 
 interface TestimonialSliderProps {
@@ -80,7 +81,9 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
                       <p className="text-sm font-semibold text-[#1B4D3E]">
                         {testimonial.clientName}
                       </p>
-                      <p className="text-xs text-gray-500">{testimonial.propertyType}</p>
+                      <p className="text-xs text-gray-500">
+                        {getPropertyCategoryLabelTh(testimonial.propertyType)}
+                      </p>
                     </div>
                   </div>
                 </div>

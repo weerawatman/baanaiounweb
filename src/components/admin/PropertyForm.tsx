@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { ImageUploader } from "@/components/admin/ImageUploader"
 import { propertySchema, type PropertyFormValues } from "@/lib/validations/property"
 import { slugify } from "@/lib/format"
+import { PROPERTY_CATEGORY_OPTIONS } from "@/content/form-options"
 import type { Property } from "@/lib/types/property"
 import type { ActionState } from "@/actions/properties"
 import { cn } from "@/lib/utils"
@@ -140,14 +141,14 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
             </select>
           </FormField>
 
-          <FormField label="ประเภทย่อย" error={errors.sub_type?.message}>
+          <FormField label="ประเภททรัพย์" error={errors.sub_type?.message}>
             <select {...register("sub_type")} className={selectCls}>
               <option value="">— เลือก —</option>
-              <option value="new">ใหม่</option>
-              <option value="renovated">รีโนเวท</option>
-              <option value="townhome">ทาวน์โฮม</option>
-              <option value="residential">หมู่บ้าน</option>
-              <option value="investment">เพื่อการลงทุน</option>
+              {PROPERTY_CATEGORY_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.labelTh}
+                </option>
+              ))}
             </select>
           </FormField>
 

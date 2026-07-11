@@ -7,15 +7,13 @@ import {
   isServiceRequestType,
   SERVICE_REQUEST_TYPE_LABEL,
 } from "@/lib/types/service-request"
-import { REQUEST_PROPERTY_TYPE_OPTIONS } from "@/content/form-options"
+import { getPropertyCategoryLabel } from "@/content/form-options"
 import { RequestStatusUpdater } from "./RequestStatusUpdater"
 import { RequestNotesEditor } from "./RequestNotesEditor"
 
 export const metadata = { title: "รายละเอียดคำขอบริการ" }
 
-const PROPERTY_TYPE_LABEL: Record<string, string> = Object.fromEntries(
-  REQUEST_PROPERTY_TYPE_OPTIONS.map((opt) => [opt.value, opt.label]),
-)
+const PROPERTY_TYPE_LABEL = getPropertyCategoryLabel
 
 interface Props {
   params: Promise<{ id: string }>
@@ -76,7 +74,7 @@ export default async function RequestDetailPage({ params, searchParams }: Props)
         <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <Row
             label="ประเภททรัพย์"
-            value={PROPERTY_TYPE_LABEL[request.property_type] ?? request.property_type}
+            value={PROPERTY_TYPE_LABEL(request.property_type)}
           />
           <Row label="ทำเล / พื้นที่" value={request.location} />
           <Row label="งบประมาณ / ราคา" value={request.budget} />

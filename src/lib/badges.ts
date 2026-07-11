@@ -5,7 +5,7 @@ import type { Property } from "@/types"
  * already edits on the property form (no separate badge UI needed):
  *
  * - "คัดกรองโดยนักลงทุน"  ← featured = true, or a tag containing "นักลงทุน"/"investor"
- * - "รีโนเวทใหม่พร้อมอยู่" ← sub_type = "renovated", or a tag containing "รีโนเวท"/"renovate"
+ * - "รีโนเวทใหม่พร้อมอยู่" ← a tag containing "รีโนเวท"/"renovate"
  * - "การันตีทำเลทอง"      ← a tag containing "ทำเลทอง"/"prime"
  */
 
@@ -42,7 +42,7 @@ export function deriveBadges(property: Property): TrustBadge[] {
   const tags = property.tags.join(" ")
   const badges: TrustBadge[] = []
   if (property.featured || /นักลงทุน|investor/i.test(tags)) badges.push(INVESTOR)
-  if (property.subType === "renovated" || /รีโนเวท|renovat/i.test(tags)) badges.push(RENOVATED)
+  if (/รีโนเวท|renovat/i.test(tags)) badges.push(RENOVATED)
   if (/ทำเลทอง|prime/i.test(tags)) badges.push(PRIME)
   return badges.slice(0, 2)
 }

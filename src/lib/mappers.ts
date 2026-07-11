@@ -21,7 +21,7 @@ export function mapProperty(row: PropertyRow): Property {
     slug: row.slug,
     title: row.title,
     type: row.type,
-    subType: row.sub_type ?? "residential",
+    subType: (row.sub_type as Property["subType"] | null) ?? "house",
     price: Number(row.price ?? 0),
     priceLabel: row.price_label,
     areaSqm: Number(row.area_sqm ?? 0),
