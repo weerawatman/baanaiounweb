@@ -3,6 +3,7 @@ import Image from "next/image"
 import { FileImage } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import { FaqSection, type FaqItem } from "@/components/shared"
+import { cn } from "@/lib/utils"
 import type { Profile } from "@/types"
 
 interface AboutPageProps {
@@ -20,56 +21,61 @@ interface Milestone {
   descEN: React.ReactNode
 }
 
-const VALUE_PROPS = [
+const ADVANTAGES = [
   {
-    icon: "🤍",
-    titleTH: "เข้าใจทุกความต้องการ\nทลายกำแพงภาษา",
-    titleEN: "Understanding Needs,\nBridging Gaps",
-    descTH:
-      "เราเป็น 'ศูนย์กลาง' รวบรวมทรัพย์และนายหน้า (Co-Agent) ตัดความยุ่งยากในการสื่อสาร ค้นหาทรัพย์ที่ซ่อนอยู่ในระบบทั่วไปไม่เจอ",
+    icon: "🌐",
+    titleTH: "เราคือ \u201cระบบนิเวศที่มีชีวิต\u201d",
+    titleEN: "A Living Ecosystem",
+    descTH: (
+      <>
+        เราไม่ใช่แค่แพลตฟอร์มเทคโนโลยีที่ให้คนมาแปะป้ายขายบ้าน แต่เราคือ{" "}
+        <strong>Human-Centric Ecosystem</strong> ศูนย์รวมของ เจ้าของทรัพย์ ผู้ซื้อ เครือข่ายนายหน้า
+        และทีมช่าง ที่ทำงานร่วมกันอย่างมีชีวิตชีวา
+      </>
+    ),
     descEN:
-      "We act as a central hub, gathering properties and co-agents, removing communication barriers to find hidden gems not listed elsewhere.",
+      "More than a listing board — we are a human-centric ecosystem connecting owners, buyers, agent networks, and renovation teams working vibrantly together.",
   },
   {
-    icon: "🛡️",
-    titleTH: "บริการครบวงจรจบที่เดียว",
-    titleEN: "End-to-End Seamless Service",
+    icon: "👁️",
+    titleTH: "คัดกรองด้วย \u201cวิสัยทัศน์นักลงทุน\u201d",
+    titleEN: "Curated with an Investor's Vision",
     descTH:
-      "ดูแลทุกขั้นตอน ตั้งแต่คัดสรร เจรจา ปรึกษาสินเชื่อ สัญญา ไปจนถึงโอนกรรมสิทธิ์และส่งมอบกุญแจ ปลอดภัย 100%",
+      "เว็บอื่นแค่แสดงราคา แต่เราคือทีมงานที่มีประสบการณ์ตรง (Investor-Minded) จึงสามารถตรวจสอบโครงสร้าง ประเมินความคุ้มค่า และให้คำปรึกษาเพื่อเพิ่มมูลค่าทรัพย์ได้จริง",
     descEN:
-      "We handle everything: property selection, negotiation, loans, contracts, and secure ownership transfer. 100% safe.",
+      "Other sites just show prices. Our investor-minded team inspects structures, evaluates true value, and advises on how to genuinely increase property value.",
   },
   {
-    icon: "⭐",
-    titleTH: "เครือข่ายทีมงาน\nคัดกรองด้วยหัวใจ",
-    titleEN: "Heart-Curated\nTeam Network",
+    icon: "🤝",
+    titleTH: "บริการครบวงจรจบในที่เดียว",
+    titleEN: "End-to-End Service in One Place",
     descTH:
-      "เชื่อมโยงนายหน้าทั่วประเทศ นำทรัพย์ที่ซ่อนอยู่มาเปิดเผย เพื่อให้มั่นใจว่าลูกค้าจะได้เจอกับทรัพย์ที่ 'น่าอยู่จริง'",
+      "ไม่ทิ้งให้คุณเผชิญปัญหาเพียงลำพัง ทีมงานของเราพร้อมเป็นพี่เลี้ยง ดูแลตั้งแต่การตั้งราคา ทำการตลาด จัดหาสินเชื่อ คัดกรองผู้เช่า ไปจนถึงการจดทะเบียนที่กรมที่ดิน",
     descEN:
-      "Connected with nationwide agents to reveal hidden properties, ensuring clients find truly livable and desirable homes.",
+      "You're never left to face problems alone. We mentor you from pricing and marketing to loans, tenant screening, and Land Office registration.",
   },
 ] as const
 
 const LOCAL_AREAS = [
-  { label: "กรุงเทพมหานคร", highlight: false },
-  { label: "สมุทรปราการ", highlight: false },
-  { label: "ชลบุรี", highlight: false },
-  { label: "ฉะเชิงเทรา", highlight: false },
-  { label: "ระยอง", highlight: false },
-  { label: "โซน EEC", highlight: true },
+  { label: "📍 กรุงเทพมหานคร", highlight: false },
+  { label: "📍 สมุทรปราการ", highlight: false },
+  { label: "📍 ชลบุรี", highlight: false },
+  { label: "📍 ฉะเชิงเทรา", highlight: false },
+  { label: "📍 ระยอง", highlight: false },
+  { label: "⭐ โซนเศรษฐกิจพิเศษ EEC", highlight: true },
 ] as const
 
 function TimelineImage({ src, alt, hint }: { src: string; alt: string; hint: string }) {
   if (src) {
     return (
-      <div className="relative h-[150px] overflow-hidden rounded-lg border border-border md:h-full md:min-h-[150px]">
-        <Image src={src} alt={alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 400px" />
+      <div className="relative h-[220px] w-full overflow-hidden rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.1)] md:h-[280px]">
+        <Image src={src} alt={alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 450px" />
       </div>
     )
   }
 
   return (
-    <div className="flex h-[150px] items-center justify-center rounded-lg border-2 border-dashed border-[#cbd5e1] bg-[#e2e8f0] px-4 text-center text-sm text-[#64748b] md:h-full md:min-h-[150px]">
+    <div className="flex h-[220px] w-full items-center justify-center rounded-2xl border-2 border-dashed border-[#cbd5e1] bg-[#e2e8f0] px-4 text-center text-sm text-[#64748b] md:h-[280px]">
       <span className="flex items-center gap-2">
         <FileImage className="size-4 shrink-0 opacity-60" />
         {hint}
@@ -83,64 +89,57 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
     {
       year: "2002",
       imageUrl: profile.aboutTimeline2002Image,
-      imageHint: "หอพักหรือกุญแจบ้าน",
-      titleTH: "จุดเริ่มต้นจากห้องเช่าเล็กๆ",
-      titleEN: "The Beginning",
+      imageHint: "ห้องพักเริ่มต้น",
+      titleTH: "จุดเริ่มต้นจากความเข้าใจที่แท้จริง",
+      titleEN: "The Beginning of True Understanding",
       descTH: (
         <>
-          พิมเริ่มต้นชีวิตในกรุงเทพฯ ด้วยห้องเช่าราคาหลักพัน ต้องย้ายที่อยู่บ่อยครั้ง จนวันที่กู้ซื้อบ้านหลังแรกสำเร็จ
-          ประสบการณ์นั้นทำให้เรา <strong>&apos;เข้าใจความเหนื่อยล้าของคนไกลบ้าน&apos;</strong> อย่างลึกซึ้ง
+          ทีมงานของเราเริ่มต้นจากการเป็นผู้เช่าและคนหาบ้าน ทำให้{" "}
+          <strong>&apos;เรา&apos; เข้าใจความต้องการที่แท้จริง</strong>{" "}
+          และเป็นแรงผลักดันให้เรามุ่งมั่นสรรสร้าง &apos;บ้าน&apos;
+          ที่อบอุ่นและตอบโจทย์ที่สุดสำหรับทุกคน
         </>
       ),
-      descEN: (
-        <>
-          Pim started her life in Bangkok in a small rented room, moving frequently. Finally securing her
-          first home loan taught her to deeply understand{" "}
-          <strong>&apos;the exhaustion of finding a true home.&apos;</strong>
-        </>
-      ),
+      descEN:
+        "Our team started as renters and home-seekers ourselves, so we truly understand what people need — driving us to create warm homes that answer everyone's needs.",
     },
     {
       year: "2016",
       imageUrl: profile.aboutTimeline2016Image,
-      imageHint: "รีโนเวทบ้าน หรือศึกษาดูงาน",
-      titleTH: "ก้าวแรกสู่วงการอสังหาฯ",
-      titleEN: "First Step in Real Estate",
+      imageHint: "การลงทุนอสังหาริมทรัพย์เบื้องต้น",
+      titleTH: "ก้าวแรกสู่การเป็นนักลงทุนอสังหาฯ",
+      titleEN: "First Steps as Property Investors",
       descTH:
-        "เริ่มต้นเรียนรู้การลงทุนอสังหาริมทรัพย์ควบคู่กับงานประจำ เริ่มจากการกู้เงินเพื่อรีโนเวทบ้าน ปล่อยขายและเช่าในพื้นที่ชลบุรี ลองผิดลองถูกจนเชี่ยวชาญ",
+        "เราเริ่มสะสมประสบการณ์จริงจากการลงพื้นที่ ซื้อ-ขาย-รีโนเวท ปล่อยเช่าในพื้นที่ชลบุรีและปริมณฑล เรียนรู้ตลาดอย่างลึกซึ้ง ลองผิดลองถูกจนเชี่ยวชาญทุกกระบวนการ",
       descEN:
-        "Began learning real estate investment alongside a full-time job. Started by securing loans to renovate, sell, and rent properties in Chonburi, learning the market inside out.",
+        "We gained hands-on experience buying, selling, renovating, and renting properties across Chonburi and Greater Bangkok — learning the market deeply until mastering every process.",
     },
     {
       year: "2020",
       imageUrl: profile.aboutTimeline2020Image,
-      imageHint: "ทีมงานพูดคุยกับลูกค้า",
-      titleTH: "กำเนิด 'บ้านไออุ่น'",
-      titleEN: "The Birth of Baan Ai Oun",
-      descTH:
-        "ก่อตั้ง บริษัท บ้านไออุ่น จำกัด สร้างบ้านเพื่อคนทำงาน แม้เผชิญวิกฤตโควิด-19 เราก็สู้จนลูกค้าได้เข้าอยู่ครบทุกหลัง และรักษาสายสัมพันธ์อันดีกับลูกค้าและนายหน้ามาตลอด",
+      imageHint: "ก่อตั้งบริษัทบ้านไออุ่น",
+      titleTH: "กำเนิด \u201cบ้านไออุ่น พร็อพเพอร์ตี้\u201d",
+      titleEN: "The Birth of Baan Ai Oun Property",
+      descTH: (
+        <>
+          ก่อตั้ง <strong>&apos;บ้านไออุ่น&apos;</strong> อย่างเป็นทางการ
+          เราเปลี่ยนทุกความท้าทายให้เป็นความใส่ใจ
+          พร้อมดูแลเคียงข้างลูกค้าและพาร์ทเนอร์นายหน้าให้เติบโตไปด้วยกันในทุกสถานการณ์
+        </>
+      ),
       descEN:
-        "Founded Baan Ai Oun Co., Ltd. Despite the COVID-19 crisis, we fought hard to ensure every client moved into their homes, building lasting relationships with clients and agents.",
+        "Baan Ai Oun was officially founded. We turned every challenge into care, standing beside clients and agent partners to grow together through every situation.",
     },
     {
       year: "2026",
       imageUrl: profile.aboutTimeline2026Image,
-      imageHint: "หน้าจอเว็บไซต์ หรือการจับมือปิดดีล",
-      titleTH: "กำเนิดเว็บไซต์บ้านไออุ่น",
-      titleEN: "Launch of Digital Hub",
-      descTH: (
-        <>
-          เราพบปัญหาใหญ่: อสังหาฯ ล้นตลาดแต่ผู้ซื้อกลับ <strong>&apos;หาบ้านที่ตรงใจไม่เจอ&apos;</strong> ส่วนเจ้าของก็{" "}
-          <strong>&apos;ปล่อยขายไม่ออก&apos;</strong> เราจึงสร้างเว็บไซต์นี้ขึ้นมาเป็นพื้นที่แก้ปัญหาโดยเฉพาะ
-        </>
-      ),
-      descEN: (
-        <>
-          We noticed a massive gap: an oversupplied market, yet buyers{" "}
-          <strong>&apos;couldn&apos;t find the right home&apos;</strong> and owners{" "}
-          <strong>&apos;couldn&apos;t sell.&apos;</strong> We launched this platform specifically to bridge that gap.
-        </>
-      ),
+      imageHint: "แพลตฟอร์มดิจิทัลบ้านไออุ่น",
+      titleTH: "ก้าวสู่ระบบนิเวศอสังหาฯ ไร้รอยต่อ",
+      titleEN: "Toward a Seamless Real Estate Ecosystem",
+      descTH:
+        "เปิดตัวแพลตฟอร์มออนไลน์เต็มรูปแบบ รวบรวมทรัพย์คุณภาพ ผสานการทำงานกับเครือข่าย Co-Agent ทั่วประเทศ เพื่อช่วยให้คนหาบ้านได้บ้านที่ใช่ และช่วยเจ้าของบ้านปิดดีลได้ไวที่สุด",
+      descEN:
+        "Launched our full online platform, gathering quality listings and partnering with a nationwide Co-Agent network — helping buyers find the right home and owners close deals faster.",
     },
   ]
 
@@ -148,12 +147,12 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
 
   return (
     <>
-      <div className="mx-auto max-w-4xl px-4 py-4 sm:px-6">
+      <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "เกี่ยวกับเรา | About Us" }]} />
       </div>
 
       {/* Hero banner (mockup about.html) */}
-      <header className="relative isolate overflow-hidden bg-gradient-to-b from-[#1B4D3E] to-[#0d2820] py-16 text-center text-white sm:py-20">
+      <header className="relative isolate overflow-hidden bg-[#14532d] py-20 text-center text-white sm:py-24">
         {heroImage && (
           <>
             <Image
@@ -163,76 +162,87 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
               fill
               priority
               sizes="100vw"
-              className="-z-20 object-cover"
+              className="-z-20 object-cover brightness-[0.6]"
             />
-            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1B4D3E]/85 to-[#0d2820]/90" />
+            <div className="absolute inset-0 -z-10 bg-[#14532d]/70" />
           </>
         )}
         <div className="mx-auto max-w-3xl px-4">
-          <h1 className="text-3xl font-bold sm:text-[2.2rem]">
+          <h1 className="text-3xl font-bold leading-tight [text-shadow:0_2px_4px_rgba(0,0,0,0.5)] sm:text-[2.8rem]">
             เกี่ยวกับเรา: บ้านไออุ่น พร็อพเพอร์ตี้
+            <span className="mt-1 block text-2xl font-semibold text-white/90 sm:text-3xl">
+              About Baan Ai Oun Property
+            </span>
           </h1>
-          <p className="mt-2 text-xl font-medium text-white/80">About Baan Ai Oun Property</p>
-          <p className="mt-5 text-base font-bold text-[#D4A843] sm:text-lg">
-            &ldquo;เชื่อมโยงทุกความต้องการอสังหาฯ ด้วยประสบการณ์นักลงทุนและบริการที่จริงใจ
-            เพื่อคนไทยและต่างชาติ&rdquo;
+          <p className="mt-5 text-lg font-bold text-[#eab308] [text-shadow:0_1px_3px_rgba(0,0,0,0.5)] sm:text-xl">
+            เชื่อมโยงทุกความต้องการอสังหาฯ ด้วยประสบการณ์นักลงทุนและบริการที่จริงใจ
           </p>
-          <p className="mt-2 text-sm text-white/75">
-            &ldquo;Connecting real estate goals through investor-led expertise and heartfelt service for
-            local and international clients.&rdquo;
+          <p className="mt-1 text-base text-gray-200">
+            Connecting real estate goals through investor-led expertise and heartfelt service.
           </p>
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 pb-16 pt-12 sm:px-6">
-
+      <main className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
         {/* Our Story */}
         <section>
-          <div className="mb-10 text-center">
-            <h2 className="text-2xl font-bold text-foreground sm:text-[2rem]">
+          <div className="mb-10 mt-14 text-center">
+            <h2 className="text-3xl font-bold text-primary sm:text-[2.2rem]">
               จุดเริ่มต้นของเรา | Our Story
             </h2>
-            <p className="mt-2 text-base italic text-[#666]">
-              &ldquo;จากคนเช่าห้องแถว สู่ทีมงานที่คัดสรรบ้านด้วยหัวใจ&rdquo;
+            <p className="mt-2 text-lg text-[#666]">
+              เรื่องราวที่หล่อหลอมให้เราเป็น &ldquo;ศูนย์รวมอสังหาฯ ที่เข้าใจคุณที่สุด&rdquo; ในวันนี้
             </p>
-            <p className="mt-1 text-sm italic text-muted-foreground">
-              &ldquo;From renting a small room to a team that curates homes with heart.&rdquo;
+            <p className="mt-1 text-sm text-muted-foreground">
+              The story that shaped us into the real estate hub that understands you best.
             </p>
           </div>
 
-          <div className="relative ml-2 max-w-3xl pl-8 sm:mx-auto">
-            <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-primary" aria-hidden />
+          {/* Zigzag timeline (mockup pattern) */}
+          <div className="relative mx-auto max-w-4xl py-5">
+            <div
+              className="absolute bottom-0 top-0 left-5 w-0.5 bg-primary md:left-1/2 md:-translate-x-1/2"
+              aria-hidden
+            />
 
-            <div className="flex flex-col gap-12">
-              {milestones.map((milestone) => (
-                <article key={milestone.year} className="relative">
+            <div className="flex flex-col gap-10 md:gap-16">
+              {milestones.map((milestone, index) => (
+                <article
+                  key={milestone.year}
+                  className={cn(
+                    "relative flex flex-col gap-5 pl-12 md:flex-row md:items-center md:justify-between md:pl-0",
+                    index % 2 === 1 && "md:flex-row-reverse",
+                  )}
+                >
                   <div
-                    className="absolute -left-[42px] top-0 size-6 rounded-full border-4 border-muted bg-primary"
+                    className="absolute left-5 top-2 z-10 size-5 -translate-x-1/2 rounded-full border-4 border-primary bg-[#eab308] md:left-1/2 md:top-1/2 md:-translate-y-1/2"
                     aria-hidden
                   />
 
-                  <div className="grid grid-cols-1 gap-5 md:grid-cols-[1fr_1.5fr] md:items-center">
+                  <div className="md:w-[45%]">
                     <TimelineImage
                       src={milestone.imageUrl}
                       alt={milestone.titleTH}
                       hint={milestone.imageHint}
                     />
+                  </div>
 
-                    <div className="rounded-xl border border-border bg-card p-6 shadow-[0_4px_6px_rgba(0,0,0,0.02)]">
-                      <h3 className="mb-3 flex flex-wrap items-center justify-between gap-2 text-lg font-semibold text-primary">
-                        <span>
-                          {milestone.titleTH}
-                          <span className="ml-1.5 text-sm font-normal text-muted-foreground">
-                            | {milestone.titleEN}
-                          </span>
-                        </span>
-                        <span className="rounded-full bg-[#eee] px-2.5 py-0.5 text-xs font-bold text-[#555]">
-                          {milestone.year}
-                        </span>
-                      </h3>
-                      <p className="text-[0.95rem] leading-relaxed text-[#555]">{milestone.descTH}</p>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{milestone.descEN}</p>
-                    </div>
+                  <div className="rounded-2xl border border-border bg-card p-6 shadow-[0_5px_20px_rgba(0,0,0,0.03)] md:w-[45%] md:p-8">
+                    <span className="inline-block rounded-full bg-primary px-4 py-1 text-sm font-bold text-primary-foreground">
+                      {milestone.year}
+                    </span>
+                    <h3 className="mt-4 text-xl font-bold text-foreground">
+                      {milestone.titleTH}
+                      <span className="mt-0.5 block text-sm font-medium text-muted-foreground">
+                        {milestone.titleEN}
+                      </span>
+                    </h3>
+                    <p className="mt-3 text-[0.95rem] leading-relaxed text-[#555]">
+                      {milestone.descTH}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {milestone.descEN}
+                    </p>
                   </div>
                 </article>
               ))}
@@ -241,13 +251,13 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
         </section>
 
         {/* Mid-page banner */}
-        <div className="relative mt-20 h-[200px] overflow-hidden rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.15)] sm:h-[280px] lg:h-[350px]">
+        <div className="relative mt-20 h-[200px] overflow-hidden rounded-[20px] shadow-[0_15px_40px_rgba(0,0,0,0.15)] sm:h-[280px] lg:h-[350px]">
           {profile.aboutMidBannerImage ? (
             <Image
               src={profile.aboutMidBannerImage}
-              alt="ทำเลศักยภาพ EEC และชลบุรี"
+              alt="ภาพมุมกว้างทำเลเศรษฐกิจ EEC"
               fill
-              sizes="(max-width: 768px) 100vw, 896px"
+              sizes="(max-width: 1152px) 100vw, 1152px"
               className="object-cover brightness-[0.85]"
             />
           ) : (
@@ -258,118 +268,95 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
           )}
         </div>
 
-        {/* How we help */}
+        {/* How we help (Unfair Advantage) */}
         <section className="mt-20">
           <div className="mb-10 text-center">
-            <h2 className="text-2xl font-bold text-foreground sm:text-[2rem]">
+            <h2 className="text-3xl font-bold text-primary sm:text-[2.2rem]">
               เว็บไซต์บ้านไออุ่น ช่วยแก้ปัญหาให้คุณได้อย่างไร?
             </h2>
             <p className="mt-1 text-lg font-medium text-muted-foreground sm:text-xl">
               How Does Baan Ai Oun Platform Help You?
             </p>
-            <p className="mt-3 text-base italic text-[#666]">
-              ศูนย์รวมอสังหาฯ และเครือข่ายนายหน้า บริการซื้อ-ขาย-เช่า ดูแลลูกค้าคนไทยและต่างชาติแบบไร้รอยต่อ
+            <p className="mt-3 text-lg text-[#666]">
+              แตกต่างจากกระดานประกาศทั่วไป เพราะเราดูแลคุณด้วยทีมงานที่มีหัวใจและประสบการณ์จริง
             </p>
-            <p className="mt-1 text-sm italic text-muted-foreground">
-              An all-in-one real estate hub and agent network for seamless buying, selling, and renting
-              experiences.
+            <p className="mt-1 text-sm text-muted-foreground">
+              Unlike typical listing boards, we care for you with a real, experienced, heartfelt team.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {VALUE_PROPS.map((vp) => (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+            {ADVANTAGES.map((adv) => (
               <div
-                key={vp.titleEN}
-                className="rounded-2xl border border-border bg-card px-6 py-9 text-center shadow-[0_4px_10px_rgba(0,0,0,0.03)]"
+                key={adv.titleEN}
+                className="rounded-[20px] border border-border bg-card px-7 py-10 text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_15px_40px_rgba(20,83,45,0.1)]"
               >
-                <div className="mb-5 text-4xl text-[#ea580c]">{vp.icon}</div>
-                <h3 className="mb-3 whitespace-pre-line text-base font-bold text-foreground sm:text-lg">
-                  {vp.titleTH}
-                </h3>
-                <p className="mb-3 text-sm font-medium text-muted-foreground whitespace-pre-line">
-                  {vp.titleEN}
-                </p>
-                <p className="text-sm leading-relaxed text-[#666]">{vp.descTH}</p>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{vp.descEN}</p>
+                <div className="mb-5 text-5xl">{adv.icon}</div>
+                <h3 className="mb-1 text-xl font-bold text-primary">{adv.titleTH}</h3>
+                <p className="mb-4 text-sm font-medium text-muted-foreground">{adv.titleEN}</p>
+                <p className="text-[0.95rem] leading-relaxed text-[#555]">{adv.descTH}</p>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{adv.descEN}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Local expertise */}
-        <section className="mt-10 rounded-xl border border-border bg-card p-8 text-center">
-          <h3 className="text-lg font-bold text-primary">
-            ความเชี่ยวชาญเฉพาะพื้นที่ | Local Market Expertise
-          </h3>
-          <p className="mt-2 text-[0.95rem] text-[#666]">
-            เราคลุกคลีในตลาดอสังหาริมทรัพย์ของพื้นที่เหล่านี้มากกว่า 10 ปี รู้ลึก รู้จริง
+        <section className="mt-20 rounded-3xl border border-border bg-card px-6 py-14 text-center shadow-[0_10px_40px_rgba(0,0,0,0.02)] sm:px-10">
+          <h2 className="text-2xl font-bold text-primary sm:text-[2rem]">
+            ความเชี่ยวชาญเฉพาะพื้นที่ (Local Market Expertise)
+          </h2>
+          <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-[#555]">
+            เราคือผู้เชี่ยวชาญตัวจริงที่ลงพื้นที่ และมีเครือข่ายนายหน้าทำงานร่วมกัน
+            ครอบคลุมทำเลศักยภาพสูงสุดในประเทศไทย ได้แก่:
           </p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Over 10 years of deep expertise in these local real estate markets.
+          <p className="mx-auto mt-1 max-w-3xl text-sm text-muted-foreground">
+            Real on-the-ground experts with a collaborative agent network covering Thailand&apos;s
+            highest-potential locations:
           </p>
 
-          <div className="mt-5 flex flex-wrap justify-center gap-2.5">
+          <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
             {LOCAL_AREAS.map((area) => (
               <span
                 key={area.label}
-                className={`rounded-full border px-5 py-2 text-sm ${
+                className={cn(
+                  "whitespace-nowrap rounded-full border px-6 py-3 text-sm font-bold transition-colors",
                   area.highlight
-                    ? "border-primary bg-[#fef3c7] font-bold text-primary"
-                    : "border-[#ddd] bg-[#fafafa] text-[#555]"
-                }`}
+                    ? "border-[#eab308] bg-[#eab308] text-[#333]"
+                    : "border-primary bg-[#f0fdf4] text-primary hover:bg-primary hover:text-primary-foreground",
+                )}
               >
                 {area.label}
               </span>
             ))}
           </div>
         </section>
-
-        {/* Join CTA */}
-        <section className="mt-20 rounded-2xl border border-border bg-card px-6 py-12 text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] sm:px-10">
-          <h2 className="text-2xl font-bold text-foreground sm:text-[1.8rem]">
-            เติบโตไปด้วยกันกับครอบครัวบ้านไออุ่น
-          </h2>
-          <p className="mt-1 text-lg font-medium text-muted-foreground">
-            Grow Together with Baan Ai Oun Ecosystem
-          </p>
-
-          <p className="mx-auto mt-5 max-w-2xl text-[1.05rem] leading-relaxed text-[#555]">
-            <strong className="text-foreground">อยากเป็นนายหน้าอสังหาฯ แต่ไม่มีทุน ไม่รู้จะเริ่มอย่างไร?</strong>
-            <br />
-            เราพบว่ามีลูกค้าต้องการซื้อ-เช่าบ้านจำนวนมากผ่านระบบเรา จึงเปิดโอกาสให้ผู้ที่อยากมีรายได้
-            เข้ามาเรียนรู้แบบ &ldquo;จับมือทำ&rdquo; มาร่วมเป็นเครือข่าย Co-Agent
-            เพื่อสร้างอาชีพที่มั่นคงไปด้วยกัน!
-          </p>
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            <strong>Want to be a real estate agent but don&apos;t know where to start?</strong>
-            <br />
-            We have a high volume of buyers and renters. We offer hands-on training to help you start
-            earning. Join our Co-Agent network and build a stable career with us!
-          </p>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link
-              href="/find-property"
-              className="inline-flex items-center justify-center rounded-lg bg-primary px-8 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-[#0f3d20]"
-            >
-              ค้นหาทรัพย์ | Find Properties
-            </Link>
-            <Link
-              href="/services"
-              className="inline-flex items-center justify-center rounded-lg border-2 border-primary bg-transparent px-8 py-3 text-sm font-bold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-            >
-              ร่วมเป็น Co-Agent / คอร์สนายหน้า | Join Co-Agent / Agent Course
-            </Link>
-          </div>
-        </section>
       </main>
 
       <FaqSection
-        title="คำถามที่พบบ่อย | Frequently Asked Questions"
+        title="คำถามที่พบบ่อยเกี่ยวกับ บ้านไออุ่น | Frequently Asked Questions"
         subtitle="เรื่องที่ลูกค้ามักสอบถามเกี่ยวกับบ้านไออุ่น พร็อพเพอร์ตี้"
         items={faqs}
         variant="boxed"
       />
+
+      {/* Bottom CTA (mockup pattern) */}
+      <section className="mx-auto max-w-6xl px-4 pb-16 pt-6 text-center sm:px-6">
+        <h2 className="text-2xl font-bold text-foreground sm:text-[2.2rem]">
+          ให้เราเป็นพาร์ทเนอร์ดูแลเรื่องอสังหาฯ ของคุณ
+        </h2>
+        <p className="mt-1 text-lg font-medium text-muted-foreground">
+          Let us be your trusted real estate partner.
+        </p>
+        <div className="mt-7">
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center rounded-lg bg-primary px-10 py-4 text-lg font-bold text-primary-foreground transition-colors hover:bg-[#0f3d20]"
+          >
+            💬 ติดต่อทีมงานบ้านไออุ่น | Contact Our Team
+          </Link>
+        </div>
+      </section>
     </>
   )
 }
