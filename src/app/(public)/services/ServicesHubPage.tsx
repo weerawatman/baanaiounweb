@@ -46,7 +46,6 @@ export default function ServicesHubPage({
         titleEn={SERVICES_HUB_CONTENT.hero.h1.en}
         subtitleTh={SERVICES_HUB_CONTENT.hero.sub.th}
         subtitleEn={SERVICES_HUB_CONTENT.hero.sub.en}
-        className="py-7 sm:py-8"
         data-testid="services-hero"
       >
         <div

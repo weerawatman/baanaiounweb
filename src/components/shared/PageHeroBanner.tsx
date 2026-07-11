@@ -27,7 +27,7 @@ export default function PageHeroBanner({
   return (
     <section
       className={cn(
-        "relative isolate overflow-hidden bg-primary py-10 text-primary-foreground sm:py-12",
+        "relative isolate overflow-hidden bg-primary py-7 text-primary-foreground sm:py-8",
         className,
       )}
       data-testid={testId}
