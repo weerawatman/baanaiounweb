@@ -1,9 +1,9 @@
 "use client"
 
-import Link from "next/link"
 import { ArchiveRestore, Star } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
 import { DataTable, type Column } from "@/components/admin/DataTable"
+import { AdminRowLink } from "@/components/admin/AdminRowLink"
 import { StatusBadge } from "@/components/admin/StatusBadge"
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
 import { archiveProperty, restoreProperty, toggleFeaturedProperty } from "@/actions/properties"
@@ -71,12 +71,12 @@ const columns: Column<Property>[] = [
     searchable: false,
     render: (row) => (
       <div className="flex items-center justify-end gap-2">
-        <Link
+        <AdminRowLink
           href={`/admin/properties/${row.id}/edit`}
           className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
         >
           แก้ไข
-        </Link>
+        </AdminRowLink>
         {row.deleted_at ? (
           <ConfirmDialog
             trigger={

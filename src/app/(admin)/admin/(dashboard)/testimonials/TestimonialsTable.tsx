@@ -1,10 +1,10 @@
 "use client"
 
-import Link from "next/link"
 import { Star } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DataTable, type Column } from "@/components/admin/DataTable"
+import { AdminRowLink } from "@/components/admin/AdminRowLink"
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
 import { deleteTestimonial } from "@/actions/testimonials"
 import type { Testimonial } from "@/lib/types/property"
@@ -55,12 +55,12 @@ const columns: Column<Testimonial>[] = [
     searchable: false,
     render: (row) => (
       <div className="flex items-center justify-end gap-2">
-        <Link
+        <AdminRowLink
           href={`/admin/testimonials/${row.id}/edit`}
           className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
         >
           แก้ไข
-        </Link>
+        </AdminRowLink>
         <ConfirmDialog
           trigger={
             <span

@@ -1,7 +1,7 @@
 "use client"
 
-import Link from "next/link"
 import { DataTable, type Column } from "@/components/admin/DataTable"
+import { AdminRowLink } from "@/components/admin/AdminRowLink"
 import { StatusBadge } from "@/components/admin/StatusBadge"
 import type { Lead } from "@/lib/types/property"
 
@@ -20,9 +20,12 @@ const columns: Column<Lead>[] = [
     key: "name",
     label: "ชื่อ",
     render: (row) => (
-      <Link href={`/admin/leads/${row.id}`} className="text-primary font-medium hover:underline">
+      <AdminRowLink
+        href={`/admin/leads/${row.id}`}
+        className="text-primary font-medium hover:underline"
+      >
         {row.name}
-      </Link>
+      </AdminRowLink>
     ),
   },
   {
@@ -61,12 +64,12 @@ const columns: Column<Lead>[] = [
     label: "",
     searchable: false,
     render: (row) => (
-      <Link
+      <AdminRowLink
         href={`/admin/leads/${row.id}`}
         className="text-muted-foreground hover:text-primary text-sm"
       >
         ดูรายละเอียด →
-      </Link>
+      </AdminRowLink>
     ),
   },
 ]

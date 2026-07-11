@@ -1,3 +1,4 @@
+import { cache } from "react"
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import type { User } from "@supabase/supabase-js"
@@ -9,7 +10,7 @@ import type { User } from "@supabase/supabase-js"
  * Defense in depth: proxy.ts already redirects unauthenticated users,
  * but Server Actions can be invoked directly, so we re-check here.
  */
-export async function requireAdmin(): Promise<User> {
+export const requireAdmin = cache(async (): Promise<User> => {
   const supabase = await createClient()
   const {
     data: { user },
@@ -20,4 +21,4 @@ export async function requireAdmin(): Promise<User> {
   }
 
   return user
-}
+})

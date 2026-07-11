@@ -1,10 +1,10 @@
 "use client"
 
-import Link from "next/link"
 import Image from "next/image"
 import { buttonVariants } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DataTable, type Column } from "@/components/admin/DataTable"
+import { AdminRowLink } from "@/components/admin/AdminRowLink"
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
 import { deleteBlogPost } from "@/actions/blog"
 import type { BlogPost } from "@/lib/types/property"
@@ -81,12 +81,12 @@ const columns: Column<BlogPost>[] = [
     searchable: false,
     render: (row) => (
       <div className="flex items-center justify-end gap-2">
-        <Link
+        <AdminRowLink
           href={`/admin/blog/${row.id}/edit`}
           className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
         >
           แก้ไข
-        </Link>
+        </AdminRowLink>
         <ConfirmDialog
           trigger={
             <span

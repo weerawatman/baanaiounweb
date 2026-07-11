@@ -1,7 +1,7 @@
 "use client"
 
-import Link from "next/link"
 import { DataTable, type Column } from "@/components/admin/DataTable"
+import { AdminRowLink } from "@/components/admin/AdminRowLink"
 import { StatusBadge } from "@/components/admin/StatusBadge"
 import type { ServiceRequest, ServiceRequestType } from "@/lib/types/service-request"
 import { getPropertyCategoryLabelTh } from "@/content/form-options"
@@ -11,12 +11,12 @@ function buildColumns(type: ServiceRequestType): Column<ServiceRequest>[] {
       key: "name",
       label: "ชื่อ",
       render: (row) => (
-        <Link
+        <AdminRowLink
           href={`/admin/requests/${row.id}?type=${type}`}
           className="text-primary font-medium hover:underline"
         >
           {row.name}
-        </Link>
+        </AdminRowLink>
       ),
     },
     {
@@ -68,12 +68,12 @@ function buildColumns(type: ServiceRequestType): Column<ServiceRequest>[] {
       label: "",
       searchable: false,
       render: (row) => (
-        <Link
+        <AdminRowLink
           href={`/admin/requests/${row.id}?type=${type}`}
           className="text-muted-foreground hover:text-primary text-sm"
         >
           ดูรายละเอียด →
-        </Link>
+        </AdminRowLink>
       ),
     },
   ]

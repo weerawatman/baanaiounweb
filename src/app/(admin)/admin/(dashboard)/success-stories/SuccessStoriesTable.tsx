@@ -1,9 +1,9 @@
 "use client"
 
-import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DataTable, type Column } from "@/components/admin/DataTable"
+import { AdminRowLink } from "@/components/admin/AdminRowLink"
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
 import { deleteSuccessStory } from "@/actions/success-stories"
 import type { SuccessStory } from "@/lib/types/property"
@@ -50,12 +50,12 @@ const columns: Column<SuccessStory>[] = [
     searchable: false,
     render: (row) => (
       <div className="flex items-center justify-end gap-2">
-        <Link
+        <AdminRowLink
           href={`/admin/success-stories/${row.id}/edit`}
           className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
         >
           แก้ไข
-        </Link>
+        </AdminRowLink>
         <ConfirmDialog
           trigger={
             <span
