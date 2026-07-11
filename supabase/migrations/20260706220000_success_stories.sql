@@ -28,25 +28,4 @@ CREATE POLICY "Admin full access to success_stories" ON public.success_stories
 CREATE POLICY "Service role full access to success_stories" ON public.success_stories
   FOR ALL TO service_role USING (true) WITH CHECK (true);
 
--- Seed one published story so the public slider renders before admin adds content.
-INSERT INTO public.success_stories (
-  title,
-  title_en,
-  description,
-  description_en,
-  location,
-  before_image_url,
-  after_image_url,
-  published,
-  sort_order
-) VALUES (
-  'รีโนเวทบ้านเดี่ยว บ้านบึง',
-  'Renovated single house, Ban Bueng',
-  'เปลี่ยนบ้านเก่าให้พร้อมอยู่ภายใน 90 วัน โดยทีมนักลงทุนและช่างที่ไว้ใจได้',
-  'Transformed an outdated home into move-in ready within 90 days with our trusted investor-led team.',
-  'บ้านบึง ชลบุรี | Ban Bueng, Chonburi',
-  'https://placehold.co/1200x800/CCCCCC/666666?text=Before',
-  'https://placehold.co/1200x800/1B4D3E/FFFFFF?text=After',
-  true,
-  0
-);
+-- Seed removed: add real before/after images via /admin/success-stories (upload to Storage).

@@ -6,8 +6,8 @@ export const successStorySchema = z.object({
   description: z.string().default(""),
   description_en: z.string().default(""),
   location: z.string().default(""),
-  before_image_url: z.string().min(1, "กรุณาระบุ URL รูปก่อนรีโนเวท"),
-  after_image_url: z.string().min(1, "กรุณาระบุ URL รูปหลังรีโนเวท"),
+  before_image_url: z.string().min(1, "กรุณาอัปโหลดรูปก่อนรีโนเวท"),
+  after_image_url: z.string().min(1, "กรุณาอัปโหลดรูปหลังรีโนเวท"),
   published: z.boolean().default(true),
   sort_order: z.coerce.number().int().default(0),
 })

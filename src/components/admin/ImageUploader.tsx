@@ -11,6 +11,8 @@ interface ImageUploaderProps {
   onChange: (urls: string[]) => void
   maxFiles?: number
   label?: string
+  /** Subfolder under uploads/ in property-images bucket (allowlisted server-side). */
+  uploadFolder?: string
 }
 
 export function ImageUploader({
@@ -18,6 +20,7 @@ export function ImageUploader({
   onChange,
   maxFiles = 10,
   label = "อัปโหลดรูปภาพ",
+  uploadFolder,
 }: ImageUploaderProps) {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
@@ -35,14 +38,17 @@ export function ImageUploader({
     startTransition(async () => {
       const formData = new FormData()
       files.forEach((f) => formData.append("files", f))
+      if (uploadFolder) formData.append("folder", uploadFolder)
 
       try {
         const res = await fetch("/api/upload-images", {
           method: "POST",
           body: formData,
         })
-        if (!res.ok) throw new Error("อัปโหลดล้มเหลว")
         const json = await res.json()
+        if (!res.ok || !json.success) {
+          throw new Error(json.error ?? "อัปโหลดล้มเหลว")
+        }
         const urls: string[] = json.urls ?? []
         onChange([...value, ...urls])
       } catch (err) {

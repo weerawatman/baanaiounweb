@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createServerSupabase } from "@/lib/supabase"
+import { buildStorageUploadPath } from "@/lib/upload-storage"
 
 // ─── Config ──────────────────────────────────────────────────────────────
 
@@ -76,6 +77,8 @@ export async function POST(request: NextRequest) {
 
     const formData = await request.formData()
     const files = formData.getAll("files") as File[]
+    const folder = formData.get("folder")
+    const storageFolder = typeof folder === "string" ? folder : undefined
 
     if (!files.length) {
       return NextResponse.json({ success: false, error: "No files provided" }, { status: 400 })
@@ -116,7 +119,7 @@ export async function POST(request: NextRequest) {
       // Derive extension from the validated MIME type — never trust file.name.
       const ext = EXT_BY_TYPE[file.type]
       const safeName = `${timestamp}-${i}.${ext}`
-      const storagePath = `uploads/${safeName}`
+      const storagePath = buildStorageUploadPath(storageFolder, safeName)
 
       const arrayBuffer = await file.arrayBuffer()
       const buffer = new Uint8Array(arrayBuffer)

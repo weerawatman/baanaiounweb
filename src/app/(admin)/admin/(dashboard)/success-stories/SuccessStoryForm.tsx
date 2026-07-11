@@ -6,7 +6,9 @@ import { useActionState } from "react"
 import { AlertTriangle, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { SingleImageField } from "@/components/admin/SingleImageField"
 import { successStorySchema, type SuccessStoryFormValues } from "@/lib/validations/success-story"
+import { UPLOAD_STORAGE_FOLDERS } from "@/lib/upload-storage"
 import type { SuccessStory } from "@/lib/types/property"
 import type { ActionState } from "@/actions/properties"
 import { cn } from "@/lib/utils"
@@ -78,7 +80,7 @@ export function SuccessStoryForm({
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium">ทำเล (สำหรับ alt text / SEO)</label>
+          <label className="text-sm font-medium">ทำเล</label>
           <Input {...register("location")} placeholder="บ้านบึง ชลบุรี" />
         </div>
 
@@ -92,21 +94,45 @@ export function SuccessStoryForm({
           <textarea {...register("description_en")} rows={3} className={textareaCls} />
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium">
-              URL รูปก่อนรีโนเวท <span className="text-red-500">*</span>
+              รูปก่อนรีโนเวท <span className="text-red-500">*</span>
             </label>
-            <Input {...register("before_image_url")} placeholder="https://..." />
+            <Controller
+              control={control}
+              name="before_image_url"
+              render={({ field }) => (
+                <SingleImageField
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="อัปโหลดรูปก่อนรีโนเวท"
+                  aspect="wide"
+                  uploadFolder={UPLOAD_STORAGE_FOLDERS.successStories}
+                />
+              )}
+            />
             {errors.before_image_url && (
               <p className="text-xs text-red-500">{errors.before_image_url.message}</p>
             )}
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium">
-              URL รูปหลังรีโนเวท <span className="text-red-500">*</span>
+              รูปหลังรีโนเวท <span className="text-red-500">*</span>
             </label>
-            <Input {...register("after_image_url")} placeholder="https://..." />
+            <Controller
+              control={control}
+              name="after_image_url"
+              render={({ field }) => (
+                <SingleImageField
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="อัปโหลดรูปหลังรีโนเวท"
+                  aspect="wide"
+                  uploadFolder={UPLOAD_STORAGE_FOLDERS.successStories}
+                />
+              )}
+            />
             {errors.after_image_url && (
               <p className="text-xs text-red-500">{errors.after_image_url.message}</p>
             )}
@@ -133,7 +159,7 @@ export function SuccessStoryForm({
               )}
             />
             <label htmlFor="published" className="cursor-pointer text-sm font-medium">
-              เผยแพร่
+              เผยแพร่บนหน้าแรก
             </label>
           </div>
         </div>

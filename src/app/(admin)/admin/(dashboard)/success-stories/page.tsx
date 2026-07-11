@@ -16,7 +16,7 @@ export default async function SuccessStoriesPage() {
         <div>
           <h1 className="text-foreground text-2xl font-bold">ผลงานก่อน-หลัง</h1>
           <p className="text-muted-foreground mt-1 text-sm">
-            จัดการรูปผลงานรีโนเวทสำหรับหน้าแรก
+            อัปโหลดรูปก่อน-หลังรีโนเวท — แสดงบนหน้าแรกในโซนความไว้วางใจจากลูกค้า
           </p>
         </div>
         <Link

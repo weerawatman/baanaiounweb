@@ -10,6 +10,7 @@ interface SingleImageFieldProps {
   onChange: (url: string) => void
   label?: string
   aspect?: "square" | "wide"
+  uploadFolder?: string
 }
 
 /** ฟิลด์รูปเดียว (เช่น avatar / hero) — wrapper ของ ImageUploader ที่รับ/คืน string */
@@ -18,6 +19,7 @@ export function SingleImageField({
   onChange,
   label = "อัปโหลดรูป",
   aspect = "square",
+  uploadFolder,
 }: SingleImageFieldProps) {
   return (
     <div className="flex flex-col gap-3">
@@ -56,6 +58,7 @@ export function SingleImageField({
           onChange={(urls) => onChange(urls[0] ?? "")}
           maxFiles={1}
           label={label}
+          uploadFolder={uploadFolder}
         />
       )}
     </div>

@@ -1,11 +1,17 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { requireAdmin } from "@/lib/auth/guard"
 import { successStorySchema } from "@/lib/validations/success-story"
 import type { ActionState } from "./properties"
+
+function revalidateSuccessStories() {
+  revalidateTag("success-stories", "max")
+  revalidatePath("/")
+  revalidatePath("/admin/success-stories")
+}
 
 export async function createSuccessStory(
   _prev: ActionState,
@@ -28,8 +34,7 @@ export async function createSuccessStory(
 
   if (error) return { error: error.message }
 
-  revalidatePath("/")
-  revalidatePath("/admin/success-stories")
+  revalidateSuccessStories()
   redirect("/admin/success-stories")
 }
 
@@ -55,8 +60,7 @@ export async function updateSuccessStory(
 
   if (error) return { error: error.message }
 
-  revalidatePath("/")
-  revalidatePath("/admin/success-stories")
+  revalidateSuccessStories()
   redirect("/admin/success-stories")
 }
 
@@ -68,7 +72,6 @@ export async function deleteSuccessStory(id: string): Promise<{ error?: string }
 
   if (error) return { error: error.message }
 
-  revalidatePath("/")
-  revalidatePath("/admin/success-stories")
+  revalidateSuccessStories()
   return {}
 }
