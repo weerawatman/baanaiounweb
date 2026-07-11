@@ -4,16 +4,13 @@
  */
 
 export const HERO = {
-  h1Th: "ครบจบเรื่องอสังหาฯ ซื้อ-ขาย-เช่า ง่าย สะดวก ปลอดภัย",
-  h1Th2: "พร้อมดูแลด้วยใจเพื่อคนไทยและต่างชาติ",
-  h1En: "Your All-in-One Real Estate Partner — Buy, Sell, Rent, Stress-Free.",
-  h1En2: "Caring service for both Thai and international clients.",
-  ctaThai: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property", href: "/request?tab=list-property" },
-  ctaIntl: {
-    th: "ค้นหาทรัพย์ที่ใช่",
-    en: "Find Your Perfect Match",
-    href: "/find-property",
-  },
+  h1Th: "ครบจบเรื่องอสังหาฯ ซื้อ-ขาย-เช่า",
+  h1Th2: "ดูแลด้วยสายตานักลงทุน",
+  h1En: "Your All-in-One Real Estate Partner",
+  subTh: "ปิดดีลไว ได้ราคาที่ใช่ พร้อมทีมงานดูแลครบวงจรเพื่อคนไทยและต่างชาติ",
+  subEn: "Expert services for buyers, sellers, and renters. Serving local and international clients.",
+  ctaList: { th: "ฝากขาย / ปล่อยเช่า", en: "List Your Property", href: "/list-property" },
+  ctaSearch: { th: "ค้นหาทรัพย์", en: "Search Properties", href: "/properties" },
 } as const
 
 export const SERVICES_HEADING = {
@@ -25,6 +22,7 @@ export const SERVICES_HEADING = {
 
 export const SERVICE_CARDS = [
   {
+    emoji: "🏠",
     icon: "Home",
     color: "#E8833A",
     titleTh: "สำหรับเจ้าของทรัพย์",
@@ -37,6 +35,7 @@ export const SERVICE_CARDS = [
     secondaryHref: "/services",
   },
   {
+    emoji: "🔍",
     icon: "Search",
     color: "#2E75B6",
     titleTh: "สำหรับผู้ซื้อ-เช่า",
@@ -49,6 +48,7 @@ export const SERVICE_CARDS = [
     secondaryHref: "/services",
   },
   {
+    emoji: "🤝",
     icon: "Users",
     color: "#1B7A52",
     titleTh: "เครือข่าย Co-Agent",
@@ -61,6 +61,7 @@ export const SERVICE_CARDS = [
     secondaryHref: "/services",
   },
   {
+    emoji: "🎓",
     icon: "GraduationCap",
     color: "#7C3AED",
     titleTh: "คอร์สนายหน้าอสังหาฯ",

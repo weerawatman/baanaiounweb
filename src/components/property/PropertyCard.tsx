@@ -36,7 +36,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       >
         <Card className="group-hover:ring-foreground/20 h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl">
           {/* Image */}
-          <div className="relative h-52 overflow-hidden">
+          <div className="relative h-60 overflow-hidden">
             <Image
               src={property.imagePrimary}
               alt={`${type.label} ${property.title}`}
@@ -81,7 +81,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             </h3>
 
             {/* Price */}
-            <p className="text-base font-semibold text-green-700">{formatPrice(property)}</p>
+            <p className="text-xl font-bold text-primary">{formatPrice(property)}</p>
 
             {/* Stats row */}
             <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-xs">

@@ -17,7 +17,7 @@ export default function HomePage({ properties, heroImage, faqs }: HomePageProps)
   ].sort()
 
   return (
-    <>
+    <div className="bg-[#f8f6f0]">
       <HeroSection heroImage={heroImage} districts={districts} />
 
       <ServiceShortcuts />
@@ -27,10 +27,11 @@ export default function HomePage({ properties, heroImage, faqs }: HomePageProps)
       <FeaturedProperties properties={properties} />
 
       <FaqSection
-        title="คำถามที่พบบ่อย | FAQ"
+        variant="boxed"
+        title="คำถามที่พบบ่อย (FAQ) | Frequently Asked Questions"
         subtitle="เรื่องอสังหาฯ ให้เราดูแล เพื่อให้คุณก้าวสู่เป้าหมายได้อย่างสบายใจและคุ้มค่าที่สุด | We handle real estate so you can move forward with confidence."
         items={faqs}
       />
-    </>
+    </div>
   )
 }
