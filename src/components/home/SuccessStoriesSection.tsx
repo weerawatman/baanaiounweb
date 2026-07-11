@@ -42,13 +42,13 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
   if (displayableStories.length === 0) return null
 
   return (
-    <section className="bg-[#F5F0E8] py-16" data-testid="success-stories-section">
+    <section className="bg-muted py-16" data-testid="success-stories-section">
       <div className="container mx-auto max-w-5xl px-4">
         <div className="mb-10 text-center">
-          <h2 className="text-2xl font-bold text-primary md:text-3xl">
+          <h2 className="font-heading text-2xl font-bold text-primary md:text-3xl">
             ผลงานจริง ก่อน-หลังรีโนเวท
           </h2>
-          <p className="mt-2 text-sm text-gray-600 md:text-base">
+          <p className="mt-2 text-sm text-muted-foreground md:text-base">
             Real Results: Before &amp; After Renovations
           </p>
         </div>
@@ -57,7 +57,7 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
           <div className="flex">
             {displayableStories.map((story) => (
               <div key={story.id} className="min-w-0 flex-[0_0_100%] px-2">
-                <div className="flex flex-col gap-6 rounded-2xl bg-white p-4 shadow-sm md:p-6">
+                <div className="flex flex-col gap-6 rounded-2xl bg-card p-4 shadow-[0_10px_30px_rgba(45,90,39,0.04)] md:p-6">
                   <BeforeAfterSlider
                     beforeUrl={story.beforeImageUrl}
                     afterUrl={story.afterImageUrl}
@@ -67,18 +67,18 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
                   <div className="text-center md:text-left">
                     <h3 className="text-lg font-bold text-primary">{story.title}</h3>
                     {story.titleEn && (
-                      <p className="text-sm text-gray-500">{story.titleEn}</p>
+                      <p className="text-sm text-muted-foreground">{story.titleEn}</p>
                     )}
                     {story.location && (
-                      <p className="mt-1 text-xs text-[#D4A843]">{story.location}</p>
+                      <p className="mt-1 text-xs text-secondary">{story.location}</p>
                     )}
                     {story.description && (
-                      <p className="mt-3 text-sm leading-relaxed text-gray-700">
+                      <p className="mt-3 text-sm leading-relaxed text-foreground">
                         {story.description}
                       </p>
                     )}
                     {story.descriptionEn && (
-                      <p className="mt-1 text-sm text-gray-500">{story.descriptionEn}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">{story.descriptionEn}</p>
                     )}
                   </div>
                 </div>
@@ -95,7 +95,7 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
                 onClick={() => scrollTo(index)}
                 aria-label={`Go to story ${index + 1}`}
                 className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                  index === selectedIndex ? "bg-primary" : "bg-gray-300 hover:bg-gray-400"
+                  index === selectedIndex ? "bg-primary" : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
                 }`}
               />
             ))}

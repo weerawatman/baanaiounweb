@@ -19,11 +19,11 @@ export default function GlobalError({
           <p className="text-6xl">😔</p>
           <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">
             เกิดข้อผิดพลาดร้ายแรง
-            <span className="mt-1 block text-lg font-medium text-gray-400">
+            <span className="mt-1 block text-lg font-medium text-muted-foreground">
               A critical error occurred
             </span>
           </h1>
-          <p className="mt-3 max-w-md text-base leading-relaxed text-gray-600">
+          <p className="mt-3 max-w-md text-base leading-relaxed text-muted-foreground">
             ขอโทษนะคะ ระบบมีปัญหา ทีมงานได้รับแจ้งแล้ว กรุณาลองโหลดหน้านี้ใหม่
           </p>
           {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- root layout has crashed; next/link's router context isn't reliable here, use a plain reload */}

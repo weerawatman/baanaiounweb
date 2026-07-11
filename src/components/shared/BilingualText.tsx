@@ -26,17 +26,17 @@ export default function BilingualText({
   if (layout === "side-by-side") {
     return (
       <div className={`flex items-center gap-2 ${className}`}>
-        <span className={`font-medium text-gray-900 ${thClassName}`}>{th}</span>
-        <span className="text-gray-400">|</span>
-        <span className={`text-gray-600 ${enClassName}`}>{en}</span>
+        <span className={`font-medium text-foreground ${thClassName}`}>{th}</span>
+        <span className="text-muted-foreground">|</span>
+        <span className={`text-muted-foreground ${enClassName}`}>{en}</span>
       </div>
     )
   }
 
   return (
     <div className={`space-y-1 ${className}`}>
-      <p className={`font-medium text-gray-900 ${thClassName}`}>{th}</p>
-      <p className={`text-sm text-gray-600 ${enClassName}`}>{en}</p>
+      <p className={`font-medium text-foreground ${thClassName}`}>{th}</p>
+      <p className={`text-sm text-muted-foreground ${enClassName}`}>{en}</p>
     </div>
   )
 }

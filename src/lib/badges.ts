@@ -27,14 +27,14 @@ const RENOVATED: TrustBadge = {
   key: "renovated",
   th: "รีโนเวทใหม่พร้อมอยู่",
   en: "Newly Renovated",
-  className: "bg-[#E8833A] text-white",
+  className: "bg-accent text-accent-foreground",
 }
 
 const PRIME: TrustBadge = {
   key: "prime",
   th: "การันตีทำเลทอง",
   en: "Prime Location",
-  className: "bg-[#D4A843] text-white",
+  className: "bg-secondary text-secondary-foreground",
 }
 
 /** Max 2 badges per card to keep the image readable. */

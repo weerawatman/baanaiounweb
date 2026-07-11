@@ -45,7 +45,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
   )
 
   const selectClass =
-    "w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
+    "w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -65,9 +65,9 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
       </div>
 
       {/* Filter bar */}
-      <div className="mt-6 rounded-2xl bg-white p-5 shadow-md ring-1 ring-black/5">
+      <div className="mt-6 rounded-2xl bg-card p-5 shadow-[0_10px_30px_rgba(45,90,39,0.04)] ring-1 ring-black/5">
         {/* Type tabs */}
-        <div className="mb-3 flex overflow-hidden rounded-lg border border-gray-200">
+        <div className="mb-3 flex overflow-hidden rounded-lg border border-border">
           {PURPOSE_TABS.map((tab) => (
             <button
               key={tab.value}
@@ -75,7 +75,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
               className={`flex-1 min-h-[44px] py-2 text-sm font-semibold transition-colors ${
                 purpose === tab.value
                   ? "bg-primary text-white"
-                  : "text-gray-600 hover:bg-gray-50"
+                  : "text-muted-foreground hover:bg-muted"
               }`}
             >
               {tab.th === tab.en ? tab.th : `${tab.th} | ${tab.en}`}
@@ -134,7 +134,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
       </div>
 
       {/* Result count */}
-      <p className="mt-4 text-sm text-gray-500">
+      <p className="mt-4 text-sm text-muted-foreground">
         พบ {filtered.length} รายการ | Found {filtered.length} listings
       </p>
 
@@ -147,13 +147,13 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
         </div>
       ) : (
         <div className="py-20 text-center">
-          <p className="text-lg font-medium text-gray-700">
+          <p className="text-lg font-medium text-foreground">
             ไม่พบทรัพย์ที่ตรงเงื่อนไข
-            <span className="mt-1 block text-base text-gray-500">
+            <span className="mt-1 block text-base text-muted-foreground">
               No properties match your filters
             </span>
           </p>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-muted-foreground">
             ลองเปลี่ยนตัวกรอง หรือ{" "}
             <a href="/contact" className="text-primary underline underline-offset-2">
               ติดต่อพิมโดยตรง

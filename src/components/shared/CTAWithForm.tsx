@@ -41,15 +41,15 @@ export default function CTAWithForm({
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-bold text-primary sm:text-3xl">
+            <h2 className="font-heading text-2xl font-bold text-primary sm:text-3xl">
               พร้อมเริ่มต้นหรือยัง?
-              <span className="mt-1 block text-base font-medium text-[#D4A843]">
+              <span className="mt-1 block text-base font-medium text-secondary">
                 Ready to Get Started?
               </span>
             </h2>
-            <p className="max-w-xl text-gray-600">
+            <p className="max-w-xl text-muted-foreground">
               คุยง่าย ตรงไปตรงมา พร้อมดูแลทุกเคสด้วยความจริงใจ
-              <span className="mt-1 block text-sm text-gray-400">
+              <span className="mt-1 block text-sm text-muted-foreground/80">
                 Straightforward communication, handling every case with sincerity.
               </span>
             </p>
@@ -78,7 +78,7 @@ export default function CTAWithForm({
                 <Link href={secondary.href}>
                   <Button
                     variant="outline"
-                    className="gap-2 border-[#D4A843] px-8 py-2.5 text-[#D4A843] hover:bg-[#D4A843] hover:text-white"
+                    className="gap-2 border-secondary px-8 py-2.5 text-secondary hover:bg-secondary hover:text-secondary-foreground"
                     size="lg"
                   >
                     {secondary.label}
@@ -98,7 +98,7 @@ export default function CTAWithForm({
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="text-sm text-gray-400 underline underline-offset-2 hover:text-gray-600"
+                className="text-sm text-muted-foreground underline underline-offset-2 hover:text-foreground"
               >
                 ยกเลิก กลับไปหน้าเดิม
               </button>

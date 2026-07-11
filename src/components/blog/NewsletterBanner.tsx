@@ -62,7 +62,7 @@ export default function NewsletterBanner() {
         />
         <button
           type="submit"
-          className="min-h-[52px] rounded-full bg-[#ea580c] px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-[#d04d08]"
+          className="min-h-[52px] rounded-full bg-secondary px-8 py-3 text-sm font-bold text-secondary-foreground transition-colors hover:bg-secondary/90"
         >
           ติดตามข่าวสาร | Subscribe
         </button>

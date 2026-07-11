@@ -48,19 +48,19 @@ export default function RequestPage({ initialTab }: { initialTab: RequestTab }) 
   }
 
   return (
-    <main className="bg-[#F5F0E8] pb-16">
+    <main className="bg-muted pb-16">
       <div className="mx-auto max-w-3xl px-4 pt-8 sm:px-6 lg:px-8">
         <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "ส่งคำขอบริการ" }]} />
 
         {/* Heading */}
         <div className="mt-6 text-center">
-          <h1 className="text-2xl font-bold text-primary sm:text-3xl">
+          <h1 className="font-heading text-2xl font-bold text-primary sm:text-3xl">
             ส่งคำขอบริการ
-            <span className="mt-1 block text-lg font-medium text-gray-400">Service Request</span>
+            <span className="mt-1 block text-lg font-medium text-muted-foreground">Service Request</span>
           </h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-gray-600">
+          <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
             เลือกบริการที่ต้องการ กรอกฟอร์มสั้นๆ ทีมงานจะติดต่อกลับโดยเร็วที่สุด
-            <span className="mt-0.5 block text-xs text-gray-400">
+            <span className="mt-0.5 block text-xs text-muted-foreground/80">
               Pick a service, fill in a short form, and our team will get back to you shortly.
             </span>
           </p>
@@ -82,13 +82,13 @@ export default function RequestPage({ initialTab }: { initialTab: RequestTab }) 
                 className={`flex flex-col items-center gap-1.5 rounded-2xl border-2 px-4 py-4 text-center transition-all ${
                   active
                     ? "border-primary bg-primary text-white shadow-lg"
-                    : "border-transparent bg-white text-gray-600 shadow-sm hover:border-primary/30 hover:shadow-md"
+                    : "border-transparent bg-card text-muted-foreground shadow-sm hover:border-primary/30 hover:shadow-md"
                 }`}
               >
-                <Icon className={`size-6 ${active ? "text-[#D4A843]" : "text-primary"}`} />
+                <Icon className={`size-6 ${active ? "text-secondary" : "text-primary"}`} />
                 <span className="text-sm leading-snug font-semibold">{m.th}</span>
                 <span
-                  className={`text-xs leading-snug ${active ? "text-white/75" : "text-gray-400"}`}
+                  className={`text-xs leading-snug ${active ? "text-white/75" : "text-muted-foreground"}`}
                 >
                   {m.en}
                 </span>
@@ -103,14 +103,14 @@ export default function RequestPage({ initialTab }: { initialTab: RequestTab }) 
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="mt-6 rounded-2xl bg-white p-6 shadow-md ring-1 ring-black/5 sm:p-8"
+          className="mt-6 rounded-2xl bg-card p-6 shadow-[0_10px_30px_rgba(45,90,39,0.04)] ring-1 ring-black/5 sm:p-8"
         >
           <div className="mb-6 text-center">
             <h2 className="text-lg font-bold text-primary">
-              {meta.th} <span className="font-medium text-gray-400">| {meta.en}</span>
+              {meta.th} <span className="font-medium text-muted-foreground">| {meta.en}</span>
             </h2>
-            <p className="mt-1 text-sm text-gray-600">{meta.taglineTh}</p>
-            <p className="text-xs text-gray-400">{meta.taglineEn}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{meta.taglineTh}</p>
+            <p className="text-xs text-muted-foreground/80">{meta.taglineEn}</p>
           </div>
           <RequestForm requestType={tab} />
         </motion.div>

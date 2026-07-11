@@ -57,8 +57,8 @@ export default function BlogHeroArticle({ post }: BlogHeroArticleProps) {
           <div>
             <p className="text-sm font-medium text-foreground">{heroAuthor.bylineTh}</p>
             <p className="text-xs font-medium text-muted-foreground">{heroAuthor.bylineEn}</p>
-            <p className="mt-1 text-xs font-bold text-[#16a34a]">{heroAuthor.verifiedTh}</p>
-            <p className="text-[0.7rem] font-medium text-[#16a34a]/80">{heroAuthor.verifiedEn}</p>
+            <p className="mt-1 text-xs font-bold text-primary">{heroAuthor.verifiedTh}</p>
+            <p className="text-[0.7rem] font-medium text-primary/80">{heroAuthor.verifiedEn}</p>
           </div>
         </div>
       </div>

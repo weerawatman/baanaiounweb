@@ -20,7 +20,7 @@ export default function MobileContactBar({ phone, lineUrl, whatsappUrl }: Mobile
   return (
     <nav
       aria-label="ติดต่อด่วน | Quick contact"
-      className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-gray-200 bg-white pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_10px_rgba(0,0,0,0.08)] md:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_10px_rgba(45,90,39,0.08)] md:hidden"
     >
       <a href={telHref} className={`${itemClass} text-primary`} aria-label={`โทร ${phone}`}>
         <Phone className="size-5" />

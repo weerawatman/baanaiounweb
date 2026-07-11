@@ -74,7 +74,7 @@ export default function FindPropertyPage({
             </h2>
             <p className="mt-2 text-lg font-medium text-secondary">{split.headline.en}</p>
 
-            <p className="mt-5 inline-block border-b-2 border-[#eab308] pb-3 text-sm font-bold text-primary">
+            <p className="mt-5 inline-block border-b-2 border-secondary pb-3 text-sm font-bold text-primary">
               {split.seo.th}
             </p>
             <p className="mt-1 text-xs font-medium text-muted-foreground">{split.seo.en}</p>
@@ -126,10 +126,10 @@ export default function FindPropertyPage({
                 <p className="text-3xl" aria-hidden>
                   💛
                 </p>
-                <blockquote className="mt-2 text-lg font-bold italic text-[#eab308] sm:text-xl">
+                <blockquote className="mt-2 text-lg font-bold italic text-secondary sm:text-xl">
                   &ldquo;{hook.quote.th}&rdquo;
                 </blockquote>
-                <p className="mt-2 text-sm italic text-[#eab308]/80">&ldquo;{hook.quote.en}&rdquo;</p>
+                <p className="mt-2 text-sm italic text-secondary/80">&ldquo;{hook.quote.en}&rdquo;</p>
                 <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
                   {hook.message.th}
                 </p>

@@ -35,14 +35,14 @@ function BentoCell({
       <div
         className={`absolute bottom-2 left-2 rounded-full px-3 py-1.5 text-[0.65rem] font-bold shadow-sm sm:bottom-3 sm:left-3 sm:px-4 sm:py-2 sm:text-xs ${
           item.badgeVariant === "orange"
-            ? "bg-white/95 text-[#ea580c]"
+            ? "bg-white/95 text-secondary"
             : "bg-white/95 text-primary"
         }`}
       >
         {item.badgeTh}
         <span
           className={`mt-0.5 block font-medium ${
-            item.badgeVariant === "orange" ? "text-[#ea580c]/75" : "text-primary/75"
+            item.badgeVariant === "orange" ? "text-secondary/75" : "text-primary/75"
           }`}
         >
           {item.badgeEn}

@@ -20,8 +20,8 @@ function Block({ block }: { block: PolicyBlock }) {
   if (block.type === "p") {
     return (
       <div className="mt-4">
-        <p className="text-gray-700 leading-relaxed">{withBold(block.th)}</p>
-        <p className="mt-1 text-sm leading-relaxed text-gray-500">{withBold(block.en)}</p>
+        <p className="text-foreground leading-relaxed">{withBold(block.th)}</p>
+        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{withBold(block.en)}</p>
       </div>
     )
   }
@@ -33,8 +33,8 @@ function Block({ block }: { block: PolicyBlock }) {
           <li key={i} className="flex gap-2.5">
             <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary/40" />
             <div>
-              <p className="text-gray-700 leading-relaxed">{withBold(item.th)}</p>
-              <p className="mt-1 text-sm leading-relaxed text-gray-500">{withBold(item.en)}</p>
+              <p className="text-foreground leading-relaxed">{withBold(item.th)}</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{withBold(item.en)}</p>
             </div>
           </li>
         ))}
@@ -59,11 +59,11 @@ export default function PrivacyPolicyPage() {
       />
 
       <div className="mt-6">
-        <h1 className="text-2xl font-bold text-primary sm:text-3xl">
+        <h1 className="font-heading text-2xl font-bold text-primary sm:text-3xl">
           นโยบายความเป็นส่วนตัว
-          <span className="mt-1 block text-lg font-medium text-gray-400">Privacy Policy</span>
+          <span className="mt-1 block text-lg font-medium text-muted-foreground">Privacy Policy</span>
         </h1>
-        <p className="mt-3 text-sm text-gray-500">
+        <p className="mt-3 text-sm text-muted-foreground">
           บังคับใช้ตั้งแต่ {EFFECTIVE_DATE.th}
           <span className="mx-1.5">·</span>
           Effective from {EFFECTIVE_DATE.en}
@@ -71,16 +71,16 @@ export default function PrivacyPolicyPage() {
       </div>
 
       <div className="mt-6">
-        <p className="text-gray-700 leading-relaxed">{INTRO.th}</p>
-        <p className="mt-2 text-sm leading-relaxed text-gray-500">{INTRO.en}</p>
+        <p className="text-foreground leading-relaxed">{INTRO.th}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{INTRO.en}</p>
       </div>
 
-      <div className="mt-10 flex flex-col divide-y divide-gray-100">
+      <div className="mt-10 flex flex-col divide-y divide-border">
         {PRIVACY_POLICY_SECTIONS.map((section) => (
           <section key={section.number} className="py-8 first:pt-0">
-            <h2 className="text-lg font-bold text-primary sm:text-xl">
+            <h2 className="font-heading text-lg font-bold text-primary sm:text-xl">
               {section.number}. {section.titleTh}
-              <span className="mt-0.5 block text-sm font-medium text-gray-400">
+              <span className="mt-0.5 block text-sm font-medium text-muted-foreground">
                 {section.titleEn}
               </span>
             </h2>

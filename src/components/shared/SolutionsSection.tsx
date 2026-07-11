@@ -31,22 +31,22 @@ export default function SolutionsSection({
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
           {/* Text content */}
           <div style={{ animation: "fade-up 0.5s ease both" }}>
-            <h2 className="text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+            <h2 className="font-heading text-2xl font-bold tracking-tight text-primary sm:text-3xl">
               {headline}
             </h2>
             {headlineEn && (
-              <p className="mt-1 text-base font-medium text-[#D4A843]">{headlineEn}</p>
+              <p className="mt-1 text-base font-medium text-secondary">{headlineEn}</p>
             )}
-            {subtitle && <p className="mt-2 text-lg font-medium text-[#D4A843]">{subtitle}</p>}
-            <p className="mt-4 text-base leading-relaxed text-gray-600">{description}</p>
+            {subtitle && <p className="mt-2 text-lg font-medium text-secondary">{subtitle}</p>}
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">{description}</p>
             {descriptionEn && (
-              <p className="mt-1 text-sm leading-relaxed text-gray-500">{descriptionEn}</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground/80">{descriptionEn}</p>
             )}
             {highlight && (
               <p className="mt-3 text-base font-semibold text-primary">{highlight}</p>
             )}
             {highlightEn && (
-              <p className="mt-0.5 text-sm font-medium text-[#D4A843]">{highlightEn}</p>
+              <p className="mt-0.5 text-sm font-medium text-secondary">{highlightEn}</p>
             )}
           </div>
 
@@ -60,11 +60,11 @@ export default function SolutionsSection({
               >
                 <CheckCircle className="mt-0.5 size-5 shrink-0 text-primary" />
                 <div>
-                  <span className="text-sm leading-relaxed text-gray-700 sm:text-base">
+                  <span className="text-sm leading-relaxed text-foreground sm:text-base">
                     {feature}
                   </span>
                   {featuresEn?.[i] && (
-                    <span className="mt-0.5 block text-xs leading-relaxed text-[#D4A843]/75 sm:text-sm">
+                    <span className="mt-0.5 block text-xs leading-relaxed text-secondary/75 sm:text-sm">
                       {featuresEn[i]}
                     </span>
                   )}

@@ -168,7 +168,7 @@ export default function Header({ profile }: { profile: Profile }) {
                 >
                   <span className="text-sm leading-snug font-medium">{item.th}</span>
                   {item.en !== item.th && (
-                    <span className="text-xs leading-snug text-gray-400">{item.en}</span>
+                    <span className="text-xs leading-snug text-muted-foreground">{item.en}</span>
                   )}
                 </Link>
               ))}

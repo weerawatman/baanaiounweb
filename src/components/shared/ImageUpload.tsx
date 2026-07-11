@@ -132,7 +132,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
           {images.map((img, i) => (
             <div
               key={img.preview}
-              className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
+              className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-muted"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -190,10 +190,10 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
         <div
           className={`relative flex cursor-pointer flex-col items-center gap-2 rounded-lg border-2 border-dashed px-4 py-6 text-center transition-colors ${
             disabled
-              ? "cursor-not-allowed border-gray-200 bg-gray-50 text-gray-400"
+              ? "cursor-not-allowed border-border bg-muted text-muted-foreground"
               : dragActive
                 ? "border-primary bg-primary/5 text-primary"
-                : "border-gray-300 text-gray-500 hover:border-primary/40 hover:text-gray-700"
+                : "border-input text-muted-foreground hover:border-primary/40 hover:text-foreground"
           }`}
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
@@ -213,7 +213,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
           <div className="text-sm">
             <span className="font-medium">คลิกเลือกรูป</span> หรือลากไฟล์มาวาง
           </div>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-muted-foreground">
             JPG, PNG, WEBP สูงสุด {MAX_FILES} รูป (ไม่เกิน {MAX_FILE_SIZE / 1024 / 1024} MB ต่อรูป)
           </p>
           <input
@@ -230,7 +230,7 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
 
       {/* File count */}
       {images.length > 0 && (
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-muted-foreground">
           {images.length}/{MAX_FILES} รูป
         </p>
       )}

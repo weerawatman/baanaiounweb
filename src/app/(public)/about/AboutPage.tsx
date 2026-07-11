@@ -75,7 +75,7 @@ function TimelineImage({ src, alt, hint }: { src: string; alt: string; hint: str
   }
 
   return (
-    <div className="flex h-[220px] w-full items-center justify-center rounded-2xl border-2 border-dashed border-[#cbd5e1] bg-[#e2e8f0] px-4 text-center text-sm text-[#64748b] md:h-[280px]">
+    <div className="flex h-[220px] w-full items-center justify-center rounded-2xl border-2 border-dashed border-border bg-muted px-4 text-center text-sm text-muted-foreground md:h-[280px]">
       <span className="flex items-center gap-2">
         <FileImage className="size-4 shrink-0 opacity-60" />
         {hint}
@@ -168,16 +168,16 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
           </>
         )}
         <div className="mx-auto max-w-3xl px-4">
-          <h1 className="text-3xl font-bold leading-tight [text-shadow:0_2px_4px_rgba(0,0,0,0.5)] sm:text-[2.8rem]">
+          <h1 className="font-heading text-3xl font-bold leading-tight [text-shadow:0_2px_4px_rgba(0,0,0,0.5)] sm:text-[2.8rem]">
             เกี่ยวกับเรา: บ้านไออุ่น พร็อพเพอร์ตี้
             <span className="mt-1 block text-2xl font-semibold text-white/90 sm:text-3xl">
               About Baan Ai Oun Property
             </span>
           </h1>
-          <p className="mt-5 text-lg font-bold text-[#eab308] [text-shadow:0_1px_3px_rgba(0,0,0,0.5)] sm:text-xl">
+          <p className="mt-5 text-lg font-bold text-secondary [text-shadow:0_1px_3px_rgba(0,0,0,0.5)] sm:text-xl">
             เชื่อมโยงทุกความต้องการอสังหาฯ ด้วยประสบการณ์นักลงทุนและบริการที่จริงใจ
           </p>
-          <p className="mt-1 text-base text-gray-200">
+          <p className="mt-1 text-base text-primary-foreground/80">
             Connecting real estate goals through investor-led expertise and heartfelt service.
           </p>
         </div>
@@ -187,10 +187,10 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
         {/* Our Story */}
         <section>
           <div className="mb-10 mt-14 text-center">
-            <h2 className="text-3xl font-bold text-primary sm:text-[2.2rem]">
+            <h2 className="font-heading text-3xl font-bold text-primary sm:text-[2.2rem]">
               จุดเริ่มต้นของเรา | Our Story
             </h2>
-            <p className="mt-2 text-lg text-[#666]">
+            <p className="mt-2 text-lg text-muted-foreground">
               เรื่องราวที่หล่อหลอมให้เราเป็น &ldquo;ศูนย์รวมอสังหาฯ ที่เข้าใจคุณที่สุด&rdquo; ในวันนี้
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -215,7 +215,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
                   )}
                 >
                   <div
-                    className="absolute left-5 top-2 z-10 size-5 -translate-x-1/2 rounded-full border-4 border-primary bg-[#eab308] md:left-1/2 md:top-1/2 md:-translate-y-1/2"
+                    className="absolute left-5 top-2 z-10 size-5 -translate-x-1/2 rounded-full border-4 border-primary bg-secondary md:left-1/2 md:top-1/2 md:-translate-y-1/2"
                     aria-hidden
                   />
 
@@ -237,7 +237,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
                         {milestone.titleEN}
                       </span>
                     </h3>
-                    <p className="mt-3 text-[0.95rem] leading-relaxed text-[#555]">
+                    <p className="mt-3 text-[0.95rem] leading-relaxed text-muted-foreground">
                       {milestone.descTH}
                     </p>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -271,13 +271,13 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
         {/* How we help (Unfair Advantage) */}
         <section className="mt-20">
           <div className="mb-10 text-center">
-            <h2 className="text-3xl font-bold text-primary sm:text-[2.2rem]">
+            <h2 className="font-heading text-3xl font-bold text-primary sm:text-[2.2rem]">
               เว็บไซต์บ้านไออุ่น ช่วยแก้ปัญหาให้คุณได้อย่างไร?
             </h2>
             <p className="mt-1 text-lg font-medium text-muted-foreground sm:text-xl">
               How Does Baan Ai Oun Platform Help You?
             </p>
-            <p className="mt-3 text-lg text-[#666]">
+            <p className="mt-3 text-lg text-muted-foreground">
               แตกต่างจากกระดานประกาศทั่วไป เพราะเราดูแลคุณด้วยทีมงานที่มีหัวใจและประสบการณ์จริง
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -294,7 +294,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
                 <div className="mb-5 text-5xl">{adv.icon}</div>
                 <h3 className="mb-1 text-xl font-bold text-primary">{adv.titleTH}</h3>
                 <p className="mb-4 text-sm font-medium text-muted-foreground">{adv.titleEN}</p>
-                <p className="text-[0.95rem] leading-relaxed text-[#555]">{adv.descTH}</p>
+                <p className="text-[0.95rem] leading-relaxed text-muted-foreground">{adv.descTH}</p>
                 <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{adv.descEN}</p>
               </div>
             ))}
@@ -303,10 +303,10 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
 
         {/* Local expertise */}
         <section className="mt-20 rounded-3xl border border-border bg-card px-6 py-14 text-center shadow-[0_10px_40px_rgba(0,0,0,0.02)] sm:px-10">
-          <h2 className="text-2xl font-bold text-primary sm:text-[2rem]">
+          <h2 className="font-heading text-2xl font-bold text-primary sm:text-[2rem]">
             ความเชี่ยวชาญเฉพาะพื้นที่ (Local Market Expertise)
           </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-[#555]">
+          <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">
             เราคือผู้เชี่ยวชาญตัวจริงที่ลงพื้นที่ และมีเครือข่ายนายหน้าทำงานร่วมกัน
             ครอบคลุมทำเลศักยภาพสูงสุดในประเทศไทย ได้แก่:
           </p>
@@ -322,7 +322,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
                 className={cn(
                   "whitespace-nowrap rounded-full border px-6 py-3 text-sm font-bold transition-colors",
                   area.highlight
-                    ? "border-[#eab308] bg-[#eab308] text-[#333]"
+                    ? "border-secondary bg-secondary text-secondary-foreground"
                     : "border-primary bg-primary-subtle text-primary hover:bg-primary hover:text-primary-foreground",
                 )}
               >
@@ -342,7 +342,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
 
       {/* Bottom CTA (mockup pattern) */}
       <section className="mx-auto max-w-6xl px-4 pb-16 pt-6 text-center sm:px-6">
-        <h2 className="text-2xl font-bold text-foreground sm:text-[2.2rem]">
+        <h2 className="font-heading text-2xl font-bold text-foreground sm:text-[2.2rem]">
           ให้เราเป็นพาร์ทเนอร์ดูแลเรื่องอสังหาฯ ของคุณ
         </h2>
         <p className="mt-1 text-lg font-medium text-muted-foreground">
@@ -351,7 +351,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
         <div className="mt-7">
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center rounded-lg bg-primary px-10 py-4 text-lg font-bold text-primary-foreground transition-colors hover:bg-[#0f3d20]"
+            className="inline-flex items-center justify-center rounded-lg bg-primary px-10 py-4 text-lg font-bold text-primary-foreground transition-colors hover:bg-primary/90"
           >
             💬 ติดต่อทีมงานบ้านไออุ่น | Contact Our Team
           </Link>

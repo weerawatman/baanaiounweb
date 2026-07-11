@@ -79,10 +79,10 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-gray-700">
+      <label className="text-sm font-medium text-foreground">
         {labelTh}
         {required && <span className="ml-0.5 text-red-500">*</span>}
-        <span className="ml-1.5 text-xs font-normal text-gray-400">{labelEn}</span>
+        <span className="ml-1.5 text-xs font-normal text-muted-foreground">{labelEn}</span>
       </label>
       {children}
       {error && (
@@ -162,7 +162,7 @@ function PropertyTypeCards({
                 "flex flex-col items-center gap-1.5 rounded-lg border px-3 py-3.5 text-center transition-colors",
                 value === opt.value
                   ? "border-primary bg-primary-subtle text-primary shadow-sm"
-                  : "border-input bg-[#fafafa] text-gray-600 hover:border-primary/40",
+                  : "border-input bg-muted text-muted-foreground hover:border-primary/40",
               )}
             >
               <span className="text-2xl" aria-hidden>
@@ -212,7 +212,7 @@ function ListingPurposeCards({
                 "flex flex-col items-center gap-1.5 rounded-lg border px-3 py-3.5 text-center transition-colors",
                 value === opt.value
                   ? "border-primary bg-primary-subtle text-primary shadow-sm"
-                  : "border-input bg-[#fafafa] text-gray-600 hover:border-primary/40",
+                  : "border-input bg-muted text-muted-foreground hover:border-primary/40",
               )}
             >
               <span className="text-2xl" aria-hidden>
@@ -349,13 +349,13 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
         <p className="text-5xl">🎉</p>
         <h3 className="mt-4 text-lg font-bold text-primary">
           ส่งคำขอเรียบร้อยแล้ว ขอบคุณค่ะ
-          <span className="mt-1 block text-sm font-medium text-gray-400">
+          <span className="mt-1 block text-sm font-medium text-muted-foreground">
             Your request has been sent — thank you!
           </span>
         </h3>
-        <p className="mt-2 text-sm text-gray-600">
+        <p className="mt-2 text-sm text-muted-foreground">
           ทีมงานบ้านไออุ่นจะติดต่อกลับโดยเร็วที่สุด
-          <span className="mt-0.5 block text-xs text-gray-400">
+          <span className="mt-0.5 block text-xs text-muted-foreground/80">
             Our team will get back to you as soon as possible.
           </span>
         </p>
@@ -405,7 +405,7 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
         value={data.propertyType ?? ""}
         onChange={(e) => update("propertyType", e.target.value)}
         aria-invalid={fieldErrors.propertyType ? true : undefined}
-        className={`focus:border-ring focus:ring-ring/50 h-10 w-full rounded-lg border bg-white px-3 text-sm text-gray-700 transition-colors outline-none focus:ring-2 ${
+        className={`focus:border-ring focus:ring-ring/50 h-10 w-full rounded-lg border bg-card px-3 text-sm text-foreground transition-colors outline-none focus:ring-2 ${
           fieldErrors.propertyType ? "border-red-400 ring-1 ring-red-200" : "border-input"
         }`}
       >
@@ -455,9 +455,9 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
     <Field labelTh={labels.images.th} labelEn={labels.images.en}>
       <ImageUpload images={images} onChange={setImages} disabled={submitting} />
       {isMatchmaking && (
-        <p className="mt-3 rounded-md bg-[#dcfce7] px-3 py-2.5 text-xs font-medium leading-relaxed text-[#166534]">
+        <p className="mt-3 rounded-md bg-primary-subtle px-3 py-2.5 text-xs font-medium leading-relaxed text-primary">
           💡 สามารถแคปหน้าจอรูปภาพบ้านจากที่อื่น ส่งมาให้เราช่วยจัดหาแบบเดียวกันในราคาที่ดีกว่าได้เลยค่ะ
-          <span className="mt-1 block text-[#166534]/80">
+          <span className="mt-1 block text-primary/80">
             Feel free to screenshot listings you like from other sites so we can find similar matches.
           </span>
         </p>

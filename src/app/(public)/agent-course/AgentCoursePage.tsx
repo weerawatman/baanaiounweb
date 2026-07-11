@@ -40,7 +40,7 @@ function CurriculumDaySection({ day }: { day: CurriculumDay }) {
       {items.map((item) => (
         <li
           key={item.number}
-          className="flex gap-4 rounded-xl border border-border bg-[#f8fafc] p-5"
+          className="flex gap-4 rounded-xl border border-border bg-muted p-5"
         >
           <div className="flex h-[38px] w-7 shrink-0 items-center justify-center rounded-md bg-primary text-sm font-bold text-primary-foreground">
             {item.number}
@@ -107,7 +107,7 @@ export default function AgentCoursePage({
         />
       </div>
 
-      <section className="relative isolate overflow-hidden bg-[#111827] pb-24 pt-20 text-white sm:pb-28 sm:pt-24">
+      <section className="relative isolate overflow-hidden bg-[#1a3816] pb-24 pt-20 text-white sm:pb-28 sm:pt-24">
         {heroImage && (
           <Image
             src={heroImage}
@@ -119,7 +119,7 @@ export default function AgentCoursePage({
             className="-z-20 object-cover"
           />
         )}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#111827]/70 to-primary/90" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1a3816]/70 to-primary/90" />
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h1 className="text-pretty text-3xl font-bold leading-snug drop-shadow sm:text-4xl lg:text-[2.8rem]">
             {hero.titleTh}

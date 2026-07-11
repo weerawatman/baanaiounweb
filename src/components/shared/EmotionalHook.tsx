@@ -16,24 +16,24 @@ export default function EmotionalHook({
   className,
 }: EmotionalHookProps) {
   return (
-    <section className={`bg-[#F5F0E8] py-16 sm:py-20 ${className ?? ""}`}>
+    <section className={`bg-muted py-16 sm:py-20 ${className ?? ""}`}>
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div
           className="flex flex-col items-center gap-6 text-center"
           style={{ animation: "fade-up 0.6s ease both" }}
         >
-          <Heart className="size-8 text-[#D4A843]" />
+          <Heart className="size-8 text-secondary" />
           <blockquote className="text-xl font-bold leading-relaxed text-primary sm:text-2xl">
             &ldquo;{quote}&rdquo;
           </blockquote>
           {quoteEn && (
-            <blockquote className="text-base font-medium italic leading-relaxed text-[#D4A843]/80">
+            <blockquote className="text-base font-medium italic leading-relaxed text-secondary/80">
               &ldquo;{quoteEn}&rdquo;
             </blockquote>
           )}
-          <p className="max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">{message}</p>
+          <p className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">{message}</p>
           {messageEn && (
-            <p className="max-w-2xl text-sm leading-relaxed text-gray-500">{messageEn}</p>
+            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground/80">{messageEn}</p>
           )}
         </div>
       </div>

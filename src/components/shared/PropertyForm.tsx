@@ -43,7 +43,7 @@ function FormField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-gray-700">
+      <label className="text-sm font-medium text-foreground">
         {label}
         {required && <span className="ml-0.5 text-red-500">*</span>}
       </label>
@@ -81,7 +81,7 @@ function SelectField({
     <FormField label={label} required={required} error={error}>
       <select
         name={name}
-        className={`focus:border-ring focus:ring-ring/50 h-9 w-full rounded-lg border bg-white px-3 text-sm text-gray-700 transition-colors outline-none focus:ring-2 ${
+        className={`focus:border-ring focus:ring-ring/50 h-9 w-full rounded-lg border bg-white px-3 text-sm text-foreground transition-colors outline-none focus:ring-2 ${
           error ? "border-red-400 ring-1 ring-red-200" : "border-input"
         }`}
         value={value}
@@ -117,7 +117,7 @@ function TextAreaField({
     <FormField label={label} error={error}>
       <textarea
         name={name}
-        className={`focus:border-ring focus:ring-ring/50 min-h-[80px] w-full resize-y rounded-lg border bg-white px-3 py-2 text-sm text-gray-700 transition-colors outline-none focus:ring-2 ${
+        className={`focus:border-ring focus:ring-ring/50 min-h-[80px] w-full resize-y rounded-lg border bg-white px-3 py-2 text-sm text-foreground transition-colors outline-none focus:ring-2 ${
           error ? "border-red-400 ring-1 ring-red-200" : "border-input"
         }`}
         placeholder={placeholder}
@@ -355,9 +355,9 @@ function OwnerFormThai({
                     form.update("purpose", "")
                   }
                 }}
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                className="h-4 w-4 rounded border-input text-primary focus:ring-primary"
               />
-              <span className="text-sm text-gray-700">{option.label}</span>
+              <span className="text-sm text-foreground">{option.label}</span>
             </label>
           ))}
         </div>
@@ -442,9 +442,9 @@ function OwnerFormForeign({
                     form.update("purpose", "")
                   }
                 }}
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                className="h-4 w-4 rounded border-input text-primary focus:ring-primary"
               />
-              <span className="text-sm text-gray-700">{option.label}</span>
+              <span className="text-sm text-foreground">{option.label}</span>
             </label>
           ))}
         </div>
@@ -550,9 +550,9 @@ function BuyerFormThai({
                     form.update("requirement", "")
                   }
                 }}
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                className="h-4 w-4 rounded border-input text-primary focus:ring-primary"
               />
-              <span className="text-sm text-gray-700">{option.label}</span>
+              <span className="text-sm text-foreground">{option.label}</span>
             </label>
           ))}
         </div>
@@ -645,9 +645,9 @@ function BuyerFormForeign({
                     form.update("requirement", "")
                   }
                 }}
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                className="h-4 w-4 rounded border-input text-primary focus:ring-primary"
               />
-              <span className="text-sm text-gray-700">{option.label}</span>
+              <span className="text-sm text-foreground">{option.label}</span>
             </label>
           ))}
         </div>
@@ -734,8 +734,8 @@ function CoAgentForm({ form }: { form: ReturnType<typeof useFormState> }) {
         value={form.data.details ?? ""}
         onChange={form.update}
       />
-      <div className="mt-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-        <p className="text-xs text-gray-600">
+      <div className="mt-2 p-3 bg-muted rounded-lg border border-border">
+        <p className="text-xs text-muted-foreground">
           {COAGENT_RIGHTS_NOTICE.th} | {COAGENT_RIGHTS_NOTICE.en}
         </p>
       </div>
@@ -781,8 +781,8 @@ function AcademyForm({ form }: { form: ReturnType<typeof useFormState> }) {
         value={form.data.details ?? ""}
         onChange={form.update}
       />
-      <div className="mt-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-        <p className="text-xs text-gray-600">
+      <div className="mt-2 p-3 bg-muted rounded-lg border border-border">
+        <p className="text-xs text-muted-foreground">
           ทีมงานจะติดต่อกลับเพื่อแจ้งรอบเรียนและสถานที่ | Our team will contact you with schedule and location.
         </p>
       </div>
@@ -849,7 +849,7 @@ export default function PropertyForm({ variant, preselect, className }: Property
       >
         <div className="mb-4 text-4xl">🎉</div>
         <h3 className="text-xl font-bold text-primary">ส่งข้อมูลเรียบร้อยแล้ว! | Submitted Successfully!</h3>
-        <p className="mt-2 text-gray-600">
+        <p className="mt-2 text-muted-foreground">
           ทีมงานบ้านไออุ่นจะรีบติดต่อกลับโดยเร็วที่สุดค่ะ | Our team will contact you as soon as possible!
         </p>
         <Button className="mt-6" variant="outline" onClick={form.reset}>

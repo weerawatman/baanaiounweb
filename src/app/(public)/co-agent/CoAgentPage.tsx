@@ -34,7 +34,7 @@ export default function CoAgentPage({
         />
       </div>
 
-      <section className="relative isolate overflow-hidden bg-[#111827] pb-24 pt-20 text-white sm:pb-28 sm:pt-24">
+      <section className="relative isolate overflow-hidden bg-[#1a3816] pb-24 pt-20 text-white sm:pb-28 sm:pt-24">
         {heroImage && (
           <Image
             src={heroImage}
@@ -46,7 +46,7 @@ export default function CoAgentPage({
             className="-z-20 object-cover"
           />
         )}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#111827]/60 to-primary/85" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1a3816]/60 to-primary/85" />
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h1 className="text-pretty text-3xl font-bold leading-snug drop-shadow sm:text-4xl lg:text-[2.8rem]">
             {hero.titleTh}

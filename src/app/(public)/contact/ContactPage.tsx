@@ -25,7 +25,7 @@ interface FormState {
 }
 
 const inputCls =
-  "w-full rounded-lg border border-input bg-[#fafafa] px-4 py-3 text-[15px] transition-colors focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
+  "w-full rounded-lg border border-input bg-muted px-4 py-3 text-[15px] transition-colors focus:border-primary focus:bg-card focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 
 export default function ContactPage({ profile }: { profile: Profile }) {
   const phone = profile.phone || SITE_CONFIG.phone
@@ -99,7 +99,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
       </div>
 
       {/* Hero — mockup: green banner + optional background image */}
-      <header className="relative mb-12 overflow-hidden border-b-4 border-[#eab308] bg-primary py-16 text-center text-white sm:py-20">
+      <header className="relative mb-12 overflow-hidden border-b-4 border-secondary bg-primary py-16 text-center text-white sm:py-20">
         {profile.heroImageUrl && (
           <Image
             src={profile.heroImageUrl}
@@ -113,7 +113,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
         <div className="absolute inset-0 bg-primary/85" aria-hidden />
         <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6">
           <h1 className="text-3xl font-bold sm:text-4xl">ติดต่อเรา | Contact Us</h1>
-          <p className="mt-4 text-base leading-relaxed text-[#e5e7eb] sm:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-primary-foreground/85 sm:text-lg">
             ส่งข้อความหาพิม หรือแอดไลน์มาได้เลยค่ะ เราตอบทุกข้อความ
             <br />
             Send us a message or add us on LINE — we reply to every message.
@@ -152,7 +152,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
             ) : (
               <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="text-sm font-bold text-[#444]">
+                  <label htmlFor="name" className="text-sm font-bold text-foreground">
                     ชื่อ-นามสกุล | Full Name <span className="text-red-600">*</span>
                   </label>
                   <Input
@@ -169,7 +169,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="phone" className="text-sm font-bold text-[#444]">
+                  <label htmlFor="phone" className="text-sm font-bold text-foreground">
                     เบอร์โทรศัพท์ | Phone <span className="text-red-600">*</span>
                   </label>
                   <Input
@@ -186,7 +186,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="email" className="text-sm font-bold text-[#444]">
+                  <label htmlFor="email" className="text-sm font-bold text-foreground">
                     อีเมล | Email
                   </label>
                   <Input
@@ -202,7 +202,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="subject" className="text-sm font-bold text-[#444]">
+                  <label htmlFor="subject" className="text-sm font-bold text-foreground">
                     หัวข้อ | Subject
                   </label>
                   <select
@@ -223,7 +223,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="message" className="text-sm font-bold text-[#444]">
+                  <label htmlFor="message" className="text-sm font-bold text-foreground">
                     ข้อความ | Message <span className="text-red-600">*</span>
                   </label>
                   <textarea
@@ -250,7 +250,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                   type="submit"
                   size="lg"
                   disabled={submitting}
-                  className="bg-primary hover:bg-[#0f3d20] mt-2 h-auto w-full gap-2 py-4 text-base font-bold text-white disabled:opacity-50"
+                  className="bg-primary hover:bg-primary/90 mt-2 h-auto w-full gap-2 py-4 text-base font-bold text-white disabled:opacity-50"
                 >
                   {submitting ? (
                     <>
@@ -287,7 +287,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
               <h3 className="text-lg font-semibold text-primary">
                 ⚡ ต้องการคำตอบเร็วกว่านี้? | Need a Faster Reply?
               </h3>
-              <p className="mt-2 text-sm text-[#555]">
+              <p className="mt-2 text-sm text-muted-foreground">
                 แอดไลน์หรือ WhatsApp หาพิมได้เลย ตอบไวกว่าค่ะ!
                 <br />
                 Add us on LINE or WhatsApp for the fastest response!
@@ -323,7 +323,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                   📱
                 </div>
                 <div>
-                  <p className="text-xs font-bold tracking-wide text-[#888] uppercase">
+                  <p className="text-xs font-bold tracking-wide text-muted-foreground uppercase">
                     โทรศัพท์ | Phone
                   </p>
                   <p className="mt-1 text-base font-medium text-foreground">{phone}</p>
@@ -338,7 +338,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                   ✉️
                 </div>
                 <div>
-                  <p className="text-xs font-bold tracking-wide text-[#888] uppercase">
+                  <p className="text-xs font-bold tracking-wide text-muted-foreground uppercase">
                     อีเมล | Email
                   </p>
                   <p className="mt-1 truncate text-base font-medium text-foreground">{email}</p>
@@ -350,7 +350,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                   📍
                 </div>
                 <div>
-                  <p className="text-xs font-bold tracking-wide text-[#888] uppercase">
+                  <p className="text-xs font-bold tracking-wide text-muted-foreground uppercase">
                     ที่อยู่สำนักงาน | Address
                   </p>
                   <p className="mt-1 text-base font-medium text-foreground">{address}</p>

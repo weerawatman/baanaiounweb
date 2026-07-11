@@ -140,7 +140,7 @@ export default function ServicesHubPage({
               target="_blank"
               rel="noopener noreferrer"
               data-testid="services-line-cta"
-              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[#22c55e] px-8 py-3 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#16a34a] sm:w-auto"
+              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[#06C755] px-8 py-3 text-base font-bold text-white shadow-sm transition-opacity hover:opacity-90 sm:w-auto"
             >
               <MessageCircle className="size-5" />
               ทักแชทปรึกษาฟรี | Free LINE Chat

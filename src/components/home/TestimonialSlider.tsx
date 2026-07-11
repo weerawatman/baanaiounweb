@@ -43,13 +43,13 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
   )
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-background py-16">
       <div className="container mx-auto max-w-4xl px-4">
         <div className="mb-10 text-center">
-          <h2 className="text-2xl font-bold text-primary md:text-3xl">
+          <h2 className="font-heading text-2xl font-bold text-primary md:text-3xl">
             เสียงจากลูกค้าบ้านไออุ่น
           </h2>
-          <p className="mt-3 text-sm text-gray-600 md:text-base">
+          <p className="mt-3 text-sm text-muted-foreground md:text-base">
             ความไว้วางใจคือรางวัลที่ดีที่สุดของพิม
           </p>
         </div>
@@ -58,16 +58,16 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
           <div className="flex">
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="min-w-0 flex-[0_0_100%] px-4">
-                <div className="flex flex-col items-center gap-5 rounded-2xl bg-[#F5F0E8] p-8 text-center md:p-10">
+                <div className="flex flex-col items-center gap-5 rounded-2xl bg-muted p-8 text-center shadow-[0_10px_30px_rgba(45,90,39,0.04)] md:p-10">
                   {/* Stars */}
                   <div className="flex gap-1">
                     {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <Star key={i} size={18} className="fill-[#D4A843] text-[#D4A843]" />
+                      <Star key={i} size={18} className="fill-secondary text-secondary" />
                     ))}
                   </div>
 
                   {/* Quote */}
-                  <blockquote className="max-w-2xl text-base leading-relaxed text-gray-700 italic md:text-lg">
+                  <blockquote className="max-w-2xl text-base leading-relaxed text-foreground italic md:text-lg">
                     &ldquo;{testimonial.quote}&rdquo;
                   </blockquote>
 
@@ -81,7 +81,7 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
                       <p className="text-sm font-semibold text-primary">
                         {testimonial.clientName}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-muted-foreground">
                         {getPropertyCategoryLabelTh(testimonial.propertyType)}
                       </p>
                     </div>
@@ -100,7 +100,7 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
               onClick={() => scrollTo(index)}
               aria-label={`Go to slide ${index + 1}`}
               className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                index === selectedIndex ? "bg-primary" : "bg-gray-300 hover:bg-gray-400"
+                index === selectedIndex ? "bg-primary" : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
               }`}
             />
           ))}

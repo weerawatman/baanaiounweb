@@ -9,7 +9,7 @@ interface FinancialCalculatorProps {
   property: Property
 }
 
-const CHART_COLORS = ["#14532d", "#D4A843"]
+const CHART_COLORS = ["#2d5a27", "#d4af37"]
 
 function formatThb(value: number): string {
   return new Intl.NumberFormat("th-TH", {

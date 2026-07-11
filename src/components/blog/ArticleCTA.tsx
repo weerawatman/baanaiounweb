@@ -16,14 +16,14 @@ export default function ArticleCTA({ lineUrl }: ArticleCTAProps) {
     >
       <h2 className="text-foreground text-xl font-bold">
         สนใจปรึกษาเรื่องบ้าน?
-        <span className="mt-1 block text-base font-medium text-gray-500">
+        <span className="mt-1 block text-base font-medium text-muted-foreground">
           Need help with your home search or loan?
         </span>
       </h2>
       <p className="text-muted-foreground mx-auto max-w-md text-sm">
         พิมพร้อมให้คำแนะนำทุกขั้นตอน ตั้งแต่เลือกทำเล วางแผนการเงิน จนถึงวันโอน
         ไม่มีค่าใช้จ่ายในการปรึกษา
-        <span className="mt-1 block text-gray-500">
+        <span className="mt-1 block text-muted-foreground">
           Free consultation from location selection to closing day.
         </span>
       </p>

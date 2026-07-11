@@ -19,7 +19,7 @@ export default function ServiceShortcuts() {
             className="flex flex-col rounded-[20px] border border-border bg-card px-6 py-9 text-center shadow-[0_10px_30px_rgba(45,90,39,0.04)] transition-all duration-300 hover:-translate-y-2 hover:border-secondary/60 hover:shadow-[0_20px_40px_rgba(212,175,55,0.12)]"
           >
             <div
-              className="mx-auto mb-5 flex size-16 items-center justify-center rounded-full bg-[#fdf9ee] text-[1.75rem] text-[#b5932b]"
+              className="mx-auto mb-5 flex size-16 items-center justify-center rounded-full bg-secondary/10 text-[1.75rem] text-secondary"
               aria-hidden
             >
               {card.emoji}
@@ -49,7 +49,7 @@ export default function ServiceShortcuts() {
               </Link>
               <Link
                 href={card.secondaryHref}
-                className="flex min-h-[48px] items-center justify-center rounded-[10px] border border-border px-4 py-3 text-sm text-foreground transition-colors hover:border-secondary hover:bg-[#fdf9ee] hover:text-[#b5932b]"
+                className="flex min-h-[48px] items-center justify-center rounded-[10px] border border-border px-4 py-3 text-sm text-foreground transition-colors hover:border-secondary hover:bg-secondary/10 hover:text-secondary"
               >
                 อ่านรายละเอียด | Learn More
               </Link>
