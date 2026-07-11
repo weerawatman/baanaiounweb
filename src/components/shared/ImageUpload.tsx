@@ -192,8 +192,8 @@ export default function ImageUpload({ images, onChange, error, disabled }: Image
             disabled
               ? "cursor-not-allowed border-gray-200 bg-gray-50 text-gray-400"
               : dragActive
-                ? "border-[#1B4D3E] bg-[#1B4D3E]/5 text-[#1B4D3E]"
-                : "border-gray-300 text-gray-500 hover:border-[#1B4D3E]/40 hover:text-gray-700"
+                ? "border-primary bg-primary/5 text-primary"
+                : "border-gray-300 text-gray-500 hover:border-primary/40 hover:text-gray-700"
           }`}
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}

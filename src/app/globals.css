@@ -7,8 +7,9 @@
 :root {
   --background: #f5f0e8;
   --foreground: #1a1a2e;
-  --primary: #1b4d3e;
+  --primary: #14532d;
   --primary-foreground: #ffffff;
+  --primary-subtle: #f0fdf4;
   --secondary: #d4a843;
   --secondary-foreground: #1a1a2e;
   --accent: #2e75b6;
@@ -18,13 +19,13 @@
   --card: #ffffff;
   --card-foreground: #1a1a2e;
   --border: #e5dfd5;
-  --ring: #1b4d3e;
+  --ring: #14532d;
   --radius: 0.5rem;
   --input: #e5dfd5;
   --popover: #ffffff;
   --popover-foreground: #1a1a2e;
   --destructive: #ef4444;
-  --chart-1: #1b4d3e;
+  --chart-1: #14532d;
   --chart-2: #d4a843;
   --chart-3: #2e75b6;
   --chart-4: #22c55e;
@@ -36,6 +37,7 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-subtle: var(--primary-subtle);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-accent: var(--accent);

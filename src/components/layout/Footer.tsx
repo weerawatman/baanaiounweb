@@ -59,7 +59,7 @@ export default function Footer({ profile }: { profile: Profile }) {
   const linePersonalId = SITE_CONFIG.linePersonalId
 
   return (
-    <footer className="bg-primary text-white">
+    <footer className="border-t-4 border-secondary bg-primary text-white">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {/* บริษัท */}

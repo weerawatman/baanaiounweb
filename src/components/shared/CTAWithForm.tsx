@@ -41,7 +41,7 @@ export default function CTAWithForm({
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-bold text-[#1B4D3E] sm:text-3xl">
+            <h2 className="text-2xl font-bold text-primary sm:text-3xl">
               พร้อมเริ่มต้นหรือยัง?
               <span className="mt-1 block text-base font-medium text-[#D4A843]">
                 Ready to Get Started?
@@ -56,7 +56,7 @@ export default function CTAWithForm({
             <div className="flex flex-wrap items-center justify-center gap-4">
               {primary.action === "form" ? (
                 <Button
-                  className="gap-2 bg-[#1B4D3E] px-8 py-2.5 text-white hover:bg-[#2A6B56]"
+                  className="gap-2 bg-primary px-8 py-2.5 text-white hover:bg-primary/90"
                   size="lg"
                   onClick={() => setShowForm(true)}
                 >
@@ -66,7 +66,7 @@ export default function CTAWithForm({
               ) : (
                 <Link href={primary.href ?? "#"}>
                   <Button
-                    className="gap-2 bg-[#1B4D3E] px-8 py-2.5 text-white hover:bg-[#2A6B56]"
+                    className="gap-2 bg-primary px-8 py-2.5 text-white hover:bg-primary/90"
                     size="lg"
                   >
                     {primary.label}

@@ -46,7 +46,7 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
     <section className="bg-white py-16">
       <div className="container mx-auto max-w-4xl px-4">
         <div className="mb-10 text-center">
-          <h2 className="text-2xl font-bold text-[#1B4D3E] md:text-3xl">
+          <h2 className="text-2xl font-bold text-primary md:text-3xl">
             เสียงจากลูกค้าบ้านไออุ่น
           </h2>
           <p className="mt-3 text-sm text-gray-600 md:text-base">
@@ -78,7 +78,7 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
                       <AvatarFallback>{testimonial.clientName.slice(0, 2)}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="text-sm font-semibold text-[#1B4D3E]">
+                      <p className="text-sm font-semibold text-primary">
                         {testimonial.clientName}
                       </p>
                       <p className="text-xs text-gray-500">
@@ -100,7 +100,7 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
               onClick={() => scrollTo(index)}
               aria-label={`Go to slide ${index + 1}`}
               className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                index === selectedIndex ? "bg-[#1B4D3E]" : "bg-gray-300 hover:bg-gray-400"
+                index === selectedIndex ? "bg-primary" : "bg-gray-300 hover:bg-gray-400"
               }`}
             />
           ))}

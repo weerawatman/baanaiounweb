@@ -355,7 +355,7 @@ function OwnerFormThai({
                     form.update("purpose", "")
                   }
                 }}
-                className="h-4 w-4 rounded border-gray-300 text-[#1B4D3E] focus:ring-[#1B4D3E]"
+                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
               />
               <span className="text-sm text-gray-700">{option.label}</span>
             </label>
@@ -442,7 +442,7 @@ function OwnerFormForeign({
                     form.update("purpose", "")
                   }
                 }}
-                className="h-4 w-4 rounded border-gray-300 text-[#1B4D3E] focus:ring-[#1B4D3E]"
+                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
               />
               <span className="text-sm text-gray-700">{option.label}</span>
             </label>
@@ -550,7 +550,7 @@ function BuyerFormThai({
                     form.update("requirement", "")
                   }
                 }}
-                className="h-4 w-4 rounded border-gray-300 text-[#1B4D3E] focus:ring-[#1B4D3E]"
+                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
               />
               <span className="text-sm text-gray-700">{option.label}</span>
             </label>
@@ -645,7 +645,7 @@ function BuyerFormForeign({
                     form.update("requirement", "")
                   }
                 }}
-                className="h-4 w-4 rounded border-gray-300 text-[#1B4D3E] focus:ring-[#1B4D3E]"
+                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
               />
               <span className="text-sm text-gray-700">{option.label}</span>
             </label>
@@ -848,7 +848,7 @@ export default function PropertyForm({ variant, preselect, className }: Property
         transition={{ duration: 0.3 }}
       >
         <div className="mb-4 text-4xl">🎉</div>
-        <h3 className="text-xl font-bold text-[#1B4D3E]">ส่งข้อมูลเรียบร้อยแล้ว! | Submitted Successfully!</h3>
+        <h3 className="text-xl font-bold text-primary">ส่งข้อมูลเรียบร้อยแล้ว! | Submitted Successfully!</h3>
         <p className="mt-2 text-gray-600">
           ทีมงานบ้านไออุ่นจะรีบติดต่อกลับโดยเร็วที่สุดค่ะ | Our team will contact you as soon as possible!
         </p>
@@ -872,7 +872,7 @@ export default function PropertyForm({ variant, preselect, className }: Property
       <Button
         type="submit"
         disabled={form.submitting}
-        className="mt-6 w-full gap-2 bg-[#1B4D3E] py-2.5 text-white hover:bg-[#2A6B56] disabled:opacity-50"
+        className="mt-6 w-full gap-2 bg-primary py-2.5 text-white hover:bg-primary/90 disabled:opacity-50"
         size="lg"
       >
         {form.submitting ? (
@@ -899,7 +899,7 @@ export default function PropertyForm({ variant, preselect, className }: Property
         noValidate
         className={`ring-foreground/5 mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg ring-1 sm:p-8 ${className ?? ""}`}
       >
-        <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">
+        <h3 className="mb-6 text-lg font-bold text-primary">
           สมัครคอร์สพลิกชีวิต | Register for Life-Changing Course
         </h3>
         <AcademyForm form={form} />
@@ -916,7 +916,7 @@ export default function PropertyForm({ variant, preselect, className }: Property
         noValidate
         className={`ring-foreground/5 mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg ring-1 sm:p-8 ${className ?? ""}`}
       >
-        <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">
+        <h3 className="mb-6 text-lg font-bold text-primary">
           ส่งข้อมูลทรัพย์ Co-Agent | Submit Co-Agent Listing
         </h3>
         <CoAgentForm form={form} />
@@ -936,7 +936,7 @@ export default function PropertyForm({ variant, preselect, className }: Property
       noValidate
       className={`ring-foreground/5 mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg ring-1 sm:p-8 ${className ?? ""}`}
     >
-      <h3 className="mb-6 text-lg font-bold text-[#1B4D3E]">{title}</h3>
+      <h3 className="mb-6 text-lg font-bold text-primary">{title}</h3>
 
       <Tabs
         defaultValue="thai"

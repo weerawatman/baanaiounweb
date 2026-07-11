@@ -152,7 +152,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
       </div>
 
       {/* Hero banner (mockup about.html) */}
-      <header className="relative isolate overflow-hidden bg-[#14532d] py-20 text-center text-white sm:py-24">
+      <header className="relative isolate overflow-hidden bg-primary py-20 text-center text-white sm:py-24">
         {heroImage && (
           <>
             <Image
@@ -164,7 +164,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
               sizes="100vw"
               className="-z-20 object-cover brightness-[0.6]"
             />
-            <div className="absolute inset-0 -z-10 bg-[#14532d]/70" />
+            <div className="absolute inset-0 -z-10 bg-primary/70" />
           </>
         )}
         <div className="mx-auto max-w-3xl px-4">
@@ -323,7 +323,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
                   "whitespace-nowrap rounded-full border px-6 py-3 text-sm font-bold transition-colors",
                   area.highlight
                     ? "border-[#eab308] bg-[#eab308] text-[#333]"
-                    : "border-primary bg-[#f0fdf4] text-primary hover:bg-primary hover:text-primary-foreground",
+                    : "border-primary bg-primary-subtle text-primary hover:bg-primary hover:text-primary-foreground",
                 )}
               >
                 {area.label}

@@ -45,7 +45,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
   )
 
   const selectClass =
-    "w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1B4D3E]"
+    "w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -74,7 +74,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
               onClick={() => setPurpose(tab.value)}
               className={`flex-1 min-h-[44px] py-2 text-sm font-semibold transition-colors ${
                 purpose === tab.value
-                  ? "bg-[#1B4D3E] text-white"
+                  ? "bg-primary text-white"
                   : "text-gray-600 hover:bg-gray-50"
               }`}
             >
@@ -155,12 +155,12 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
           </p>
           <p className="mt-2 text-sm text-gray-500">
             ลองเปลี่ยนตัวกรอง หรือ{" "}
-            <a href="/contact" className="text-[#1B4D3E] underline underline-offset-2">
+            <a href="/contact" className="text-primary underline underline-offset-2">
               ติดต่อพิมโดยตรง
             </a>
             <span className="mt-0.5 block">
               Try adjusting the filters or{" "}
-              <a href="/contact" className="text-[#1B4D3E] underline underline-offset-2">
+              <a href="/contact" className="text-primary underline underline-offset-2">
                 contact us directly
               </a>
             </span>

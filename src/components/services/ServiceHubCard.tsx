@@ -34,7 +34,7 @@ export default function ServiceHubCard({
       )}
     >
       <div
-        className="mb-5 flex size-[60px] items-center justify-center rounded-xl bg-[#f0fdf4] text-3xl"
+        className="mb-5 flex size-[60px] items-center justify-center rounded-xl bg-primary-subtle text-3xl"
         aria-hidden
       >
         {emoji}

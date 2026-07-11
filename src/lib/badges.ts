@@ -20,7 +20,7 @@ const INVESTOR: TrustBadge = {
   key: "investor",
   th: "คัดกรองโดยนักลงทุน",
   en: "Investor Curated",
-  className: "bg-[#1B4D3E] text-white",
+  className: "bg-primary text-white",
 }
 
 const RENOVATED: TrustBadge = {

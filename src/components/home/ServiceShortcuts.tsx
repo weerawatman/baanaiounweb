@@ -27,7 +27,7 @@ export default function ServiceShortcuts() {
               <span className="mt-1 block text-sm font-medium text-white/75">{card.titleEn}</span>
             </h3>
 
-            <p className="mb-6 flex-1 text-[0.95rem] leading-relaxed text-[#f0fdf4]">
+            <p className="mb-6 flex-1 text-[0.95rem] leading-relaxed text-primary-subtle">
               {card.descTh}
             </p>
             <p className="mb-6 text-xs leading-relaxed text-white/65">{card.descEn}</p>

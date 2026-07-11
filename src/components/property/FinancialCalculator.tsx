@@ -9,7 +9,7 @@ interface FinancialCalculatorProps {
   property: Property
 }
 
-const CHART_COLORS = ["#1B4D3E", "#D4A843"]
+const CHART_COLORS = ["#14532d", "#D4A843"]
 
 function formatThb(value: number): string {
   return new Intl.NumberFormat("th-TH", {
@@ -102,9 +102,9 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
       </div>
 
       {/* Result */}
-      <div className="rounded-xl border border-green-200 bg-green-50 p-5 text-center">
-        <p className="text-sm font-medium text-green-700">ผ่อนชำระต่อเดือน (โดยประมาณ)</p>
-        <p className="mt-1 text-3xl font-bold text-green-800">
+      <div className="rounded-xl border border-primary/20 bg-green-50 p-5 text-center">
+        <p className="text-sm font-medium text-primary">ผ่อนชำระต่อเดือน (โดยประมาณ)</p>
+        <p className="mt-1 text-3xl font-bold text-primary">
           {formatThb(result.monthly)} <span className="text-base font-normal">บาท/เดือน</span>
         </p>
         <div className="text-muted-foreground mt-3 flex justify-center gap-6 text-xs">

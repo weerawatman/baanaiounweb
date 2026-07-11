@@ -66,7 +66,7 @@ export default function CoAgentPage({
               className="flex gap-4 rounded-2xl border border-border bg-card p-6 shadow-md transition-all hover:-translate-y-1 hover:border-primary"
             >
               <div
-                className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#f0fdf4] text-2xl"
+                className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-2xl"
                 aria-hidden
               >
                 {card.icon}

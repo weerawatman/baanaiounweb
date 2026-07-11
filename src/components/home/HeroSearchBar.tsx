@@ -135,7 +135,7 @@ export default function HeroSearchBar({
         </Link>
         <button
           type="submit"
-          className="flex min-h-[50px] flex-1 items-center justify-center gap-2 rounded-lg border border-[#4ade80] bg-[#14532d]/80 px-4 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-primary"
+          className="flex min-h-[50px] flex-1 items-center justify-center gap-2 rounded-lg border border-primary/50 bg-primary/80 px-4 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-primary"
         >
           🔍 {searchLabelTh}
           <span className="text-sm font-medium text-white/90">| {searchLabelEn}</span>

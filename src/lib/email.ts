@@ -106,9 +106,9 @@ function generateEmailHTML(payload: EmailPayload): string {
   <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f5f5f5; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: #1B4D3E; color: white; padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; }
+    .header { background: #14532d; color: white; padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; }
     .content { padding: 25px 20px; background: #ffffff; border-radius: 0 0 8px 8px; }
-    .contact-info { background: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #1B4D3E; }
+    .contact-info { background: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #14532d; }
     .details-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
     .details-table td { vertical-align: top; }
     .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; margin-top: 20px; }
@@ -125,13 +125,13 @@ function generateEmailHTML(payload: EmailPayload): string {
     </div>
 
     <div class="content">
-      <h3 style="margin-top: 0; color: #1B4D3E;">ข้อมูลผู้ติดต่อ | Contact Information</h3>
+      <h3 style="margin-top: 0; color: #14532d;">ข้อมูลผู้ติดต่อ | Contact Information</h3>
       <div class="contact-info">
         <p style="margin: 5px 0;"><strong>ชื่อ | Name:</strong> ${payload.name}</p>
         <p style="margin: 5px 0;"><strong>ติดต่อ | Contact:</strong> ${payload.contact}</p>
       </div>
 
-      <h3 style="color: #1B4D3E;">รายละเอียดเพิ่มเติม | Additional Details</h3>
+      <h3 style="color: #14532d;">รายละเอียดเพิ่มเติม | Additional Details</h3>
       <table class="details-table">
         ${detailsRows}
       </table>

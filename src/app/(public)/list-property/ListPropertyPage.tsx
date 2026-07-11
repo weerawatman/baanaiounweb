@@ -92,7 +92,7 @@ export default function ListPropertyPage({
                   className="flex items-start gap-3 rounded-xl border border-border bg-card p-5 shadow-sm"
                 >
                   <span
-                    className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#f0fdf4] text-xl"
+                    className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-xl"
                     aria-hidden
                   >
                     {item.icon}
@@ -107,7 +107,7 @@ export default function ListPropertyPage({
               ))}
             </div>
 
-            <div className="mt-8 rounded-2xl border border-primary/20 bg-[#f0fdf4]/50 p-6">
+            <div className="mt-8 rounded-2xl border border-primary/20 bg-primary-subtle/50 p-6">
               <h3 className="text-lg font-bold text-primary">{split.whyUs.titleTh}</h3>
               <p className="text-sm font-medium text-muted-foreground">{split.whyUs.titleEn}</p>
               <ul className="mt-4 space-y-4">

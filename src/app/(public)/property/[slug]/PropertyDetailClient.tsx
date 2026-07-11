@@ -35,7 +35,7 @@ const typeBreadcrumb: Record<Property["type"], { label: string; href: string }> 
 }
 
 const typeBadgeClass: Record<Property["type"], string> = {
-  SALE: "bg-green-600 text-white",
+  SALE: "bg-primary text-white",
   RENT: "bg-blue-600 text-white",
   LAND: "bg-amber-500 text-white",
 }
@@ -65,7 +65,7 @@ export default function PropertyDetailClient({
         </p>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 rounded-full bg-green-700 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-800"
+          className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
         >
           กลับหน้าแรก
         </Link>
@@ -137,11 +137,11 @@ export default function PropertyDetailClient({
             </h1>
 
             {/* Price */}
-            <p className="text-2xl font-bold text-green-700">{formatPrice(property)}</p>
+            <p className="text-2xl font-bold text-primary">{formatPrice(property)}</p>
 
             {/* Location line */}
             <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-              <MapPin className="h-4 w-4 shrink-0 text-green-700" />
+              <MapPin className="h-4 w-4 shrink-0 text-primary" />
               <span>
                 {property.location.subdistrict}, {property.location.district}
               </span>
@@ -212,10 +212,10 @@ export default function PropertyDetailClient({
             animate="visible"
             variants={sectionVariants}
             transition={{ ...sectionTransition, delay: 0.4 }}
-            className="rounded-2xl bg-gradient-to-br from-green-700 to-emerald-800 p-8 text-center text-white"
+            className="rounded-2xl bg-gradient-to-br from-primary to-primary/80 p-8 text-center text-white"
           >
             <h2 className="mb-2 text-xl font-bold">สนใจหลังนี้? ปรึกษาพิมเลย</h2>
-            <p className="mb-6 text-sm leading-relaxed text-green-100">
+            <p className="mb-6 text-sm leading-relaxed text-primary-foreground/80">
               พิมพร้อมตอบทุกคำถาม นัดดูบ้านได้ทุกวัน ไม่มีค่าใช้จ่ายในการปรึกษาค่ะ
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -223,7 +223,7 @@ export default function PropertyDetailClient({
                 href={lineHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-green-800 transition-colors hover:bg-green-50"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
               >
                 <MessageCircle className="h-4 w-4" />
                 ทักหาพิมทาง LINE

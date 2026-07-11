@@ -89,7 +89,7 @@ export default function FindPropertyPage({
                   className="flex items-start gap-4 rounded-xl border border-border bg-card p-5 shadow-sm"
                 >
                   <span
-                    className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#f0fdf4] text-xl"
+                    className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-xl"
                     aria-hidden
                   >
                     {item.icon}

@@ -11,13 +11,13 @@ interface PropertyCardProps {
 }
 
 const statusConfig: Record<Property["status"], { label: string; className: string }> = {
-  ACTIVE: { label: "พร้อมขาย/เช่า", className: "bg-green-100 text-green-800 border-green-200" },
+  ACTIVE: { label: "พร้อมขาย/เช่า", className: "bg-primary-subtle text-primary border-primary/20" },
   SOLD: { label: "ขายแล้ว", className: "bg-red-100 text-red-800 border-red-200" },
   RENTED: { label: "ปล่อยเช่าแล้ว", className: "bg-blue-100 text-blue-800 border-blue-200" },
 }
 
 const typeConfig: Record<Property["type"], { label: string; className: string }> = {
-  SALE: { label: "ขาย", className: "bg-green-600 text-white" },
+  SALE: { label: "ขาย", className: "bg-primary text-white" },
   RENT: { label: "เช่า", className: "bg-blue-600 text-white" },
   LAND: { label: "ที่ดิน", className: "bg-amber-500 text-white" },
 }

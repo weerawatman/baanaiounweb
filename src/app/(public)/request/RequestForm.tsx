@@ -161,7 +161,7 @@ function PropertyTypeCards({
               className={cn(
                 "flex flex-col items-center gap-1.5 rounded-lg border px-3 py-3.5 text-center transition-colors",
                 value === opt.value
-                  ? "border-primary bg-[#f0fdf4] text-primary shadow-sm"
+                  ? "border-primary bg-primary-subtle text-primary shadow-sm"
                   : "border-input bg-[#fafafa] text-gray-600 hover:border-primary/40",
               )}
             >
@@ -211,7 +211,7 @@ function ListingPurposeCards({
               className={cn(
                 "flex flex-col items-center gap-1.5 rounded-lg border px-3 py-3.5 text-center transition-colors",
                 value === opt.value
-                  ? "border-primary bg-[#f0fdf4] text-primary shadow-sm"
+                  ? "border-primary bg-primary-subtle text-primary shadow-sm"
                   : "border-input bg-[#fafafa] text-gray-600 hover:border-primary/40",
               )}
             >
@@ -347,7 +347,7 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
     return (
       <div className="py-10 text-center">
         <p className="text-5xl">🎉</p>
-        <h3 className="mt-4 text-lg font-bold text-[#1B4D3E]">
+        <h3 className="mt-4 text-lg font-bold text-primary">
           ส่งคำขอเรียบร้อยแล้ว ขอบคุณค่ะ
           <span className="mt-1 block text-sm font-medium text-gray-400">
             Your request has been sent — thank you!
@@ -367,7 +367,7 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
             setSubmitted(false)
             setError(null)
           }}
-          className="mt-6 rounded-lg border border-[#1B4D3E] px-6 py-2 text-sm font-semibold text-[#1B4D3E] transition-colors hover:bg-[#1B4D3E]/5"
+          className="mt-6 rounded-lg border border-primary px-6 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
         >
           ส่งคำขอใหม่ | Submit Another Request
         </button>
@@ -546,7 +546,7 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
       <button
         type="submit"
         disabled={submitting}
-        className="inline-flex min-h-[54px] items-center justify-center gap-2 rounded-lg bg-[#1B4D3E] px-6 py-3 text-base font-bold text-white transition-colors hover:bg-[#163f33] disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex min-h-[54px] items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {submitting ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
         {submitting

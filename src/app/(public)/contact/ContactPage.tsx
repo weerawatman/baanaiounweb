@@ -282,7 +282,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
             </div>
 
             {/* Fast Reply */}
-            <div className="rounded-2xl border border-[#bbf7d0] bg-[#f0fdf4] p-8 text-center">
+            <div className="rounded-2xl border border-primary/20 bg-primary-subtle p-8 text-center">
               <h3 className="text-lg font-semibold text-primary">
                 ⚡ ต้องการคำตอบเร็วกว่านี้? | Need a Faster Reply?
               </h3>
@@ -318,7 +318,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 href={`tel:${phone.replace(/-/g, "")}`}
                 className="flex flex-col gap-2.5 rounded-xl border border-border bg-card p-5 shadow-[0_4px_6px_rgba(0,0,0,0.02)] transition-shadow hover:shadow-md"
               >
-                <div className="flex size-10 items-center justify-center rounded-full bg-[#f0fdf4] text-lg text-primary">
+                <div className="flex size-10 items-center justify-center rounded-full bg-primary-subtle text-lg text-primary">
                   📱
                 </div>
                 <div>
@@ -333,7 +333,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 href={`mailto:${email}`}
                 className="flex flex-col gap-2.5 rounded-xl border border-border bg-card p-5 shadow-[0_4px_6px_rgba(0,0,0,0.02)] transition-shadow hover:shadow-md"
               >
-                <div className="flex size-10 items-center justify-center rounded-full bg-[#f0fdf4] text-lg text-primary">
+                <div className="flex size-10 items-center justify-center rounded-full bg-primary-subtle text-lg text-primary">
                   ✉️
                 </div>
                 <div>
@@ -345,7 +345,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
               </a>
 
               <div className="col-span-full flex flex-col gap-2.5 rounded-xl border border-border bg-card p-5 shadow-[0_4px_6px_rgba(0,0,0,0.02)]">
-                <div className="flex size-10 items-center justify-center rounded-full bg-[#f0fdf4] text-lg text-primary">
+                <div className="flex size-10 items-center justify-center rounded-full bg-primary-subtle text-lg text-primary">
                   📍
                 </div>
                 <div>

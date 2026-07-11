@@ -63,7 +63,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
               onClick={() => setSelectedIndex(idx)}
               className={`focus-visible:ring-ring shrink-0 overflow-hidden rounded-lg border-2 transition-all focus-visible:ring-2 focus-visible:outline-none ${
                 idx === selectedIndex
-                  ? "border-green-600 ring-1 ring-green-600"
+                  ? "border-primary ring-1 ring-primary"
                   : "hover:border-muted-foreground/40 border-transparent"
               }`}
               aria-label={`ดูภาพที่ ${idx + 1}`}

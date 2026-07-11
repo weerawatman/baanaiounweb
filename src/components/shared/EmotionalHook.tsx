@@ -23,7 +23,7 @@ export default function EmotionalHook({
           style={{ animation: "fade-up 0.6s ease both" }}
         >
           <Heart className="size-8 text-[#D4A843]" />
-          <blockquote className="text-xl font-bold leading-relaxed text-[#1B4D3E] sm:text-2xl">
+          <blockquote className="text-xl font-bold leading-relaxed text-primary sm:text-2xl">
             &ldquo;{quote}&rdquo;
           </blockquote>
           {quoteEn && (

@@ -13,7 +13,7 @@ const statusLabel: Record<Property["status"], string> = {
 }
 
 const statusClass: Record<Property["status"], string> = {
-  ACTIVE: "text-green-700",
+  ACTIVE: "text-primary",
   SOLD: "text-red-600",
   RENTED: "text-blue-600",
 }
@@ -28,7 +28,7 @@ interface FactItemProps {
 function FactItem({ icon, label, value, valueClassName }: FactItemProps) {
   return (
     <div className="border-border bg-muted/40 flex flex-col items-center gap-1.5 rounded-xl border p-4 text-center">
-      <div className="text-green-700">{icon}</div>
+      <div className="text-primary">{icon}</div>
       <p className="text-muted-foreground text-xs">{label}</p>
       <p className={`text-sm font-semibold ${valueClassName ?? "text-foreground"}`}>{value}</p>
     </div>

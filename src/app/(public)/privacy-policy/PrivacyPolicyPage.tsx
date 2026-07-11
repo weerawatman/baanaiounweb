@@ -31,7 +31,7 @@ function Block({ block }: { block: PolicyBlock }) {
       <ul className="mt-4 flex flex-col gap-4">
         {block.items.map((item, i) => (
           <li key={i} className="flex gap-2.5">
-            <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#1B4D3E]/40" />
+            <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary/40" />
             <div>
               <p className="text-gray-700 leading-relaxed">{withBold(item.th)}</p>
               <p className="mt-1 text-sm leading-relaxed text-gray-500">{withBold(item.en)}</p>
@@ -59,7 +59,7 @@ export default function PrivacyPolicyPage() {
       />
 
       <div className="mt-6">
-        <h1 className="text-2xl font-bold text-[#1B4D3E] sm:text-3xl">
+        <h1 className="text-2xl font-bold text-primary sm:text-3xl">
           นโยบายความเป็นส่วนตัว
           <span className="mt-1 block text-lg font-medium text-gray-400">Privacy Policy</span>
         </h1>
@@ -78,7 +78,7 @@ export default function PrivacyPolicyPage() {
       <div className="mt-10 flex flex-col divide-y divide-gray-100">
         {PRIVACY_POLICY_SECTIONS.map((section) => (
           <section key={section.number} className="py-8 first:pt-0">
-            <h2 className="text-lg font-bold text-[#1B4D3E] sm:text-xl">
+            <h2 className="text-lg font-bold text-primary sm:text-xl">
               {section.number}. {section.titleTh}
               <span className="mt-0.5 block text-sm font-medium text-gray-400">
                 {section.titleEn}

@@ -54,7 +54,7 @@ export default function RequestPage({ initialTab }: { initialTab: RequestTab }) 
 
         {/* Heading */}
         <div className="mt-6 text-center">
-          <h1 className="text-2xl font-bold text-[#1B4D3E] sm:text-3xl">
+          <h1 className="text-2xl font-bold text-primary sm:text-3xl">
             ส่งคำขอบริการ
             <span className="mt-1 block text-lg font-medium text-gray-400">Service Request</span>
           </h1>
@@ -81,11 +81,11 @@ export default function RequestPage({ initialTab }: { initialTab: RequestTab }) 
                 onClick={() => selectTab(key)}
                 className={`flex flex-col items-center gap-1.5 rounded-2xl border-2 px-4 py-4 text-center transition-all ${
                   active
-                    ? "border-[#1B4D3E] bg-[#1B4D3E] text-white shadow-lg"
-                    : "border-transparent bg-white text-gray-600 shadow-sm hover:border-[#1B4D3E]/30 hover:shadow-md"
+                    ? "border-primary bg-primary text-white shadow-lg"
+                    : "border-transparent bg-white text-gray-600 shadow-sm hover:border-primary/30 hover:shadow-md"
                 }`}
               >
-                <Icon className={`size-6 ${active ? "text-[#D4A843]" : "text-[#1B4D3E]"}`} />
+                <Icon className={`size-6 ${active ? "text-[#D4A843]" : "text-primary"}`} />
                 <span className="text-sm leading-snug font-semibold">{m.th}</span>
                 <span
                   className={`text-xs leading-snug ${active ? "text-white/75" : "text-gray-400"}`}
@@ -106,7 +106,7 @@ export default function RequestPage({ initialTab }: { initialTab: RequestTab }) 
           className="mt-6 rounded-2xl bg-white p-6 shadow-md ring-1 ring-black/5 sm:p-8"
         >
           <div className="mb-6 text-center">
-            <h2 className="text-lg font-bold text-[#1B4D3E]">
+            <h2 className="text-lg font-bold text-primary">
               {meta.th} <span className="font-medium text-gray-400">| {meta.en}</span>
             </h2>
             <p className="mt-1 text-sm text-gray-600">{meta.taglineTh}</p>

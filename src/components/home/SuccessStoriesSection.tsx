@@ -41,7 +41,7 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
     <section className="bg-[#F5F0E8] py-16" data-testid="success-stories-section">
       <div className="container mx-auto max-w-5xl px-4">
         <div className="mb-10 text-center">
-          <h2 className="text-2xl font-bold text-[#1B4D3E] md:text-3xl">
+          <h2 className="text-2xl font-bold text-primary md:text-3xl">
             ผลงานจริง ก่อน-หลังรีโนเวท
           </h2>
           <p className="mt-2 text-sm text-gray-600 md:text-base">
@@ -61,7 +61,7 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
                     afterAlt={`After renovation ${story.location}`}
                   />
                   <div className="text-center md:text-left">
-                    <h3 className="text-lg font-bold text-[#1B4D3E]">{story.title}</h3>
+                    <h3 className="text-lg font-bold text-primary">{story.title}</h3>
                     {story.titleEn && (
                       <p className="text-sm text-gray-500">{story.titleEn}</p>
                     )}
@@ -91,7 +91,7 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
                 onClick={() => scrollTo(index)}
                 aria-label={`Go to story ${index + 1}`}
                 className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                  index === selectedIndex ? "bg-[#1B4D3E]" : "bg-gray-300 hover:bg-gray-400"
+                  index === selectedIndex ? "bg-primary" : "bg-gray-300 hover:bg-gray-400"
                 }`}
               />
             ))}

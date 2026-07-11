@@ -14,7 +14,7 @@ interface DistanceCardProps {
 function DistanceCard({ icon, label, value }: DistanceCardProps) {
   return (
     <div className="border-border bg-muted/40 flex items-start gap-3 rounded-xl border p-4">
-      <div className="mt-0.5 shrink-0 text-green-700">{icon}</div>
+      <div className="mt-0.5 shrink-0 text-primary">{icon}</div>
       <div>
         <p className="text-muted-foreground text-xs">{label}</p>
         <p className="text-foreground text-sm font-semibold">{value}</p>
@@ -57,7 +57,7 @@ export default function LocationIntelligence({ property }: LocationIntelligenceP
 
       {/* Location label */}
       <div className="text-muted-foreground flex items-center gap-2 text-sm">
-        <MapPin className="h-4 w-4 shrink-0 text-green-700" />
+        <MapPin className="h-4 w-4 shrink-0 text-primary" />
         <span>
           {location.subdistrict}
           {location.subdistrict && location.district ? ", " : ""}
