@@ -25,8 +25,13 @@ export default async function ListPropertyRoute() {
     profile.servicesHeroImage,
     profile.heroImageUrl,
   )
+  const quoteImage = pickHeroImage(
+    profile.listPropertyHeroImage,
+    profile.servicesHeroImage,
+    profile.heroImageUrl,
+  )
 
   return (
-    <ListPropertyPage heroImage={heroImage} bentoItems={bentoItems} faqs={faqs} />
+    <ListPropertyPage heroImage={heroImage} quoteImage={quoteImage} bentoItems={bentoItems} faqs={faqs} />
   )
 }

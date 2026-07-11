@@ -107,7 +107,10 @@ const SCHEMAS: Record<string, ValidationSchema> = {
     name: { required: true, minLength: 2 },
   },
   // /request page — 3 tabs, same structure
-  "request-list-property": SERVICE_REQUEST_SCHEMA,
+  "request-list-property": {
+    ...SERVICE_REQUEST_SCHEMA,
+    listingPurpose: { required: true },
+  },
   "request-matchmaking": SERVICE_REQUEST_SCHEMA,
   "request-co-agent": SERVICE_REQUEST_SCHEMA,
 }
@@ -124,6 +127,7 @@ const FIELD_LABELS: Record<string, { th: string; en: string }> = {
   purpose: { th: "จุดประสงค์", en: "Purpose" },
   lineId: { th: "LINE ID", en: "LINE ID" },
   location: { th: "ทำเลที่ตั้ง", en: "Location" },
+  listingPurpose: { th: "ความต้องการ", en: "Listing Type" },
   price: { th: "ราคา", en: "Price" },
   budget: { th: "งบประมาณ", en: "Budget" },
   occupation: { th: "อาชีพปัจจุบัน", en: "Current Occupation" },

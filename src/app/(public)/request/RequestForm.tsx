@@ -26,9 +26,9 @@ const FIELD_LABELS: Record<
   }
 > = {
   "list-property": {
-    location: { th: "ทำเลที่ตั้งทรัพย์ / แลนด์มาร์คใกล้เคียง", en: "Property Location / Nearby Landmarks" },
-    budget: { th: "ราคาที่ต้องการขาย/ปล่อยเช่า", en: "Asking Price" },
-    images: { th: "แนบรูปทรัพย์เพื่อให้ทีมงานประเมินเบื้องต้น", en: "Upload property photos for a quick assessment" },
+    location: { th: "ทำเลที่ตั้ง / แลนด์มาร์คใกล้เคียง", en: "Property Location / Nearby Landmarks" },
+    budget: { th: "ราคาที่ต้องการขาย/ปล่อยเช่า", en: "Asking Price / Rent" },
+    images: { th: "แนบรูปถ่ายทรัพย์ (เพื่อทีมงานประเมินเบื้องต้น)", en: "Upload property photos for assessment" },
   },
   matchmaking: {
     location: { th: "ทำเล / พื้นที่ / แลนด์มาร์คที่ต้องการ", en: "Preferred Location / Landmarks" },
@@ -42,9 +42,20 @@ const FIELD_LABELS: Record<
   },
 }
 
+const LISTING_PURPOSE_OPTIONS = [
+  { value: "sell", icon: "💰", labelTh: "ฝากขาย", labelEn: "For Sale" },
+  { value: "rent", icon: "🔑", labelTh: "ปล่อยเช่า", labelEn: "For Rent" },
+] as const
+
 const PLACEHOLDERS: Partial<
   Record<RequestTab, Partial<Record<"location" | "budget" | "name" | "phone", string>>>
 > = {
+  "list-property": {
+    location: "เช่น ซอยมหาชัย บางพลีใหญ่... | e.g. Soi Mahachai, Bang Phli Yai...",
+    budget: "เช่น 2,500,000 บาท หรือ 15,000/เดือน | e.g. 2,500,000 THB or 15,000/mo",
+    name: "คุณชื่ออะไรคะ? | Your full name",
+    phone: "08x-xxx-xxxx | Phone or LINE ID",
+  },
   matchmaking: {
     location: "เช่น อ่อนนุช, สุขุมวิท 77, บ้านบึง, โซน EEC... | e.g. On Nut, Sukhumvit 77, Ban Bueng, EEC...",
     budget: "เช่น ซื้อ 2.5 ล้าน หรือ เช่า 15,000/เดือน | e.g. Buy 2.5M or Rent 15,000/mo",
@@ -173,6 +184,56 @@ function PropertyTypeCards({
   )
 }
 
+function ListingPurposeCards({
+  value,
+  onChange,
+  error,
+}: {
+  value: string
+  onChange: (value: string) => void
+  error?: string
+}) {
+  return (
+    <div>
+      <div className="grid grid-cols-2 gap-2.5">
+        {LISTING_PURPOSE_OPTIONS.map((opt) => (
+          <label key={opt.value} className="cursor-pointer">
+            <input
+              type="radio"
+              name="listingPurpose"
+              value={opt.value}
+              checked={value === opt.value}
+              onChange={() => onChange(opt.value)}
+              className="sr-only"
+              aria-invalid={error ? true : undefined}
+            />
+            <div
+              className={cn(
+                "flex flex-col items-center gap-1.5 rounded-lg border px-3 py-3.5 text-center transition-colors",
+                value === opt.value
+                  ? "border-primary bg-[#f0fdf4] text-primary shadow-sm"
+                  : "border-input bg-[#fafafa] text-gray-600 hover:border-primary/40",
+              )}
+            >
+              <span className="text-2xl" aria-hidden>
+                {opt.icon}
+              </span>
+              <span className="text-xs font-bold">{opt.labelTh}</span>
+              <span className="text-[0.65rem] font-medium text-muted-foreground">{opt.labelEn}</span>
+            </div>
+          </label>
+        ))}
+      </div>
+      {error && (
+        <p className="mt-1.5 flex items-center gap-1 text-xs text-red-500">
+          <AlertTriangle className="size-3 shrink-0" />
+          {error}
+        </p>
+      )}
+    </div>
+  )
+}
+
 function MatchmakingTrustBadge() {
   return (
     <div className="flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
@@ -195,6 +256,8 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
   const labels = FIELD_LABELS[requestType]
   const placeholders = PLACEHOLDERS[requestType] ?? {}
   const isMatchmaking = requestType === "matchmaking"
+  const isListProperty = requestType === "list-property"
+  const usesCardForm = isMatchmaking || isListProperty
   const formRef = useRef<HTMLFormElement>(null)
 
   const [data, setData] = useState<Record<string, string>>({})
@@ -246,14 +309,19 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
         imageUrls = await uploadImages(images, setImages)
       }
 
+      const payload: Record<string, unknown> = {
+        requestType,
+        ...data,
+        ...(imageUrls.length > 0 ? { imageUrls } : {}),
+      }
+      if (isListProperty && data.listingPurpose) {
+        payload.listingPurpose = data.listingPurpose
+      }
+
       const res = await fetch("/api/service-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          requestType,
-          ...data,
-          ...(imageUrls.length > 0 ? { imageUrls } : {}),
-        }),
+        body: JSON.stringify(payload),
       })
 
       const body = await res.json()
@@ -307,13 +375,23 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
     )
   }
 
-  const propertyTypeField = isMatchmaking ? (
-    <Field
-      labelTh="ประเภททรัพย์ที่สนใจ"
-      labelEn="Property Type"
-      required
-      error={fieldErrors.propertyType}
-    >
+  const listingPurposeField = (
+    <Field labelTh="ความต้องการ" labelEn="Listing Type" required error={fieldErrors.listingPurpose}>
+      <ListingPurposeCards
+        value={data.listingPurpose ?? ""}
+        onChange={(v) => update("listingPurpose", v)}
+        error={fieldErrors.listingPurpose}
+      />
+    </Field>
+  )
+
+  const propertyTypeField = usesCardForm ? (
+      <Field
+        labelTh={isListProperty ? "ประเภททรัพย์" : "ประเภททรัพย์ที่สนใจ"}
+        labelEn="Property Type"
+        required
+        error={fieldErrors.propertyType}
+      >
       <PropertyTypeCards
         value={data.propertyType ?? ""}
         onChange={(v) => update("propertyType", v)}
@@ -399,8 +477,8 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
       </Field>
 
       <Field
-        labelTh={isMatchmaking ? "เบอร์โทร / LINE ID" : "เบอร์โทร / WhatsApp / LINE"}
-        labelEn={isMatchmaking ? "Phone / LINE ID" : "Phone / WhatsApp / LINE"}
+        labelTh={isMatchmaking || isListProperty ? "เบอร์โทร / LINE ID" : "เบอร์โทร / WhatsApp / LINE"}
+        labelEn={isMatchmaking || isListProperty ? "Phone / LINE ID" : "Phone / WhatsApp / LINE"}
         required
         error={fieldErrors.phone}
       >
@@ -438,6 +516,16 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
           <hr className="border-border" />
           {contactFields}
         </>
+      ) : isListProperty ? (
+        <>
+          {listingPurposeField}
+          {propertyTypeField}
+          {locationField}
+          {budgetField}
+          {imagesField}
+          <hr className="border-border" />
+          {contactFields}
+        </>
       ) : (
         <>
           {contactFields}
@@ -465,10 +553,12 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
           ? "กำลังส่ง... | Sending..."
           : isMatchmaking
             ? "ส่งโจทย์ให้ทีมงานช่วยหา 🚀"
-            : "ส่งคำขอ | Submit Request"}
+            : isListProperty
+              ? "ส่งคำขอ | Submit Request 🚀"
+              : "ส่งคำขอ | Submit Request"}
       </button>
 
-      {isMatchmaking ? <MatchmakingTrustBadge /> : <PrivacyNotice />}
+      {usesCardForm ? <MatchmakingTrustBadge /> : <PrivacyNotice />}
     </form>
   )
 }

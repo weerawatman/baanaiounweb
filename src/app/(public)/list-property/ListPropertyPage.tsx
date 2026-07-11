@@ -1,3 +1,4 @@
+import Image from "next/image"
 import type { Metadata } from "next"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
@@ -6,7 +7,6 @@ import {
   ServiceLeadTabs,
   PortfolioBento,
   FaqSection,
-  EmotionalHook,
   type FaqItem,
   type BentoItem,
 } from "@/components/shared"
@@ -26,12 +26,14 @@ export function generateMetadata(): Metadata {
 
 interface ListPropertyPageProps {
   heroImage?: string
+  quoteImage?: string
   bentoItems: BentoItem[]
   faqs: FaqItem[]
 }
 
 export default function ListPropertyPage({
   heroImage,
+  quoteImage,
   bentoItems,
   faqs,
 }: ListPropertyPageProps) {
@@ -57,49 +59,61 @@ export default function ListPropertyPage({
         subtitleEn={banner.subtitleEn}
       />
 
-      <PageSection variant="warm" className="pt-8 lg:pt-10">
-        <ServiceLeadTabs active="list-property" />
+      <PageSection variant="warm" className="pt-0">
+        <div className="relative z-10 -mt-8 mb-10">
+          <ServiceLeadTabs active="list-property" />
+        </div>
 
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
           <div>
-            <h2 className="text-2xl font-bold leading-tight text-primary sm:text-3xl">
+            <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
               {split.headline.th}
+              <br />
+              {split.headline.thLine2}
             </h2>
             <p className="mt-2 text-lg font-medium text-secondary">{split.headline.en}</p>
 
-            <p className="mt-4 text-sm font-semibold text-muted-foreground">{split.seo.th}</p>
-            <p className="text-xs text-muted-foreground/80">{split.seo.en}</p>
+            <p className="mt-5 inline-block border-b-2 border-[#eab308] pb-3 text-sm font-bold text-primary">
+              {split.seo.th}
+            </p>
+            <p className="mt-1 text-xs font-medium text-muted-foreground">{split.seo.en}</p>
 
-            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {split.benefits.map((item) => (
                 <div
                   key={item.titleTh}
-                  className="flex items-start gap-3 rounded-xl border border-border bg-card p-4"
+                  className="flex items-start gap-3 rounded-xl border border-border bg-card p-5 shadow-sm"
                 >
-                  <span className="text-2xl" aria-hidden>
+                  <span
+                    className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#f0fdf4] text-xl"
+                    aria-hidden
+                  >
                     {item.icon}
                   </span>
                   <div>
                     <p className="text-sm font-bold text-foreground">{item.titleTh}</p>
                     <p className="text-xs font-medium text-muted-foreground">{item.titleEn}</p>
-                    <p className="mt-1 text-xs text-foreground/80">{item.descTh}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-foreground/80">{item.descTh}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{item.descEn}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-8 rounded-2xl border border-primary/20 bg-primary/5 p-6">
+            <div className="mt-8 rounded-2xl border border-primary/20 bg-[#f0fdf4]/50 p-6">
               <h3 className="text-lg font-bold text-primary">{split.whyUs.titleTh}</h3>
               <p className="text-sm font-medium text-muted-foreground">{split.whyUs.titleEn}</p>
-              <ul className="mt-4 space-y-3">
+              <ul className="mt-4 space-y-4">
                 {split.whyUs.items.map((item) => (
-                  <li key={item.th} className="flex gap-2 text-sm">
+                  <li key={item.th} className="flex gap-3 text-sm">
                     <span className="shrink-0 text-primary" aria-hidden>
                       ✅
                     </span>
                     <div>
-                      <p className="font-medium text-foreground">{item.th}</p>
-                      <p className="text-xs text-muted-foreground">{item.en}</p>
+                      <p className="font-bold text-foreground">{item.th}</p>
+                      <p className="text-xs font-medium text-muted-foreground">{item.en}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-foreground/80">{item.descTh}</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">{item.descEn}</p>
                     </div>
                   </li>
                 ))}
@@ -109,22 +123,62 @@ export default function ListPropertyPage({
             <PortfolioBento items={bentoItems} />
 
             <div className="mt-8">
-              <h3 className="text-lg font-bold text-primary">
-                {steps.headline.split("|")[0].trim()}
+              <h3 className="text-center text-lg font-bold text-primary sm:text-xl">
+                {steps.headlineTh}
               </h3>
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <p className="mt-1 text-center text-sm font-medium text-muted-foreground">
+                {steps.headlineEn}
+              </p>
+              <div className="mt-5 grid gap-4 sm:grid-cols-3">
                 {steps.items.map((step) => (
                   <div
                     key={step.number}
-                    className="rounded-xl border border-border bg-card p-4 text-center"
+                    className="flex h-full min-w-0 flex-col items-center rounded-2xl border border-border bg-card p-5 text-center shadow-sm"
                   >
-                    <div className="mx-auto flex size-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                    <div className="flex size-10 items-center justify-center rounded-full border-[3px] border-[#eab308] bg-primary text-sm font-bold text-primary-foreground">
                       {step.number}
                     </div>
-                    <p className="mt-3 text-sm font-bold text-foreground">{step.title}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{step.description}</p>
+                    <p className="mt-3 text-sm font-bold text-primary">{step.titleTh}</p>
+                    <p className="text-xs font-medium text-muted-foreground">{step.titleEn}</p>
+                    <p className="mt-2 text-xs leading-relaxed text-foreground/80">{step.descriptionTh}</p>
+                    <p className="mt-1 text-[0.65rem] leading-relaxed text-muted-foreground">
+                      {step.descriptionEn}
+                    </p>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            <div className="relative isolate mt-8 overflow-hidden rounded-2xl px-6 py-12 text-center shadow-lg sm:px-10">
+              {quoteImage ? (
+                <>
+                  <Image
+                    src={quoteImage}
+                    alt=""
+                    aria-hidden
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 55vw"
+                    className="-z-20 object-cover grayscale-[50%]"
+                  />
+                  <div className="absolute inset-0 -z-10 bg-primary/90" />
+                </>
+              ) : (
+                <div className="absolute inset-0 -z-10 bg-primary" />
+              )}
+              <div className="relative z-10 text-primary-foreground">
+                <p className="text-3xl" aria-hidden>
+                  💛
+                </p>
+                <blockquote className="mt-2 text-lg font-bold italic text-[#eab308] sm:text-xl">
+                  &ldquo;{hook.quote.th}&rdquo;
+                </blockquote>
+                <p className="mt-2 text-sm italic text-[#eab308]/80">&ldquo;{hook.quote.en}&rdquo;</p>
+                <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
+                  {hook.message.th}
+                </p>
+                <p className="mx-auto mt-2 max-w-xl text-xs leading-relaxed text-white/65">
+                  {hook.message.en}
+                </p>
               </div>
             </div>
           </div>
@@ -134,8 +188,8 @@ export default function ListPropertyPage({
               className="rounded-3xl border border-border bg-card p-6 shadow-lg sm:p-8"
               data-testid="list-property-form"
             >
-              <div className="mb-6 text-center">
-                <h2 className="text-xl font-bold text-foreground sm:text-2xl">
+              <div className="mb-6 border-b border-border pb-5 text-center">
+                <h2 className="text-xl font-bold text-primary sm:text-2xl">
                   {formCard.title.th}
                 </h2>
                 <p className="mt-1 text-sm font-medium text-secondary">{formCard.title.en}</p>
@@ -148,17 +202,12 @@ export default function ListPropertyPage({
         </div>
       </PageSection>
 
-      <EmotionalHook
-        quote={hook.quote.th}
-        quoteEn={hook.quote.en}
-        message={hook.message.th}
-        messageEn={hook.message.en}
-      />
-
       <FaqSection
-        title="คำถามที่พบบ่อย | FAQ"
-        subtitle="สงสัยอะไร ถามพิมได้เลยค่ะ | Have questions? Just ask Pim!"
+        title="คำถามที่พบบ่อยเกี่ยวกับการฝากทรัพย์ (FAQ)"
+        subtitle="เปลี่ยนความกังวลให้เป็นความมั่นใจ ทุกข้อสงสัยเรามีคำตอบให้ค่ะ | Turn worries into confidence — we have clear answers."
         items={faqs}
+        variant="boxed"
+        layout="cards"
       />
     </>
   )

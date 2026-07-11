@@ -62,13 +62,13 @@ export const LIST_PROPERTY_CONTENT = {
   },
   hook: {
     quote: {
-      th: '"คุณไม่ต้องทำเองค่ะ พิมดูแลให้หมด"',
-      en: '"You don\'t have to do it alone, Pim takes care of everything"'
+      th: "คุณไม่ต้องเหนื่อยทำเองค่ะ ทีมงานเราดูแลให้ครบทุกขั้นตอน",
+      en: "You don't have to do it alone, our team handles every step.",
     },
     message: {
-      th: "เจ้าของทรัพย์ท่านหนึ่งแจ้งมาว่า 'ขายมาปีกว่ายังไม่ออก' พิมเลยช่วยประเมินราคาใหม่ ถ่ายรูปมุมสวยๆ โพสต์ขายครบทุกช่องทาง คัดกรองลูกค้าจริง จัดการเอกสารจนถึงวันโอน เจ้าของทรัพย์บอก 'ไม่น่าเชื่อว่าจะปิดดีลได้เร็วขนาดนี้!'",
-      en: "One property owner told us 'Been trying to sell for over a year with no luck.' Pim helped revalue the property, took beautiful photos, posted across all channels, screened real buyers, handled all paperwork until closing day. The owner said 'I can't believe it closed this fast!'"
-    }
+      th: "เจ้าของทรัพย์หลายท่านทึ่งกับความไว... ทีมงานช่วยประเมินราคาใหม่ ถ่ายรูปมุมสวยๆ โพสต์ขายครบทุกช่องทาง คัดกรองลูกค้าจริง จัดการเอกสารจนถึงวันโอน เจ้าของทรัพย์ต่างยืนยันว่า 'ไม่เชื่อว่าจะปิดดีลได้เร็วขนาดนี้!'",
+      en: "Many owners are surprised how fast it goes — revaluation, pro photos, omnichannel marketing, verified buyers, and paperwork through closing day.",
+    },
   },
   cta: {
     primary: {
@@ -81,22 +81,29 @@ export const LIST_PROPERTY_CONTENT = {
     }
   },
   steps: {
-    headline: "ฝากทรัพย์ง่ายๆ ใน 3 ขั้นตอน | 3 Simple Steps to List",
+    headlineTh: "ฝากทรัพย์ง่ายๆ ใน 3 ขั้นตอน",
+    headlineEn: "3 Simple Steps to List",
     items: [
       {
         number: 1,
-        title: "ส่งข้อมูลเบื้องต้น (Submit Your Info)",
-        description: "กรอกฟอร์ม 1 นาที ทีมงานพร้อมรับข้อมูลและติดต่อกลับทันที",
+        titleTh: "ส่งข้อมูลเบื้องต้น",
+        titleEn: "Submit Info",
+        descriptionTh: "กรอกฟอร์มด้านข้าง ทีมงานพร้อมติดต่อกลับทันที",
+        descriptionEn: "Fill in the form — our team will contact you right away.",
       },
       {
         number: 2,
-        title: "ประเมินราคาและถ่ายทำ (Valuation & Media)",
-        description: "ทีมลงพื้นที่ประเมินราคาตลาด + ถ่ายภาพและวิดีโออย่างมืออาชีพ",
+        titleTh: "ประเมินราคาและถ่ายทำ",
+        titleEn: "Valuation & Media",
+        descriptionTh: "ทีมลงพื้นที่ประเมินราคาตลาด พร้อมถ่ายภาพอย่างมืออาชีพ",
+        descriptionEn: "On-site market valuation and professional photography.",
       },
       {
         number: 3,
-        title: "ทำการตลาดและปิดดีล (Market & Close)",
-        description: "หาลูกค้าจริง เจรจา จัดการเอกสารครบวงจรจนถึงวันโอน",
+        titleTh: "ทำการตลาดและปิดดีล",
+        titleEn: "Market & Close",
+        descriptionTh: "หาลูกค้าจริง เจรจาต่อรอง และจัดการเอกสารจนถึงวันโอน",
+        descriptionEn: "Find real buyers, negotiate, and handle paperwork through transfer day.",
       },
     ],
   },
@@ -109,7 +116,8 @@ export const LIST_PROPERTY_CONTENT = {
   },
   split: {
     headline: {
-      th: "หมดทุกความกังวลเรื่องฝากขาย-ปล่อยเช่า เราพร้อมเปลี่ยนให้เป็นเรื่องง่ายและปิดดีลไว",
+      th: "หมดทุกความกังวลเรื่องฝากขาย-ปล่อยเช่า",
+      thLine2: "เราพร้อมเปลี่ยนให้เป็นเรื่องง่ายและปิดดีลไว",
       en: "Turn selling worries into a fast and successful close.",
     },
     seo: {
@@ -126,9 +134,24 @@ export const LIST_PROPERTY_CONTENT = {
       titleTh: "ทำไมเจ้าของทรัพย์ถึงเลือก บ้านไออุ่น?",
       titleEn: "Why Choose Baan Ai Oun?",
       items: [
-        { th: "ประเมินศักยภาพด้วยสายตานักลงทุน — ลงพื้นที่ตรวจเช็กและแนะนำการปรับปรุงทรัพย์เพื่ออัปราคาขาย", en: "Investor's valuation with on-site inspection and upgrade advice." },
-        { th: "ทำการตลาดเชิงรุก ครบทุกช่องทาง (Omnichannel Marketing)", en: "Proactive omnichannel marketing across all channels." },
-        { th: "คัดกรองผู้ซื้อและผู้เช่าตัวจริง (Verified Clients Only)", en: "Verified buyers and renters only — save your time." },
+        {
+          th: "ประเมินศักยภาพด้วยสายตานักลงทุน (Investor's Valuation)",
+          en: "Investor's Valuation",
+          descTh: "เราไม่ได้แค่รับฝากโพสต์ แต่ลงพื้นที่ตรวจเช็ก และแนะนำการปรับปรุงทรัพย์เพื่ออัปราคาขายให้คุณก่อนเสมอ",
+          descEn: "On-site inspection and upgrade advice before listing — not just posting your ad.",
+        },
+        {
+          th: "ทำการตลาดเชิงรุก ครบทุกช่องทาง (Omnichannel Marketing)",
+          en: "Omnichannel Marketing",
+          descTh: "ทั้งสื่อออนไลน์ ป้ายหน้าทรัพย์ และเครือข่ายออฟไลน์",
+          descEn: "Online channels, on-site signage, and offline partner network.",
+        },
+        {
+          th: "คัดกรองผู้ซื้อและผู้เช่าตัวจริง (Verified Clients Only)",
+          en: "Verified Clients Only",
+          descTh: "ช่วยประหยัดเวลา ไม่ต้องเหนื่อยเปิดบ้านให้คนที่ยังไม่พร้อม",
+          descEn: "Save your time — no showings for buyers who aren't ready.",
+        },
       ],
     },
   },
@@ -150,10 +173,10 @@ export const LIST_PROPERTY_CONTENT = {
     },
   ],
   formCard: {
-    title: { th: "ส่งข้อมูลฝากทรัพย์", en: "Submit Your Listing" },
+    title: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property" },
     description: {
-      th: "กรอกข้อมูลเบื้องต้น ทีมงานพร้อมติดต่อกลับเพื่อประเมินและเริ่มทำการตลาด",
-      en: "Share the basics and our team will follow up to assess and market your property.",
+      th: "กรอกข้อมูล 1 นาที ทีมงานพร้อมดูแลทันที",
+      en: "Quick 1-minute form, immediate service.",
     },
   },
 }

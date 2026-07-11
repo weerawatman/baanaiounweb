@@ -45,7 +45,15 @@ interface ServiceRequestBody {
   propertyType: string
   location: string
   budget?: string
+  listingPurpose?: string
   imageUrls?: string[]
+}
+
+function formatBudget(listingPurpose?: string, budget?: string): string | undefined {
+  const purposeLabel =
+    listingPurpose === "sell" ? "ฝากขาย" : listingPurpose === "rent" ? "ปล่อยเช่า" : undefined
+  const parts = [purposeLabel, budget?.trim()].filter(Boolean)
+  return parts.length > 0 ? parts.join(" | ") : undefined
 }
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -80,6 +88,15 @@ function validateRequest(
     return { valid: false, error: "location is required" }
   }
 
+  if (d.requestType === "list-property") {
+    if (!d.listingPurpose || typeof d.listingPurpose !== "string") {
+      return { valid: false, error: "listingPurpose is required" }
+    }
+    if (d.listingPurpose !== "sell" && d.listingPurpose !== "rent") {
+      return { valid: false, error: "listingPurpose must be sell or rent" }
+    }
+  }
+
   return {
     valid: true,
     parsed: {
@@ -89,7 +106,12 @@ function validateRequest(
       email: String(d.email).trim(),
       propertyType: String(d.propertyType),
       location: String(d.location).trim(),
-      budget: d.budget ? String(d.budget).trim() : undefined,
+      budget: formatBudget(
+        typeof d.listingPurpose === "string" ? d.listingPurpose : undefined,
+        d.budget ? String(d.budget) : undefined,
+      ),
+      listingPurpose:
+        typeof d.listingPurpose === "string" ? String(d.listingPurpose) : undefined,
       imageUrls: Array.isArray(d.imageUrls)
         ? (d.imageUrls as unknown[]).filter((u): u is string => typeof u === "string")
         : undefined,
@@ -149,6 +171,11 @@ export async function POST(request: NextRequest) {
       location: data.location,
       email: data.email,
       ...(data.budget ? { budget: data.budget } : {}),
+      ...(data.listingPurpose
+        ? {
+            purpose: data.listingPurpose === "sell" ? "ฝากขาย" : "ปล่อยเช่า",
+          }
+        : {}),
     }
 
     const [lineResult, emailResult] = await Promise.allSettled([
