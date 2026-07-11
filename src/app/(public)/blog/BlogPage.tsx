@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import { type BlogPost } from "@/types"
 import { BLOG_CATEGORIES } from "@/data/blog-posts"
 import { BLOG_PAGE_CONTENT } from "@/content/blog"
@@ -11,7 +10,7 @@ import NewsletterBanner from "@/components/blog/NewsletterBanner"
 import BlogCategoryFilter from "@/components/blog/BlogCategoryFilter"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
-import { FaqSection, type FaqItem } from "@/components/shared"
+import { FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { Search } from "lucide-react"
 
 interface BlogPageProps {
@@ -45,52 +44,15 @@ export default function BlogPage({ posts, faqs, blogHeroImage }: BlogPageProps) 
         <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "บทความ | Blog" }]} />
       </div>
 
-      <PageSection variant="default" className="pt-6 pb-10">
-        <header
-          className={
-            blogHeroImage
-              ? "relative isolate mb-10 overflow-hidden rounded-2xl bg-primary py-14 text-center text-primary-foreground sm:py-16"
-              : "mb-10 text-center"
-          }
-        >
-          {blogHeroImage && (
-            <>
-              <Image
-                src={blogHeroImage}
-                alt=""
-                aria-hidden
-                fill
-                priority
-                sizes="100vw"
-                className="-z-10 object-cover grayscale-[50%] brightness-[0.8]"
-              />
-              <div className="absolute inset-0 -z-10 bg-primary/85" />
-            </>
-          )}
-          <div className={blogHeroImage ? "relative z-10 px-4" : undefined}>
-            <h1
-              className={`text-3xl font-bold sm:text-4xl ${blogHeroImage ? "text-primary-foreground" : "text-primary"}`}
-            >
-              {header.titleTh}
-            </h1>
-            <p
-              className={`mt-1 text-xl font-medium sm:text-2xl ${blogHeroImage ? "text-primary-foreground/95" : "text-muted-foreground"}`}
-            >
-              {header.titleEn}
-            </p>
-            <p
-              className={`mx-auto mt-4 max-w-2xl text-base ${blogHeroImage ? "text-primary-foreground/90" : "text-foreground/90"}`}
-            >
-              {header.subtitleTh}
-            </p>
-            <p
-              className={`mx-auto mt-1 max-w-2xl text-sm ${blogHeroImage ? "text-primary-foreground/80" : "text-muted-foreground"}`}
-            >
-              {header.subtitleEn}
-            </p>
-          </div>
-        </header>
+      <PageHeroBanner
+        image={blogHeroImage}
+        titleTh={header.titleTh}
+        titleEn={header.titleEn}
+        subtitleTh={header.subtitleTh}
+        subtitleEn={header.subtitleEn}
+      />
 
+      <PageSection variant="default" className="pt-8 pb-10">
         <div
           className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between"
           data-testid="blog-filters"

@@ -2,7 +2,7 @@ import Image from "next/image"
 import { ImageIcon } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
-import { CTAWithForm, FaqSection, type FaqItem } from "@/components/shared"
+import { CTAWithForm, FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { COAGENT_CONTENT } from "@/content/co-agent"
 import { SITE_CONFIG } from "@/config/site"
 
@@ -34,32 +34,15 @@ export default function CoAgentPage({
         />
       </div>
 
-      <section className="relative isolate overflow-hidden bg-[#1a3816] pb-24 pt-20 text-white sm:pb-28 sm:pt-24">
-        {heroImage && (
-          <Image
-            src={heroImage}
-            alt=""
-            aria-hidden
-            fill
-            priority
-            sizes="100vw"
-            className="-z-20 object-cover"
-          />
-        )}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1a3816]/60 to-primary/85" />
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <h1 className="text-pretty text-3xl font-bold leading-snug drop-shadow sm:text-4xl lg:text-[2.8rem]">
-            {hero.titleTh}
-            <span className="mt-2 block">{hero.titleThLine2}</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base font-bold text-secondary drop-shadow sm:text-lg">
-            {hero.titleEn}
-          </p>
-        </div>
-      </section>
+      <PageHeroBanner
+        image={heroImage}
+        titleTh={hero.titleTh}
+        titleThLine2={hero.titleThLine2}
+        subtitleTh={hero.titleEn}
+      />
 
       <PageSection variant="default" className="pt-0">
-        <div className="relative z-10 -mt-12 mx-auto grid max-w-4xl grid-cols-1 gap-5 sm:-mt-14 sm:grid-cols-2">
+        <div className="relative z-10 -mt-6 mx-auto grid max-w-4xl grid-cols-1 gap-5 sm:-mt-8 sm:grid-cols-2">
           {valueCards.map((card) => (
             <article
               key={card.titleTh}

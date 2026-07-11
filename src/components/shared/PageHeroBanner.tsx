@@ -1,22 +1,37 @@
 import Image from "next/image"
+import { cn } from "@/lib/utils"
 
 interface PageHeroBannerProps {
   image?: string
   titleTh: string
-  titleEn: string
+  titleThLine2?: string
+  titleEn?: string
   subtitleTh?: string
   subtitleEn?: string
+  children?: React.ReactNode
+  className?: string
+  "data-testid"?: string
 }
 
 export default function PageHeroBanner({
   image,
   titleTh,
+  titleThLine2,
   titleEn,
   subtitleTh,
   subtitleEn,
+  children,
+  className,
+  "data-testid": testId,
 }: PageHeroBannerProps) {
   return (
-    <section className="relative isolate min-h-[240px] overflow-hidden bg-primary sm:min-h-[280px]">
+    <section
+      className={cn(
+        "relative isolate overflow-hidden bg-primary py-10 text-primary-foreground sm:py-12",
+        className,
+      )}
+      data-testid={testId}
+    >
       {image && (
         <Image
           src={image}
@@ -25,19 +40,31 @@ export default function PageHeroBanner({
           fill
           priority
           sizes="100vw"
-          className="-z-20 object-cover"
+          className="-z-10 object-cover grayscale-[50%] brightness-[0.8]"
         />
       )}
-      <div className={`absolute inset-0 -z-10 ${image ? "bg-primary/75" : "bg-primary"}`} />
-      <div className="mx-auto flex max-w-4xl flex-col items-center justify-center px-4 py-16 text-center text-primary-foreground sm:py-20">
-        <h1 className="text-3xl font-bold sm:text-4xl lg:text-[2.75rem]">{titleTh}</h1>
-        <p className="mt-2 text-lg font-medium text-primary-foreground/85 sm:text-xl">{titleEn}</p>
+      <div className="absolute inset-0 -z-10 bg-primary/85" />
+      <div className="mx-auto max-w-4xl px-4 text-center">
+        <h1 className="font-heading text-2xl font-bold drop-shadow sm:text-3xl lg:text-4xl">
+          {titleTh}
+          {titleThLine2 && <span className="mt-1 block">{titleThLine2}</span>}
+        </h1>
+        {titleEn && (
+          <p className="mt-1.5 text-xl font-normal text-primary-foreground/95 drop-shadow sm:text-2xl">
+            {titleEn}
+          </p>
+        )}
         {subtitleTh && (
-          <p className="mt-4 max-w-2xl text-base text-primary-foreground/90">{subtitleTh}</p>
+          <p className="mx-auto mt-3 max-w-3xl text-base font-bold text-secondary sm:text-lg">
+            {subtitleTh}
+          </p>
         )}
         {subtitleEn && (
-          <p className="mt-1 max-w-2xl text-sm text-primary-foreground/70">{subtitleEn}</p>
+          <p className="mx-auto mt-1.5 max-w-3xl text-sm text-primary-foreground/80">
+            {subtitleEn}
+          </p>
         )}
+        {children}
       </div>
     </section>
   )

@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { FileImage } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
-import { FaqSection, type FaqItem } from "@/components/shared"
+import { FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { cn } from "@/lib/utils"
 import type { Profile } from "@/types"
 
@@ -151,37 +151,13 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
         <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "เกี่ยวกับเรา | About Us" }]} />
       </div>
 
-      {/* Hero banner (mockup about.html) */}
-      <header className="relative isolate overflow-hidden bg-primary py-20 text-center text-white sm:py-24">
-        {heroImage && (
-          <>
-            <Image
-              src={heroImage}
-              alt=""
-              aria-hidden
-              fill
-              priority
-              sizes="100vw"
-              className="-z-20 object-cover brightness-[0.6]"
-            />
-            <div className="absolute inset-0 -z-10 bg-primary/70" />
-          </>
-        )}
-        <div className="mx-auto max-w-3xl px-4">
-          <h1 className="font-heading text-3xl font-bold leading-tight [text-shadow:0_2px_4px_rgba(0,0,0,0.5)] sm:text-[2.8rem]">
-            เกี่ยวกับเรา: บ้านไออุ่น พร็อพเพอร์ตี้
-            <span className="mt-1 block text-2xl font-semibold text-white/90 sm:text-3xl">
-              About Baan Ai Oun Property
-            </span>
-          </h1>
-          <p className="mt-5 text-lg font-bold text-secondary [text-shadow:0_1px_3px_rgba(0,0,0,0.5)] sm:text-xl">
-            เชื่อมโยงทุกความต้องการอสังหาฯ ด้วยประสบการณ์นักลงทุนและบริการที่จริงใจ
-          </p>
-          <p className="mt-1 text-base text-primary-foreground/80">
-            Connecting real estate goals through investor-led expertise and heartfelt service.
-          </p>
-        </div>
-      </header>
+      <PageHeroBanner
+        image={heroImage}
+        titleTh="เกี่ยวกับเรา: บ้านไออุ่น พร็อพเพอร์ตี้"
+        titleEn="About Baan Ai Oun Property"
+        subtitleTh="เชื่อมโยงทุกความต้องการอสังหาฯ ด้วยประสบการณ์นักลงทุนและบริการที่จริงใจ"
+        subtitleEn="Connecting real estate goals through investor-led expertise and heartfelt service."
+      />
 
       <main className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
         {/* Our Story */}

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Breadcrumb from "@/components/layout/Breadcrumb"
-import SectionTitle from "@/components/layout/SectionTitle"
+import PageHeroBanner from "@/components/shared/PageHeroBanner"
 import PropertyCard from "@/components/property/PropertyCard"
 import type { Property } from "@/types"
 import {
@@ -16,7 +16,13 @@ import {
 } from "@/lib/search"
 import type { PropertyCategory } from "@/content/form-options"
 
-export default function PropertiesPage({ properties }: { properties: Property[] }) {
+export default function PropertiesPage({
+  properties,
+  heroImage,
+}: {
+  properties: Property[]
+  heroImage?: string
+}) {
   const searchParams = useSearchParams()
   const urlFilters = useMemo(() => parseFilters(searchParams), [searchParams])
 
@@ -48,26 +54,27 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
     "w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <Breadcrumb
-        items={[
-          { label: "หน้าแรก", href: "/" },
-          { label: "ทรัพย์ทั้งหมด" },
-        ]}
-      />
-
-      <div className="mt-6">
-        <SectionTitle
-          as="h1"
-          title="ทรัพย์ทั้งหมด | All Properties"
-          subtitle="บ้านขาย บ้านเช่า และที่ดิน จากบ้านไออุ่น พร็อพเพอร์ตี้"
+    <>
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <Breadcrumb
+          items={[
+            { label: "หน้าแรก", href: "/" },
+            { label: "ทรัพย์ทั้งหมด" },
+          ]}
         />
       </div>
 
-      {/* Filter bar */}
-      <div className="mt-6 rounded-2xl bg-card p-5 shadow-[0_10px_30px_rgba(45,90,39,0.04)] ring-1 ring-black/5">
-        {/* Type tabs */}
-        <div className="mb-3 flex overflow-hidden rounded-lg border border-border">
+      <PageHeroBanner
+        image={heroImage}
+        titleTh="ทรัพย์ทั้งหมด"
+        titleEn="All Properties"
+        subtitleTh="บ้านขาย บ้านเช่า และที่ดิน จากบ้านไออุ่น พร็อพเพอร์ตี้"
+      />
+
+      <main className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
+        <div className="mt-6 rounded-2xl bg-card p-5 shadow-[0_10px_30px_rgba(45,90,39,0.04)] ring-1 ring-black/5">
+          {/* Type tabs */}
+          <div className="mb-3 flex overflow-hidden rounded-lg border border-border">
           {PURPOSE_TABS.map((tab) => (
             <button
               key={tab.value}
@@ -131,10 +138,10 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
             ))}
           </select>
         </div>
-      </div>
+        </div>
 
-      {/* Result count */}
-      <p className="mt-4 text-sm text-muted-foreground">
+        {/* Result count */}
+        <p className="mt-4 text-sm text-muted-foreground">
         พบ {filtered.length} รายการ | Found {filtered.length} listings
       </p>
 
@@ -167,6 +174,7 @@ export default function PropertiesPage({ properties }: { properties: Property[] 
           </p>
         </div>
       )}
-    </main>
+      </main>
+    </>
   )
 }

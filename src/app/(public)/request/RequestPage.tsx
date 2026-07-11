@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { Home, Search, Users, type LucideIcon } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
+import PageHeroBanner from "@/components/shared/PageHeroBanner"
 import RequestForm from "./RequestForm"
 import { REQUEST_TABS, type RequestTab } from "./tabs"
 
@@ -48,26 +49,22 @@ export default function RequestPage({ initialTab }: { initialTab: RequestTab }) 
   }
 
   return (
-    <main className="bg-muted pb-16">
-      <div className="mx-auto max-w-3xl px-4 pt-8 sm:px-6 lg:px-8">
+    <>
+      <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6 lg:px-8">
         <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "ส่งคำขอบริการ" }]} />
+      </div>
 
-        {/* Heading */}
-        <div className="mt-6 text-center">
-          <h1 className="font-heading text-2xl font-bold text-primary sm:text-3xl">
-            ส่งคำขอบริการ
-            <span className="mt-1 block text-lg font-medium text-muted-foreground">Service Request</span>
-          </h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
-            เลือกบริการที่ต้องการ กรอกฟอร์มสั้นๆ ทีมงานจะติดต่อกลับโดยเร็วที่สุด
-            <span className="mt-0.5 block text-xs text-muted-foreground/80">
-              Pick a service, fill in a short form, and our team will get back to you shortly.
-            </span>
-          </p>
-        </div>
+      <PageHeroBanner
+        titleTh="ส่งคำขอบริการ"
+        titleEn="Service Request"
+        subtitleTh="เลือกบริการที่ต้องการ กรอกฟอร์มสั้นๆ ทีมงานจะติดต่อกลับโดยเร็วที่สุด"
+        subtitleEn="Pick a service, fill in a short form, and our team will get back to you shortly."
+      />
 
+      <main className="bg-muted pb-16">
+      <div className="mx-auto max-w-3xl px-4 pt-8 sm:px-6 lg:px-8">
         {/* Modern segmented tab selector */}
-        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3" role="tablist">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3" role="tablist">
           {REQUEST_TABS.map((key) => {
             const m = TAB_META[key]
             const Icon = m.icon
@@ -116,5 +113,6 @@ export default function RequestPage({ initialTab }: { initialTab: RequestTab }) 
         </motion.div>
       </div>
     </main>
+    </>
   )
 }

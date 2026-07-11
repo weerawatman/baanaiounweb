@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/layout/Breadcrumb"
+import PageHeroBanner from "@/components/shared/PageHeroBanner"
 import {
   EFFECTIVE_DATE,
   INTRO,
@@ -53,23 +54,21 @@ function Block({ block }: { block: PolicyBlock }) {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-      <Breadcrumb
-        items={[{ label: "หน้าแรก", href: "/" }, { label: "นโยบายความเป็นส่วนตัว" }]}
-      />
-
-      <div className="mt-6">
-        <h1 className="font-heading text-2xl font-bold text-primary sm:text-3xl">
-          นโยบายความเป็นส่วนตัว
-          <span className="mt-1 block text-lg font-medium text-muted-foreground">Privacy Policy</span>
-        </h1>
-        <p className="mt-3 text-sm text-muted-foreground">
-          บังคับใช้ตั้งแต่ {EFFECTIVE_DATE.th}
-          <span className="mx-1.5">·</span>
-          Effective from {EFFECTIVE_DATE.en}
-        </p>
+    <>
+      <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6 lg:px-8">
+        <Breadcrumb
+          items={[{ label: "หน้าแรก", href: "/" }, { label: "นโยบายความเป็นส่วนตัว" }]}
+        />
       </div>
 
+      <PageHeroBanner
+        titleTh="นโยบายความเป็นส่วนตัว"
+        titleEn="Privacy Policy"
+        subtitleTh={`บังคับใช้ตั้งแต่ ${EFFECTIVE_DATE.th}`}
+        subtitleEn={`Effective from ${EFFECTIVE_DATE.en}`}
+      />
+
+      <main className="mx-auto max-w-3xl px-4 pb-8 sm:px-6 lg:px-8">
       <div className="mt-6">
         <p className="text-foreground leading-relaxed">{INTRO.th}</p>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{INTRO.en}</p>
@@ -91,5 +90,6 @@ export default function PrivacyPolicyPage() {
         ))}
       </div>
     </main>
+    </>
   )
 }

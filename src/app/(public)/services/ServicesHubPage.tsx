@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 import { MessageCircle, Phone } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
@@ -7,7 +6,7 @@ import SectionTitle from "@/components/layout/SectionTitle"
 import TrustPillars, { type TrustPillarImages } from "@/components/home/TrustPillars"
 import ServiceHubCard from "@/components/services/ServiceHubCard"
 import ServicesWhyChoose from "@/components/services/ServicesWhyChoose"
-import { FaqSection, type FaqItem } from "@/components/shared"
+import { FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
 import { SITE_CONFIG } from "@/config/site"
 
@@ -41,47 +40,29 @@ export default function ServicesHubPage({
         />
       </div>
 
-      <section className="relative isolate overflow-hidden bg-primary py-10 text-primary-foreground sm:py-12">
-        <Image
-          src={background}
-          alt=""
-          aria-hidden
-          fill
-          priority
-          sizes="100vw"
-          className="-z-10 object-cover grayscale-[50%] brightness-[0.8]"
-        />
-        <div className="absolute inset-0 -z-10 bg-primary/85" />
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <h1 className="font-heading text-2xl font-bold drop-shadow sm:text-3xl lg:text-4xl">
-            {SERVICES_HUB_CONTENT.hero.h1.th}
-          </h1>
-          <p className="mt-1.5 text-xl font-normal text-primary-foreground/95 drop-shadow sm:text-2xl">
-            {SERVICES_HUB_CONTENT.hero.h1.en}
-          </p>
-          <p className="mx-auto mt-3 max-w-3xl text-base font-bold text-secondary sm:text-lg">
-            {SERVICES_HUB_CONTENT.hero.sub.th}
-          </p>
-          <p className="mx-auto mt-1.5 max-w-3xl text-sm text-primary-foreground/80">
-            {SERVICES_HUB_CONTENT.hero.sub.en}
-          </p>
-
-          <div
-            className="mt-8 border-t border-primary-foreground/20 pt-6"
-            data-testid="services-stats-bar"
-          >
-            <div className="grid grid-cols-2 gap-5 sm:grid-cols-4 sm:gap-6">
-              {SERVICES_HUB_CONTENT.stats.map((stat) => (
-                <div key={stat.th} className="text-center">
-                  <p className="text-2xl font-bold text-secondary sm:text-3xl">{stat.value}</p>
-                  <p className="mt-1 text-sm font-medium">{stat.th}</p>
-                  <p className="text-xs text-primary-foreground/70">{stat.en}</p>
-                </div>
-              ))}
-            </div>
+      <PageHeroBanner
+        image={background}
+        titleTh={SERVICES_HUB_CONTENT.hero.h1.th}
+        titleEn={SERVICES_HUB_CONTENT.hero.h1.en}
+        subtitleTh={SERVICES_HUB_CONTENT.hero.sub.th}
+        subtitleEn={SERVICES_HUB_CONTENT.hero.sub.en}
+        data-testid="services-hero"
+      >
+        <div
+          className="mt-8 border-t border-primary-foreground/20 pt-6"
+          data-testid="services-stats-bar"
+        >
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-4 sm:gap-6">
+            {SERVICES_HUB_CONTENT.stats.map((stat) => (
+              <div key={stat.th} className="text-center">
+                <p className="text-2xl font-bold text-secondary sm:text-3xl">{stat.value}</p>
+                <p className="mt-1 text-sm font-medium">{stat.th}</p>
+                <p className="text-xs text-primary-foreground/70">{stat.en}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </section>
+      </PageHeroBanner>
 
       <PageSection variant="default">
         <SectionTitle title={servicesSection.title} />

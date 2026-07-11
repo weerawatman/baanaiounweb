@@ -3,7 +3,7 @@ import Image from "next/image"
 import { ImageIcon } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
-import { CTAWithForm, FaqSection, type FaqItem } from "@/components/shared"
+import { CTAWithForm, FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
 import { SITE_CONFIG } from "@/config/site"
 
@@ -107,32 +107,15 @@ export default function AgentCoursePage({
         />
       </div>
 
-      <section className="relative isolate overflow-hidden bg-[#1a3816] pb-24 pt-20 text-white sm:pb-28 sm:pt-24">
-        {heroImage && (
-          <Image
-            src={heroImage}
-            alt=""
-            aria-hidden
-            fill
-            priority
-            sizes="100vw"
-            className="-z-20 object-cover"
-          />
-        )}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1a3816]/70 to-primary/90" />
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <h1 className="text-pretty text-3xl font-bold leading-snug drop-shadow sm:text-4xl lg:text-[2.8rem]">
-            {hero.titleTh}
-            <span className="mt-2 block">{hero.titleThLine2}</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base font-bold text-secondary drop-shadow sm:text-lg">
-            {hero.titleEn}
-          </p>
-        </div>
-      </section>
+      <PageHeroBanner
+        image={heroImage}
+        titleTh={hero.titleTh}
+        titleThLine2={hero.titleThLine2}
+        subtitleTh={hero.titleEn}
+      />
 
       <PageSection variant="default" className="pt-0">
-        <div className="relative z-10 -mt-10 mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:-mt-12 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="relative z-10 -mt-6 mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:-mt-8 sm:grid-cols-2 xl:grid-cols-4">
           {successCards.map((card) => (
             <article
               key={card.titleTh}

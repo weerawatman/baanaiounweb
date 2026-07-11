@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import {
   Loader2,
   CheckCircle,
@@ -10,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Breadcrumb from "@/components/layout/Breadcrumb"
+import PageHeroBanner from "@/components/shared/PageHeroBanner"
 import WhatsAppIcon from "@/components/shared/WhatsAppIcon"
 import { SITE_CONFIG } from "@/config/site"
 import { buildGoogleMapsEmbedUrl } from "@/lib/google-maps"
@@ -98,28 +98,13 @@ export default function ContactPage({ profile }: { profile: Profile }) {
         <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "ติดต่อเรา | Contact Us" }]} />
       </div>
 
-      {/* Hero — mockup: green banner + optional background image */}
-      <header className="relative mb-12 overflow-hidden border-b-4 border-secondary bg-primary py-16 text-center text-white sm:py-20">
-        {profile.heroImageUrl && (
-          <Image
-            src={profile.heroImageUrl}
-            alt=""
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-        )}
-        <div className="absolute inset-0 bg-primary/85" aria-hidden />
-        <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6">
-          <h1 className="text-3xl font-bold sm:text-4xl">ติดต่อเรา | Contact Us</h1>
-          <p className="mt-4 text-base leading-relaxed text-primary-foreground/85 sm:text-lg">
-            ส่งข้อความหาพิม หรือแอดไลน์มาได้เลยค่ะ เราตอบทุกข้อความ
-            <br />
-            Send us a message or add us on LINE — we reply to every message.
-          </p>
-        </div>
-      </header>
+      <PageHeroBanner
+        image={profile.heroImageUrl}
+        titleTh="ติดต่อเรา"
+        titleEn="Contact Us"
+        subtitleTh="ส่งข้อความหาพิม หรือแอดไลน์มาได้เลยค่ะ เราตอบทุกข้อความ"
+        subtitleEn="Send us a message or add us on LINE — we reply to every message."
+      />
 
       <main className="mx-auto max-w-7xl px-4 pb-16 sm:px-6">
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-10">
