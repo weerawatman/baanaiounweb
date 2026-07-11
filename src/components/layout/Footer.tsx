@@ -138,7 +138,7 @@ export default function Footer({ profile }: { profile: Profile }) {
               <Link
                 key={tag.href}
                 href={tag.href}
-                className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/75 transition-colors hover:bg-white/15 hover:text-white"
+                className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/75 transition-colors hover:bg-secondary hover:text-secondary-foreground"
               >
                 {tag.label}
               </Link>

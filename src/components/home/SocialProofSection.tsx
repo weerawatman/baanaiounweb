@@ -97,7 +97,7 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
           </p>
 
           <div className="mx-auto max-w-3xl">
-            <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-4 md:p-6">
+            <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-4 shadow-[0_10px_30px_rgba(45,90,39,0.04)] md:p-6">
               <BeforeAfterSlider
                 key={activeStory.id}
                 beforeUrl={activeStory.beforeImageUrl}

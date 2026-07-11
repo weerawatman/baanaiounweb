@@ -38,14 +38,14 @@ export default function FaqSection({
         {items.map((faq) => (
           <div
             key={faq.id}
-            className="rounded-xl border border-[#eee] bg-[#fafafa] px-6 py-6 sm:px-8 sm:py-7"
+            className="rounded-2xl border border-border bg-card px-6 py-6 shadow-[0_5px_20px_rgba(45,90,39,0.03)] transition-colors hover:border-secondary/50 sm:px-8 sm:py-7"
           >
-            <p className="flex gap-2.5 text-base font-bold text-primary sm:text-lg">
-              <span className="shrink-0 text-[#ea580c]">Q:</span>
+            <p className="flex gap-2.5 text-base font-semibold text-primary sm:text-lg">
+              <span className="shrink-0 font-bold text-secondary">Q:</span>
               {faq.question}
             </p>
             <div
-              className="mt-3 pl-7 text-sm leading-relaxed text-[#555] sm:text-[0.95rem]"
+              className="mt-3 pl-7 text-sm leading-relaxed text-muted-foreground sm:text-[0.95rem]"
               dangerouslySetInnerHTML={{ __html: faq.answer }}
             />
           </div>
@@ -79,7 +79,7 @@ export default function FaqSection({
   if (variant === "boxed") {
     return (
       <PageSection variant="default">
-        <div className="rounded-3xl border border-border bg-card px-6 py-10 shadow-sm sm:px-10 sm:py-14 lg:px-14 lg:py-16">
+        <div className="rounded-3xl border border-border bg-card px-6 py-10 shadow-[0_10px_30px_rgba(45,90,39,0.04)] sm:px-10 sm:py-14 lg:px-14 lg:py-16">
           {content}
         </div>
       </PageSection>

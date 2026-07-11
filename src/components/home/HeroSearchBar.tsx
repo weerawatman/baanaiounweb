@@ -37,7 +37,7 @@ export default function HeroSearchBar({
   const [propertyType, setPropertyType] = useState<"" | PropertyCategory>("")
 
   const selectClass =
-    "w-full rounded-lg border-0 bg-white px-4 py-3.5 text-base text-[#333] focus:outline-none focus:ring-2 focus:ring-[#eab308]"
+    "w-full rounded-xl border border-border bg-white px-5 py-4 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary"
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -48,7 +48,7 @@ export default function HeroSearchBar({
   return (
     <form
       onSubmit={handleSearch}
-      className="mx-auto mt-9 max-w-3xl rounded-2xl border border-white/30 bg-white/15 p-6 text-left shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-md sm:p-7"
+      className="mx-auto mt-9 max-w-3xl rounded-3xl border border-secondary/30 bg-white/15 p-6 text-left shadow-[0_20px_50px_rgba(0,0,0,0.2)] backdrop-blur-md sm:p-8"
     >
       <p className="mb-4 border-b border-white/30 pb-3 text-base font-bold text-white">
         ค้นหาทรัพย์ที่ใช่สำหรับคุณ
@@ -63,10 +63,10 @@ export default function HeroSearchBar({
             key={tab.value}
             type="button"
             onClick={() => setPurpose(tab.value)}
-            className={`flex-1 rounded-lg px-2 py-2.5 text-sm font-bold transition-colors ${
+            className={`flex-1 rounded-full px-3 py-2.5 text-sm font-semibold transition-colors ${
               purpose === tab.value
-                ? "bg-[#eab308] text-[#333]"
-                : "bg-white/15 text-white hover:bg-white/25"
+                ? "bg-secondary text-secondary-foreground"
+                : "border border-white/20 bg-white/10 text-white hover:bg-white/25"
             }`}
           >
             {tab.th === tab.en ? tab.th : `${tab.th} | ${tab.en}`}
@@ -128,14 +128,14 @@ export default function HeroSearchBar({
       <div className="flex flex-col gap-3 sm:flex-row">
         <Link
           href={listHref}
-          className="flex min-h-[50px] flex-1 items-center justify-center gap-2 rounded-lg bg-[#ea580c] px-4 py-3.5 text-base font-bold text-white shadow-[0_4px_6px_rgba(0,0,0,0.2)] transition-colors hover:bg-[#d04d08]"
+          className="flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-xl border border-white/60 bg-transparent px-4 py-3.5 text-base font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
         >
           🏠 {listLabelTh}
           <span className="text-sm font-medium text-white/90">| {listLabelEn}</span>
         </Link>
         <button
           type="submit"
-          className="flex min-h-[50px] flex-1 items-center justify-center gap-2 rounded-lg border border-primary/50 bg-primary/80 px-4 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-primary"
+          className="flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-xl bg-secondary px-4 py-3.5 text-base font-semibold text-secondary-foreground shadow-[0_8px_20px_rgba(212,175,55,0.3)] transition-colors hover:bg-secondary/90"
         >
           🔍 {searchLabelTh}
           <span className="text-sm font-medium text-white/90">| {searchLabelEn}</span>

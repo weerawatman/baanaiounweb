@@ -103,14 +103,14 @@ export default function Header({ profile }: { profile: Profile }) {
   const siteName = profile?.siteName || SITE_CONFIG.name
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-white/95 shadow-[0_4px_20px_rgba(45,90,39,0.05)] backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link
           href="/"
           title={siteName}
           aria-label={`${siteName} — หน้าแรก`}
-          className="text-primary shrink-0 text-lg font-bold transition-opacity hover:opacity-80"
+          className="text-primary font-heading shrink-0 text-lg font-bold transition-opacity hover:opacity-80"
         >
           {siteName}
         </Link>
@@ -126,7 +126,7 @@ export default function Header({ profile }: { profile: Profile }) {
                 href={entry.href}
                 title={navLabel(entry)}
                 aria-label={navLabel(entry)}
-                className="bg-primary hover:bg-primary/90 ml-2 inline-flex flex-col items-center rounded-md px-4 py-1.5 text-center text-white transition-colors"
+                className="bg-secondary hover:bg-secondary/90 ml-2 inline-flex flex-col items-center rounded-full px-5 py-2 text-center text-secondary-foreground transition-colors"
               >
                 <BilingualLabel th={entry.th} en={entry.en} />
               </Link>

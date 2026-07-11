@@ -26,7 +26,7 @@ export default function HomePage({
   ].sort()
 
   return (
-    <div className="bg-[#f8f6f0]">
+    <div className="bg-background">
       <HeroSection heroImage={heroImage} districts={districts} />
 
       <ServiceShortcuts />

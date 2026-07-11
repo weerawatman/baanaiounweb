@@ -1,5 +1,20 @@
 import type { Metadata } from "next"
+import { Noto_Sans_Thai, Prompt } from "next/font/google"
 import "./globals.css"
+
+const prompt = Prompt({
+  subsets: ["latin", "thai"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-heading",
+  display: "swap",
+})
+
+const notoSansThai = Noto_Sans_Thai({
+  subsets: ["thai", "latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-sans",
+  display: "swap",
+})
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
@@ -28,8 +43,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="th" className="h-full antialiased">
-      <body className="flex min-h-full flex-col">{children}</body>
+    <html lang="th" className={`${prompt.variable} ${notoSansThai.variable} h-full antialiased`}>
+      <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   )
 }

@@ -34,7 +34,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         aria-label={property.title}
         className="group block h-full"
       >
-        <Card className="group-hover:ring-foreground/20 h-full overflow-hidden transition-shadow duration-300 group-hover:shadow-xl">
+        <Card className="group-hover:ring-foreground/20 h-full overflow-hidden rounded-[20px] border-border shadow-[0_10px_30px_rgba(45,90,39,0.04)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_15px_40px_rgba(45,90,39,0.1)]">
           {/* Image */}
           <div className="relative h-60 overflow-hidden">
             <Image

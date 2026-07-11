@@ -18,8 +18,8 @@ export default function SectionTitle({
       <Heading
         className={
           variant === "plain"
-            ? "text-2xl font-bold text-[#333] sm:text-[2.2rem]"
-            : "text-foreground text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl"
+            ? "font-heading text-2xl font-semibold text-primary sm:text-[2.125rem]"
+            : "text-foreground font-heading text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl"
         }
       >
         {title}
@@ -35,7 +35,7 @@ export default function SectionTitle({
         <p
           className={
             variant === "plain"
-              ? "max-w-2xl text-lg leading-relaxed text-[#666]"
+              ? "max-w-2xl text-base leading-relaxed text-muted-foreground"
               : "text-muted-foreground max-w-2xl text-base leading-relaxed"
           }
         >
