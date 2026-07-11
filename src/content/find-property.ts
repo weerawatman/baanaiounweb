@@ -110,21 +110,21 @@ export const FIND_PROPERTY_CONTENT = {
   bentoSlots: [
     {
       alt: "จัดหาบ้านเดี่ยว ชลบุรี ตรงใจลูกค้า",
-      badgeTh: "✅ หาตรงโจทย์ ภายใน 3 วัน",
-      badgeEn: "Matched in 3 Days",
+      badgeTh: "✅ คัดทรัพย์ตรงใจ ไม่ต้องเสียเวลาหาเอง",
+      badgeEn: "Curated matches — skip the endless search",
       badgeVariant: "primary" as const,
     },
     {
       alt: "จัดหาคอนโดใกล้ BTS สุขุมวิท 77",
-      badgeTh: "✅ คอนโดใกล้รถไฟฟ้า",
-      badgeEn: "Near BTS Station",
+      badgeTh: "✅ ตัวเลือกพรีเมียม คุ้มค่าทุกทำเล",
+      badgeEn: "Premium picks, great value in every area",
       badgeVariant: "primary" as const,
     },
     {
       alt: "บ้านมือสองรีโนเวทราคาต่ำกว่าตลาด",
-      badgeTh: "✅ ได้ราคาต่ำกว่าตลาด 15%",
-      badgeEn: "15% Below Market",
-      badgeVariant: "orange" as const,
+      badgeTh: "✅ ดูแลเอกสารและสินเชื่อ ซื้อ-เช่าจบครบถึงวันโอน",
+      badgeEn: "Docs & loans handled through transfer day",
+      badgeVariant: "primary" as const,
     },
   ],
 }
