@@ -37,7 +37,7 @@ export default function HeroSearchBar({
   const [propertyType, setPropertyType] = useState<"" | PropertyCategory>("")
 
   const selectClass =
-    "w-full rounded-xl border border-border bg-white px-5 py-4 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary"
+    "min-w-0 w-full rounded-xl border border-border bg-white px-5 py-4 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary"
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -74,7 +74,7 @@ export default function HeroSearchBar({
         ))}
       </div>
 
-      <div className="mb-5 flex flex-col gap-2.5 sm:flex-row">
+      <div className="mb-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
         <input
           type="search"
           value={query}
