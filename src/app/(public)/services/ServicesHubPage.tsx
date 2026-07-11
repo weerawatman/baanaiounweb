@@ -1,17 +1,15 @@
 import Image from "next/image"
+import Link from "next/link"
+import { MessageCircle, Phone } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
 import SectionTitle from "@/components/layout/SectionTitle"
-import AudienceCard from "@/components/shared/AudienceCard"
-import LineClosingCta from "@/components/shared/LineClosingCta"
 import TrustPillars, { type TrustPillarImages } from "@/components/home/TrustPillars"
+import ServiceHubCard from "@/components/services/ServiceHubCard"
 import ServicesWhyChoose from "@/components/services/ServicesWhyChoose"
 import { FaqSection, type FaqItem } from "@/components/shared"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
 import { SITE_CONFIG } from "@/config/site"
-import { Home, Search, Users, GraduationCap } from "lucide-react"
-
-const ICON_MAP = { Home, Search, Users, GraduationCap } as const
 
 interface ServicesHubPageProps {
   servicesHeroImage?: string
@@ -33,6 +31,7 @@ export default function ServicesHubPage({
   const background = servicesHeroImage || heroImageUrl || SITE_CONFIG.pim.heroImage
   const lineHref = lineUrl || SITE_CONFIG.lineUrl
   const phoneHref = `tel:${SITE_CONFIG.phone.replace(/-/g, "")}`
+  const { cta, servicesSection } = SERVICES_HUB_CONTENT
 
   return (
     <>
@@ -50,20 +49,20 @@ export default function ServicesHubPage({
           fill
           priority
           sizes="100vw"
-          className="-z-10 object-cover"
+          className="-z-10 object-cover grayscale-[50%] brightness-[0.8]"
         />
         <div className="absolute inset-0 -z-10 bg-primary/85" />
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <h1 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
+          <h1 className="text-3xl font-bold drop-shadow sm:text-4xl lg:text-5xl">
             {SERVICES_HUB_CONTENT.hero.h1.th}
-            <span className="mt-2 block text-2xl font-semibold text-primary-foreground/85 sm:text-3xl">
-              {SERVICES_HUB_CONTENT.hero.h1.en}
-            </span>
           </h1>
-          <p className="mx-auto mt-5 max-w-3xl text-lg text-primary-foreground/90">
+          <p className="mt-2 text-2xl font-normal text-primary-foreground/95 drop-shadow sm:text-3xl">
+            {SERVICES_HUB_CONTENT.hero.h1.en}
+          </p>
+          <p className="mx-auto mt-5 max-w-3xl text-lg font-bold text-secondary">
             {SERVICES_HUB_CONTENT.hero.sub.th}
           </p>
-          <p className="mx-auto mt-2 max-w-3xl text-sm text-primary-foreground/75">
+          <p className="mx-auto mt-2 max-w-3xl text-sm text-primary-foreground/80">
             {SERVICES_HUB_CONTENT.hero.sub.en}
           </p>
 
@@ -85,31 +84,29 @@ export default function ServicesHubPage({
       </section>
 
       <PageSection variant="default">
-        <SectionTitle
-          title="เลือกบริการที่ตรงกับคุณ | Choose Your Path"
-          subtitle="คลิกการ์ดเพื่อดูรายละเอียดและเริ่มต้นได้ทันที | Click on a card to learn more and get started."
-        />
+        <SectionTitle title={servicesSection.title} />
+        <p className="mx-auto -mt-4 max-w-3xl text-center text-base font-bold leading-relaxed text-primary sm:text-lg">
+          {servicesSection.seoSubtitle.th}
+          <span className="mt-1 block text-sm font-medium text-muted-foreground">
+            {servicesSection.seoSubtitle.en}
+          </span>
+        </p>
+
         <div
           className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
           data-testid="services-four-column-grid"
         >
-          {SERVICES_HUB_CONTENT.services.map((service) => {
-            const Icon = ICON_MAP[service.icon as keyof typeof ICON_MAP]
-            return (
-              <AudienceCard
-                key={service.href}
-                href={service.href}
-                icon={Icon}
-                accentColor={service.color}
-                titleTh={service.title.th}
-                titleEn={service.title.en}
-                highlightTh={service.highlight.th}
-                highlightEn={service.highlight.en}
-                descTh={service.description.th}
-                descEn={service.description.en}
-              />
-            )
-          })}
+          {SERVICES_HUB_CONTENT.services.map((service) => (
+            <ServiceHubCard
+              key={service.href}
+              href={service.href}
+              emoji={service.emoji}
+              titleTh={service.title.th}
+              titleEn={service.title.en}
+              descTh={service.description.th}
+              descEn={service.description.en}
+            />
+          ))}
         </div>
       </PageSection>
 
@@ -119,23 +116,45 @@ export default function ServicesHubPage({
 
       <FaqSection
         variant="boxed"
+        layout="cards"
         title="คำถามที่พบบ่อย | FAQ"
         subtitle="ข้อสงสัยยอดฮิตเกี่ยวกับบริการทั้งหมดของเรา | Top questions about all our services."
         items={faqs}
       />
 
-      <LineClosingCta
-        variant="warm"
-        lineUrl={lineHref}
-        phoneUrl={phoneHref}
-        lineTestId="services-line-cta"
-        locationTh={SERVICES_HUB_CONTENT.localAuthority.th}
-        locationEn={SERVICES_HUB_CONTENT.localAuthority.en}
-        titleTh="พร้อมเริ่มต้นหรือยัง?"
-        titleEn="Ready to get started?"
-        subtitleTh="เลือกบริการด้านบน หรือทักมาปรึกษาฟรีได้ทันที"
-        subtitleEn="Choose a service above or contact us for a free consultation today."
-      />
+      <PageSection variant="default">
+        <div className="rounded-3xl border border-border bg-card px-6 py-12 text-center shadow-sm sm:px-10 sm:py-16">
+          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
+            {cta.titleTh}
+            <span className="mt-1 block text-lg font-medium text-muted-foreground">
+              {cta.titleEn}
+            </span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground">
+            {cta.subtitleTh}
+            <span className="mt-1 block text-sm">{cta.subtitleEn}</span>
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href={lineHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="services-line-cta"
+              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[#22c55e] px-8 py-3 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#16a34a] sm:w-auto"
+            >
+              <MessageCircle className="size-5" />
+              ทักแชทปรึกษาฟรี | Free LINE Chat
+            </Link>
+            <Link
+              href={phoneHref}
+              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg border border-border bg-transparent px-8 py-3 text-base font-bold text-foreground transition-colors hover:bg-muted sm:w-auto"
+            >
+              <Phone className="size-5" />
+              โทรด่วน | Call Now
+            </Link>
+          </div>
+        </div>
+      </PageSection>
     </>
   )
 }

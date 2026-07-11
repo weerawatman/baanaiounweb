@@ -16,40 +16,52 @@ export const SERVICES_HUB_CONTENT = {
       en: "Baan Ai Oun Property",
     },
     sub: {
-      th: "ศูนย์รวมทางลัดความสำเร็จในโลกอสังหาฯ ที่เข้าใจทั้งเจ้าของทรัพย์ ผู้ซื้อ และคนอยากสร้างรายได้ด้วยใจทั้งคนไทยและต่างชาติ",
+      th: "ศูนย์รวมทางลัดความสำเร็จในโลกอสังหาฯ ที่เข้าใจทั้งเจ้าของทรัพย์ ผู้ซื้อ และคนอยากสร้างรายได้ด้วยใจ ทั้งคนไทยและต่างชาติ",
       en: "The ultimate shortcut to real estate success—empowering property owners, buyers, and aspiring agents with genuine care for both local and international clients.",
+    },
+  },
+  servicesSection: {
+    title: "เลือกบริการที่ตรงกับคุณ | Choose Your Path",
+    seoSubtitle: {
+      th: "ศูนย์รวมบริการอสังหาฯ ครบวงจร ครอบคลุมทำเล กรุงเทพฯ สมุทรปราการ ชลบุรี ฉะเชิงเทรา ระยอง และพื้นที่นิคมอุตสาหกรรม EEC",
+      en: "Comprehensive real estate services covering Bangkok, Samut Prakan, Chonburi, Chachoengsao, Rayong, and EEC zones.",
     },
   },
   whyChoose: {
     title: "ทำไมต้องเลือกบ้านไออุ่น? | Why Choose Baan Ai Oun?",
     subtitle:
-      "ศูนย์รวมอสังหาและเครือข่ายนายหน้า บริการซื้อ-ขาย-เช่า ครบจบในที่เดียว | All-in-one real estate center and agent network for buying, selling, and renting.",
+      "ศูนย์รวมอสังหาฯ และเครือข่ายนายหน้า ซื้อ-ขาย-เช่า ครบจบในที่เดียว | All-in-one real estate center and agent network for buying, selling, and renting.",
     items: [
       {
-        icon: "Heart",
-        title: { th: "เข้าใจทุกความต้องการ", en: "Understand Your Needs" },
+        emoji: "💡",
+        title: { th: "เข้าใจทุกความต้องการด้วยทีมงานมีชีวิต", en: "Understanding Needs with a Human Touch" },
         description: {
-          th: "บริการ 2 ภาษา ค้นหาและจับคู่ทรัพย์ในกรุงเทพฯ, สมุทรปราการ, EEC, ชลบุรี และพื้นที่นิคมอุตสาหกรรม",
-          en: "Bilingual experts matching you with properties across Bangkok, Samut Prakan, EEC, and Chonburi.",
+          th: "เราไม่ได้ใช้แค่ระบบอัตโนมัติจับคู่ แต่เรามีทีมงานลงพื้นที่จริง คอยรับฟังปัญหาและช่วยคัดกรองทรัพย์ให้ตรงใจคุณที่สุด ทั้งลูกค้าคนไทยและต่างชาติ",
+          en: "We don't just rely on algorithms. Our team actively surveys areas, listens to your needs, and curates properties perfectly suited for both local and expat clients.",
         },
       },
       {
-        icon: "Shield",
-        title: { th: "บริการครบวงจรที่เดียว", en: "All-In-One Seamless Services" },
+        emoji: "🛡️",
+        title: { th: "บริการครบวงจร ไร้รอยต่อ (End-to-End)", en: "Seamless End-to-End Services" },
         description: {
-          th: "ดูแลตั้งแต่หาทรัพย์ สินเชื่อ สัญญา จนถึงวันโอนกรรมสิทธิ์",
-          en: "End-to-end support from search and loans to secure ownership transfer.",
+          th: "ไม่ต้องวิ่งวุ่นหาหลายที่ เราดูแลตั้งแต่เริ่มต้นหาสินเชื่อ ตรวจสอบสัญญา และประสานงานทุกฝ่ายจนถึงวันโอนกรรมสิทธิ์อย่างปลอดภัย 100%",
+          en: "No need to jump between agencies. We handle everything from securing loans and reviewing contracts to safe and smooth ownership transfers.",
         },
       },
       {
-        icon: "Star",
-        title: { th: "เครือข่ายทีมงานคุณภาพ", en: "Quality Network & Screened Properties" },
+        emoji: "⭐",
+        title: { th: "เครือข่ายคุณภาพ และสายตานักลงทุน", en: "Quality Network & Investor's Eye" },
         description: {
-          th: "คัดกรองทรัพย์ทุกหลังด้วยสายตานักลงทุน",
-          en: "Properties curated by investor-minded experts for true value.",
+          th: "เรามีเครือข่าย Co-Agent ทั่วประเทศช่วยกระจายทรัพย์ และทุกทรัพย์จะถูกประเมินความคุ้มค่า โครงสร้าง และราคาด้วยสายตานักลงทุนตัวจริงก่อนเสนอขาย",
+          en: "Our nationwide Co-Agent network distributes listings, and every property is vetted for value, structure, and pricing by real investors before it reaches you.",
         },
       },
     ],
+  },
+  trust: {
+    title: "ความไว้วางใจจากลูกค้า | Trusted by Our Clients",
+    subtitle:
+      "ผลงานคุณภาพที่พิสูจน์ได้จากรอยยิ้มของลูกค้าและพาร์ทเนอร์ของเรา | Proven quality reflected in the smiles of our clients and partners.",
   },
   stats: [
     { value: "200+", th: "เคสสำเร็จปีนี้", en: "Deals Closed" },
@@ -63,64 +75,46 @@ export const SERVICES_HUB_CONTENT = {
   },
   services: [
     {
-      icon: "Home",
-      color: "#E8833A",
+      emoji: "🏠",
       title: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property" },
-      highlight: {
-        th: "ประเมินศักยภาพทรัพย์ฟรี โดยทีมนักลงทุนตัวจริง",
-        en: "Free investor-led property assessment",
-      },
       description: {
-        th: "จบทุกปัญหาขายยาก ปวดหัวเอกสาร และการฉ้อโกง — บริการครบวงจร ปิดดีลไว ไว้ใจได้",
-        en: "End-to-end listing support — marketing, paperwork, and closing handled by experts.",
+        th: "ประเมินศักยภาพทรัพย์ฟรี คัดกรองผู้ซื้อตัวจริง ดูแลเอกสารและสินเชื่อให้ครบ จบง่าย สบายใจในที่เดียว",
+        en: "Free property assessment, real buyer screening, and complete document & loan handling all in one place.",
       },
-      cta: { th: "ฝากขาย/ปล่อยเช่า", en: "List Your Property" },
       href: "/list-property",
     },
     {
-      icon: "Search",
-      color: "#2E75B6",
-      title: { th: "ค้นหาบ้าน/สินเชื่อ", en: "Find Your Home" },
-      highlight: {
-        th: "คัดสรรบ้านทำเลทอง และทรัพย์รีโนเวทสภาพพร้อมอยู่ ผ่านการตรวจสอบโครงสร้างแล้ว",
-        en: "Prime-location and move-in-ready renovated homes, structurally vetted.",
-      },
+      emoji: "🔍",
+      title: { th: "ให้เราหาให้ฟรี (ซื้อ/เช่า)", en: "Find Your Home" },
       description: {
-        th: "คัดทรัพย์ตรงโจทย์ ดูแลสินเชื่อและสัญญา จบที่เดียว ไม่มีค่าใช้จ่ายสำหรับผู้ซื้อและผู้เช่า",
-        en: "Curated matching, loan guidance, and contracts — free for buyers and renters.",
+        th: "คัดสรรบ้านทำเลทอง ผ่านการตรวจโครงสร้างและประเมินความคุ้มค่าด้วยสายตานักลงทุน พร้อมดูแลสินเชื่อฟรี",
+        en: "Curated prime locations, structurally vetted with an investor's eye. Includes free loan guidance.",
       },
-      cta: { th: "ค้นหาทรัพย์ที่ใช่", en: "Find Your Perfect Match" },
       href: "/find-property",
     },
     {
-      icon: "Users",
-      color: "#1B7A52",
-      title: { th: "ร่วมเป็น Co-Agent", en: "Partner with Us" },
-      highlight: {
-        th: "ฝากทรัพย์ฟรี เราช่วยทำการตลาดจนกว่าจะปิดดีลได้",
-        en: "List with us free — we market until the deal closes.",
-      },
+      emoji: "🤝",
+      title: { th: "ร่วมเป็น Co-Agent", en: "Partner with Us (Co-Agent)" },
       description: {
-        th: "มีทรัพย์แต่หาลูกค้าไม่ได้? กังวลค่าการตลาด? — เข้าร่วมเครือข่ายที่เติบโตไปด้วยกัน",
-        en: "Have listings but no clients? Join our growing co-agent network.",
+        th: "ขยายโอกาสปิดการขายให้ไวขึ้น นำทรัพย์มาฝากเราช่วยกระจายการตลาดให้ฟรี แบ่งคอมมิชชันโปร่งใส",
+        en: "Expand your closing opportunities faster. List with us for free marketing and transparent commission splits.",
       },
-      cta: { th: "ร่วมเป็น Co-Agent", en: "Join as Co-Agent" },
       href: "/co-agent",
     },
     {
-      icon: "GraduationCap",
-      color: "#7C3AED",
-      title: { th: "คอร์สนายหน้า", en: "Agent Course" },
-      highlight: {
-        th: "ถ่ายทอดเคล็ดลับจากผู้แต่งหนังสือและนักลงทุนตัวจริง",
-        en: "Secrets from published authors and practicing investors.",
-      },
+      emoji: "🎓",
+      title: { th: "คอร์สนายหน้าอสังหาฯ", en: "Agent Course" },
       description: {
-        th: "2 วันเปลี่ยนชีวิต! Workshop จับมือทำจริง สำหรับว่าที่นายหน้า — เรียนจริง ทำจริง ได้เงินจริง",
-        en: "Life-changing 2-day hands-on workshop for aspiring agents.",
+        th: "ถ่ายทอดเคล็ดลับจากผู้เชี่ยวชาญตัวจริง เวิร์กชอปจับมือทำ พร้อมมีทรัพย์ในระบบให้เริ่มทำเงินได้ทันทีหลังเรียนจบ",
+        en: "Learn secrets from real experts in a hands-on workshop. Access ready-to-sell listings immediately upon graduation.",
       },
-      cta: { th: "สมัครคอร์สนายหน้า", en: "Enroll in Agent Course" },
       href: "/agent-course",
     },
   ],
+  cta: {
+    titleTh: "พร้อมเริ่มต้นหรือยัง?",
+    titleEn: "Ready to get started?",
+    subtitleTh: "เลือกบริการด้านบน หรือทักมาปรึกษาทีมงานเราได้ทันที",
+    subtitleEn: "Choose a service above or contact us for a free consultation today.",
+  },
 } as const

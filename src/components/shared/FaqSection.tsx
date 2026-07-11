@@ -40,7 +40,7 @@ export default function FaqSection({
             key={faq.id}
             className="rounded-xl border border-[#eee] bg-[#fafafa] px-6 py-6 sm:px-8 sm:py-7"
           >
-            <p className="flex gap-2.5 text-base font-bold text-foreground sm:text-lg">
+            <p className="flex gap-2.5 text-base font-bold text-primary sm:text-lg">
               <span className="shrink-0 text-[#ea580c]">Q:</span>
               {faq.question}
             </p>
