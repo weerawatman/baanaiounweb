@@ -10,7 +10,7 @@ export default async function ProfilePage() {
   const profile = await getProfile()
 
   return (
-    <div className="flex max-w-4xl flex-col gap-6">
+    <div className="flex max-w-5xl flex-col gap-6">
       <div>
         <Link
           href="/admin"

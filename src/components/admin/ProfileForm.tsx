@@ -97,8 +97,8 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </div>
       )}
 
-      <Tabs defaultValue="general" className="w-full">
-        <TabsList className="h-auto w-full flex-wrap justify-start gap-1 bg-muted/60 p-1">
+      <Tabs defaultValue="general" className="w-full gap-0">
+        <TabsList variant="sheet">
           <TabsTrigger value="general">ข้อมูลทั่วไป</TabsTrigger>
           <TabsTrigger value="home">หน้าแรก</TabsTrigger>
           <TabsTrigger value="property-match">งานหาทรัพย์</TabsTrigger>
@@ -111,7 +111,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </TabsList>
 
         {/* ─── Sheet 1: ข้อมูลทั่วไป ─────────────────── */}
-        <TabsContent value="general" className="flex flex-col gap-6 pt-4">
+        <TabsContent value="general" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">ข้อมูลพิม</h2>
 
@@ -260,7 +260,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </TabsContent>
 
         {/* ─── Sheet: หน้าแรก ───────────────────────── */}
-        <TabsContent value="home" className="flex flex-col gap-6 pt-4">
+        <TabsContent value="home" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">รูปภาพประกอบหน้าแรก</h2>
 
@@ -282,7 +282,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </TabsContent>
 
         {/* ─── Sheet: งานหาทรัพย์ (Property Match) ──── */}
-        <TabsContent value="property-match" className="flex flex-col gap-6 pt-4">
+        <TabsContent value="property-match" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">รูปภาพหน้างานหาทรัพย์ (Property Match)</h2>
             <p className="text-muted-foreground text-sm">
@@ -373,7 +373,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </TabsContent>
 
         {/* ─── Sheet: ฝากขาย/เช่า ───────────────────── */}
-        <TabsContent value="list-property" className="flex flex-col gap-6 pt-4">
+        <TabsContent value="list-property" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">รูปภาพหน้าฝากขาย/ปล่อยเช่า</h2>
             <p className="text-muted-foreground text-sm">
@@ -443,7 +443,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </TabsContent>
 
         {/* ─── Sheet: บทความ (Blog) ─────────────────── */}
-        <TabsContent value="blog" className="flex flex-col gap-6 pt-4">
+        <TabsContent value="blog" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">รูปภาพหน้าบทความ (Blog)</h2>
 
@@ -468,7 +468,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </TabsContent>
 
         {/* ─── Sheet: เกี่ยวกับเรา ──────────────────── */}
-        <TabsContent value="about" className="flex flex-col gap-6 pt-4">
+        <TabsContent value="about" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">รูปภาพหน้าเกี่ยวกับเรา (Timeline)</h2>
             <p className="text-muted-foreground text-sm">
@@ -554,7 +554,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
           </section>
         </TabsContent>
         {/* ─── Sheet: บริการของเรา ──────────────────── */}
-        <TabsContent value="services" className="flex flex-col gap-6 pt-4">
+        <TabsContent value="services" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">รูปภาพหน้าบริการของเรา</h2>
 
@@ -642,7 +642,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
         </TabsContent>
 
         {/* ─── Sheet: คอร์สนายหน้า ──────────────────── */}
-        <TabsContent value="agent-course" className="flex flex-col gap-6 pt-4">
+        <TabsContent value="agent-course" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">รูปภาพหน้าคอร์สนายหน้า</h2>
 
@@ -683,7 +683,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
             </FormField>
           </section>
         </TabsContent>
-        <TabsContent value="co-agent" className="flex flex-col gap-6 pt-4">
+        <TabsContent value="co-agent" className="flex flex-col gap-6 p-4 sm:p-6">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">รูปภาพหน้า Co-Agent</h2>
 
