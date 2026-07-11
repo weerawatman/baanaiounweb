@@ -20,7 +20,7 @@ export default function CoAgentPage({
   faqs,
 }: CoAgentPageProps) {
   const lineHref = lineUrl || SITE_CONFIG.lineUrl
-  const { hero, valueCards, whyCoBroke, hook, faq, cta } = COAGENT_CONTENT
+  const { hero, valueCards, whyCoAgent, hook, faq, cta } = COAGENT_CONTENT
 
   return (
     <>
@@ -103,18 +103,18 @@ export default function CoAgentPage({
 
           <div>
             <h2 className="text-2xl font-bold leading-snug text-foreground sm:text-3xl">
-              {whyCoBroke.headlineTh}
+              {whyCoAgent.headlineTh}
             </h2>
             <p className="mt-1 text-lg font-medium text-muted-foreground">
-              {whyCoBroke.headlineEn}
+              {whyCoAgent.headlineEn}
             </p>
             <p className="mt-4 inline-block border-b-2 border-secondary pb-3 text-sm font-bold text-primary sm:text-base">
-              {whyCoBroke.seoTh}
+              {whyCoAgent.seoTh}
             </p>
-            <p className="mt-1 text-xs font-medium text-muted-foreground">{whyCoBroke.seoEn}</p>
+            <p className="mt-1 text-xs font-medium text-muted-foreground">{whyCoAgent.seoEn}</p>
 
             <div className="mt-6 flex flex-col gap-5">
-              {whyCoBroke.reasons.map((reason) => (
+              {whyCoAgent.reasons.map((reason) => (
                 <article
                   key={reason.titleTh}
                   className="rounded-lg border border-border border-l-4 border-l-primary bg-card p-5 shadow-sm"

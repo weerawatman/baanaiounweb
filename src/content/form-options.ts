@@ -116,6 +116,6 @@ export const FORM_PRIVACY_NOTICE = {
 }
 
 export const COAGENT_RIGHTS_NOTICE = {
-  th: "เราเคารพสิทธิ์การดูแลทรัพย์ของคุณ ข้อมูลใช้เพื่อ Co-Broke เท่านั้น",
-  en: "We respect your listing rights. This information is used for Co-Broke purposes only.",
+  th: "เราเคารพสิทธิ์การดูแลทรัพย์ของคุณ ข้อมูลใช้เพื่อ Co-Agent เท่านั้น",
+  en: "We respect your listing rights. This information is used for Co-Agent purposes only.",
 }

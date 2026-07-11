@@ -254,7 +254,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
               <Input {...register("site_name")} placeholder="บ้านไออุ่น พร็อพเพอร์ตี้" />
             </FormField>
             <FormField label="สโลแกน" error={errors.slogan?.message}>
-              <Input {...register("slogan")} placeholder="บ้านไออุ่น: มากกว่าที่พัก..." />
+              <Input {...register("slogan")} placeholder="มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ" />
             </FormField>
           </section>
         </TabsContent>
@@ -707,7 +707,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
 
             <FormField
               label="รูปประกอบส่วนเนื้อหา (Split layout)"
-              hint="แสดงฝั่งซ้ายของส่วน &ldquo;ทำไมถึงควร Co-Broke&rdquo;"
+              hint="แสดงฝั่งซ้ายของส่วน &ldquo;ทำไมถึงควร Co-Agent&rdquo;"
             >
               <Controller
                 control={control}

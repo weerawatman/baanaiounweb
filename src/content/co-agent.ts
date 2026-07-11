@@ -44,12 +44,12 @@ export const COAGENT_CONTENT = {
       descEn: "Access 50+ partner agents ready to actively promote your listings.",
     },
   ],
-  whyCoBroke: {
-    headlineTh: "ทำไมถึงควร Co-Broke กับบ้านไออุ่น?",
-    headlineEn: "Why Co-Broke with Baan Ai Oun?",
+  whyCoAgent: {
+    headlineTh: "ทำไมถึงควร Co-Agent กับบ้านไออุ่น?",
+    headlineEn: "Why Co-Agent with Baan Ai Oun?",
     seoTh:
-      "รับ Co-Broke อสังหาฯ โซนกรุงเทพฯ สมุทรปราการ ชลบุรี ฉะเชิงเทรา ระยอง และ EEC แบบแบ่งคอมมิชชันโปร่งใส",
-    seoEn: "Transparent Co-Broke network in Bangkok, Samut Prakan, Chonburi, Rayong & EEC.",
+      "รับ Co-Agent อสังหาฯ โซนกรุงเทพฯ สมุทรปราการ ชลบุรี ฉะเชิงเทรา ระยอง และ EEC แบบแบ่งคอมมิชชันโปร่งใส",
+    seoEn: "Transparent Co-Agent network in Bangkok, Samut Prakan, Chonburi, Rayong & EEC.",
     reasons: [
       {
         emoji: "👥",

@@ -47,7 +47,8 @@ function FooterRow({
 export default function Footer({ profile }: { profile: Profile }) {
   const currentYear = new Date().getFullYear()
   const siteName = profile.siteName || SITE_CONFIG.name
-  const slogan = profile.slogan || SITE_CONFIG.slogan
+  const rawSlogan = profile.slogan || SITE_CONFIG.slogan
+  const slogan = rawSlogan.replace(/^บ้านไออุ่น:\s*/, "")
   const phone = profile.phone || SITE_CONFIG.phone
   const lineId = profile.lineId || SITE_CONFIG.lineId
   const lineUrl = profile.lineUrl || SITE_CONFIG.lineUrl
