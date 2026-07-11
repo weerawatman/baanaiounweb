@@ -2,24 +2,19 @@ import Link from "next/link"
 import Image from "next/image"
 import { FileImage } from "lucide-react"
 import { type BlogPost } from "@/types"
+import { BLOG_PAGE_CONTENT } from "@/content/blog"
 
 interface BlogCardProps {
   post: BlogPost
 }
 
 export default function BlogCard({ post }: BlogCardProps) {
-  const formattedDate = post.publishedAt
-    ? new Date(post.publishedAt).toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      })
-    : null
+  const { cardAuthor } = BLOG_PAGE_CONTENT
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[0_4px_6px_rgba(0,0,0,0.03)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
       <Link href={`/blog/${post.slug}`} className="group flex h-full flex-col">
-        <div className="relative h-[200px] border-b border-border bg-muted">
+        <div className="relative aspect-video bg-muted">
           {post.featuredImage ? (
             <Image
               src={post.featuredImage}
@@ -35,32 +30,34 @@ export default function BlogCard({ post }: BlogCardProps) {
           )}
         </div>
 
-        <div className="flex flex-1 flex-col p-[25px]">
-          {post.category && (
-            <span className="mb-3 inline-flex self-start rounded bg-[#f0fdf4] px-2.5 py-1 text-xs font-bold text-primary">
-              {post.category}
-            </span>
-          )}
+        <div className="flex flex-1 flex-col p-6">
+          <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+            {post.category && (
+              <span className="rounded-full bg-secondary px-2.5 py-1 font-bold text-secondary-foreground">
+                {post.category}
+              </span>
+            )}
+            {post.readingTime && (
+              <span className="flex items-center gap-1">
+                <span aria-hidden>⏱️</span>
+                {post.readingTime}
+              </span>
+            )}
+          </div>
 
-          <h3 className="text-xl font-bold leading-snug text-foreground line-clamp-2">
+          <h3 className="mt-2.5 text-lg font-bold leading-snug text-foreground line-clamp-3 sm:text-xl">
             {post.title}
           </h3>
 
           {post.excerpt && (
-            <p className="mt-2 flex-1 text-[0.95rem] leading-relaxed text-muted-foreground line-clamp-3">
+            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground line-clamp-3 sm:text-[0.95rem]">
               {post.excerpt}
             </p>
           )}
 
-          <div className="mt-auto flex items-center justify-between border-t border-border pt-[15px]">
-            <span className="text-sm font-bold text-orange-600 group-hover:underline">
-              อ่านต่อ → | Read more →
-            </span>
-            {formattedDate && (
-              <time className="text-xs text-muted-foreground" dateTime={post.publishedAt}>
-                {formattedDate}
-              </time>
-            )}
+          <div className="mt-auto border-t border-border pt-4">
+            <p className="text-sm text-muted-foreground">{cardAuthor.th}</p>
+            <p className="text-xs text-muted-foreground/80">{cardAuthor.en}</p>
           </div>
         </div>
       </Link>
