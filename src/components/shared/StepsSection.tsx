@@ -13,18 +13,18 @@ interface StepsSectionProps {
 export default function StepsSection({ headline, steps, className }: StepsSectionProps) {
   return (
     <section className={`bg-[#1B4D3E]/5 py-16 sm:py-24 ${className ?? ""}`}>
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2
           className="mb-12 text-center text-2xl font-bold tracking-tight text-[#1B4D3E] sm:text-3xl"
           style={{ animation: "fade-up 0.5s ease both" }}
         >
           {headline}
         </h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-6">
           {steps.map((step, i) => (
             <div
               key={step.number}
-              className="flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm"
+              className="flex h-full min-w-0 flex-col items-center rounded-2xl border border-border bg-white p-8 text-center shadow-sm"
               style={{ animation: `fade-up 0.5s ease ${i * 0.1}s both` }}
             >
               <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-[#1B4D3E] text-lg font-bold text-white">
