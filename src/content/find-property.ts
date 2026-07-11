@@ -115,4 +115,47 @@ export const FIND_PROPERTY_CONTENT = {
     ],
   },
   formTag: "request-matchmaking",
+  banner: {
+    titleTh: "ให้เราหาให้ ฟรี!",
+    titleEn: "Free Property Matchmaking",
+    subtitleTh: "แค่บอกโจทย์ของคุณ ทีมงานผู้เชี่ยวชาญพร้อมคัดสรรบ้าน คอนโด และที่ดินที่ใช่ที่สุด",
+    subtitleEn: "Tell us your needs, and we'll curate the best properties just for you.",
+  },
+  split: {
+    headline: {
+      th: "บอกบ้านในฝันของคุณ ให้ทีมงานเนรมิตให้เป็นจริง ฟรี 100%",
+      en: "Tell us your dream home. We'll make it a reality for free.",
+    },
+    seo: {
+      th: "บริการผู้ช่วยจัดหาอสังหาฯ ซื้อ-เช่า โซนกรุงเทพฯ อ่อนนุช สุขุมวิท 77 สมุทรปราการ ชลบุรี ระยอง และ EEC",
+      en: "Personal property shopper in Bangkok, On Nut, Sukhumvit 77, Chonburi & EEC.",
+    },
+    lead: {
+      th: "ประหยัดเวลาอันมีค่าของคุณ ไม่ต้องเลื่อนดูประกาศเองเป็นร้อยๆ หน้า ทีมงานผู้เชี่ยวชาญของเราพร้อมทำหน้าที่เป็น \"ผู้ช่วยส่วนตัว\" ลงพื้นที่คัดกรองทรัพย์ตามงบ ทำเล และตรวจสอบสภาพแวดล้อมให้คุณก่อนเสมอ",
+      en: "Save your valuable time. Our expert team acts as your personal shopper, physically inspecting and curating properties that match your exact criteria.",
+    },
+    benefits: [
+      { icon: "🎯", th: "คัดกรองด้วยสายตานักลงทุน", en: "Investor-minded screening" },
+      { icon: "📍", th: "เชี่ยวชาญทำเล EEC และปริมณฑล", en: "EEC & greater Bangkok expertise" },
+      { icon: "🛡️", th: "ดูแลสินเชื่อและเอกสารฟรี", en: "Free loan and paperwork care" },
+      { icon: "⚡", th: "ส่งลิสต์คัดพิเศษภายใน 1-3 วันทำการ", en: "Curated shortlist in 1-3 business days" },
+    ],
+  },
+  bentoSlots: [
+    {
+      alt: "จัดหาบ้านเดี่ยว ชลบุรี ตรงใจลูกค้า",
+      badgeTh: "✅ จัดหาได้ตรงใจ",
+      badgeEn: "Perfect Match",
+    },
+    {
+      alt: "จัดหาคอนโดใกล้ BTS สุขุมวิท 77",
+      badgeTh: "✅ ใกล้ BTS",
+      badgeEn: "Near BTS",
+    },
+    {
+      alt: "บ้านมือสองรีโนเวทราคาต่ำกว่าตลาด",
+      badgeTh: "✅ รีโนเวทพร้อมอยู่",
+      badgeEn: "Renovated",
+    },
+  ],
 }

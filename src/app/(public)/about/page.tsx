@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 import { getProfile } from "@/lib/queries/profile"
+import { getFaqsByPage } from "@/lib/queries/faqs"
+import { mapFaq } from "@/lib/mappers"
+import { mapFaqsToItems } from "@/lib/faq-items"
 import { SITE_CONFIG } from "@/config/site"
 import AboutPage from "./AboutPage"
 
@@ -67,7 +70,8 @@ const localBusinessJsonLd = {
 }
 
 export default async function Page() {
-  const profile = await getProfile()
+  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("about")])
+  const faqs = mapFaqsToItems(faqRows.map(mapFaq))
 
   return (
     <>
@@ -75,7 +79,7 @@ export default async function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
       />
-      <AboutPage profile={profile} />
+      <AboutPage profile={profile} faqs={faqs} />
     </>
   )
 }

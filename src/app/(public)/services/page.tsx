@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 import { getProfile } from "@/lib/queries/profile"
+import { getFaqsByPage } from "@/lib/queries/faqs"
+import { mapFaq } from "@/lib/mappers"
+import { mapFaqsToItems } from "@/lib/faq-items"
 import ServicesHubPage from "./ServicesHubPage"
 
 export const revalidate = 3600
@@ -16,7 +19,8 @@ export const metadata: Metadata = {
 }
 
 export default async function ServicesRoute() {
-  const profile = await getProfile()
+  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("services")])
+  const faqs = mapFaqsToItems(faqRows.map(mapFaq))
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
@@ -44,11 +48,13 @@ export default async function ServicesRoute() {
         servicesHeroImage={profile.servicesHeroImage}
         heroImageUrl={profile.heroImageUrl}
         lineUrl={profile.lineUrl}
+        whyChooseImage={profile.servicesWhyChooseImage}
         trustImages={{
           renovation: profile.trustRenovationImage,
           network: profile.trustNetworkImage,
           shopper: profile.trustShopperImage,
         }}
+        faqs={faqs}
       />
     </>
   )

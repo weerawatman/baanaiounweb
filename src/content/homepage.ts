@@ -19,6 +19,8 @@ export const HERO = {
 export const SERVICES_HEADING = {
   th: "บริการของเรา",
   en: "Our Services",
+  subtitleTh: "เราไม่ใช่แค่กระดานประกาศ แต่เราคือ \"พาร์ทเนอร์\" ที่เข้าใจคุณ",
+  subtitleEn: "More than just listings, we are your real estate partners.",
 } as const
 
 export const SERVICE_CARDS = [
@@ -27,35 +29,80 @@ export const SERVICE_CARDS = [
     color: "#E8833A",
     titleTh: "สำหรับเจ้าของทรัพย์",
     titleEn: "Property Owners",
-    descTh: "ประเมินศักยภาพทรัพย์ฟรี และการตลาดครบวงจรจนปิดดีล",
-    descEn: "Free investor-led assessment and full-service marketing until closing.",
-    href: "/request?tab=list-property",
+    descTh: "ประเมินศักยภาพทรัพย์ฟรี คัดกรองผู้ซื้อตัวจริง และทำการตลาดเชิงรุกจนปิดดีล",
+    descEn: "Free property assessment and proactive full-service marketing until closed.",
+    href: "/list-property",
+    ctaTh: "ฝากทรัพย์ทันที",
+    ctaEn: "List Property Now",
+    secondaryHref: "/services",
   },
   {
     icon: "Search",
     color: "#2E75B6",
     titleTh: "สำหรับผู้ซื้อ-เช่า",
     titleEn: "Buyers & Renters",
-    descTh: "คัดสรรทรัพย์ทำเลทองและรีโนเวทพร้อมอยู่ ดูแลสินเชื่อฟรี",
-    descEn: "Curated homes and free loan guidance through closing.",
+    descTh: "คัดสรรทรัพย์ทำเลทอง รีโนเวทพร้อมอยู่ พร้อมบริการดูแลด้านสินเชื่อให้ฟรี 100%",
+    descEn: "Curated prime locations and renovated homes with free loan care.",
     href: "/find-property",
+    ctaTh: "ให้เราหาให้ฟรี",
+    ctaEn: "Find Property Free",
+    secondaryHref: "/services",
   },
   {
     icon: "Users",
     color: "#1B7A52",
     titleTh: "เครือข่าย Co-Agent",
     titleEn: "Co-Agent Network",
-    descTh: "ฝากทรัพย์ฟรี เราช่วยทำการตลาดจนกว่าจะปิดดีล",
-    descEn: "List with us free — we market until the deal closes.",
-    href: "/request?tab=co-agent",
+    descTh: "ขยายโอกาส ปิดดีลไว ฝากทรัพย์เข้าระบบฟรี เราช่วยดันการตลาด แบ่งคอมมิชชันโปร่งใส",
+    descEn: "Expand your reach. Free listing with transparent commission splits.",
+    href: "/co-agent",
+    ctaTh: "ร่วมเครือข่าย",
+    ctaEn: "Join Network",
+    secondaryHref: "/services",
   },
   {
     icon: "GraduationCap",
     color: "#7C3AED",
     titleTh: "คอร์สนายหน้าอสังหาฯ",
     titleEn: "Real Estate Course",
-    descTh: "คอร์สจับมือทำ ถ่ายทอดจากนักลงทุนและผู้เชี่ยวชาญตัวจริง",
-    descEn: "Hands-on course taught by real investors and experts.",
+    descTh: "คอร์สเวิร์กชอปจับมือทำ ถ่ายทอดประสบการณ์จริงจากนักลงทุนและผู้เชี่ยวชาญตัวจริง",
+    descEn: "Hands-on workshop taught by real investors and industry experts.",
     href: "/agent-course",
+    ctaTh: "สมัครคอร์สเรียน",
+    ctaEn: "Enroll Now",
+    secondaryHref: "/services",
   },
 ] as const
+
+export const HOME_WHY_CHOOSE = {
+  heading: { th: "ทำไมต้องเลือก บ้านไออุ่น?", en: "Why Choose Us?" },
+  pillars: [
+    {
+      icon: "👁️",
+      titleTh: "คัดกรองด้วยสายตานักลงทุน",
+      titleEn: "Investor's Eye Screening",
+      descTh:
+        "ทีมงานลงพื้นที่ตรวจเช็กโครงสร้างและประเมินความคุ้มค่าให้คุณก่อนเสมอ เพื่อให้มั่นใจว่าทรัพย์ทุกชิ้นมีคุณภาพสูงสุด",
+      descEn:
+        "Our team inspects structure and value on-site before every recommendation, ensuring top quality.",
+    },
+    {
+      icon: "🌐",
+      titleTh: "ระบบนิเวศที่มีชีวิต",
+      titleEn: "Living Ecosystem",
+      descTh:
+        "ศูนย์รวมผู้ซื้อ ผู้ขาย และเครือข่าย Co-Agent ทั่วประเทศ ที่ทำงานร่วมกันอย่างมีชีวิตชีวา ช่วยเพิ่มโอกาสปิดดีลให้ไวขึ้น",
+      descEn:
+        "A nationwide network of buyers, sellers, and Co-Agents working together to close deals faster.",
+    },
+    {
+      icon: "🛡️",
+      titleTh: "ดูแลเอกสารและสินเชื่อฟรี",
+      titleEn: "Free Paperwork & Loan Care",
+      descTh:
+        "บริการแบบ End-to-End ตั้งแต่หาสินเชื่อ ตรวจสัญญา จนถึงวันโอนกรรมสิทธิ์ โดยไม่มีค่าใช้จ่ายแอบแฝง",
+      descEn:
+        "End-to-end service from loans and contracts through transfer day — no hidden fees.",
+    },
+  ],
+} as const

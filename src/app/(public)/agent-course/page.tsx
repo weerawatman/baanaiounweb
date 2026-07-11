@@ -1,5 +1,9 @@
 import { SITE_CONFIG } from "@/config/site"
 import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
+import { getProfile } from "@/lib/queries/profile"
+import { getFaqsByPage } from "@/lib/queries/faqs"
+import { mapFaq } from "@/lib/mappers"
+import { mapFaqsToItems } from "@/lib/faq-items"
 
 export { generateMetadata } from "./AgentCoursePage"
 import AgentCoursePage from "./AgentCoursePage"
@@ -44,14 +48,21 @@ const courseJsonLd = {
   },
 }
 
-export default function AgentCourseRoute() {
+export default async function AgentCourseRoute() {
+  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("agent-course")])
+  const faqs = mapFaqsToItems(faqRows.map(mapFaq))
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
       />
-      <AgentCoursePage />
+      <AgentCoursePage
+        heroImage={profile.agentCourseHeroImage || undefined}
+        midBannerImage={profile.agentCourseBannerImage || undefined}
+        faqs={faqs}
+      />
     </>
   )
 }

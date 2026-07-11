@@ -100,5 +100,60 @@ export const LIST_PROPERTY_CONTENT = {
       },
     ],
   },
-  formTag: "owner"
+  formTag: "owner",
+  banner: {
+    titleTh: "ฝากขาย / ปล่อยเช่า อสังหาฯ",
+    titleEn: "List Your Property",
+    subtitleTh: "เปลี่ยนเรื่องขายบ้านให้เป็นเรื่องง่าย ปิดดีลไว ได้ราคาที่ใช่",
+    subtitleEn: "Make selling easy, close deals faster, at the right price.",
+  },
+  split: {
+    headline: {
+      th: "หมดทุกความกังวลเรื่องฝากขาย-ปล่อยเช่า เราพร้อมเปลี่ยนให้เป็นเรื่องง่ายและปิดดีลไว",
+      en: "Turn selling worries into a fast and successful close.",
+    },
+    seo: {
+      th: "บริการรับฝากขาย-ปล่อยเช่า อสังหาฯ โซนชลบุรี สมุทรปราการ ฉะเชิงเทรา ระยอง และ EEC",
+      en: "Full-service property listing in Chonburi, Samut Prakan, Rayong & EEC.",
+    },
+    benefits: [
+      { icon: "🚀", titleTh: "ปิดดีลไว ไม่ต้องรอนาน", titleEn: "Fast Closing", descTh: "ทำการตลาดตรงจุด เข้าถึงกลุ่มผู้ซื้อตัวจริง", descEn: "Targeted marketing to real buyers." },
+      { icon: "📑", titleTh: "หมดปวดหัวเรื่องเอกสาร", titleEn: "Hassle-Free", descTh: "ทีมงานจัดการสัญญาและขั้นตอนให้ครบจบ", descEn: "We handle all contracts and processes." },
+      { icon: "🛡️", titleTh: "ปลอดภัย โปร่งใส 100%", titleEn: "100% Secure", descTh: "ดูแลทุกขั้นตอนอย่างรัดกุม ไว้ใจได้แน่นอน", descEn: "Transparent and safe at every step." },
+      { icon: "🌐", titleTh: "เครือข่าย Co-Agent", titleEn: "Co-Agent Network", descTh: "กระจายทรัพย์ให้พาร์ทเนอร์กว่า 50+ ท่านช่วยขาย", descEn: "Distributed to 50+ partners instantly." },
+    ],
+    whyUs: {
+      titleTh: "ทำไมเจ้าของทรัพย์ถึงเลือก บ้านไออุ่น?",
+      titleEn: "Why Choose Baan Ai Oun?",
+      items: [
+        { th: "ประเมินศักยภาพด้วยสายตานักลงทุน — ลงพื้นที่ตรวจเช็กและแนะนำการปรับปรุงทรัพย์เพื่ออัปราคาขาย", en: "Investor's valuation with on-site inspection and upgrade advice." },
+        { th: "ทำการตลาดเชิงรุก ครบทุกช่องทาง (Omnichannel Marketing)", en: "Proactive omnichannel marketing across all channels." },
+        { th: "คัดกรองผู้ซื้อและผู้เช่าตัวจริง (Verified Clients Only)", en: "Verified buyers and renters only — save your time." },
+      ],
+    },
+  },
+  bentoSlots: [
+    {
+      alt: "ผลงานขายบ้านเดี่ยวชลบุรี",
+      badgeTh: "✅ ปิดดีลแล้ว ภายใน 14 วัน",
+      badgeEn: "Sold in 14 Days",
+    },
+    {
+      alt: "ผลงานปล่อยเช่าคอนโด",
+      badgeTh: "✅ ปล่อยเช่าแล้ว",
+      badgeEn: "Rented",
+    },
+    {
+      alt: "ผลงานขายทาวน์โฮมสมุทรปราการ",
+      badgeTh: "✅ โอนสำเร็จ",
+      badgeEn: "Transferred",
+    },
+  ],
+  formCard: {
+    title: { th: "ส่งข้อมูลฝากทรัพย์", en: "Submit Your Listing" },
+    description: {
+      th: "กรอกข้อมูลเบื้องต้น ทีมงานพร้อมติดต่อกลับเพื่อประเมินและเริ่มทำการตลาด",
+      en: "Share the basics and our team will follow up to assess and market your property.",
+    },
+  },
 }

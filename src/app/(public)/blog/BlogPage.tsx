@@ -2,20 +2,24 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import { cn } from "@/lib/utils"
 import { type BlogPost } from "@/types"
 import { BLOG_CATEGORIES } from "@/data/blog-posts"
 import BlogCard from "@/components/blog/BlogCard"
+import BlogHeroArticle from "@/components/blog/BlogHeroArticle"
+import NewsletterBanner from "@/components/blog/NewsletterBanner"
 import BlogCategoryFilter from "@/components/blog/BlogCategoryFilter"
 import Breadcrumb from "@/components/layout/Breadcrumb"
+import { FaqSection, type FaqItem } from "@/components/shared"
 import { Search } from "lucide-react"
-import { cn } from "@/lib/utils"
 
 interface BlogPageProps {
   posts: BlogPost[]
+  faqs: FaqItem[]
   heroImage?: string
 }
 
-export default function BlogPage({ posts, heroImage }: BlogPageProps) {
+export default function BlogPage({ posts, faqs, heroImage }: BlogPageProps) {
   const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
 
@@ -29,6 +33,8 @@ export default function BlogPage({ posts, heroImage }: BlogPageProps) {
     return true
   })
 
+  const heroPost = filteredPosts[0]
+  const gridPosts = filteredPosts.slice(1)
   const showComingSoon = posts.length === 0
 
   return (
@@ -71,6 +77,14 @@ export default function BlogPage({ posts, heroImage }: BlogPageProps) {
         >
           Insightful Articles by Baan Ai Oun
         </p>
+        <p
+          className={cn(
+            "mx-auto mt-3 max-w-2xl text-sm",
+            heroImage ? "text-white/75" : "text-muted-foreground",
+          )}
+        >
+          คลังความรู้ เคล็ดลับ และเคสรีโนเวทจริง เพื่อให้คุณลงทุนและซื้อขายอสังหาฯ ได้อย่างมั่นใจ
+        </p>
         <div className="mx-auto mt-4 h-1 w-[60px] rounded-sm bg-primary" />
       </header>
 
@@ -89,15 +103,17 @@ export default function BlogPage({ posts, heroImage }: BlogPageProps) {
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="ค้นหาบทความ... | Search articles..."
+            placeholder="ค้นหาบทความ ความรู้ ทำเล... | Search..."
             className="w-full rounded-full border border-border bg-card py-2.5 pr-4 pl-10 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
         </div>
       </div>
 
-      {filteredPosts.length > 0 && (
+      {heroPost && <BlogHeroArticle post={heroPost} />}
+
+      {gridPosts.length > 0 && (
         <div className="mb-12 grid grid-cols-1 gap-[30px] sm:grid-cols-2 xl:grid-cols-3">
-          {filteredPosts.map((post) => (
+          {gridPosts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
         </div>
@@ -119,6 +135,14 @@ export default function BlogPage({ posts, heroImage }: BlogPageProps) {
           </p>
         </div>
       )}
+
+      <NewsletterBanner />
+
+      <FaqSection
+        title="อสังหาฯ 101 (Real Estate 101) | FAQ"
+        subtitle={'คำว่า "101" หมายถึงความรู้พื้นฐานสำหรับผู้เริ่มต้น | "101" means beginner-friendly fundamentals.'}
+        items={faqs}
+      />
     </main>
   )
 }

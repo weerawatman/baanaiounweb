@@ -16,6 +16,10 @@ interface AudienceCardProps {
   className?: string
   /** "dark" = การ์ดพื้นเขียวเข้มแบบหน้าแรก (mockup), default = การ์ดขาว */
   variant?: "light" | "dark"
+  /** ปุ่มหลัก + ปุ่มรอง (mockup หน้าแรก) */
+  ctaTh?: string
+  ctaEn?: string
+  secondaryHref?: string
 }
 
 export default function AudienceCard({
@@ -30,18 +34,19 @@ export default function AudienceCard({
   highlightEn,
   className,
   variant = "light",
+  ctaTh,
+  ctaEn,
+  secondaryHref,
 }: AudienceCardProps) {
   if (variant === "dark") {
     return (
-      <Link
-        href={href}
+      <div
         className={cn(
-          "group flex h-full flex-col items-center rounded-2xl bg-primary p-6 text-center shadow-sm",
-          "transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg",
+          "flex h-full flex-col items-center rounded-2xl bg-primary p-6 text-center shadow-sm",
           className,
         )}
       >
-        <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/20 transition-colors group-hover:bg-white/15">
+        <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/20">
           <Icon size={30} className="text-white" />
         </div>
 
@@ -52,7 +57,27 @@ export default function AudienceCard({
 
         <p className="mt-2 flex-1 text-sm leading-relaxed text-white/90">{descTh}</p>
         <p className="mt-1 text-xs leading-relaxed text-white/60">{descEn}</p>
-      </Link>
+
+        <div className="mt-5 flex w-full flex-col gap-2">
+          <Link
+            href={href}
+            className="rounded-full bg-secondary px-4 py-2.5 text-sm font-bold text-secondary-foreground transition-opacity hover:opacity-90"
+          >
+            {ctaTh ?? titleTh}
+            {ctaEn && (
+              <span className="mt-0.5 block text-xs font-medium opacity-90">{ctaEn}</span>
+            )}
+          </Link>
+          {secondaryHref && (
+            <Link
+              href={secondaryHref}
+              className="rounded-full border border-white/40 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              อ่านรายละเอียด | Learn More
+            </Link>
+          )}
+        </div>
+      </div>
     )
   }
 

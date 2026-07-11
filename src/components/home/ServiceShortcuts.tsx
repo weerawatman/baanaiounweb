@@ -9,7 +9,10 @@ const ICON_MAP = { Home, Search, Users, GraduationCap } as const
 export default function ServiceShortcuts() {
   return (
     <PageSection variant="default">
-      <SectionTitle title={`${SERVICES_HEADING.th} | ${SERVICES_HEADING.en}`} />
+      <SectionTitle
+        title={`${SERVICES_HEADING.th} | ${SERVICES_HEADING.en}`}
+        subtitle={`${SERVICES_HEADING.subtitleTh} | ${SERVICES_HEADING.subtitleEn}`}
+      />
 
       <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {SERVICE_CARDS.map((card) => {
@@ -25,6 +28,9 @@ export default function ServiceShortcuts() {
               titleEn={card.titleEn}
               descTh={card.descTh}
               descEn={card.descEn}
+              ctaTh={card.ctaTh}
+              ctaEn={card.ctaEn}
+              secondaryHref={card.secondaryHref}
             />
           )
         })}

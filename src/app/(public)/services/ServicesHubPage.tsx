@@ -6,6 +6,7 @@ import AudienceCard from "@/components/shared/AudienceCard"
 import LineClosingCta from "@/components/shared/LineClosingCta"
 import TrustPillars, { type TrustPillarImages } from "@/components/home/TrustPillars"
 import ServicesWhyChoose from "@/components/services/ServicesWhyChoose"
+import { FaqSection, type FaqItem } from "@/components/shared"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
 import { SITE_CONFIG } from "@/config/site"
 import { Home, Search, Users, GraduationCap } from "lucide-react"
@@ -16,14 +17,18 @@ interface ServicesHubPageProps {
   servicesHeroImage?: string
   heroImageUrl?: string
   lineUrl?: string
+  whyChooseImage?: string
   trustImages: TrustPillarImages
+  faqs: FaqItem[]
 }
 
 export default function ServicesHubPage({
   servicesHeroImage,
   heroImageUrl,
   lineUrl,
+  whyChooseImage,
   trustImages,
+  faqs,
 }: ServicesHubPageProps) {
   const background = servicesHeroImage || heroImageUrl || SITE_CONFIG.pim.heroImage
   const lineHref = lineUrl || SITE_CONFIG.lineUrl
@@ -108,9 +113,16 @@ export default function ServicesHubPage({
         </div>
       </PageSection>
 
-      <ServicesWhyChoose />
+      <ServicesWhyChoose imageUrl={whyChooseImage} />
 
       <TrustPillars images={trustImages} />
+
+      <FaqSection
+        variant="boxed"
+        title="คำถามที่พบบ่อย | FAQ"
+        subtitle="ข้อสงสัยยอดฮิตเกี่ยวกับบริการทั้งหมดของเรา | Top questions about all our services."
+        items={faqs}
+      />
 
       <LineClosingCta
         variant="warm"

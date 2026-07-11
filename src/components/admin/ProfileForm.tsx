@@ -51,6 +51,18 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
       agent_course_hero_image: defaultValues.agentCourseHeroImage,
       co_agent_hero_image: defaultValues.coAgentHeroImage,
       blog_hero_image: defaultValues.blogHeroImage,
+      find_property_hero_image: defaultValues.findPropertyHeroImage,
+      find_property_bento_1_image: defaultValues.findPropertyBento1Image,
+      find_property_bento_2_image: defaultValues.findPropertyBento2Image,
+      find_property_bento_3_image: defaultValues.findPropertyBento3Image,
+      list_property_hero_image: defaultValues.listPropertyHeroImage,
+      list_property_bento_1_image: defaultValues.listPropertyBento1Image,
+      list_property_bento_2_image: defaultValues.listPropertyBento2Image,
+      list_property_bento_3_image: defaultValues.listPropertyBento3Image,
+      about_mid_banner_image: defaultValues.aboutMidBannerImage,
+      services_why_choose_image: defaultValues.servicesWhyChooseImage,
+      co_agent_split_image: defaultValues.coAgentSplitImage,
+      agent_course_banner_image: defaultValues.agentCourseBannerImage,
       phone: defaultValues.phone,
       line_id: defaultValues.lineId,
       line_url: defaultValues.lineUrl,
@@ -90,6 +102,7 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
           <TabsTrigger value="general">ข้อมูลทั่วไป</TabsTrigger>
           <TabsTrigger value="home">หน้าแรก</TabsTrigger>
           <TabsTrigger value="property-match">งานหาทรัพย์</TabsTrigger>
+          <TabsTrigger value="list-property">ฝากขาย/เช่า</TabsTrigger>
           <TabsTrigger value="blog">บทความ</TabsTrigger>
           <TabsTrigger value="about">เกี่ยวกับเรา</TabsTrigger>
           <TabsTrigger value="services">บริการของเรา</TabsTrigger>
@@ -265,51 +278,6 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
                 )}
               />
             </FormField>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <FormField label="รูปผลงานรีโนเวท" hint="แนะนำภาพเปรียบเทียบ Before & After">
-                <Controller
-                  control={control}
-                  name="trust_renovation_image"
-                  render={({ field }) => (
-                    <SingleImageField
-                      value={field.value}
-                      onChange={field.onChange}
-                      label="อัปโหลดรูป"
-                      aspect="wide"
-                    />
-                  )}
-                />
-              </FormField>
-              <FormField label="รูปนายหน้ามืออาชีพ" hint="ภาพบรรยากาศทีมงาน">
-                <Controller
-                  control={control}
-                  name="trust_network_image"
-                  render={({ field }) => (
-                    <SingleImageField
-                      value={field.value}
-                      onChange={field.onChange}
-                      label="อัปโหลดรูป"
-                      aspect="wide"
-                    />
-                  )}
-                />
-              </FormField>
-              <FormField label="รูปบริการจัดหาบ้านฟรี" hint="ภาพลูกค้า/การให้คำปรึกษา">
-                <Controller
-                  control={control}
-                  name="trust_shopper_image"
-                  render={({ field }) => (
-                    <SingleImageField
-                      value={field.value}
-                      onChange={field.onChange}
-                      label="อัปโหลดรูป"
-                      aspect="wide"
-                    />
-                  )}
-                />
-              </FormField>
-            </div>
           </section>
         </TabsContent>
 
@@ -322,8 +290,26 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
             </p>
 
             <FormField
+              label="รูป Hero banner หน้างานหาทรัพย์"
+              hint="แบนเนอร์ด้านบนหน้า /find-property"
+            >
+              <Controller
+                control={control}
+                name="find_property_hero_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูป Hero"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+
+            <FormField
               label="รูปทีมงานให้คำปรึกษาลูกค้า"
-              hint="แสดงใต้ข้อความฝั่งซ้ายของหน้างานหาทรัพย์ (ยังไม่อัปโหลด = แสดงกล่องสำรองแทน)"
+              hint="แสดงฝั่งซ้ายของหน้างานหาทรัพย์ (ยังไม่อัปโหลด = แสดงกล่องสำรองแทน)"
             >
               <Controller
                 control={control}
@@ -338,6 +324,121 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
                 )}
               />
             </FormField>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <FormField label="รูปผลงาน Bento ช่องใหญ่">
+                <Controller
+                  control={control}
+                  name="find_property_bento_1_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="รูปผลงาน Bento ช่องเล็ก 1">
+                <Controller
+                  control={control}
+                  name="find_property_bento_2_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="รูปผลงาน Bento ช่องเล็ก 2">
+                <Controller
+                  control={control}
+                  name="find_property_bento_3_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+            </div>
+          </section>
+        </TabsContent>
+
+        {/* ─── Sheet: ฝากขาย/เช่า ───────────────────── */}
+        <TabsContent value="list-property" className="flex flex-col gap-6 pt-4">
+          <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+            <h2 className="text-foreground font-semibold">รูปภาพหน้าฝากขาย/ปล่อยเช่า</h2>
+            <p className="text-muted-foreground text-sm">
+              รูปประกอบหน้า /list-property — Hero, ทีมงาน และผลงาน Bento
+            </p>
+
+            <FormField label="รูป Hero banner หน้าฝากขาย/เช่า">
+              <Controller
+                control={control}
+                name="list_property_hero_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูป Hero"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <FormField label="รูปผลงาน Bento ช่องใหญ่">
+                <Controller
+                  control={control}
+                  name="list_property_bento_1_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="รูปผลงาน Bento ช่องเล็ก 1">
+                <Controller
+                  control={control}
+                  name="list_property_bento_2_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="รูปผลงาน Bento ช่องเล็ก 2">
+                <Controller
+                  control={control}
+                  name="list_property_bento_3_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+            </div>
           </section>
         </TabsContent>
 
@@ -432,9 +533,26 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
                 />
               </FormField>
             </div>
+
+            <FormField
+              label="รูปแบนเนอร์กลางหน้า"
+              hint="แบนเนอร์คั่นระหว่างไทม์ไลน์กับส่วน &ldquo;เว็บไซต์ช่วยแก้ปัญหา&rdquo;"
+            >
+              <Controller
+                control={control}
+                name="about_mid_banner_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูปแบนเนอร์"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
           </section>
         </TabsContent>
-
         {/* ─── Sheet: บริการของเรา ──────────────────── */}
         <TabsContent value="services" className="flex flex-col gap-6 pt-4">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
@@ -457,6 +575,69 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
                 )}
               />
             </FormField>
+
+            <FormField
+              label="รูปประกอบส่วน &ldquo;ทำไมต้องเลือกเรา&rdquo;"
+              hint="แสดงฝั่งซ้ายของส่วน Why Choose Us"
+            >
+              <Controller
+                control={control}
+                name="services_why_choose_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูป"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <FormField label="รูปผลงานรีโนเวท" hint="Trust pillar — แนะนำภาพ Before & After">
+                <Controller
+                  control={control}
+                  name="trust_renovation_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="รูปนายหน้ามืออาชีพ" hint="Trust pillar — ภาพบรรยากาศทีมงาน">
+                <Controller
+                  control={control}
+                  name="trust_network_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="รูปบริการจัดหาบ้านฟรี" hint="Trust pillar — ภาพลูกค้า/การให้คำปรึกษา">
+                <Controller
+                  control={control}
+                  name="trust_shopper_image"
+                  render={({ field }) => (
+                    <SingleImageField
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="อัปโหลดรูป"
+                      aspect="wide"
+                    />
+                  )}
+                />
+              </FormField>
+            </div>
           </section>
         </TabsContent>
 
@@ -482,10 +663,26 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
                 )}
               />
             </FormField>
+
+            <FormField
+              label="รูปแบนเนอร์กลางหน้า (ระหว่าง Day 1–2)"
+              hint="แบนเนอร์คั่นระหว่างเนื้อหาวันแรกกับวันที่สอง"
+            >
+              <Controller
+                control={control}
+                name="agent_course_banner_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูปแบนเนอร์"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
           </section>
         </TabsContent>
-
-        {/* ─── Sheet: Co-Agent ──────────────────────── */}
         <TabsContent value="co-agent" className="flex flex-col gap-6 pt-4">
           <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
             <h2 className="text-foreground font-semibold">รูปภาพหน้า Co-Agent</h2>
@@ -502,6 +699,24 @@ export function ProfileForm({ defaultValues, action }: ProfileFormProps) {
                     value={field.value}
                     onChange={field.onChange}
                     label="อัปโหลดรูปพื้นหลัง"
+                    aspect="wide"
+                  />
+                )}
+              />
+            </FormField>
+
+            <FormField
+              label="รูปประกอบส่วนเนื้อหา (Split layout)"
+              hint="แสดงฝั่งซ้ายของส่วน &ldquo;ทำไมถึงควร Co-Broke&rdquo;"
+            >
+              <Controller
+                control={control}
+                name="co_agent_split_image"
+                render={({ field }) => (
+                  <SingleImageField
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="อัปโหลดรูป"
                     aspect="wide"
                   />
                 )}

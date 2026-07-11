@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
 import { getActiveProperties } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
-import { mapProperty } from "@/lib/mappers"
+import { getFaqsByPage } from "@/lib/queries/faqs"
+import { mapProperty, mapFaq } from "@/lib/mappers"
+import { mapFaqsToItems } from "@/lib/faq-items"
 import HomePage from "./HomePage"
 
 export const revalidate = 900
@@ -18,19 +20,20 @@ export const metadata: Metadata = {
 }
 
 export default async function HomeRoute() {
-  const [propertyRows, profile] = await Promise.all([getActiveProperties(), getProfile()])
+  const [propertyRows, profile, faqRows] = await Promise.all([
+    getActiveProperties(),
+    getProfile(),
+    getFaqsByPage("home"),
+  ])
 
   const properties = propertyRows.map(mapProperty)
+  const faqs = mapFaqsToItems(faqRows.map(mapFaq))
 
   return (
     <HomePage
       properties={properties}
       heroImage={profile.homeHeroImage || profile.heroImageUrl}
-      trustImages={{
-        renovation: profile.trustRenovationImage,
-        network: profile.trustNetworkImage,
-        shopper: profile.trustShopperImage,
-      }}
+      faqs={faqs}
     />
   )
 }

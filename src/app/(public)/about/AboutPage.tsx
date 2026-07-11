@@ -2,7 +2,13 @@ import Link from "next/link"
 import Image from "next/image"
 import { FileImage } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
+import { FaqSection, type FaqItem } from "@/components/shared"
 import type { Profile } from "@/types"
+
+interface AboutPageProps {
+  profile: Profile
+  faqs: FaqItem[]
+}
 
 interface Milestone {
   year: string
@@ -72,7 +78,7 @@ function TimelineImage({ src, alt, hint }: { src: string; alt: string; hint: str
   )
 }
 
-export default function AboutPage({ profile }: { profile: Profile }) {
+export default function AboutPage({ profile, faqs }: AboutPageProps) {
   const milestones: Milestone[] = [
     {
       year: "2002",
@@ -138,31 +144,47 @@ export default function AboutPage({ profile }: { profile: Profile }) {
     },
   ]
 
+  const heroImage = profile.heroImageUrl
+
   return (
     <>
       <div className="mx-auto max-w-4xl px-4 py-4 sm:px-6">
         <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "เกี่ยวกับเรา | About Us" }]} />
       </div>
 
-      <main className="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
-        {/* Header & Mission */}
-        <header className="mb-12 mt-5 text-center">
-          <h1 className="text-[2.2rem] font-bold text-foreground">
+      {/* Hero banner (mockup about.html) */}
+      <header className="relative isolate overflow-hidden bg-gradient-to-b from-[#1B4D3E] to-[#0d2820] py-16 text-center text-white sm:py-20">
+        {heroImage && (
+          <>
+            <Image
+              src={heroImage}
+              alt=""
+              aria-hidden
+              fill
+              priority
+              sizes="100vw"
+              className="-z-20 object-cover"
+            />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1B4D3E]/85 to-[#0d2820]/90" />
+          </>
+        )}
+        <div className="mx-auto max-w-3xl px-4">
+          <h1 className="text-3xl font-bold sm:text-[2.2rem]">
             เกี่ยวกับเรา: บ้านไออุ่น พร็อพเพอร์ตี้
           </h1>
-          <p className="mt-2 text-xl font-medium text-muted-foreground">About Baan Ai Oun Property</p>
+          <p className="mt-2 text-xl font-medium text-white/80">About Baan Ai Oun Property</p>
+          <p className="mt-5 text-base font-bold text-[#D4A843] sm:text-lg">
+            &ldquo;เชื่อมโยงทุกความต้องการอสังหาฯ ด้วยประสบการณ์นักลงทุนและบริการที่จริงใจ
+            เพื่อคนไทยและต่างชาติ&rdquo;
+          </p>
+          <p className="mt-2 text-sm text-white/75">
+            &ldquo;Connecting real estate goals through investor-led expertise and heartfelt service for
+            local and international clients.&rdquo;
+          </p>
+        </div>
+      </header>
 
-          <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-border bg-card px-6 py-6 shadow-[0_4px_6px_rgba(0,0,0,0.02)]">
-            <p className="text-base font-bold text-primary sm:text-lg">
-              &ldquo;เชื่อมโยงทุกความต้องการอสังหาฯ ด้วยประสบการณ์นักลงทุนและบริการที่จริงใจ
-              เพื่อคนไทยและต่างชาติ&rdquo;
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              &ldquo;Connecting real estate goals through investor-led expertise and heartfelt service for
-              local and international clients.&rdquo;
-            </p>
-          </div>
-        </header>
+      <main className="mx-auto max-w-4xl px-4 pb-16 pt-12 sm:px-6">
 
         {/* Our Story */}
         <section>
@@ -217,6 +239,24 @@ export default function AboutPage({ profile }: { profile: Profile }) {
             </div>
           </div>
         </section>
+
+        {/* Mid-page banner */}
+        <div className="relative mt-20 h-[200px] overflow-hidden rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.15)] sm:h-[280px] lg:h-[350px]">
+          {profile.aboutMidBannerImage ? (
+            <Image
+              src={profile.aboutMidBannerImage}
+              alt="ทำเลศักยภาพ EEC และชลบุรี"
+              fill
+              sizes="(max-width: 768px) 100vw, 896px"
+              className="object-cover brightness-[0.85]"
+            />
+          ) : (
+            <div className="flex h-full flex-col items-center justify-center gap-2 bg-muted text-muted-foreground">
+              <FileImage className="size-10 opacity-40" aria-hidden />
+              <p className="text-sm">อัปโหลดรูปแบนเนอร์กลางใน Admin &gt; โปรไฟล์ &gt; เกี่ยวกับเรา</p>
+            </div>
+          )}
+        </div>
 
         {/* How we help */}
         <section className="mt-20">
@@ -323,6 +363,13 @@ export default function AboutPage({ profile }: { profile: Profile }) {
           </div>
         </section>
       </main>
+
+      <FaqSection
+        title="คำถามที่พบบ่อย | Frequently Asked Questions"
+        subtitle="เรื่องที่ลูกค้ามักสอบถามเกี่ยวกับบ้านไออุ่น พร็อพเพอร์ตี้"
+        items={faqs}
+        variant="boxed"
+      />
     </>
   )
 }

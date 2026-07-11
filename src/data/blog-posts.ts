@@ -1,11 +1,12 @@
 import { type BlogCategory } from "@/types"
 
-/** 5 หมวดบทความ — เน้น Local SEO และ E-E-A-T (Phase 5) */
+/** 6 หมวดบทความ — ตาม mockup docs/mockups/blog.html */
 export const BLOG_CATEGORIES: BlogCategory[] = [
+  { name: "อสังหาฯ 101", nameEn: "Real Estate 101", slug: "real-estate-101" },
+  { name: "รีโนเวทและต่อเติม", nameEn: "Renovation", slug: "renovation" },
+  { name: "ทำเลและการลงทุน", nameEn: "Locations & Investment", slug: "locations" },
   { name: "ซื้อ-ขายและเช่า", nameEn: "Buy, Sell & Rent", slug: "buy-sell-rent" },
   { name: "สินเชื่อและการเงิน", nameEn: "Loans & Finance", slug: "loans-finance" },
-  { name: "ทำเลและการลงทุน", nameEn: "Locations & Investment", slug: "locations" },
-  { name: "รีโนเวทและต่อเติม", nameEn: "Renovation", slug: "renovation" },
   { name: "นายหน้าและอาชีพ", nameEn: "Agent Career", slug: "agent-career" },
 ]
 

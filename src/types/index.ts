@@ -112,6 +112,18 @@ export interface Profile {
   agentCourseHeroImage: string
   coAgentHeroImage: string
   blogHeroImage: string
+  findPropertyHeroImage: string
+  findPropertyBento1Image: string
+  findPropertyBento2Image: string
+  findPropertyBento3Image: string
+  listPropertyHeroImage: string
+  listPropertyBento1Image: string
+  listPropertyBento2Image: string
+  listPropertyBento3Image: string
+  aboutMidBannerImage: string
+  servicesWhyChooseImage: string
+  coAgentSplitImage: string
+  agentCourseBannerImage: string
   phone: string
   lineId: string
   lineUrl: string

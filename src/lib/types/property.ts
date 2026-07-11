@@ -136,6 +136,18 @@ export interface AgentProfile {
   agent_course_hero_image: string
   co_agent_hero_image: string
   blog_hero_image: string
+  find_property_hero_image: string
+  find_property_bento_1_image: string
+  find_property_bento_2_image: string
+  find_property_bento_3_image: string
+  list_property_hero_image: string
+  list_property_bento_1_image: string
+  list_property_bento_2_image: string
+  list_property_bento_3_image: string
+  about_mid_banner_image: string
+  services_why_choose_image: string
+  co_agent_split_image: string
+  agent_course_banner_image: string
   phone: string
   line_id: string
   line_url: string
