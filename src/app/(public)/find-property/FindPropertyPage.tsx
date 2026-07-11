@@ -65,28 +65,30 @@ export default function FindPropertyPage({
           <ServiceLeadTabs active="matchmaking" />
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-          <div>
-            <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
-              {split.headline.th}
-              <br />
-              {split.headline.thLine2}
-            </h2>
-            <p className="mt-2 text-lg font-medium text-secondary">{split.headline.en}</p>
+        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
+          <div className="flex h-full min-h-0 flex-col">
+            <div className="shrink-0">
+              <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
+                {split.headline.th}
+                <br />
+                {split.headline.thLine2}
+              </h2>
+              <p className="mt-2 text-lg font-medium text-secondary">{split.headline.en}</p>
 
-            <p className="mt-5 inline-block border-b-2 border-secondary pb-3 text-sm font-bold text-primary">
-              {split.seo.th}
-            </p>
-            <p className="mt-1 text-xs font-medium text-muted-foreground">{split.seo.en}</p>
+              <p className="mt-5 inline-block border-b-2 border-secondary pb-3 text-sm font-bold text-primary">
+                {split.seo.th}
+              </p>
+              <p className="mt-1 text-xs font-medium text-muted-foreground">{split.seo.en}</p>
 
-            <p className="mt-5 text-base leading-relaxed text-foreground/90">{split.lead.th}</p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{split.lead.en}</p>
+              <p className="mt-5 text-base leading-relaxed text-foreground/90">{split.lead.th}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{split.lead.en}</p>
+            </div>
 
-            <ul className="mt-6 space-y-4">
+            <ul className="mt-6 flex min-h-0 flex-1 flex-col gap-4 lg:justify-between">
               {split.benefits.map((item) => (
                 <li
                   key={item.titleTh}
-                  className="flex items-start gap-4 rounded-xl border border-border bg-card p-5 shadow-sm"
+                  className="flex flex-1 items-start gap-4 rounded-xl border border-border bg-card p-5 shadow-sm"
                 >
                   <span
                     className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-xl"
@@ -103,46 +105,11 @@ export default function FindPropertyPage({
                 </li>
               ))}
             </ul>
-
-            <PortfolioBento items={bentoItems} />
-
-            <div className="relative isolate mt-8 overflow-hidden rounded-2xl px-6 py-12 text-center shadow-lg sm:px-10">
-              {teamImage ? (
-                <>
-                  <Image
-                    src={teamImage}
-                    alt=""
-                    aria-hidden
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 55vw"
-                    className="-z-20 object-cover grayscale-[30%] brightness-[0.7]"
-                  />
-                  <div className="absolute inset-0 -z-10 bg-primary/85" />
-                </>
-              ) : (
-                <div className="absolute inset-0 -z-10 bg-primary" />
-              )}
-              <div className="relative z-10 text-primary-foreground">
-                <p className="text-3xl" aria-hidden>
-                  💛
-                </p>
-                <blockquote className="mt-2 text-lg font-bold italic text-secondary sm:text-xl">
-                  &ldquo;{hook.quote.th}&rdquo;
-                </blockquote>
-                <p className="mt-2 text-sm italic text-secondary/80">&ldquo;{hook.quote.en}&rdquo;</p>
-                <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
-                  {hook.message.th}
-                </p>
-                <p className="mx-auto mt-2 max-w-xl text-xs leading-relaxed text-white/65">
-                  {hook.message.en}
-                </p>
-              </div>
-            </div>
           </div>
 
-          <div className="lg:sticky lg:top-24">
+          <div className="lg:sticky lg:top-24 lg:self-start">
             <div
-              className="rounded-3xl border border-border bg-card p-6 shadow-lg sm:p-8"
+              className="h-full rounded-3xl border border-border bg-card p-6 shadow-lg sm:p-8"
               data-testid="property-match-form"
             >
               <div className="mb-6 border-b border-border pb-5 text-center">
@@ -155,6 +122,41 @@ export default function FindPropertyPage({
               </div>
               <RequestForm requestType="matchmaking" />
             </div>
+          </div>
+        </div>
+
+        <PortfolioBento items={bentoItems} />
+
+        <div className="relative isolate mt-8 overflow-hidden rounded-2xl px-6 py-12 text-center shadow-lg sm:px-10">
+          {teamImage ? (
+            <>
+              <Image
+                src={teamImage}
+                alt=""
+                aria-hidden
+                fill
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                className="-z-20 object-cover grayscale-[30%] brightness-[0.7]"
+              />
+              <div className="absolute inset-0 -z-10 bg-primary/85" />
+            </>
+          ) : (
+            <div className="absolute inset-0 -z-10 bg-primary" />
+          )}
+          <div className="relative z-10 text-primary-foreground">
+            <p className="text-3xl" aria-hidden>
+              💛
+            </p>
+            <blockquote className="mt-2 text-lg font-bold italic text-secondary sm:text-xl">
+              &ldquo;{hook.quote.th}&rdquo;
+            </blockquote>
+            <p className="mt-2 text-sm italic text-secondary/80">&ldquo;{hook.quote.en}&rdquo;</p>
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
+              {hook.message.th}
+            </p>
+            <p className="mx-auto mt-2 max-w-xl text-xs leading-relaxed text-white/65">
+              {hook.message.en}
+            </p>
           </div>
         </div>
       </PageSection>
