@@ -46,17 +46,18 @@ export default function ServicesHubPage({
         titleEn={SERVICES_HUB_CONTENT.hero.h1.en}
         subtitleTh={SERVICES_HUB_CONTENT.hero.sub.th}
         subtitleEn={SERVICES_HUB_CONTENT.hero.sub.en}
+        className="py-7 sm:py-8"
         data-testid="services-hero"
       >
         <div
-          className="mt-8 border-t border-primary-foreground/20 pt-6"
+          className="mt-5 border-t border-primary-foreground/20 pt-4"
           data-testid="services-stats-bar"
         >
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-4 sm:gap-6">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5">
             {SERVICES_HUB_CONTENT.stats.map((stat) => (
               <div key={stat.th} className="text-center">
-                <p className="text-2xl font-bold text-secondary sm:text-3xl">{stat.value}</p>
-                <p className="mt-1 text-sm font-medium">{stat.th}</p>
+                <p className="text-xl font-bold text-secondary sm:text-2xl">{stat.value}</p>
+                <p className="mt-0.5 text-sm font-medium">{stat.th}</p>
                 <p className="text-xs text-primary-foreground/70">{stat.en}</p>
               </div>
             ))}
