@@ -61,6 +61,7 @@ export default async function AgentCourseRoute() {
       <AgentCoursePage
         heroImage={profile.agentCourseHeroImage || undefined}
         midBannerImage={profile.agentCourseBannerImage || undefined}
+        lineUrl={profile.lineUrl || SITE_CONFIG.lineUrl}
         faqs={faqs}
       />
     </>
