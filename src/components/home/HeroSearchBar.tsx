@@ -48,7 +48,7 @@ export default function HeroSearchBar({
   return (
     <form
       onSubmit={handleSearch}
-      className="mx-auto mt-9 max-w-3xl rounded-3xl border border-secondary/30 bg-white/15 p-6 text-left shadow-[0_20px_50px_rgba(0,0,0,0.2)] backdrop-blur-md sm:p-8"
+      className="mx-auto mt-7 max-w-3xl rounded-3xl border border-secondary/30 bg-white/15 p-6 text-left shadow-[0_20px_50px_rgba(0,0,0,0.2)] backdrop-blur-md sm:p-8"
     >
       <p className="mb-4 border-b border-white/30 pb-3 text-base font-bold text-white">
         ค้นหาทรัพย์ที่ใช่สำหรับคุณ

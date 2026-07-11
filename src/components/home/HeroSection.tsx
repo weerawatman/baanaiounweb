@@ -12,7 +12,7 @@ export default function HeroSection({ heroImage, districts }: HeroSectionProps) 
   const background = heroImage || SITE_CONFIG.pim.heroImage
 
   return (
-    <section className="relative isolate overflow-hidden py-20 text-center text-white sm:py-24 lg:py-28">
+    <section className="relative isolate overflow-hidden py-14 text-center text-white sm:py-16 lg:py-20">
       <Image
         src={background}
         alt="ทีมงานบ้านไออุ่นส่งมอบความสุขให้ลูกค้า"
@@ -32,7 +32,7 @@ export default function HeroSection({ heroImage, districts }: HeroSectionProps) 
           </span>
         </h1>
 
-        <p className="mt-4 text-lg font-medium text-secondary [text-shadow:0_1px_2px_rgba(0,0,0,0.4)] sm:text-xl">
+        <p className="mt-3 text-lg font-medium text-secondary [text-shadow:0_1px_2px_rgba(0,0,0,0.4)] sm:text-xl">
           {HERO.subTh}
         </p>
         <p className="mt-1 text-base text-primary-subtle">{HERO.subEn}</p>
