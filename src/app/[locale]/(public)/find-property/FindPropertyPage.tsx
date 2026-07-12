@@ -1,5 +1,6 @@
 import Image from "next/image"
 import type { Metadata } from "next"
+import { getLocale } from "next-intl/server"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
 import {
@@ -12,15 +13,29 @@ import {
   type BentoItem,
 } from "@/components/shared"
 import { FIND_PROPERTY_CONTENT } from "@/content/find-property"
+import { NAV_ITEMS } from "@/config/navigation"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { navText } from "@/lib/i18n/locale-label"
 import RequestForm from "../request/RequestForm"
 
-export function generateMetadata(): Metadata {
+const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
+const FAQ_TITLE = { th: "คำถามที่พบบ่อย (FAQ)", en: "Frequently Asked Questions" } as const
+const FAQ_SUBTITLE = {
+  th: "ทุกข้อสงสัยเกี่ยวกับบริการจัดหาบ้าน เรามีคำตอบที่ชัดเจนให้ค่ะ",
+  en: "Clear answers about our property match service.",
+} as const
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale
+  const { seo } = FIND_PROPERTY_CONTENT
+
   return {
-    title: FIND_PROPERTY_CONTENT.seo.title,
-    description: FIND_PROPERTY_CONTENT.seo.description.th,
+    title: pickPipeBilingual(locale, seo.title),
+    description: pickLocalized(locale, seo.description),
     openGraph: {
-      title: FIND_PROPERTY_CONTENT.seo.title,
-      description: FIND_PROPERTY_CONTENT.seo.description.th,
+      title: pickPipeBilingual(locale, seo.title),
+      description: pickLocalized(locale, seo.description),
     },
   }
 }
@@ -32,22 +47,25 @@ interface FindPropertyPageProps {
   faqs: FaqItem[]
 }
 
-export default function FindPropertyPage({
+export default async function FindPropertyPage({
   heroImage,
   teamImage,
   bentoItems,
   faqs,
 }: FindPropertyPageProps) {
+  const locale = (await getLocale()) as Locale
   const { banner, split, steps, hook, formCard } = FIND_PROPERTY_CONTENT
+  const servicesNav = NAV_ITEMS.find((item) => item.href === "/services")!
+  const matchNav = NAV_ITEMS.find((item) => item.href === "/find-property")!
 
   return (
     <>
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "บริการของเรา | Our Services", href: "/services" },
-            { label: "งานหาทรัพย์ | Property Match" },
+            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            { label: navText(servicesNav, locale), href: "/services" },
+            { label: navText(matchNav, locale) },
           ]}
         />
       </div>
@@ -69,19 +87,24 @@ export default function FindPropertyPage({
           <div className="flex h-full min-h-0 flex-col">
             <div className="shrink-0">
               <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
-                {split.headline.th}
-                <br />
-                {split.headline.thLine2}
+                {locale === "en" ? (
+                  split.headline.en
+                ) : (
+                  <>
+                    {split.headline.th}
+                    <br />
+                    {split.headline.thLine2}
+                  </>
+                )}
               </h2>
-              <p className="mt-2 text-lg font-medium text-secondary">{split.headline.en}</p>
 
               <p className="mt-5 inline-block border-b-2 border-secondary pb-3 text-sm font-bold text-primary">
-                {split.seo.th}
+                {pickLocalized(locale, split.seo)}
               </p>
-              <p className="mt-1 text-xs font-medium text-muted-foreground">{split.seo.en}</p>
 
-              <p className="mt-5 text-base leading-relaxed text-foreground/90">{split.lead.th}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{split.lead.en}</p>
+              <p className="mt-5 text-base leading-relaxed text-foreground/90">
+                {pickLocalized(locale, split.lead)}
+              </p>
             </div>
 
             <ul className="mt-6 flex min-h-0 flex-1 flex-col gap-4 lg:justify-between">
@@ -97,10 +120,12 @@ export default function FindPropertyPage({
                     {item.icon}
                   </span>
                   <div>
-                    <p className="text-sm font-bold text-foreground">{item.titleTh}</p>
-                    <p className="text-xs font-medium text-muted-foreground">{item.titleEn}</p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-foreground/80">{item.descTh}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.descEn}</p>
+                    <p className="text-sm font-bold text-foreground">
+                      {pickLocalized(locale, { th: item.titleTh, en: item.titleEn })}
+                    </p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-foreground/80">
+                      {pickLocalized(locale, { th: item.descTh, en: item.descEn })}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -114,11 +139,11 @@ export default function FindPropertyPage({
             >
               <div className="mb-6 border-b border-border pb-5 text-center">
                 <h2 className="text-xl font-bold text-primary sm:text-2xl">
-                  {formCard.title.th}
+                  {pickLocalized(locale, formCard.title)}
                 </h2>
-                <p className="mt-1 text-sm font-medium text-secondary">{formCard.title.en}</p>
-                <p className="mt-3 text-sm text-muted-foreground">{formCard.description.th}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{formCard.description.en}</p>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  {pickLocalized(locale, formCard.description)}
+                </p>
               </div>
               <RequestForm requestType="matchmaking" />
             </div>
@@ -148,24 +173,27 @@ export default function FindPropertyPage({
               💛
             </p>
             <blockquote className="mt-2 text-lg font-bold italic text-secondary sm:text-xl">
-              &ldquo;{hook.quote.th}&rdquo;
+              &ldquo;{pickLocalized(locale, hook.quote)}&rdquo;
             </blockquote>
-            <p className="mt-2 text-sm italic text-secondary/80">&ldquo;{hook.quote.en}&rdquo;</p>
             <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
-              {hook.message.th}
-            </p>
-            <p className="mx-auto mt-2 max-w-xl text-xs leading-relaxed text-white/65">
-              {hook.message.en}
+              {pickLocalized(locale, hook.message)}
             </p>
           </div>
         </div>
       </PageSection>
 
-      <StepsSection headline={steps.headline} steps={steps.items} />
+      <StepsSection
+        headline={pickPipeBilingual(locale, steps.headline)}
+        steps={steps.items.map((step) => ({
+          number: step.number,
+          title: pickPipeBilingual(locale, step.title),
+          description: pickPipeBilingual(locale, step.description),
+        }))}
+      />
 
       <FaqSection
-        title="คำถามที่พบบ่อย (FAQ)"
-        subtitle="ทุกข้อสงสัยเกี่ยวกับบริการจัดหาบ้าน เรามีคำตอบที่ชัดเจนให้ค่ะ | Clear answers about our property match service."
+        title={pickLocalized(locale, FAQ_TITLE)}
+        subtitle={pickLocalized(locale, FAQ_SUBTITLE)}
         items={faqs}
         variant="boxed"
         layout="cards"

@@ -1,4 +1,5 @@
-import Link from "next/link"
+import { getLocale } from "next-intl/server"
+import { Link } from "@/i18n/navigation"
 import { MessageCircle, Phone } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
@@ -9,6 +10,8 @@ import ServicesWhyChoose from "@/components/services/ServicesWhyChoose"
 import { FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
 import { SITE_CONFIG } from "@/config/site"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 
 interface ServicesHubPageProps {
   servicesHeroImage?: string
@@ -19,7 +22,17 @@ interface ServicesHubPageProps {
   faqs: FaqItem[]
 }
 
-export default function ServicesHubPage({
+const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
+const SERVICES_CRUMB = { th: "บริการของเรา", en: "Our Services" } as const
+const FAQ_TITLE = { th: "คำถามที่พบบ่อย", en: "FAQ" } as const
+const FAQ_SUBTITLE = {
+  th: "ข้อสงสัยยอดฮิตเกี่ยวกับบริการทั้งหมดของเรา",
+  en: "Top questions about all our services.",
+} as const
+const LINE_CTA = { th: "ทักแชทปรึกษาฟรี", en: "Free LINE Chat" } as const
+const CALL_CTA = { th: "โทรด่วน", en: "Call Now" } as const
+
+export default async function ServicesHubPage({
   servicesHeroImage,
   heroImageUrl,
   lineUrl,
@@ -27,6 +40,7 @@ export default function ServicesHubPage({
   trustImages,
   faqs,
 }: ServicesHubPageProps) {
+  const locale = (await getLocale()) as Locale
   const background = servicesHeroImage || heroImageUrl || SITE_CONFIG.pim.heroImage
   const lineHref = lineUrl || SITE_CONFIG.lineUrl
   const phoneHref = `tel:${SITE_CONFIG.phone.replace(/-/g, "")}`
@@ -36,7 +50,10 @@ export default function ServicesHubPage({
     <>
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
-          items={[{ label: "หน้าแรก", href: "/" }, { label: "บริการของเรา | Our Services" }]}
+          items={[
+            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            { label: pickLocalized(locale, SERVICES_CRUMB) },
+          ]}
         />
       </div>
 
@@ -65,12 +82,9 @@ export default function ServicesHubPage({
       </PageHeroBanner>
 
       <PageSection variant="default">
-        <SectionTitle title={servicesSection.title} />
+        <SectionTitle title={pickPipeBilingual(locale, servicesSection.title)} />
         <p className="mx-auto -mt-4 max-w-3xl text-center text-base font-bold leading-relaxed text-primary sm:text-lg">
-          {servicesSection.seoSubtitle.th}
-          <span className="mt-1 block text-sm font-medium text-muted-foreground">
-            {servicesSection.seoSubtitle.en}
-          </span>
+          {pickLocalized(locale, servicesSection.seoSubtitle)}
         </p>
 
         <div
@@ -82,10 +96,9 @@ export default function ServicesHubPage({
               key={service.href}
               href={service.href}
               emoji={service.emoji}
-              titleTh={service.title.th}
-              titleEn={service.title.en}
-              descTh={service.description.th}
-              descEn={service.description.en}
+              title={service.title}
+              description={service.description}
+              locale={locale}
             />
           ))}
         </div>
@@ -98,25 +111,21 @@ export default function ServicesHubPage({
       <FaqSection
         variant="boxed"
         layout="cards"
-        title="คำถามที่พบบ่อย | FAQ"
-        subtitle="ข้อสงสัยยอดฮิตเกี่ยวกับบริการทั้งหมดของเรา | Top questions about all our services."
+        title={pickLocalized(locale, FAQ_TITLE)}
+        subtitle={pickLocalized(locale, FAQ_SUBTITLE)}
         items={faqs}
       />
 
       <PageSection variant="default">
         <div className="rounded-3xl border border-border bg-card px-6 py-12 text-center shadow-sm sm:px-10 sm:py-16">
           <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-            {cta.titleTh}
-            <span className="mt-1 block text-lg font-medium text-muted-foreground">
-              {cta.titleEn}
-            </span>
+            {pickLocalized(locale, { th: cta.titleTh, en: cta.titleEn })}
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground">
-            {cta.subtitleTh}
-            <span className="mt-1 block text-sm">{cta.subtitleEn}</span>
+            {pickLocalized(locale, { th: cta.subtitleTh, en: cta.subtitleEn })}
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
+            <a
               href={lineHref}
               target="_blank"
               rel="noopener noreferrer"
@@ -124,15 +133,15 @@ export default function ServicesHubPage({
               className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[#06C755] px-8 py-3 text-base font-bold text-white shadow-sm transition-opacity hover:opacity-90 sm:w-auto"
             >
               <MessageCircle className="size-5" />
-              ทักแชทปรึกษาฟรี | Free LINE Chat
-            </Link>
-            <Link
+              {pickLocalized(locale, LINE_CTA)}
+            </a>
+            <a
               href={phoneHref}
               className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg border border-border bg-transparent px-8 py-3 text-base font-bold text-foreground transition-colors hover:bg-muted sm:w-auto"
             >
               <Phone className="size-5" />
-              โทรด่วน | Call Now
-            </Link>
+              {pickLocalized(locale, CALL_CTA)}
+            </a>
           </div>
         </div>
       </PageSection>

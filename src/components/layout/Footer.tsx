@@ -1,6 +1,9 @@
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
+import { getLocale } from "next-intl/server"
 import { SITE_CONFIG } from "@/config/site"
 import { FOOTER_QUICK_LINKS, FOOTER_SEO_TAGS } from "@/config/navigation"
+import { navText } from "@/lib/i18n/locale-label"
+import type { Locale } from "@/i18n/routing"
 import type { Profile } from "@/types"
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
@@ -44,7 +47,8 @@ function FooterRow({
   )
 }
 
-export default function Footer({ profile }: { profile: Profile }) {
+export default async function Footer({ profile }: { profile: Profile }) {
+  const locale = (await getLocale()) as Locale
   const currentYear = new Date().getFullYear()
   const siteName = profile.siteName || SITE_CONFIG.name
   const rawSlogan = profile.slogan || SITE_CONFIG.slogan
@@ -78,7 +82,7 @@ export default function Footer({ profile }: { profile: Profile }) {
                     href={item.href}
                     className="text-xs text-white/80 transition-colors hover:text-white sm:text-sm"
                   >
-                    - {item.th}
+                    - {navText(item, locale)}
                   </Link>
                 </li>
               ))}

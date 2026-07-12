@@ -1,6 +1,6 @@
 /**
  * Main navigation items used in Header and Footer.
- * Labels are bilingual — the site displays Thai and English together.
+ * Labels are bilingual objects; display one language via pickLocalized / navText.
  */
 
 export interface NavItem {

@@ -1,27 +1,27 @@
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, type BilingualPair } from "@/lib/i18n/pick-localized"
 
 interface ServiceHubCardProps {
   href: string
   emoji: string
-  titleTh: string
-  titleEn: string
-  descTh: string
-  descEn: string
-  linkTh?: string
-  linkEn?: string
+  title: BilingualPair
+  description: BilingualPair
+  locale: Locale
+  linkLabel?: BilingualPair
   className?: string
 }
+
+const DEFAULT_LINK: BilingualPair = { th: "ดูรายละเอียด ➔", en: "Learn more ➔" }
 
 export default function ServiceHubCard({
   href,
   emoji,
-  titleTh,
-  titleEn,
-  descTh,
-  descEn,
-  linkTh = "ดูรายละเอียด ➔",
-  linkEn = "Learn more ➔",
+  title,
+  description,
+  locale,
+  linkLabel = DEFAULT_LINK,
   className,
 }: ServiceHubCardProps) {
   return (
@@ -41,16 +41,15 @@ export default function ServiceHubCard({
       </div>
 
       <h3 className="text-lg font-bold leading-snug text-foreground">
-        {titleTh}
-        <span className="mt-1 block text-sm font-medium text-muted-foreground">{titleEn}</span>
+        {pickLocalized(locale, title)}
       </h3>
 
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{descTh}</p>
-      <p className="mt-1 text-xs leading-relaxed text-muted-foreground/80">{descEn}</p>
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+        {pickLocalized(locale, description)}
+      </p>
 
       <span className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary transition-colors group-hover:text-secondary">
-        {linkTh}
-        <span className="sr-only"> | {linkEn}</span>
+        {pickLocalized(locale, linkLabel)}
       </span>
     </Link>
   )

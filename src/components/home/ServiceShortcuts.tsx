@@ -1,15 +1,25 @@
+import { getLocale } from "next-intl/server"
+import { Link } from "@/i18n/navigation"
 import PageSection from "@/components/layout/PageSection"
 import SectionTitle from "@/components/layout/SectionTitle"
 import { SERVICES_HEADING, SERVICE_CARDS } from "@/content/homepage"
-import Link from "next/link"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
 
-export default function ServiceShortcuts() {
+const LEARN_MORE = { th: "อ่านรายละเอียด", en: "Learn More" } as const
+
+export default async function ServiceShortcuts() {
+  const locale = (await getLocale()) as Locale
+
   return (
     <PageSection variant="warm">
       <SectionTitle
         variant="plain"
-        title="บริการของเรา | Our Services"
-        subtitle={`${SERVICES_HEADING.subtitleTh} | ${SERVICES_HEADING.subtitleEn}`}
+        title={pickLocalized(locale, SERVICES_HEADING)}
+        subtitle={pickLocalized(locale, {
+          th: SERVICES_HEADING.subtitleTh,
+          en: SERVICES_HEADING.subtitleEn,
+        })}
       />
 
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -26,32 +36,25 @@ export default function ServiceShortcuts() {
             </div>
 
             <h3 className="mb-3 text-lg font-semibold text-primary">
-              {card.titleTh}
-              <span className="mt-1 block text-sm font-medium text-muted-foreground">
-                {card.titleEn}
-              </span>
+              {pickLocalized(locale, { th: card.titleTh, en: card.titleEn })}
             </h3>
 
-            <p className="mb-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-              {card.descTh}
+            <p className="mb-6 flex-1 text-sm leading-relaxed text-muted-foreground">
+              {pickLocalized(locale, { th: card.descTh, en: card.descEn })}
             </p>
-            <p className="mb-6 text-xs leading-relaxed text-muted-foreground/80">{card.descEn}</p>
 
             <div className="mt-auto flex flex-col gap-2.5">
               <Link
                 href={card.href}
                 className="flex min-h-[48px] items-center justify-center rounded-[10px] bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                {card.ctaTh}
-                <span className="ml-1.5 text-xs font-medium text-primary-foreground/90">
-                  | {card.ctaEn}
-                </span>
+                {pickLocalized(locale, { th: card.ctaTh, en: card.ctaEn })}
               </Link>
               <Link
                 href={card.secondaryHref}
                 className="flex min-h-[48px] items-center justify-center rounded-[10px] border border-border px-4 py-3 text-sm text-foreground transition-colors hover:border-secondary hover:bg-secondary/10 hover:text-secondary"
               >
-                อ่านรายละเอียด | Learn More
+                {pickLocalized(locale, LEARN_MORE)}
               </Link>
             </div>
           </div>

@@ -1,16 +1,18 @@
+import { getLocale } from "next-intl/server"
 import PageSection from "@/components/layout/PageSection"
 import SectionTitle from "@/components/layout/SectionTitle"
 import { HOME_WHY_CHOOSE } from "@/content/homepage"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
 
 const iconBg = ["bg-primary", "bg-secondary", "bg-accent"] as const
 
-export default function WhyChoosePillars() {
+export default async function WhyChoosePillars() {
+  const locale = (await getLocale()) as Locale
+
   return (
     <PageSection variant="default">
-      <SectionTitle
-        variant="plain"
-        title={`${HOME_WHY_CHOOSE.heading.th} | ${HOME_WHY_CHOOSE.heading.en}`}
-      />
+      <SectionTitle variant="plain" title={pickLocalized(locale, HOME_WHY_CHOOSE.heading)} />
 
       <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-3">
         {HOME_WHY_CHOOSE.pillars.map((pillar, index) => (
@@ -24,10 +26,12 @@ export default function WhyChoosePillars() {
             >
               {pillar.icon}
             </span>
-            <h3 className="mt-6 text-lg font-semibold text-primary">{pillar.titleTh}</h3>
-            <p className="mt-1 text-sm font-medium text-muted-foreground">{pillar.titleEn}</p>
-            <p className="mt-4 text-base leading-relaxed text-muted-foreground">{pillar.descTh}</p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground/80">{pillar.descEn}</p>
+            <h3 className="mt-6 text-lg font-semibold text-primary">
+              {pickLocalized(locale, { th: pillar.titleTh, en: pillar.titleEn })}
+            </h3>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+              {pickLocalized(locale, { th: pillar.descTh, en: pillar.descEn })}
+            </p>
           </div>
         ))}
       </div>

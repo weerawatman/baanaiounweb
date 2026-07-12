@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Noto_Sans_Thai, Prompt } from "next/font/google"
+import { getLocale } from "next-intl/server"
 import "./globals.css"
 
 const prompt = Prompt({
@@ -37,13 +38,15 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = await getLocale()
+
   return (
-    <html lang="th" className={`${prompt.variable} ${notoSansThai.variable} h-full antialiased`}>
+    <html lang={locale} className={`${prompt.variable} ${notoSansThai.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   )
