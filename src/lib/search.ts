@@ -14,6 +14,7 @@ export interface PropertyFilters {
   district: string
   maxPrice: string
   propertyType: "" | PropertyCategory
+  minBedrooms: string
 }
 
 export const EMPTY_FILTERS: PropertyFilters = {
@@ -22,6 +23,7 @@ export const EMPTY_FILTERS: PropertyFilters = {
   district: "",
   maxPrice: "",
   propertyType: "",
+  minBedrooms: "",
 }
 
 export const PURPOSE_TABS: { value: PurposeTab; th: string; en: string }[] = [
@@ -44,6 +46,14 @@ export const PROPERTY_TYPE_FILTER_OPTIONS: { label: string; value: "" | Property
   ...PROPERTY_CATEGORY_OPTIONS.map((opt) => ({ label: opt.label, value: opt.value })),
 ]
 
+export const BEDROOM_OPTIONS = [
+  { label: "ทุกจำนวนห้องนอน | Any Bedrooms", value: "" },
+  { label: "1+ ห้องนอน | 1+ Beds", value: "1" },
+  { label: "2+ ห้องนอน | 2+ Beds", value: "2" },
+  { label: "3+ ห้องนอน | 3+ Beds", value: "3" },
+  { label: "4+ ห้องนอน | 4+ Beds", value: "4" },
+]
+
 export function filterProperties(properties: Property[], filters: PropertyFilters): Property[] {
   const q = filters.query.trim().toLowerCase()
 
@@ -64,6 +74,7 @@ export function filterProperties(properties: Property[], filters: PropertyFilter
     if (filters.district && p.location.district !== filters.district) return false
     if (filters.maxPrice && p.price > Number(filters.maxPrice)) return false
     if (filters.propertyType && p.subType !== filters.propertyType) return false
+    if (filters.minBedrooms && p.bedrooms < Number(filters.minBedrooms)) return false
     return true
   })
 }
@@ -73,6 +84,7 @@ export function parseFilters(params: URLSearchParams): PropertyFilters {
   const purpose = params.get("purpose") ?? ""
   const maxPrice = params.get("maxPrice") ?? ""
   const propertyType = params.get("propertyType") ?? ""
+  const minBedrooms = params.get("bedrooms") ?? ""
   return {
     query: params.get("query") ?? "",
     purpose: PURPOSE_TABS.some((t) => t.value === purpose) ? (purpose as PurposeTab) : "all",
@@ -81,6 +93,7 @@ export function parseFilters(params: URLSearchParams): PropertyFilters {
     propertyType: PROPERTY_TYPE_FILTER_OPTIONS.some((o) => o.value === propertyType)
       ? (propertyType as PropertyCategory | "")
       : "",
+    minBedrooms: BEDROOM_OPTIONS.some((o) => o.value === minBedrooms) ? minBedrooms : "",
   }
 }
 
@@ -92,5 +105,6 @@ export function buildQueryString(filters: PropertyFilters): string {
   if (filters.district) params.set("district", filters.district)
   if (filters.maxPrice) params.set("maxPrice", filters.maxPrice)
   if (filters.propertyType) params.set("propertyType", filters.propertyType)
+  if (filters.minBedrooms) params.set("bedrooms", filters.minBedrooms)
   return params.toString()
 }

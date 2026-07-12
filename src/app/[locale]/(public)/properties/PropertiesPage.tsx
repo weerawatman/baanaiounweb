@@ -9,6 +9,7 @@ import PageHeroBanner from "@/components/shared/PageHeroBanner"
 import PropertyCard from "@/components/property/PropertyCard"
 import type { Property } from "@/types"
 import {
+  BEDROOM_OPTIONS,
   PRICE_OPTIONS,
   PROPERTY_TYPE_FILTER_OPTIONS,
   PURPOSE_TABS,
@@ -46,6 +47,7 @@ const SEARCH_ARIA = { th: "ค้นหาทรัพย์", en: "Search prope
 const DISTRICT_ARIA = { th: "เลือกทำเล", en: "Select area" } as const
 const TYPE_ARIA = { th: "เลือกประเภททรัพย์", en: "Select property type" } as const
 const PRICE_ARIA = { th: "เลือกช่วงราคา", en: "Select price range" } as const
+const BEDROOM_ARIA = { th: "เลือกจำนวนห้องนอน", en: "Select bedrooms" } as const
 
 export default function PropertiesPage({
   properties,
@@ -63,6 +65,7 @@ export default function PropertiesPage({
   const [district, setDistrict] = useState(urlFilters.district)
   const [maxPrice, setMaxPrice] = useState(urlFilters.maxPrice)
   const [propertyType, setPropertyType] = useState<"" | PropertyCategory>(urlFilters.propertyType)
+  const [minBedrooms, setMinBedrooms] = useState(urlFilters.minBedrooms)
 
   useEffect(() => {
     setQuery(urlFilters.query)
@@ -70,6 +73,7 @@ export default function PropertiesPage({
     setDistrict(urlFilters.district)
     setMaxPrice(urlFilters.maxPrice)
     setPropertyType(urlFilters.propertyType)
+    setMinBedrooms(urlFilters.minBedrooms)
   }, [urlFilters])
 
   const districts = useMemo(
@@ -78,8 +82,9 @@ export default function PropertiesPage({
   )
 
   const filtered = useMemo(
-    () => filterProperties(properties, { query, purpose, district, maxPrice, propertyType }),
-    [properties, query, purpose, district, maxPrice, propertyType],
+    () =>
+      filterProperties(properties, { query, purpose, district, maxPrice, propertyType, minBedrooms }),
+    [properties, query, purpose, district, maxPrice, propertyType, minBedrooms],
   )
 
   const selectClass =
@@ -150,6 +155,18 @@ export default function PropertiesPage({
               aria-label={pickLocalized(locale, TYPE_ARIA)}
             >
               {PROPERTY_TYPE_FILTER_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {pickPipeBilingual(locale, o.label)}
+                </option>
+              ))}
+            </select>
+            <select
+              value={minBedrooms}
+              onChange={(e) => setMinBedrooms(e.target.value)}
+              className={selectClass}
+              aria-label={pickLocalized(locale, BEDROOM_ARIA)}
+            >
+              {BEDROOM_OPTIONS.map((o) => (
                 <option key={o.value} value={o.value}>
                   {pickPipeBilingual(locale, o.label)}
                 </option>

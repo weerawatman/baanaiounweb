@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useLocale } from "next-intl"
 import { Link, useRouter } from "@/i18n/navigation"
 import {
+  EMPTY_FILTERS,
   PRICE_OPTIONS,
   PROPERTY_TYPE_FILTER_OPTIONS,
   PURPOSE_TABS,
@@ -54,7 +55,7 @@ export default function HeroSearchBar({
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
-    const qs = buildQueryString({ query, purpose, district, maxPrice, propertyType })
+    const qs = buildQueryString({ ...EMPTY_FILTERS, query, purpose, district, maxPrice, propertyType })
     router.push(qs ? `/properties?${qs}` : "/properties")
   }
 
