@@ -57,9 +57,10 @@ next-env.d.ts
 .codex/*
 !.codex/agents/
 
-# testsprite (config.json contains API key; mcp.log is bulky transient logging)
-testsprite_tests/tmp/config.json
-testsprite_tests/tmp/mcp.log
+# testsprite — keep only the final report; generated scripts/tmp stay local
+# (tmp/config.json contains the API key)
+testsprite_tests/*
+!testsprite_tests/testsprite-mcp-test-report.md
 
 # local dev server log
 .dev-server.log
