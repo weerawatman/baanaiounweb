@@ -1,5 +1,15 @@
+"use client"
+
+import { useLocale } from "next-intl"
 import { Phone, MessageCircle } from "lucide-react"
 import WhatsAppIcon from "@/components/shared/WhatsAppIcon"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
+
+const NAV_LABEL = { th: "ติดต่อด่วน", en: "Quick contact" } as const
+const CALL_LABEL = { th: "โทร", en: "Call" } as const
+const LINE_ARIA = { th: "แชท LINE", en: "Chat on LINE" } as const
+const WA_ARIA = { th: "แชท WhatsApp", en: "Chat on WhatsApp" } as const
 
 interface MobileContactBarProps {
   phone: string
@@ -7,31 +17,29 @@ interface MobileContactBarProps {
   whatsappUrl: string
 }
 
-/**
- * Sticky bottom quick-contact bar — mobile only (hidden on md+ where the
- * floating LINE pill in StickyCTA takes over).
- */
 export default function MobileContactBar({ phone, lineUrl, whatsappUrl }: MobileContactBarProps) {
+  const locale = useLocale() as Locale
   const telHref = `tel:${phone.replace(/[^+\d]/g, "")}`
+  const pick = (pair: { th: string; en: string }) => pickLocalized(locale, pair)
 
   const itemClass =
     "flex min-h-[56px] flex-col items-center justify-center gap-0.5 text-[11px] font-semibold"
 
   return (
     <nav
-      aria-label="ติดต่อด่วน | Quick contact"
+      aria-label={pick(NAV_LABEL)}
       className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_10px_rgba(45,90,39,0.08)] md:hidden"
     >
-      <a href={telHref} className={`${itemClass} text-primary`} aria-label={`โทร ${phone}`}>
+      <a href={telHref} className={`${itemClass} text-primary`} aria-label={`${pick(CALL_LABEL)} ${phone}`}>
         <Phone className="size-5" />
-        โทร | Call
+        {pick(CALL_LABEL)}
       </a>
       <a
         href={lineUrl}
         target="_blank"
         rel="noopener noreferrer"
         className={`${itemClass} text-[#06C755]`}
-        aria-label="แชท LINE"
+        aria-label={pick(LINE_ARIA)}
       >
         <MessageCircle className="size-5" />
         LINE
@@ -41,7 +49,7 @@ export default function MobileContactBar({ phone, lineUrl, whatsappUrl }: Mobile
         target="_blank"
         rel="noopener noreferrer"
         className={`${itemClass} text-[#25D366]`}
-        aria-label="แชท WhatsApp"
+        aria-label={pick(WA_ARIA)}
       >
         <WhatsAppIcon className="size-5" />
         WhatsApp

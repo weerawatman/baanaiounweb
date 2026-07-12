@@ -1,5 +1,4 @@
 import { getLocale } from "next-intl/server"
-import { Link } from "@/i18n/navigation"
 import { MessageCircle, Phone } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"

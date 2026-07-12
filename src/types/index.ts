@@ -4,16 +4,21 @@ export interface Property {
   id: string
   slug: string
   title: string
+  titleEn: string
   type: "SALE" | "RENT" | "LAND"
   subType: "house" | "townhome" | "condo" | "land"
   price: number
   priceLabel: string
+  priceLabelEn: string
   areaSqm: number
   bedrooms: number
   bathrooms: number
   description: string
+  descriptionEn: string
   emotionalDesc: string
+  emotionalDescEn: string
   pimInsight: string
+  pimInsightEn: string
   status: "ACTIVE" | "SOLD" | "RENTED"
   featured: boolean
   images: string[]
@@ -40,10 +45,13 @@ export interface BlogPost {
   id: string
   slug: string
   title: string
+  titleEn: string
   category: string
   categorySlug: string
   excerpt: string
+  excerptEn: string
   content: string
+  contentEn: string
   readingTime: string
   publishedAt: string
   featuredImage: string
@@ -62,6 +70,7 @@ export interface Testimonial {
   id: string
   clientName: string
   quote: string
+  quoteEn: string
   propertyType: string
   rating: number
   avatarUrl: string
@@ -85,7 +94,9 @@ export interface SuccessStory {
 export interface FAQ {
   id: string
   question: string
+  questionEn: string
   answer: string
+  answerEn: string
   pageSlug: string
 }
 
@@ -95,8 +106,11 @@ export interface Profile {
   name: string
   fullName: string
   role: string
+  roleEn: string
   bio: string
+  bioEn: string
   vision: string
+  visionEn: string
   avatarUrl: string
   heroImageUrl: string
   homeHeroImage: string

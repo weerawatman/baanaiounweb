@@ -1,64 +1,82 @@
-import Link from "next/link"
+"use client"
+
+import { useLocale } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import Image from "next/image"
 import { Bed, Bath, Maximize, MapPin } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { type Property } from "@/types"
 import { formatPrice } from "@/lib/format"
 import { deriveBadges } from "@/lib/badges"
+import { localizedOrFallback } from "@/lib/i18n/pick-localized"
+import type { Locale } from "@/i18n/routing"
 
 interface PropertyCardProps {
   property: Property
 }
 
-const statusConfig: Record<Property["status"], { label: string; className: string }> = {
-  ACTIVE: { label: "พร้อมขาย/เช่า", className: "bg-primary-subtle text-primary border-primary/20" },
-  SOLD: { label: "ขายแล้ว", className: "bg-red-100 text-red-800 border-red-200" },
-  RENTED: { label: "ปล่อยเช่าแล้ว", className: "bg-blue-100 text-blue-800 border-blue-200" },
+const STATUS_LABELS: Record<Property["status"], { th: string; en: string }> = {
+  ACTIVE: { th: "พร้อมขาย/เช่า", en: "Available" },
+  SOLD: { th: "ขายแล้ว", en: "Sold" },
+  RENTED: { th: "ปล่อยเช่าแล้ว", en: "Rented" },
 }
 
-const typeConfig: Record<Property["type"], { label: string; className: string }> = {
-  SALE: { label: "ขาย", className: "bg-primary text-white" },
-  RENT: { label: "เช่า", className: "bg-blue-600 text-white" },
-  LAND: { label: "ที่ดิน", className: "bg-amber-500 text-white" },
+const TYPE_LABELS: Record<Property["type"], { th: string; en: string }> = {
+  SALE: { th: "ขาย", en: "Sale" },
+  RENT: { th: "เช่า", en: "Rent" },
+  LAND: { th: "ที่ดิน", en: "Land" },
 }
+
+const BED_LABEL = { th: "นอน", en: "bed" } as const
+const BATH_LABEL = { th: "น้ำ", en: "bath" } as const
+const AREA_LABEL = { th: "ตร.ม.", en: "sqm" } as const
 
 export default function PropertyCard({ property }: PropertyCardProps) {
-  const status = statusConfig[property.status]
-  const type = typeConfig[property.type]
+  const locale = useLocale() as Locale
+  const pick = (pair: { th: string; en: string }) => (locale === "en" ? pair.en : pair.th)
+  const status = STATUS_LABELS[property.status]
+  const type = TYPE_LABELS[property.type]
   const badges = deriveBadges(property)
+  const title = localizedOrFallback(locale, property.title, property.titleEn)
 
   return (
     <div className="h-full transition-transform duration-200 hover:scale-[1.02]">
       <Link
         href={`/property/${property.slug}`}
-        aria-label={property.title}
+        aria-label={title}
         className="group block h-full"
       >
         <Card className="group-hover:ring-foreground/20 h-full overflow-hidden rounded-[20px] border-border shadow-[0_10px_30px_rgba(45,90,39,0.04)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_15px_40px_rgba(45,90,39,0.1)]">
-          {/* Image */}
           <div className="relative h-60 overflow-hidden">
             <Image
               src={property.imagePrimary}
-              alt={`${type.label} ${property.title}`}
+              alt={`${pick(type)} ${title}`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
-            {/* Type badge overlay */}
             <span
-              className={`absolute top-3 left-3 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${type.className}`}
+              className={`absolute top-3 left-3 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                property.type === "SALE"
+                  ? "bg-primary text-white"
+                  : property.type === "RENT"
+                    ? "bg-blue-600 text-white"
+                    : "bg-amber-500 text-white"
+              }`}
             >
-              {type.label}
+              {pick(type)}
             </span>
-            {/* Status badge overlay */}
             {property.status !== "ACTIVE" && (
               <span
-                className={`absolute top-3 right-3 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${status.className}`}
+                className={`absolute top-3 right-3 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${
+                  property.status === "SOLD"
+                    ? "bg-red-100 text-red-800 border-red-200"
+                    : "bg-blue-100 text-blue-800 border-blue-200"
+                }`}
               >
-                {status.label}
+                {pick(status)}
               </span>
             )}
-            {/* Trust badges (max 2) */}
             {badges.length > 0 && (
               <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
                 {badges.map((badge) => (
@@ -67,7 +85,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     title={`${badge.th} | ${badge.en}`}
                     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-sm ${badge.className}`}
                   >
-                    {badge.th}
+                    {pick({ th: badge.th, en: badge.en })}
                   </span>
                 ))}
               </div>
@@ -75,35 +93,31 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           </div>
 
           <CardContent className="flex flex-col gap-2 pt-3">
-            {/* Title */}
             <h3 className="text-foreground line-clamp-2 text-sm leading-snug font-medium">
-              {property.title}
+              {title}
             </h3>
 
-            {/* Price */}
             <p className="text-xl font-bold text-primary">{formatPrice(property)}</p>
 
-            {/* Stats row */}
             <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-xs">
               {property.bedrooms > 0 && (
                 <span className="flex items-center gap-1">
                   <Bed className="h-3.5 w-3.5" />
-                  {property.bedrooms} นอน
+                  {property.bedrooms} {pick(BED_LABEL)}
                 </span>
               )}
               {property.bathrooms > 0 && (
                 <span className="flex items-center gap-1">
                   <Bath className="h-3.5 w-3.5" />
-                  {property.bathrooms} น้ำ
+                  {property.bathrooms} {pick(BATH_LABEL)}
                 </span>
               )}
               <span className="flex items-center gap-1">
                 <Maximize className="h-3.5 w-3.5" />
-                {property.areaSqm} ตร.ม.
+                {property.areaSqm} {pick(AREA_LABEL)}
               </span>
             </div>
 
-            {/* Location */}
             <div className="text-muted-foreground flex items-center gap-1 text-xs">
               <MapPin className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">{property.location.district}</span>

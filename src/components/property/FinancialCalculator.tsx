@@ -1,9 +1,12 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { useLocale } from "next-intl"
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts"
 import { Input } from "@/components/ui/input"
 import { type Property } from "@/types"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
 
 interface FinancialCalculatorProps {
   property: Property
@@ -11,14 +14,32 @@ interface FinancialCalculatorProps {
 
 const CHART_COLORS = ["#2d5a27", "#d4af37"]
 
-function formatThb(value: number): string {
-  return new Intl.NumberFormat("th-TH", {
+const LABEL_PRICE = { th: "ราคาทรัพย์ (บาท)", en: "Property price (THB)" } as const
+const LABEL_DOWN = { th: "เงินดาวน์ (%)", en: "Down payment (%)" } as const
+const LABEL_INTEREST = { th: "อัตราดอกเบี้ย (% ต่อปี)", en: "Interest rate (% p.a.)" } as const
+const LABEL_TERM = { th: "ระยะเวลากู้ (ปี)", en: "Loan term (years)" } as const
+const LABEL_MONTHLY = { th: "ผ่อนชำระต่อเดือน (โดยประมาณ)", en: "Estimated monthly payment" } as const
+const LABEL_PER_MONTH = { th: "บาท/เดือน", en: "THB/month" } as const
+const LABEL_DOWN_AMT = { th: "ดาวน์", en: "Down" } as const
+const LABEL_LOAN = { th: "เงินกู้", en: "Loan" } as const
+const CHART_DOWN = { th: "เงินดาวน์", en: "Down payment" } as const
+const CHART_LOAN = { th: "เงินกู้", en: "Loan amount" } as const
+const DISCLAIMER = {
+  th: "* ตัวเลขนี้เป็นการประมาณการเบื้องต้นเท่านั้น ยอดผ่อนจริงขึ้นอยู่กับเงื่อนไขของแต่ละธนาคาร",
+  en: "* Figures are estimates only. Actual payments depend on each bank's terms.",
+} as const
+const CURRENCY_SUFFIX = { th: "บาท", en: "THB" } as const
+
+function formatCurrency(value: number, locale: Locale): string {
+  const intlLocale = locale === "en" ? "en-US" : "th-TH"
+  return new Intl.NumberFormat(intlLocale, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(value)
 }
 
 export default function FinancialCalculator({ property }: FinancialCalculatorProps) {
+  const locale = useLocale() as Locale
   const [price, setPrice] = useState(String(property.price))
   const [downPercent, setDownPercent] = useState("20")
   const [interestRate, setInterestRate] = useState("6.5")
@@ -44,16 +65,19 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
   }, [price, downPercent, interestRate, loanYears])
 
   const chartData = [
-    { name: "เงินดาวน์", value: result.downAmount },
-    { name: "เงินกู้", value: result.loanAmount },
+    { name: pickLocalized(locale, CHART_DOWN), value: result.downAmount },
+    { name: pickLocalized(locale, CHART_LOAN), value: result.loanAmount },
   ].filter((d) => d.value > 0)
+
+  const currencySuffix = pickLocalized(locale, CURRENCY_SUFFIX)
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Inputs */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
-          <label className="text-muted-foreground text-xs font-medium">ราคาทรัพย์ (บาท)</label>
+          <label className="text-muted-foreground text-xs font-medium">
+            {pickLocalized(locale, LABEL_PRICE)}
+          </label>
           <Input
             type="number"
             value={price}
@@ -64,7 +88,9 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className="text-muted-foreground text-xs font-medium">เงินดาวน์ (%)</label>
+          <label className="text-muted-foreground text-xs font-medium">
+            {pickLocalized(locale, LABEL_DOWN)}
+          </label>
           <Input
             type="number"
             value={downPercent}
@@ -77,7 +103,7 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
 
         <div className="flex flex-col gap-1.5">
           <label className="text-muted-foreground text-xs font-medium">
-            อัตราดอกเบี้ย (% ต่อปี)
+            {pickLocalized(locale, LABEL_INTEREST)}
           </label>
           <Input
             type="number"
@@ -89,7 +115,9 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className="text-muted-foreground text-xs font-medium">ระยะเวลากู้ (ปี)</label>
+          <label className="text-muted-foreground text-xs font-medium">
+            {pickLocalized(locale, LABEL_TERM)}
+          </label>
           <Input
             type="number"
             value={loanYears}
@@ -101,23 +129,28 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
         </div>
       </div>
 
-      {/* Result */}
       <div className="rounded-xl border border-primary/20 bg-green-50 p-5 text-center">
-        <p className="text-sm font-medium text-primary">ผ่อนชำระต่อเดือน (โดยประมาณ)</p>
+        <p className="text-sm font-medium text-primary">{pickLocalized(locale, LABEL_MONTHLY)}</p>
         <p className="mt-1 text-3xl font-bold text-primary">
-          {formatThb(result.monthly)} <span className="text-base font-normal">บาท/เดือน</span>
+          {formatCurrency(result.monthly, locale)}{" "}
+          <span className="text-base font-normal">{pickLocalized(locale, LABEL_PER_MONTH)}</span>
         </p>
         <div className="text-muted-foreground mt-3 flex justify-center gap-6 text-xs">
           <span>
-            ดาวน์: <strong className="text-foreground">{formatThb(result.downAmount)} บาท</strong>
+            {pickLocalized(locale, LABEL_DOWN_AMT)}:{" "}
+            <strong className="text-foreground">
+              {formatCurrency(result.downAmount, locale)} {currencySuffix}
+            </strong>
           </span>
           <span>
-            เงินกู้: <strong className="text-foreground">{formatThb(result.loanAmount)} บาท</strong>
+            {pickLocalized(locale, LABEL_LOAN)}:{" "}
+            <strong className="text-foreground">
+              {formatCurrency(result.loanAmount, locale)} {currencySuffix}
+            </strong>
           </span>
         </div>
       </div>
 
-      {/* Pie chart */}
       {chartData.length === 2 && (
         <div className="h-52">
           <ResponsiveContainer width="100%" height="100%">
@@ -137,7 +170,9 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
               </Pie>
               <Tooltip
                 formatter={(value) =>
-                  typeof value === "number" ? [`${formatThb(value)} บาท`] : [String(value)]
+                  typeof value === "number"
+                    ? [`${formatCurrency(value, locale)} ${currencySuffix}`]
+                    : [String(value)]
                 }
               />
               <Legend />
@@ -146,9 +181,7 @@ export default function FinancialCalculator({ property }: FinancialCalculatorPro
         </div>
       )}
 
-      <p className="text-muted-foreground text-center text-xs">
-        * ตัวเลขนี้เป็นการประมาณการเบื้องต้นเท่านั้น ยอดผ่อนจริงขึ้นอยู่กับเงื่อนไขของแต่ละธนาคาร
-      </p>
+      <p className="text-muted-foreground text-center text-xs">{pickLocalized(locale, DISCLAIMER)}</p>
     </div>
   )
 }

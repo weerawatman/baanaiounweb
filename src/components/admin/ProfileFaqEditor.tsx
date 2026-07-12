@@ -13,7 +13,9 @@ interface LocalFaq {
   localId: string
   id?: string
   question: string
+  question_en: string
   answer: string
+  answer_en: string
   page_slug: string
   sort_order: number
   dirty?: boolean
@@ -44,7 +46,9 @@ export function ProfileFaqEditor({
       localId: f.id,
       id: f.id,
       question: f.question,
+      question_en: f.question_en,
       answer: f.answer,
+      answer_en: f.answer_en,
       page_slug: f.page_slug,
       sort_order: f.sort_order,
     })),
@@ -61,7 +65,9 @@ export function ProfileFaqEditor({
       {
         localId,
         question: "",
+        question_en: "",
         answer: "",
+        answer_en: "",
         page_slug: pageSlug,
         sort_order: prev.length,
         dirty: true,
@@ -70,7 +76,7 @@ export function ProfileFaqEditor({
     ])
   }
 
-  function update(localId: string, field: "question" | "answer", value: string) {
+  function update(localId: string, field: "question" | "question_en" | "answer" | "answer_en", value: string) {
     setFaqs((prev) =>
       prev.map((f) => (f.localId === localId ? { ...f, [field]: value, dirty: true } : f)),
     )
@@ -81,7 +87,9 @@ export function ProfileFaqEditor({
     setError(null)
     const formData = new FormData()
     formData.set("question", faq.question)
+    formData.set("question_en", faq.question_en)
     formData.set("answer", faq.answer)
+    formData.set("answer_en", faq.answer_en)
     formData.set("page_slug", pageSlug)
     formData.set("sort_order", String(faq.sort_order))
 
@@ -157,24 +165,53 @@ export function ProfileFaqEditor({
             <div key={faq.localId} className="flex items-start gap-3 p-4">
               <GripVertical className="text-muted-foreground/40 mt-2 size-4 shrink-0" aria-hidden />
               <div className="grid flex-1 grid-cols-1 gap-3">
-                <div className="flex flex-col gap-1">
-                  <label className="text-muted-foreground text-xs font-medium">คำถาม</label>
-                  <Input
-                    value={faq.question}
-                    onChange={(e) => update(faq.localId, "question", e.target.value)}
-                    placeholder="คำถามที่พบบ่อย..."
-                    className={cn(faq.dirty && "border-amber-300")}
-                  />
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="flex flex-col gap-1">
+                    <label className="text-muted-foreground text-xs font-medium">คำถาม (ไทย)</label>
+                    <Input
+                      value={faq.question}
+                      onChange={(e) => update(faq.localId, "question", e.target.value)}
+                      placeholder="คำถามที่พบบ่อย..."
+                      className={cn(faq.dirty && "border-amber-300")}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <label className="text-muted-foreground text-xs font-medium">
+                      คำถาม (English)
+                      <span className="text-muted-foreground/70 ml-1 font-normal">แนะนำ</span>
+                    </label>
+                    <Input
+                      value={faq.question_en}
+                      onChange={(e) => update(faq.localId, "question_en", e.target.value)}
+                      placeholder="Frequently asked question..."
+                      className={cn(faq.dirty && "border-amber-300")}
+                    />
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-muted-foreground text-xs font-medium">คำตอบ</label>
-                  <textarea
-                    value={faq.answer}
-                    onChange={(e) => update(faq.localId, "answer", e.target.value)}
-                    placeholder="คำตอบ..."
-                    rows={3}
-                    className={cn(textareaCls, faq.dirty && "border-amber-300")}
-                  />
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="flex flex-col gap-1">
+                    <label className="text-muted-foreground text-xs font-medium">คำตอบ (ไทย)</label>
+                    <textarea
+                      value={faq.answer}
+                      onChange={(e) => update(faq.localId, "answer", e.target.value)}
+                      placeholder="คำตอบ..."
+                      rows={3}
+                      className={cn(textareaCls, faq.dirty && "border-amber-300")}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <label className="text-muted-foreground text-xs font-medium">
+                      คำตอบ (English)
+                      <span className="text-muted-foreground/70 ml-1 font-normal">แนะนำ</span>
+                    </label>
+                    <textarea
+                      value={faq.answer_en}
+                      onChange={(e) => update(faq.localId, "answer_en", e.target.value)}
+                      placeholder="Answer..."
+                      rows={3}
+                      className={cn(textareaCls, faq.dirty && "border-amber-300")}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="mt-6 flex shrink-0 items-center gap-2">

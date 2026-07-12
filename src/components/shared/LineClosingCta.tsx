@@ -1,7 +1,23 @@
-import Link from "next/link"
+"use client"
+
+import { useLocale } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import { MessageCircle, Phone } from "lucide-react"
 import PageSection from "@/components/layout/PageSection"
 import { cn } from "@/lib/utils"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
+
+const DEFAULT_TITLE = {
+  th: "ปรึกษาเรื่องอสังหาฯ ฟรีกับพิม",
+  en: "Free real estate consultation with Pim",
+} as const
+const DEFAULT_SUBTITLE = {
+  th: "คุยง่าย ตรงไปตรงมา ไม่มีค่าใช้จ่ายในการปรึกษา",
+  en: "Easy, straightforward chat — consultation is free.",
+} as const
+const LINE_CTA = { th: "ทักแชทปรึกษาฟรี", en: "Free LINE Chat" } as const
+const CALL_CTA = { th: "โทรด่วน", en: "Call Now" } as const
 
 interface LineClosingCtaProps {
   lineUrl: string
@@ -21,27 +37,35 @@ export default function LineClosingCta({
   lineUrl,
   phoneUrl,
   variant = "primary",
-  titleTh = "ปรึกษาเรื่องอสังหาฯ ฟรีกับพิม",
-  titleEn = "Free real estate consultation with Pim",
-  subtitleTh = "คุยง่าย ตรงไปตรงมา ไม่มีค่าใช้จ่ายในการปรึกษา",
-  subtitleEn,
+  titleTh = DEFAULT_TITLE.th,
+  titleEn = DEFAULT_TITLE.en,
+  subtitleTh = DEFAULT_SUBTITLE.th,
+  subtitleEn = DEFAULT_SUBTITLE.en,
   locationTh,
   locationEn,
   lineTestId,
   secondaryLinks,
 }: LineClosingCtaProps) {
+  const locale = useLocale() as Locale
   const isPrimary = variant === "primary"
+  const pick = (th: string, en: string) => pickLocalized(locale, { th, en })
 
   return (
     <PageSection variant={variant}>
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
         {(locationTh || locationEn) && (
           <div className="w-full border-y border-border py-8">
-            {locationTh && (
+            {locationTh && locale !== "en" && (
               <p className="text-base leading-relaxed text-foreground/90">{locationTh}</p>
             )}
-            {locationEn && (
-              <p className="mt-2 text-sm text-muted-foreground">{locationEn}</p>
+            {locationEn && locale === "en" && (
+              <p className="text-base leading-relaxed text-foreground/90">{locationEn}</p>
+            )}
+            {!locationEn && locationTh && locale === "en" && (
+              <p className="text-base leading-relaxed text-foreground/90">{locationTh}</p>
+            )}
+            {!locationTh && locationEn && locale !== "en" && (
+              <p className="text-base leading-relaxed text-foreground/90">{locationEn}</p>
             )}
           </div>
         )}
@@ -51,15 +75,7 @@ export default function LineClosingCta({
             isPrimary ? "text-primary-foreground" : "text-foreground",
           )}
         >
-          {titleTh}
-          <span
-            className={cn(
-              "mt-1 block text-lg font-medium",
-              isPrimary ? "text-primary-foreground/80" : "text-muted-foreground",
-            )}
-          >
-            {titleEn}
-          </span>
+          {pick(titleTh, titleEn)}
         </h2>
         <p
           className={cn(
@@ -67,10 +83,7 @@ export default function LineClosingCta({
             isPrimary ? "text-primary-foreground/90" : "text-muted-foreground",
           )}
         >
-          {subtitleTh}
-          {subtitleEn && (
-            <span className="mt-1 block text-sm">{subtitleEn}</span>
-          )}
+          {pick(subtitleTh, subtitleEn ?? "")}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <a
@@ -80,13 +93,11 @@ export default function LineClosingCta({
             data-testid={lineTestId}
             className={cn(
               "inline-flex items-center gap-2 rounded-lg px-8 py-3 text-sm font-semibold shadow-md transition-opacity hover:opacity-90",
-              isPrimary
-                ? "bg-card text-primary"
-                : "bg-[#06C755] text-white",
+              isPrimary ? "bg-card text-primary" : "bg-[#06C755] text-white",
             )}
           >
             <MessageCircle className="size-5" />
-            ทักแชทปรึกษาฟรี | Free LINE Chat
+            {pick(LINE_CTA.th, LINE_CTA.en)}
           </a>
           {phoneUrl && (
             <a
@@ -99,7 +110,7 @@ export default function LineClosingCta({
               )}
             >
               <Phone className="size-5" />
-              โทรด่วน | Call Now
+              {pick(CALL_CTA.th, CALL_CTA.en)}
             </a>
           )}
         </div>

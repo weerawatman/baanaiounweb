@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useLocale } from "next-intl"
 import {
   Loader2,
   CheckCircle,
@@ -14,6 +15,8 @@ import WhatsAppIcon from "@/components/shared/WhatsAppIcon"
 import { SITE_CONFIG } from "@/config/site"
 import { buildGoogleMapsEmbedUrl } from "@/lib/google-maps"
 import { mapContactSubjectToFormTag } from "@/lib/form-validation"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
 import type { Profile } from "@/types"
 
 interface FormState {
@@ -24,10 +27,74 @@ interface FormState {
   message: string
 }
 
+const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
+const CONTACT_CRUMB = { th: "ติดต่อเรา", en: "Contact Us" } as const
+
+const FORM_HEADING = { th: "✉️ ส่งข้อความหาเรา", en: "✉️ Send Us a Message" } as const
+const SUCCESS_TITLE = { th: "ส่งข้อความเรียบร้อยแล้ว!", en: "Message sent!" } as const
+const SUCCESS_BODY = {
+  th: "พิมจะติดต่อกลับโดยเร็วที่สุดค่ะ",
+  en: "We'll get back to you shortly.",
+} as const
+const SEND_ANOTHER = { th: "ส่งข้อความอีกครั้ง", en: "Send another" } as const
+
+const LABEL_NAME = { th: "ชื่อ-นามสกุล", en: "Full Name" } as const
+const LABEL_PHONE = { th: "เบอร์โทรศัพท์", en: "Phone" } as const
+const LABEL_EMAIL = { th: "อีเมล", en: "Email" } as const
+const LABEL_SUBJECT = { th: "หัวข้อ", en: "Subject" } as const
+const LABEL_MESSAGE = { th: "ข้อความ", en: "Message" } as const
+
+const PLACEHOLDER_NAME = { th: "คุณชื่ออะไรคะ?", en: "What is your name?" } as const
+const PLACEHOLDER_MESSAGE = {
+  th: "บอกพิมได้เลยค่ะ ว่าสนใจซื้อ ขาย เช่า หรือมีคำถามอะไร...",
+  en: "Tell us if you're interested in buying, selling, renting, or have any questions...",
+} as const
+
+const SUBJECT_OPTIONS = [
+  { value: "", label: { th: "เลือกหัวข้อ", en: "Select Topic" } },
+  { value: "buy", label: { th: "ซื้อ/เช่า", en: "Buy / Rent Property" } },
+  { value: "sell", label: { th: "ฝากขาย/เช่า", en: "List My Property" } },
+  { value: "loan", label: { th: "สินเชื่อบ้าน", en: "Home Loan Inquiry" } },
+  { value: "co-agent", label: { th: "Co-Agent", en: "Co-Agent Partnership" } },
+  { value: "other", label: { th: "อื่นๆ", en: "Other" } },
+] as const
+
+const ERROR_GENERIC = {
+  th: "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
+  en: "Something went wrong. Please try again.",
+} as const
+const ERROR_NETWORK = {
+  th: "ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต",
+  en: "Could not send your message. Please check your internet connection.",
+} as const
+
+const SUBMITTING = { th: "กำลังส่ง...", en: "Sending..." } as const
+const SUBMIT = { th: "ส่งข้อความ 🚀", en: "Send Message 🚀" } as const
+
+const FAST_REPLY_HEADING = {
+  th: "⚡ ต้องการคำตอบเร็วกว่านี้?",
+  en: "⚡ Need a Faster Reply?",
+} as const
+const FAST_REPLY_BODY = {
+  th: "แอดไลน์หรือ WhatsApp หาพิมได้เลย ตอบไวกว่าค่ะ!",
+  en: "Add us on LINE or WhatsApp for the fastest response!",
+} as const
+const LINE_CTA = { th: "แอดไลน์", en: "Add LINE" } as const
+
+const CARD_PHONE = { th: "โทรศัพท์", en: "Phone" } as const
+const CARD_EMAIL = { th: "อีเมล", en: "Email" } as const
+const CARD_ADDRESS = { th: "ที่อยู่สำนักงาน", en: "Address" } as const
+
+const MAP_TITLE = {
+  th: "แผนที่ บ้านไออุ่น พร็อพเพอร์ตี้",
+  en: "Baan Ai Oun Property map",
+} as const
+
 const inputCls =
   "w-full rounded-lg border border-input bg-muted px-4 py-3 text-[15px] transition-colors focus:border-primary focus:bg-card focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 
 export default function ContactPage({ profile }: { profile: Profile }) {
+  const locale = useLocale() as Locale
   const phone = profile.phone || SITE_CONFIG.phone
   const lineId = profile.lineId || SITE_CONFIG.lineId
   const lineUrl = profile.lineUrl || SITE_CONFIG.lineUrl
@@ -80,13 +147,13 @@ export default function ContactPage({ profile }: { profile: Profile }) {
       const body = await res.json()
 
       if (!res.ok || !body.success) {
-        setError(body.error ?? "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง")
+        setError(body.error ?? pickLocalized(locale, ERROR_GENERIC))
         return
       }
 
       setSubmitted(true)
     } catch {
-      setError("ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต")
+      setError(pickLocalized(locale, ERROR_NETWORK))
     } finally {
       setSubmitting(false)
     }
@@ -95,7 +162,12 @@ export default function ContactPage({ profile }: { profile: Profile }) {
   return (
     <>
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "ติดต่อเรา | Contact Us" }]} />
+        <Breadcrumb
+          items={[
+            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            { label: pickLocalized(locale, CONTACT_CRUMB) },
+          ]}
+        />
       </div>
 
       <PageHeroBanner
@@ -108,20 +180,19 @@ export default function ContactPage({ profile }: { profile: Profile }) {
 
       <main className="mx-auto max-w-7xl px-4 pb-16 sm:px-6">
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-10">
-          {/* Left: Form */}
           <div className="rounded-2xl border border-border bg-card p-8 shadow-[0_10px_30px_rgba(0,0,0,0.03)] sm:p-10">
             <h2 className="mb-6 border-b-2 border-border pb-4 text-xl font-semibold text-primary">
-              ✉️ ส่งข้อความหาเรา | Send Us a Message
+              {pickLocalized(locale, FORM_HEADING)}
             </h2>
 
             {submitted ? (
               <div className="py-8 text-center">
                 <CheckCircle className="mx-auto size-12 text-green-500" />
                 <h3 className="mt-4 text-xl font-bold text-primary">
-                  ส่งข้อความเรียบร้อยแล้ว! | Message sent!
+                  {pickLocalized(locale, SUCCESS_TITLE)}
                 </h3>
                 <p className="mt-2 text-muted-foreground">
-                  พิมจะติดต่อกลับโดยเร็วที่สุดค่ะ | We&apos;ll get back to you shortly.
+                  {pickLocalized(locale, SUCCESS_BODY)}
                 </p>
                 <Button
                   className="mt-6"
@@ -131,20 +202,20 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                     setForm({ name: "", phone: "", email: "", subject: "", message: "" })
                   }}
                 >
-                  ส่งข้อความอีกครั้ง | Send another
+                  {pickLocalized(locale, SEND_ANOTHER)}
                 </Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name" className="text-sm font-bold text-foreground">
-                    ชื่อ-นามสกุล | Full Name <span className="text-red-600">*</span>
+                    {pickLocalized(locale, LABEL_NAME)} <span className="text-red-600">*</span>
                   </label>
                   <Input
                     id="name"
                     name="name"
                     type="text"
-                    placeholder="คุณชื่ออะไรคะ?"
+                    placeholder={pickLocalized(locale, PLACEHOLDER_NAME)}
                     required
                     value={form.name}
                     onChange={handleChange}
@@ -155,7 +226,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="phone" className="text-sm font-bold text-foreground">
-                    เบอร์โทรศัพท์ | Phone <span className="text-red-600">*</span>
+                    {pickLocalized(locale, LABEL_PHONE)} <span className="text-red-600">*</span>
                   </label>
                   <Input
                     id="phone"
@@ -172,7 +243,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="email" className="text-sm font-bold text-foreground">
-                    อีเมล | Email
+                    {pickLocalized(locale, LABEL_EMAIL)}
                   </label>
                   <Input
                     id="email"
@@ -188,7 +259,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="subject" className="text-sm font-bold text-foreground">
-                    หัวข้อ | Subject
+                    {pickLocalized(locale, LABEL_SUBJECT)}
                   </label>
                   <select
                     id="subject"
@@ -198,24 +269,23 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                     disabled={submitting}
                     className={inputCls}
                   >
-                    <option value="">เลือกหัวข้อ | Select Topic</option>
-                    <option value="buy">ซื้อ/เช่า | Buy / Rent Property</option>
-                    <option value="sell">ฝากขาย/เช่า | List My Property</option>
-                    <option value="loan">สินเชื่อบ้าน | Home Loan Inquiry</option>
-                    <option value="co-agent">Co-Agent | Partnership</option>
-                    <option value="other">อื่นๆ | Other</option>
+                    {SUBJECT_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {pickLocalized(locale, opt.label)}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="message" className="text-sm font-bold text-foreground">
-                    ข้อความ | Message <span className="text-red-600">*</span>
+                    {pickLocalized(locale, LABEL_MESSAGE)} <span className="text-red-600">*</span>
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     rows={5}
-                    placeholder="บอกพิมได้เลยค่ะ ว่าสนใจซื้อ ขาย เช่า หรือมีคำถามอะไร..."
+                    placeholder={pickLocalized(locale, PLACEHOLDER_MESSAGE)}
                     required
                     value={form.message}
                     onChange={handleChange}
@@ -240,19 +310,17 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                   {submitting ? (
                     <>
                       <Loader2 className="size-4 animate-spin" />
-                      กำลังส่ง... | Sending...
+                      {pickLocalized(locale, SUBMITTING)}
                     </>
                   ) : (
-                    <>ส่งข้อความ | Send Message 🚀</>
+                    pickLocalized(locale, SUBMIT)
                   )}
                 </Button>
               </form>
             )}
           </div>
 
-          {/* Right: Map, Fast Reply, Contact Cards */}
           <div className="flex flex-col gap-6">
-            {/* Google Maps — พิกัดจาก Admin */}
             <div className="h-[250px] overflow-hidden rounded-xl border border-border shadow-sm">
               <iframe
                 src={mapEmbed}
@@ -262,20 +330,17 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="แผนที่ บ้านไออุ่น พร็อพเพอร์ตี้"
+                title={pickLocalized(locale, MAP_TITLE)}
                 className="h-full w-full"
               />
             </div>
 
-            {/* Fast Reply */}
             <div className="rounded-2xl border border-primary/20 bg-primary-subtle p-8 text-center">
               <h3 className="text-lg font-semibold text-primary">
-                ⚡ ต้องการคำตอบเร็วกว่านี้? | Need a Faster Reply?
+                {pickLocalized(locale, FAST_REPLY_HEADING)}
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                แอดไลน์หรือ WhatsApp หาพิมได้เลย ตอบไวกว่าค่ะ!
-                <br />
-                Add us on LINE or WhatsApp for the fastest response!
+                {pickLocalized(locale, FAST_REPLY_BODY)}
               </p>
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 <a
@@ -284,7 +349,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg bg-[#00c300] px-6 py-3 text-sm font-bold text-white shadow-[0_4px_6px_rgba(0,195,0,0.2)] transition-colors hover:bg-[#00a600]"
                 >
-                  💬 แอดไลน์ {lineId}
+                  💬 {pickLocalized(locale, LINE_CTA)} {lineId}
                 </a>
                 <a
                   href={whatsappUrl}
@@ -298,7 +363,6 @@ export default function ContactPage({ profile }: { profile: Profile }) {
               </div>
             </div>
 
-            {/* Contact Cards */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <a
                 href={`tel:${phone.replace(/-/g, "")}`}
@@ -309,7 +373,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 </div>
                 <div>
                   <p className="text-xs font-bold tracking-wide text-muted-foreground uppercase">
-                    โทรศัพท์ | Phone
+                    {pickLocalized(locale, CARD_PHONE)}
                   </p>
                   <p className="mt-1 text-base font-medium text-foreground">{phone}</p>
                 </div>
@@ -324,7 +388,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 </div>
                 <div>
                   <p className="text-xs font-bold tracking-wide text-muted-foreground uppercase">
-                    อีเมล | Email
+                    {pickLocalized(locale, CARD_EMAIL)}
                   </p>
                   <p className="mt-1 truncate text-base font-medium text-foreground">{email}</p>
                 </div>
@@ -336,7 +400,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
                 </div>
                 <div>
                   <p className="text-xs font-bold tracking-wide text-muted-foreground uppercase">
-                    ที่อยู่สำนักงาน | Address
+                    {pickLocalized(locale, CARD_ADDRESS)}
                   </p>
                   <p className="mt-1 text-base font-medium text-foreground">{address}</p>
                 </div>

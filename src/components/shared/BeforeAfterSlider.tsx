@@ -1,14 +1,23 @@
 "use client"
 
 import { useCallback, useRef, useState } from "react"
+import { useLocale } from "next-intl"
 import Image from "next/image"
 import { GripVertical } from "lucide-react"
 import { cn } from "@/lib/utils"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
+
+const BEFORE_LABEL = { th: "ก่อน", en: "Before" } as const
+const AFTER_LABEL = { th: "หลัง", en: "After" } as const
+const SLIDER_ARIA = {
+  th: "เปรียบเทียบก่อนและหลัง",
+  en: "Compare before and after",
+} as const
 
 interface BeforeAfterSliderProps {
   beforeUrl: string
   afterUrl: string
-  /** Kept for API compatibility; images are decorative (caption below). */
   beforeAlt?: string
   afterAlt?: string
   className?: string
@@ -19,6 +28,7 @@ export default function BeforeAfterSlider({
   afterUrl,
   className,
 }: BeforeAfterSliderProps) {
+  const locale = useLocale() as Locale
   const containerRef = useRef<HTMLDivElement>(null)
   const [position, setPosition] = useState(50)
   const [isDragging, setIsDragging] = useState(false)
@@ -104,7 +114,7 @@ export default function BeforeAfterSlider({
 
       <div
         role="slider"
-        aria-label="Compare before and after"
+        aria-label={pickLocalized(locale, SLIDER_ARIA)}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(position)}
@@ -117,10 +127,10 @@ export default function BeforeAfterSlider({
       />
 
       <span className="pointer-events-none absolute top-3 left-3 rounded bg-black/60 px-2 py-1 text-xs font-semibold text-white">
-        Before | ก่อน
+        {pickLocalized(locale, BEFORE_LABEL)}
       </span>
       <span className="pointer-events-none absolute top-3 right-3 rounded bg-primary/90 px-2 py-1 text-xs font-semibold text-white">
-        After | หลัง
+        {pickLocalized(locale, AFTER_LABEL)}
       </span>
     </div>
   )

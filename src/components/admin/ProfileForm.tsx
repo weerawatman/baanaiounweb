@@ -37,8 +37,11 @@ export function ProfileForm({ defaultValues, faqsByPage, action }: ProfileFormPr
       name: defaultValues.name,
       full_name: defaultValues.fullName,
       role: defaultValues.role,
+      role_en: defaultValues.roleEn,
       bio: defaultValues.bio,
+      bio_en: defaultValues.bioEn,
       vision: defaultValues.vision,
+      vision_en: defaultValues.visionEn,
       avatar_url: defaultValues.avatarUrl,
       hero_image_url: defaultValues.heroImageUrl,
       home_hero_image: defaultValues.homeHeroImage,
@@ -126,11 +129,16 @@ export function ProfileForm({ defaultValues, faqsByPage, action }: ProfileFormPr
               <Input {...register("full_name")} placeholder="คุณพิม — นายหน้าอสังหาริมทรัพย์" />
             </FormField>
 
-            <FormField label="ตำแหน่ง/บทบาท" hint="แสดงใต้ชื่อในหน้าเกี่ยวกับ">
-              <Input {...register("role")} placeholder="นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี" />
-            </FormField>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <FormField label="ตำแหน่ง/บทบาท (ไทย)" hint="แสดงใต้ชื่อในหน้าเกี่ยวกับ">
+                <Input {...register("role")} placeholder="นายหน้าอสังหาริมทรัพย์ บ้านบึง ชลบุรี" />
+              </FormField>
+              <FormField label="ตำแหน่ง/บทบาท (English)" error={errors.role_en?.message} required>
+                <Input {...register("role_en")} placeholder="Real estate agent, Ban Bueng" />
+              </FormField>
+            </div>
 
-            <FormField label="คำบรรยาย (Bio)" error={errors.bio?.message}>
+            <FormField label="คำบรรยาย (Bio) — ไทย" error={errors.bio?.message}>
               <textarea
                 {...register("bio")}
                 rows={4}
@@ -139,11 +147,29 @@ export function ProfileForm({ defaultValues, faqsByPage, action }: ProfileFormPr
               />
             </FormField>
 
-            <FormField label="วิสัยทัศน์ (Vision)" error={errors.vision?.message}>
+            <FormField label="คำบรรยาย (Bio) — English" error={errors.bio_en?.message} required>
+              <textarea
+                {...register("bio_en")}
+                rows={4}
+                placeholder="Pim's background and introduction..."
+                className={textareaCls}
+              />
+            </FormField>
+
+            <FormField label="วิสัยทัศน์ (Vision) — ไทย" error={errors.vision?.message}>
               <textarea
                 {...register("vision")}
                 rows={3}
                 placeholder="พิมมุ่งมั่น..."
+                className={textareaCls}
+              />
+            </FormField>
+
+            <FormField label="วิสัยทัศน์ (Vision) — English" error={errors.vision_en?.message} required>
+              <textarea
+                {...register("vision_en")}
+                rows={3}
+                placeholder="Pim's vision..."
                 className={textareaCls}
               />
             </FormField>

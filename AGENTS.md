@@ -24,7 +24,7 @@ dashboard manages listings, blog, leads, and testimonials.
 ## Directory map
 
 ```
-src/app/(public)/*      Public site pages (no i18n routing — see below)
+src/app/[locale]/(public)/*  Public site pages (TH root, EN /en/…)
 src/app/(admin)/admin/* Admin dashboard, Supabase-auth gated
 src/app/api/*           2 routes: submit-form, upload-images
 src/components/         home/ shared/ property/ blog/ layout/ ui/ admin/
@@ -64,18 +64,22 @@ Panel → System → Advanced → Performance → Virtual Memory) and reboot.
 
 ## Conventions to preserve
 
-- **Bilingual display, no toggle:** the site permanently shows Thai and
-  English together (Thai primary/bold, English secondary/muted, or
-  "ไทย | English" inline for short labels). There is no language switcher —
-  it was deliberately removed. Don't reintroduce `th-only`/`en-only`
-  CSS-hide patterns or a toggle component.
+- **i18n routing with banner exception:** Thai content at root (`/about`),
+  English at `/en/about` (`localePrefix: "as-needed"`,
+  `localeDetection: false` — `/` is always Thai regardless of browser language).
+  `LanguageSwitcher` in `Header.tsx` toggles locale. Body copy, nav, and forms
+  show **one language** per locale via `pickLocalized()` / `localizedOrFallback()`
+  (`src/lib/i18n/`). **Page banners** (`PageHeroBanner`, `HeroSection`)
+  intentionally keep Thai + English together — do not localize banner headlines
+  to a single locale.
 - **Lead forms are click-to-reveal**, not always visible: `CTAWithForm`
   (`src/components/shared/CTAWithForm.tsx`) renders a CTA button first; the
   actual `PropertyForm` only mounts after the visitor clicks it. Automated
   tests/agents must click the CTA before looking for form fields.
 - **Legacy redirects:** `next.config.ts` permanently redirects
   `/buy /rent /land` → `/find-property`, `/owners` → `/list-property`,
-  `/academy` → `/agent-course`. The old page files were deleted (dead code,
+  `/academy` → `/agent-course`, and the same under `/en/*` (e.g.
+  `/en/buy` → `/en/find-property`). The old page files were deleted (dead code,
   unreachable — a redirect always wins over the filesystem route in
   Next.js) but the redirects themselves must stay, for old bookmarked/
   indexed links.
@@ -88,9 +92,9 @@ Panel → System → Advanced → Performance → Virtual Memory) and reboot.
 
 - **E2E:** Playwright (`e2e/*.spec.ts`, config at `playwright.config.ts`).
   Run with `npm run test:e2e` — it auto-starts the dev server if one isn't
-  already running on :3000. `e2e/smoke.spec.ts` covers: home page renders
-  the bilingual nav, all key public pages return 200, and the legacy
-  `/buy /owners` etc. redirects still resolve correctly.
+  already running on :3000. `e2e/smoke.spec.ts` covers: Thai and English home
+  nav, key `/en/*` pages return 200, language switcher, legacy redirects, and
+  banner bilingual exception on hero.
 - No Jest/Vitest unit/component test suite exists.
 - **Production audit:** `python testsprite_tests/production_audit.py` runs
   ~37 checks (status codes, redirects, SEO basics, forms, API probes, load

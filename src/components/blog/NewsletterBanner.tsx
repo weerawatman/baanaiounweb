@@ -1,9 +1,29 @@
 "use client"
 
 import { useState } from "react"
+import { useLocale } from "next-intl"
 import { SITE_CONFIG } from "@/config/site"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
+
+const HEADING = {
+  th: "ไม่พลาดทุกเคสรีโนเวทและทำเลทอง",
+  en: "Never miss renovation case studies and prime locations",
+} as const
+const BODY = {
+  th: "สมัครรับข่าวสารจากเรา เพื่อรับเคล็ดลับอสังหาฯ อัปเดตทำเลน่าลงทุน และเคสศึกษาฉบับเจาะลึก ส่งตรงถึงอีเมลคุณ",
+  en: "Subscribe for tips, location updates, and in-depth case studies delivered to your inbox.",
+} as const
+const PLACEHOLDER = { th: "กรอกอีเมลของคุณ...", en: "Your email" } as const
+const SUBSCRIBE = { th: "ติดตามข่าวสาร", en: "Subscribe" } as const
+const THANKS = { th: "ขอบคุณที่สมัครรับข่าวสารค่ะ!", en: "Thank you for subscribing!" } as const
+const FOLLOW_LINE = {
+  th: "ติดตามอัปเดตได้ที่ LINE:",
+  en: "Follow us on LINE for updates:",
+} as const
 
 export default function NewsletterBanner() {
+  const locale = useLocale() as Locale
   const [email, setEmail] = useState("")
   const [submitted, setSubmitted] = useState(false)
 
@@ -19,9 +39,9 @@ export default function NewsletterBanner() {
         className="mb-14 rounded-[20px] bg-primary px-6 py-12 text-center text-primary-foreground shadow-lg sm:px-10"
         data-testid="newsletter-banner"
       >
-        <p className="text-lg font-bold text-secondary">ขอบคุณที่สมัครรับข่าวสารค่ะ!</p>
+        <p className="text-lg font-bold text-secondary">{pickLocalized(locale, THANKS)}</p>
         <p className="mt-2 text-sm text-primary-foreground/85">
-          Thank you! Follow us on LINE for updates:{" "}
+          {pickLocalized(locale, FOLLOW_LINE)}{" "}
           <a href={SITE_CONFIG.lineUrl} className="underline">
             {SITE_CONFIG.lineId}
           </a>
@@ -36,17 +56,10 @@ export default function NewsletterBanner() {
       data-testid="newsletter-banner"
     >
       <h3 className="text-2xl font-bold text-secondary sm:text-3xl">
-        ไม่พลาดทุกเคสรีโนเวทและทำเลทอง
+        {pickLocalized(locale, HEADING)}
       </h3>
-      <p className="mt-1 text-base font-medium text-primary-foreground/90">
-        Never miss renovation case studies and prime locations
-      </p>
       <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-primary-foreground/80 sm:text-base">
-        สมัครรับข่าวสารจากเรา เพื่อรับเคล็ดลับอสังหาฯ อัปเดตทำเลน่าลงทุน และเคสศึกษาฉบับเจาะลึก
-        ส่งตรงถึงอีเมลคุณ
-      </p>
-      <p className="mx-auto mt-1 max-w-xl text-xs text-primary-foreground/65">
-        Subscribe for tips, location updates, and in-depth case studies delivered to your inbox.
+        {pickLocalized(locale, BODY)}
       </p>
       <form
         onSubmit={handleSubmit}
@@ -57,14 +70,14 @@ export default function NewsletterBanner() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="กรอกอีเมลของคุณ... | Your email"
+          placeholder={pickLocalized(locale, PLACEHOLDER)}
           className="min-h-[52px] flex-1 rounded-full border border-white/30 bg-white px-5 py-3 text-sm text-foreground shadow-sm placeholder:text-muted-foreground focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/40"
         />
         <button
           type="submit"
           className="min-h-[52px] rounded-full bg-secondary px-8 py-3 text-sm font-bold text-secondary-foreground transition-colors hover:bg-secondary/90"
         >
-          ติดตามข่าวสาร | Subscribe
+          {pickLocalized(locale, SUBSCRIBE)}
         </button>
       </form>
     </div>

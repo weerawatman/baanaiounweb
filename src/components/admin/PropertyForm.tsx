@@ -34,17 +34,22 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
     resolver: zodResolver(propertySchema) as Resolver<PropertyFormValues>,
     defaultValues: {
       title: defaultValues?.title ?? "",
+      title_en: defaultValues?.title_en ?? "",
       slug: defaultValues?.slug ?? "",
       type: defaultValues?.type ?? "SALE",
       sub_type: defaultValues?.sub_type ?? undefined,
       price: defaultValues?.price ?? 0,
       price_label: defaultValues?.price_label ?? "",
+      price_label_en: defaultValues?.price_label_en ?? "",
       area_sqm: defaultValues?.area_sqm ?? 0,
       bedrooms: defaultValues?.bedrooms ?? 0,
       bathrooms: defaultValues?.bathrooms ?? 0,
       description: defaultValues?.description ?? "",
+      description_en: defaultValues?.description_en ?? "",
       emotional_desc: defaultValues?.emotional_desc ?? "",
+      emotional_desc_en: defaultValues?.emotional_desc_en ?? "",
       pim_insight: defaultValues?.pim_insight ?? "",
+      pim_insight_en: defaultValues?.pim_insight_en ?? "",
       status: defaultValues?.status ?? "ACTIVE",
       featured: defaultValues?.featured ?? false,
       images: defaultValues?.images ?? [],
@@ -113,24 +118,31 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
         <h2 className="text-foreground font-semibold">ข้อมูลพื้นฐาน</h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <FormField label="ชื่อทรัพย์" error={errors.title?.message} required>
+          <FormField label="ชื่อทรัพย์ (ไทย)" error={errors.title?.message} required>
             <Input {...register("title")} placeholder="บ้านเดี่ยว 2 ชั้น ซอยเกษมราษฎร์" />
           </FormField>
-
           <FormField
-            label="Slug (URL)"
-            error={errors.slug?.message}
-            required
-            hint="สร้างอัตโนมัติจากชื่อทรัพย์ — แก้ได้ถ้าต้องการ URL อื่น"
+            label="ชื่อทรัพย์ (English)"
+            error={errors.title_en?.message}
+            hint="จำเป็นเมื่อสถานะเป็น «เผยแพร่»"
           >
-            <Input
-              {...register("slug", {
-                onChange: () => setSlugEdited(true),
-              })}
-              placeholder="สร้างอัตโนมัติจากชื่อทรัพย์"
-            />
+            <Input {...register("title_en")} placeholder="2-storey detached house" />
           </FormField>
         </div>
+
+        <FormField
+          label="Slug (URL)"
+          error={errors.slug?.message}
+          required
+          hint="สร้างอัตโนมัติจากชื่อทรัพย์ — แก้ได้ถ้าต้องการ URL อื่น"
+        >
+          <Input
+            {...register("slug", {
+              onChange: () => setSlugEdited(true),
+            })}
+            placeholder="สร้างอัตโนมัติจากชื่อทรัพย์"
+          />
+        </FormField>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <FormField label="ประเภท" error={errors.type?.message} required>
@@ -161,19 +173,23 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
           </FormField>
         </div>
 
+        <FormField label="ราคา (บาท)" error={errors.price?.message} required>
+          <Input type="number" min={0} {...register("price")} />
+        </FormField>
+
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <FormField label="ราคา (บาท)" error={errors.price?.message} required>
-            <Input type="number" min={0} {...register("price")} />
-          </FormField>
           <FormField
-            label="ข้อความแสดงราคา (ไม่บังคับ)"
+            label="ข้อความแสดงราคา (ไทย)"
             error={errors.price_label?.message}
-            hint="ปล่อยว่าง = ระบบจัดรูปแบบจาก «ราคา» ให้อัตโนมัติ เช่น 1,990,000 บาท หรือใส่เอง เช่น ตกลงกันได้"
+            hint="ปล่อยว่าง = ระบบจัดรูปแบบจาก «ราคา» ให้อัตโนมัติ"
           >
             <Input
               {...register("price_label")}
               placeholder="ปล่อยว่างหรือพิมพ์เอง เช่น ตกลงกันได้"
             />
+          </FormField>
+          <FormField label="ข้อความแสดงราคา (English)" error={errors.price_label_en?.message}>
+            <Input {...register("price_label_en")} placeholder="Negotiable" />
           </FormField>
         </div>
 
@@ -213,7 +229,7 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
       <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
         <h2 className="text-foreground font-semibold">คำบรรยาย</h2>
 
-        <FormField label="รายละเอียดทั่วไป" error={errors.description?.message}>
+        <FormField label="รายละเอียดทั่วไป (ไทย)" error={errors.description?.message}>
           <textarea
             {...register("description")}
             rows={4}
@@ -222,7 +238,16 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
           />
         </FormField>
 
-        <FormField label="คำบรรยายอารมณ์" error={errors.emotional_desc?.message}>
+        <FormField label="รายละเอียดทั่วไป (English)" error={errors.description_en?.message}>
+          <textarea
+            {...register("description_en")}
+            rows={4}
+            placeholder="Property details..."
+            className={textareaCls}
+          />
+        </FormField>
+
+        <FormField label="คำบรรยายอารมณ์ (ไทย)" error={errors.emotional_desc?.message}>
           <textarea
             {...register("emotional_desc")}
             rows={3}
@@ -231,11 +256,29 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
           />
         </FormField>
 
-        <FormField label="มุมมองพิม" error={errors.pim_insight?.message}>
+        <FormField label="คำบรรยายอารมณ์ (English)" error={errors.emotional_desc_en?.message}>
+          <textarea
+            {...register("emotional_desc_en")}
+            rows={3}
+            placeholder="This home is perfect for..."
+            className={textareaCls}
+          />
+        </FormField>
+
+        <FormField label="มุมมองพิม (ไทย)" error={errors.pim_insight?.message}>
           <textarea
             {...register("pim_insight")}
             rows={3}
             placeholder="พิมคิดว่าทรัพย์นี้..."
+            className={textareaCls}
+          />
+        </FormField>
+
+        <FormField label="มุมมองพิม (English)" error={errors.pim_insight_en?.message}>
+          <textarea
+            {...register("pim_insight_en")}
+            rows={3}
+            placeholder="Pim's take on this property..."
             className={textareaCls}
           />
         </FormField>

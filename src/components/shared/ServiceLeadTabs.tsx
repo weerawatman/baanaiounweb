@@ -1,6 +1,11 @@
-import Link from "next/link"
+"use client"
+
+import { useLocale } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import { Home, Search, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
 
 export type ServiceLeadTab = "list-property" | "matchmaking" | "co-agent"
 
@@ -8,29 +13,25 @@ const TABS: {
   id: ServiceLeadTab
   href: string
   icon: typeof Home
-  labelTh: string
-  labelEn: string
+  label: { th: string; en: string }
 }[] = [
   {
     id: "list-property",
     href: "/list-property",
     icon: Home,
-    labelTh: "ฝากขาย/ปล่อยเช่า",
-    labelEn: "List Property",
+    label: { th: "ฝากขาย/ปล่อยเช่า", en: "List Property" },
   },
   {
     id: "matchmaking",
     href: "/find-property",
     icon: Search,
-    labelTh: "จัดหาทรัพย์ตามต้องการ",
-    labelEn: "Property Match",
+    label: { th: "จัดหาทรัพย์ตามต้องการ", en: "Property Match" },
   },
   {
     id: "co-agent",
     href: "/co-agent",
     icon: Users,
-    labelTh: "ร่วมเป็น Co-Agent",
-    labelEn: "Join Co-Agent",
+    label: { th: "ร่วมเป็น Co-Agent", en: "Join Co-Agent" },
   },
 ]
 
@@ -39,15 +40,18 @@ interface ServiceLeadTabsProps {
 }
 
 export default function ServiceLeadTabs({ active }: ServiceLeadTabsProps) {
+  const locale = useLocale() as Locale
+
   return (
     <nav
       className="mb-10 flex flex-col gap-3 sm:flex-row sm:gap-4"
-      aria-label="บริการหลัก | Main services"
+      aria-label={locale === "en" ? "Main services" : "บริการหลัก"}
       data-testid="service-lead-tabs"
     >
       {TABS.map((tab) => {
         const Icon = tab.icon
         const isActive = tab.id === active
+        const label = pickLocalized(locale, tab.label)
         return (
           <Link
             key={tab.id}
@@ -61,17 +65,7 @@ export default function ServiceLeadTabs({ active }: ServiceLeadTabsProps) {
             aria-current={isActive ? "page" : undefined}
           >
             <Icon className="size-5 shrink-0" aria-hidden />
-            <span>
-              <span className="block">{tab.labelTh}</span>
-              <span
-                className={cn(
-                  "mt-0.5 block text-xs font-medium",
-                  isActive ? "text-primary-foreground/75" : "text-muted-foreground",
-                )}
-              >
-                {tab.labelEn}
-              </span>
-            </span>
+            <span>{label}</span>
           </Link>
         )
       })}

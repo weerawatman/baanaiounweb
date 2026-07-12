@@ -9,7 +9,7 @@ export const getFaqsByPage = unstable_cache(
   async (pageSlug: string): Promise<Faq[]> => {
     const { data, error } = await publicClient
       .from("faqs")
-      .select("id, question, answer, page_slug, sort_order")
+      .select("id, question, question_en, answer, answer_en, page_slug, sort_order")
       .eq("page_slug", pageSlug)
       .order("sort_order", { ascending: true })
     if (error) throw new Error(error.message)

@@ -1,8 +1,11 @@
 import Image from "next/image"
+import { getLocale } from "next-intl/server"
 import { Wrench, Handshake, Search, type LucideIcon } from "lucide-react"
 import PageSection from "@/components/layout/PageSection"
 import SectionTitle from "@/components/layout/SectionTitle"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 
 export interface TrustPillarImages {
   renovation: string
@@ -18,7 +21,8 @@ interface Pillar {
   titleEn: string
   descTh: string
   descEn: string
-  alt: string
+  altTh: string
+  altEn: string
 }
 
 const PILLARS: Pillar[] = [
@@ -32,7 +36,8 @@ const PILLARS: Pillar[] = [
       "มากกว่าการขาย คือการสร้างความสุขผ่านงานคุณภาพ เราประเมินและช่วยปรับปรุงสภาพทรัพย์ให้พร้อมอยู่ที่สุดก่อนส่งมอบ",
     descEn:
       "More than selling, we create happiness. We assess and improve property conditions to ensure they are perfectly move-in ready.",
-    alt: "ผลงานการจัดหาและรีโนเวทบ้านโดยบ้านไออุ่น",
+    altTh: "ผลงานการจัดหาและรีโนเวทบ้านโดยบ้านไออุ่น",
+    altEn: "Baan Ai Oun sourcing and renovation work",
   },
   {
     key: "network",
@@ -44,7 +49,8 @@ const PILLARS: Pillar[] = [
       "เจ้าของทรัพย์และเครือข่ายนายหน้ายืนยันเป็นเสียงเดียวกันถึงความเป็นมืออาชีพ คุยง่าย โปร่งใส และปิดดีลได้รวดเร็วจริง",
     descEn:
       "Property owners and partner agents consistently praise our professionalism, transparency, and fast deal-closing capabilities.",
-    alt: "รีวิวความประทับใจจากลูกค้าที่ฝากขายบ้าน",
+    altTh: "รีวิวความประทับใจจากลูกค้าที่ฝากขายบ้าน",
+    altEn: "Testimonials from listing clients",
   },
   {
     key: "shopper",
@@ -56,24 +62,27 @@ const PILLARS: Pillar[] = [
       "ลูกค้าไม่ต้องเหนื่อยหาเอง เราคัดสรรบ้านที่ใช่ พร้อมบริการดันเคสสินเชื่อและดูแลสัญญาให้ฟรีอย่างสุดความสามารถ",
     descEn:
       "Clients never have to search alone. We curate properties and provide full support with bank loans and contracts for free.",
-    alt: "ภาพบรรยากาศการดูแลลูกค้าจบสัญญาที่กรมที่ดิน",
+    altTh: "ภาพบรรยากาศการดูแลลูกค้าจบสัญญาที่กรมที่ดิน",
+    altEn: "Client support at the Land Office",
   },
 ]
+
+const UPLOAD_HINT = { th: "อัปโหลดรูปใน Admin > โปรไฟล์", en: "Upload in Admin > Profile" } as const
 
 interface TrustPillarsProps {
   images: TrustPillarImages
 }
 
-/**
- * "ความไว้วางใจจากลูกค้า" — 3 pillar cards ตาม mockup services.html
- * รูปแต่ละใบจัดการผ่าน Admin > โปรไฟล์ > รูปภาพประกอบหน้า Website
- */
-export default function TrustPillars({ images }: TrustPillarsProps) {
-  const { title, subtitle } = SERVICES_HUB_CONTENT.trust
+export default async function TrustPillars({ images }: TrustPillarsProps) {
+  const locale = (await getLocale()) as Locale
+  const { trust } = SERVICES_HUB_CONTENT
 
   return (
     <PageSection variant="default">
-      <SectionTitle title={title} subtitle={subtitle} />
+      <SectionTitle
+        title={pickPipeBilingual(locale, trust.title)}
+        subtitle={pickPipeBilingual(locale, trust.subtitle)}
+      />
 
       <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
         {PILLARS.map((pillar) => {
@@ -88,7 +97,7 @@ export default function TrustPillars({ images }: TrustPillarsProps) {
                 {imageUrl ? (
                   <Image
                     src={imageUrl}
-                    alt={pillar.alt}
+                    alt={pickLocalized(locale, { th: pillar.altTh, en: pillar.altEn })}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
@@ -96,23 +105,17 @@ export default function TrustPillars({ images }: TrustPillarsProps) {
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center gap-2 px-4 text-center text-sm text-muted-foreground">
                     <Icon className="size-8 opacity-40" aria-hidden />
-                    <span>อัปโหลดรูปใน Admin &gt; โปรไฟล์</span>
+                    <span>{pickLocalized(locale, UPLOAD_HINT)}</span>
                   </div>
                 )}
               </div>
 
               <div className="flex flex-1 flex-col p-6 sm:p-8">
                 <h3 className="text-base font-bold text-primary">
-                  {pillar.emoji} {pillar.titleTh}
-                  <span className="mt-1 block text-sm font-medium text-muted-foreground">
-                    {pillar.emoji} {pillar.titleEn}
-                  </span>
+                  {pillar.emoji} {pickLocalized(locale, { th: pillar.titleTh, en: pillar.titleEn })}
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-foreground/90">
-                  {pillar.descTh}
-                </p>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  {pillar.descEn}
+                  {pickLocalized(locale, { th: pillar.descTh, en: pillar.descEn })}
                 </p>
               </div>
             </article>

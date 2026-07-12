@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useLocale } from "next-intl"
 import { type BlogPost } from "@/types"
 import { BLOG_CATEGORIES } from "@/data/blog-posts"
 import { BLOG_PAGE_CONTENT } from "@/content/blog"
@@ -12,6 +13,8 @@ import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
 import { FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { Search } from "lucide-react"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 
 interface BlogPageProps {
   posts: BlogPost[]
@@ -19,10 +22,29 @@ interface BlogPageProps {
   blogHeroImage?: string
 }
 
+const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
+const BLOG_CRUMB = { th: "บทความ", en: "Blog" } as const
+
+const SEARCH_PLACEHOLDER = {
+  th: "ค้นหาบทความ ความรู้ ทำเล...",
+  en: "Search articles, tips, locations...",
+} as const
+
+const NO_RESULTS = {
+  th: "ไม่พบบทความที่ตรงกับการค้นหา",
+  en: "No articles match your search.",
+} as const
+
+const COMING_SOON = {
+  th: "🚧 ยังไม่มีบทความใหม่ในระบบ ทีมงานบ้านไออุ่นกำลังเตรียมคอนเทนต์ดีๆ ติดตามได้เร็วๆ นี้ค่ะ",
+  en: "🚧 No new articles at the moment. Our team is preparing great content. Stay tuned!",
+} as const
+
 export default function BlogPage({ posts, faqs, blogHeroImage }: BlogPageProps) {
+  const locale = useLocale() as Locale
   const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
-  const { header, searchPlaceholder, faq } = BLOG_PAGE_CONTENT
+  const { header, faq } = BLOG_PAGE_CONTENT
 
   const filteredPosts = posts.filter((post) => {
     if (activeCategory !== "all" && post.categorySlug !== activeCategory) return false
@@ -41,7 +63,12 @@ export default function BlogPage({ posts, faqs, blogHeroImage }: BlogPageProps) 
   return (
     <>
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
-        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "บทความ | Blog" }]} />
+        <Breadcrumb
+          items={[
+            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            { label: pickLocalized(locale, BLOG_CRUMB) },
+          ]}
+        />
       </div>
 
       <PageHeroBanner
@@ -68,7 +95,7 @@ export default function BlogPage({ posts, faqs, blogHeroImage }: BlogPageProps) 
               type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={searchPlaceholder}
+              placeholder={pickLocalized(locale, SEARCH_PLACEHOLDER)}
               className="w-full rounded-full border border-border bg-card py-3 pr-4 pl-10 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
             />
           </div>
@@ -86,17 +113,14 @@ export default function BlogPage({ posts, faqs, blogHeroImage }: BlogPageProps) 
 
         {!showComingSoon && filteredPosts.length === 0 && (
           <div className="py-16 text-center text-muted-foreground">
-            ไม่พบบทความที่ตรงกับการค้นหา | No articles match your search.
+            {pickLocalized(locale, NO_RESULTS)}
           </div>
         )}
 
         {showComingSoon && (
           <div className="mb-14 rounded-xl border-2 border-dashed border-border bg-muted/30 px-5 py-10 text-center">
             <p className="text-base font-medium text-muted-foreground">
-              🚧 ยังไม่มีบทความใหม่ในระบบ ทีมงานบ้านไออุ่นกำลังเตรียมคอนเทนต์ดีๆ ติดตามได้เร็วๆ นี้ค่ะ
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground/80">
-              🚧 No new articles at the moment. Our team is preparing great content. Stay tuned!
+              {pickLocalized(locale, COMING_SOON)}
             </p>
           </div>
         )}
@@ -105,8 +129,8 @@ export default function BlogPage({ posts, faqs, blogHeroImage }: BlogPageProps) 
       </PageSection>
 
       <FaqSection
-        title={faq.title}
-        subtitle={faq.subtitle}
+        title={pickPipeBilingual(locale, faq.title)}
+        subtitle={pickPipeBilingual(locale, faq.subtitle)}
         items={faqs}
         variant="boxed"
         layout="cards"

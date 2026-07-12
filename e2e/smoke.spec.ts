@@ -1,15 +1,39 @@
 import { test, expect } from "@playwright/test"
 
 test.describe("smoke", () => {
-  test("home page loads with bilingual header nav", async ({ page }) => {
+  test("Thai home loads with Thai nav and bilingual hero", async ({ page }) => {
     await page.goto("/")
-    await expect(page).toHaveTitle(/บ้านไออุ่น|Baan Ai Oun/)
-    await expect(page.getByRole("link", { name: /หน้าแรก/ }).first()).toBeVisible()
-    await expect(page.getByRole("link", { name: /งานหาทรัพย์/ }).first()).toBeVisible()
+    await expect(page.locator("html")).toHaveAttribute("lang", "th")
+    await expect(page.getByRole("link", { name: "หน้าแรก" }).first()).toBeVisible()
+    await expect(page.getByRole("link", { name: "งานหาทรัพย์" }).first()).toBeVisible()
+    await expect(page.getByRole("button", { name: "ภาษาไทย", pressed: true })).toBeVisible()
+    await expect(page.getByRole("button", { name: "English" })).toBeVisible()
+    // Banner exception: hero still shows both languages
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(/ครบจบเรื่องอสังหาฯ|Your All-in-One/)
+  })
+
+  test("English home loads with English nav", async ({ page }) => {
+    await page.goto("/en")
+    await expect(page.locator("html")).toHaveAttribute("lang", "en")
+    await expect(page.getByRole("link", { name: "Home" }).first()).toBeVisible()
+    await expect(page.getByRole("link", { name: "Property Match" }).first()).toBeVisible()
+    await expect(page.getByRole("button", { name: "English", pressed: true })).toBeVisible()
+    await expect(page.getByRole("button", { name: "ภาษาไทย" })).toBeVisible()
   })
 
   test("key public pages respond 200", async ({ page }) => {
-    for (const path of ["/properties", "/find-property", "/list-property", "/request", "/contact", "/about", "/privacy-policy"]) {
+    for (const path of [
+      "/properties",
+      "/find-property",
+      "/list-property",
+      "/request",
+      "/contact",
+      "/about",
+      "/privacy-policy",
+      "/en/properties",
+      "/en/find-property",
+      "/en/services",
+    ]) {
       const response = await page.goto(path)
       expect(response?.status(), `${path} should return 200`).toBe(200)
     }
@@ -21,14 +45,24 @@ test.describe("smoke", () => {
 
     await page.goto("/owners")
     await expect(page).toHaveURL(/\/list-property$/)
+
+    await page.goto("/en/buy")
+    await expect(page).toHaveURL(/\/en\/find-property$/)
   })
 
-  test("request page renders all 3 service tabs and the form", async ({ page }) => {
+  test("language switcher preserves path", async ({ page }) => {
+    await page.goto("/services")
+    await page.getByRole("button", { name: "English" }).click()
+    await expect(page).toHaveURL(/\/en\/services$/)
+
+    await page.getByRole("button", { name: "ภาษาไทย" }).click()
+    await expect(page).toHaveURL(/\/services$/)
+  })
+
+  test("request page renders service tabs and form fields", async ({ page }) => {
     await page.goto("/request?tab=matchmaking")
-    await expect(page.getByRole("tab", { name: /จัดหาทรัพย์ตามต้องการ/ })).toBeVisible()
-    await expect(page.getByRole("tab", { name: /ฝากขาย\/ปล่อยเช่า/ })).toBeVisible()
-    await expect(page.getByRole("tab", { name: /ร่วมเป็น Co-Agent/ })).toBeVisible()
+    await expect(page.getByRole("tab", { name: /จัดหาทรัพย์ตามต้องการ|Property Match/ })).toBeVisible()
     await expect(page.locator('input[name="email"]')).toBeVisible()
-    await expect(page.locator('select[name="propertyType"]')).toBeVisible()
+    await expect(page.locator('input[name="propertyType"]').first()).toBeVisible()
   })
 })

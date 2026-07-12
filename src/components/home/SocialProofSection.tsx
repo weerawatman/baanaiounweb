@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import { useLocale } from "next-intl"
 import useEmblaCarousel from "embla-carousel-react"
 import Autoplay from "embla-carousel-autoplay"
 import { Star } from "lucide-react"
@@ -10,8 +11,31 @@ import SectionTitle from "@/components/layout/SectionTitle"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { getPropertyCategoryLabelTh } from "@/content/form-options"
 import { filterDisplayableSuccessStoryViews } from "@/lib/success-stories-display"
+import { localizedOrFallback } from "@/lib/i18n/pick-localized"
+import type { Locale } from "@/i18n/routing"
 import { type SuccessStory, type Testimonial } from "@/types"
 import { cn } from "@/lib/utils"
+
+const SECTION_TITLE = {
+  th: "ความไว้วางใจจากลูกค้า",
+  en: "Trusted by Our Clients",
+} as const
+const SECTION_SUBTITLE_STORIES = {
+  th: "ผลงานจริงและเสียงจากลูกค้าที่เราดูแลจนจบ",
+  en: "Real results and voices from clients we've served to completion.",
+} as const
+const SECTION_SUBTITLE_TESTIMONIALS = {
+  th: "เสียงจากลูกค้าที่เราดูแลจนจบ",
+  en: "Voices from clients we've served to completion.",
+} as const
+const STORIES_CAPTION = {
+  th: "ผลงานจริง ก่อน-หลังรีโนเวท",
+  en: "Real Results: Before & After Renovations",
+} as const
+const TESTIMONIALS_HEADING = {
+  th: "เสียงจากลูกค้าบ้านไออุ่น",
+  en: "What our clients say",
+} as const
 
 interface SocialProofSectionProps {
   stories: SuccessStory[]
@@ -46,6 +70,7 @@ function CarouselDots({
 }
 
 export default function SocialProofSection({ stories, testimonials }: SocialProofSectionProps) {
+  const locale = useLocale() as Locale
   const displayableStories = filterDisplayableSuccessStoryViews(stories)
   const [storyIndex, setStoryIndex] = useState(0)
   const activeStory = displayableStories[storyIndex]
@@ -81,20 +106,18 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
   const hasTestimonials = testimonials.length > 0
   if (!hasStories && !hasTestimonials) return null
 
-  const sectionTitle = "ความไว้วางใจจากลูกค้า | Trusted by Our Clients"
-  const sectionSubtitle = hasStories
-    ? "ผลงานจริงและเสียงจากลูกค้าที่เราดูแลจนจบ"
-    : "เสียงจากลูกค้าที่เราดูแลจนจบ"
+  const pick = (pair: { th: string; en: string }) => (locale === "en" ? pair.en : pair.th)
 
   return (
     <PageSection variant="default" data-testid="social-proof-section">
-      <SectionTitle title={sectionTitle} subtitle={sectionSubtitle} />
+      <SectionTitle
+        title={pick(SECTION_TITLE)}
+        subtitle={pick(hasStories ? SECTION_SUBTITLE_STORIES : SECTION_SUBTITLE_TESTIMONIALS)}
+      />
 
       {hasStories && activeStory && (
         <div className="mt-10" data-testid="success-stories-section">
-          <p className="mb-4 text-center text-sm text-muted-foreground">
-            ผลงานจริง ก่อน-หลังรีโนเวท · Real Results: Before &amp; After Renovations
-          </p>
+          <p className="mb-4 text-center text-sm text-muted-foreground">{pick(STORIES_CAPTION)}</p>
 
           <div className="mx-auto max-w-3xl">
             <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-4 shadow-[0_10px_30px_rgba(45,90,39,0.04)] md:p-6">
@@ -104,10 +127,9 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
                 afterUrl={activeStory.afterImageUrl}
               />
               <div className="text-center md:text-left">
-                <p className="text-lg font-bold text-foreground">{activeStory.title}</p>
-                {activeStory.titleEn && (
-                  <p className="text-sm text-muted-foreground">{activeStory.titleEn}</p>
-                )}
+                <p className="text-lg font-bold text-foreground">
+                  {localizedOrFallback(locale, activeStory.title, activeStory.titleEn)}
+                </p>
                 {activeStory.location && (
                   <p className="mt-1 text-xs font-medium text-secondary">{activeStory.location}</p>
                 )}
@@ -126,10 +148,7 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
       {hasTestimonials && (
         <div className={cn("mt-12", hasStories && "border-t border-border pt-12")}>
           <h3 className="mb-4 text-center text-lg font-semibold text-foreground">
-            เสียงจากลูกค้าบ้านไออุ่น
-            <span className="mt-0.5 block text-sm font-normal text-muted-foreground">
-              What our clients say
-            </span>
+            {pick(TESTIMONIALS_HEADING)}
           </h3>
 
           <div className="overflow-hidden rounded-2xl" ref={testRef}>
@@ -143,7 +162,9 @@ export default function SocialProofSection({ stories, testimonials }: SocialProo
                       ))}
                     </div>
                     <blockquote className="max-w-2xl text-base leading-relaxed text-foreground/90 italic md:text-lg">
-                      &ldquo;{testimonial.quote}&rdquo;
+                      &ldquo;
+                      {localizedOrFallback(locale, testimonial.quote, testimonial.quoteEn)}
+                      &rdquo;
                     </blockquote>
                     <div className="flex flex-col items-center gap-2">
                       <Avatar size="lg" className="size-14">

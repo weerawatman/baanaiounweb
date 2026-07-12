@@ -28,12 +28,16 @@ PUBLIC_PAGES = [
     "/privacy-policy",
 ]
 
+EN_PUBLIC_PAGES = [f"/en{path}" if path != "/" else "/en" for path in PUBLIC_PAGES]
+
 REDIRECTS = [
     ("/buy", "/find-property"),
     ("/rent", "/find-property"),
     ("/land", "/find-property"),
     ("/owners", "/list-property"),
     ("/academy", "/agent-course"),
+    ("/en/buy", "/en/find-property"),
+    ("/en/owners", "/en/list-property"),
 ]
 
 results: list[str] = []
@@ -81,13 +85,20 @@ async def main() -> None:
         # ── 1. Public pages: status + timing + basics ──────────────────
         print("== Public pages ==")
         timings: dict[str, float] = {}
-        for path in PUBLIC_PAGES:
+        for path in PUBLIC_PAGES + EN_PUBLIC_PAGES:
             status, ms = await timed_goto(page, f"{BASE_URL}{path}")
             timings[path] = ms
             if status == 200:
                 ok(f"{path} -> 200 ({ms:.0f}ms)")
             else:
                 bad(f"{path} -> {status} ({ms:.0f}ms)")
+
+            lang = await page.locator("html").get_attribute("lang")
+            expected_lang = "en" if path.startswith("/en") else "th"
+            if lang == expected_lang:
+                ok(f"{path} html lang={lang}")
+            else:
+                bad(f"{path} html lang={lang} (expected {expected_lang})")
 
             title = await page.title()
             if not title or len(title) < 5:
@@ -119,6 +130,19 @@ async def main() -> None:
                 ok(f"{f} -> 200")
             else:
                 bad(f"{f} -> {resp.status}")
+
+        sitemap_body = (await page.request.get(f"{BASE_URL}/sitemap.xml")).text()
+        if "/en/" in sitemap_body or f"{BASE_URL}/en</loc>" in sitemap_body:
+            ok("sitemap contains English URLs")
+        else:
+            bad("sitemap missing /en/ URLs")
+
+        await page.goto(BASE_URL, wait_until="domcontentloaded")
+        hreflang_count = await page.locator('link[rel="alternate"][hreflang]').count()
+        if hreflang_count >= 2:
+            ok(f"homepage has hreflang alternates ({hreflang_count})")
+        else:
+            bad(f"homepage missing hreflang alternates (found {hreflang_count})")
 
         # ── 4. Key interactions ─────────────────────────────────────────
         print("== Interactions ==")
@@ -153,14 +177,22 @@ async def main() -> None:
         else:
             bad("contact page Google Maps iframe missing")
 
-        # About timeline
+        # About timeline (locale-specific probes)
         await page.goto(f"{BASE_URL}/about", wait_until="domcontentloaded")
         body_text = await page.locator("body").inner_text()
-        for probe in ["Our Story", "2002", "2026", "Local Market Expertise"]:
+        for probe in ["2002", "2026"]:
             if probe in body_text:
-                ok(f"about page contains '{probe}'")
+                ok(f"about (TH) contains '{probe}'")
             else:
-                bad(f"about page missing '{probe}'")
+                bad(f"about (TH) missing '{probe}'")
+
+        await page.goto(f"{BASE_URL}/en/about", wait_until="domcontentloaded")
+        en_body = await page.locator("body").inner_text()
+        for probe in ["Our Story", "Local Market Expertise"]:
+            if probe in en_body:
+                ok(f"about (EN) contains '{probe}'")
+            else:
+                bad(f"about (EN) missing '{probe}'")
 
         # Property detail page from listing
         await page.goto(f"{BASE_URL}/properties", wait_until="domcontentloaded")

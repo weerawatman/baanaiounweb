@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server"
 import type { BlogPost } from "@/lib/types/property"
 
 const LIST_FIELDS =
-  "id, slug, title, excerpt, category, category_slug, featured_image, published, published_at, created_at"
+  "id, slug, title, title_en, excerpt, excerpt_en, category, category_slug, featured_image, published, published_at, created_at"
 
 // ─── Public (ISR-cached) ─────────────────────────────────────────────────────
 

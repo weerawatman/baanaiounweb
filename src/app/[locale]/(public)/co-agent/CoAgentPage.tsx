@@ -1,10 +1,25 @@
 import Image from "next/image"
 import { ImageIcon } from "lucide-react"
+import { getLocale } from "next-intl/server"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
 import { CTAWithForm, FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { COAGENT_CONTENT } from "@/content/co-agent"
+import { NAV_ITEMS } from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { navText } from "@/lib/i18n/locale-label"
+
+const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
+const UPLOAD_HINT = {
+  th: "อัปโหลดรูปใน Admin > โปรไฟล์ > Co-Agent",
+  en: "Upload an image in Admin > Profile > Co-Agent",
+} as const
+const SPLIT_ALT = {
+  th: "ทีมงานนายหน้าบ้านไออุ่นร่วมมือกับพาร์ทเนอร์",
+  en: "Baan Ai Oun agents partnering with co-agents",
+} as const
 
 interface CoAgentPageProps {
   heroImage?: string
@@ -13,23 +28,26 @@ interface CoAgentPageProps {
   faqs: FaqItem[]
 }
 
-export default function CoAgentPage({
+export default async function CoAgentPage({
   heroImage,
   splitImage,
   lineUrl,
   faqs,
 }: CoAgentPageProps) {
+  const locale = (await getLocale()) as Locale
   const lineHref = lineUrl || SITE_CONFIG.lineUrl
   const { hero, valueCards, whyCoAgent, hook, faq, cta } = COAGENT_CONTENT
+  const servicesNav = NAV_ITEMS.find((item) => item.href === "/services")!
+  const coAgentNav = NAV_ITEMS.find((item) => item.href === "/co-agent")!
 
   return (
     <>
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "บริการของเรา | Our Services", href: "/services" },
-            { label: "Co-Agent | Partner with Us" },
+            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            { label: navText(servicesNav, locale), href: "/services" },
+            { label: navText(coAgentNav, locale) },
           ]}
         />
       </div>
@@ -55,11 +73,11 @@ export default function CoAgentPage({
                 {card.icon}
               </div>
               <div>
-                <h2 className="text-base font-bold text-primary">{card.titleTh}</h2>
-                <p className="text-xs font-medium text-muted-foreground">{card.titleEn}</p>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{card.descTh}</p>
-                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground/80">
-                  {card.descEn}
+                <h2 className="text-base font-bold text-primary">
+                  {pickLocalized(locale, { th: card.titleTh, en: card.titleEn })}
+                </h2>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  {pickLocalized(locale, { th: card.descTh, en: card.descEn })}
                 </p>
               </div>
             </article>
@@ -71,7 +89,7 @@ export default function CoAgentPage({
             {splitImage ? (
               <Image
                 src={splitImage}
-                alt="ทีมงานนายหน้าบ้านไออุ่นร่วมมือกับพาร์ทเนอร์"
+                alt={pickLocalized(locale, SPLIT_ALT)}
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
                 className="object-cover"
@@ -79,22 +97,18 @@ export default function CoAgentPage({
             ) : (
               <div className="flex h-full min-h-[300px] flex-col items-center justify-center gap-2 bg-muted p-6 text-center text-muted-foreground lg:min-h-[450px]">
                 <ImageIcon className="size-10 opacity-40" aria-hidden />
-                <p className="text-sm">อัปโหลดรูปใน Admin &gt; โปรไฟล์ &gt; Co-Agent</p>
+                <p className="text-sm">{pickLocalized(locale, UPLOAD_HINT)}</p>
               </div>
             )}
           </div>
 
           <div>
             <h2 className="text-2xl font-bold leading-snug text-foreground sm:text-3xl">
-              {whyCoAgent.headlineTh}
+              {pickLocalized(locale, { th: whyCoAgent.headlineTh, en: whyCoAgent.headlineEn })}
             </h2>
-            <p className="mt-1 text-lg font-medium text-muted-foreground">
-              {whyCoAgent.headlineEn}
-            </p>
             <p className="mt-4 inline-block border-b-2 border-secondary pb-3 text-sm font-bold text-primary sm:text-base">
-              {whyCoAgent.seoTh}
+              {pickLocalized(locale, { th: whyCoAgent.seoTh, en: whyCoAgent.seoEn })}
             </p>
-            <p className="mt-1 text-xs font-medium text-muted-foreground">{whyCoAgent.seoEn}</p>
 
             <div className="mt-6 flex flex-col gap-5">
               {whyCoAgent.reasons.map((reason) => (
@@ -105,17 +119,11 @@ export default function CoAgentPage({
                   <h3 className="text-base font-bold text-foreground">
                     <span className="flex items-center gap-2">
                       <span aria-hidden>{reason.emoji}</span>
-                      {reason.titleTh}
-                    </span>
-                    <span className="mt-0.5 block text-sm font-medium text-muted-foreground">
-                      {reason.titleEn}
+                      {pickLocalized(locale, { th: reason.titleTh, en: reason.titleEn })}
                     </span>
                   </h3>
                   <p className="mt-2 pl-8 text-sm leading-relaxed text-foreground/90">
-                    {reason.descTh}
-                  </p>
-                  <p className="mt-1 pl-8 text-xs leading-relaxed text-muted-foreground">
-                    {reason.descEn}
+                    {pickLocalized(locale, { th: reason.descTh, en: reason.descEn })}
                   </p>
                 </article>
               ))}
@@ -128,21 +136,17 @@ export default function CoAgentPage({
             💛
           </p>
           <h3 className="mt-3 text-xl font-semibold italic text-secondary sm:text-2xl">
-            {hook.quoteTh}
+            {pickLocalized(locale, { th: hook.quoteTh, en: hook.quoteEn })}
           </h3>
-          <p className="mt-1 text-base italic text-secondary/85">{hook.quoteEn}</p>
           <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-primary-foreground/90 sm:text-lg">
-            {hook.messageTh}
-          </p>
-          <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-primary-foreground/70">
-            {hook.messageEn}
+            {pickLocalized(locale, { th: hook.messageTh, en: hook.messageEn })}
           </p>
         </section>
       </PageSection>
 
       <FaqSection
-        title={faq.title}
-        subtitle={faq.subtitle}
+        title={pickPipeBilingual(locale, faq.title)}
+        subtitle={pickPipeBilingual(locale, faq.subtitle)}
         items={faqs}
         variant="boxed"
         layout="cards"

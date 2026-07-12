@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { useLocale } from "next-intl"
 import { AlertTriangle, Loader2, Send } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import ImageUpload, { type UploadedImage } from "@/components/shared/ImageUpload"
@@ -9,6 +10,19 @@ import { PROPERTY_CATEGORY_OPTIONS } from "@/content/form-options"
 import { validateForm, type FieldErrors } from "@/lib/form-validation"
 import type { RequestTab } from "./tabs"
 import { cn } from "@/lib/utils"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+
+/** form-validation emits "EN | TH" pipe errors; pickPipeBilingual expects "TH | EN". */
+function localizeFieldError(locale: Locale, error: string): string {
+  const sep = " | "
+  const idx = error.indexOf(sep)
+  if (idx === -1) return error
+  return pickLocalized(locale, {
+    en: error.slice(0, idx),
+    th: error.slice(idx + sep.length),
+  })
+}
 
 const PROPERTY_TYPE_CARDS = [
   { value: "house", icon: "🏠", labelTh: "บ้านเดี่ยว/บ้านแฝด", labelEn: "House" },
@@ -77,18 +91,20 @@ function Field({
   error?: string
   children: React.ReactNode
 }) {
+  const locale = useLocale() as Locale
+  const label = pickLocalized(locale, { th: labelTh, en: labelEn })
+
   return (
     <div className="flex flex-col gap-1.5">
       <label className="text-sm font-medium text-foreground">
-        {labelTh}
+        {label}
         {required && <span className="ml-0.5 text-red-500">*</span>}
-        <span className="ml-1.5 text-xs font-normal text-muted-foreground">{labelEn}</span>
       </label>
       {children}
       {error && (
         <p className="flex items-center gap-1 text-xs text-red-500">
           <AlertTriangle className="size-3 shrink-0" />
-          {error}
+          {localizeFieldError(locale, error)}
         </p>
       )}
     </div>
@@ -98,6 +114,7 @@ function Field({
 async function uploadImages(
   images: UploadedImage[],
   setImages: (imgs: UploadedImage[]) => void,
+  locale: Locale,
 ): Promise<string[]> {
   const toUpload = images.filter((img) => !img.error && !img.url)
   const alreadyUploaded = images.filter((img) => img.url).map((img) => img.url!)
@@ -114,7 +131,13 @@ async function uploadImages(
   if (!res.ok || !body.success) {
     setImages(
       images.map((img) =>
-        img.uploading ? { ...img, uploading: false, error: "อัปโหลดไม่สำเร็จ" } : img,
+        img.uploading
+          ? {
+              ...img,
+              uploading: false,
+              error: pickLocalized(locale, { th: "อัปโหลดไม่สำเร็จ", en: "Upload failed" }),
+            }
+          : img,
       ),
     )
     throw new Error(body.error ?? "Upload failed")
@@ -143,6 +166,8 @@ function PropertyTypeCards({
   onChange: (value: string) => void
   error?: string
 }) {
+  const locale = useLocale() as Locale
+
   return (
     <div>
       <div className="grid grid-cols-2 gap-2.5">
@@ -168,8 +193,9 @@ function PropertyTypeCards({
               <span className="text-2xl" aria-hidden>
                 {opt.icon}
               </span>
-              <span className="text-xs font-bold leading-tight">{opt.labelTh}</span>
-              <span className="text-[0.65rem] font-medium text-muted-foreground">{opt.labelEn}</span>
+              <span className="text-xs font-bold leading-tight">
+                {pickLocalized(locale, { th: opt.labelTh, en: opt.labelEn })}
+              </span>
             </div>
           </label>
         ))}
@@ -177,7 +203,7 @@ function PropertyTypeCards({
       {error && (
         <p className="mt-1.5 flex items-center gap-1 text-xs text-red-500">
           <AlertTriangle className="size-3 shrink-0" />
-          {error}
+          {localizeFieldError(locale, error)}
         </p>
       )}
     </div>
@@ -193,6 +219,8 @@ function ListingPurposeCards({
   onChange: (value: string) => void
   error?: string
 }) {
+  const locale = useLocale() as Locale
+
   return (
     <div>
       <div className="grid grid-cols-2 gap-2.5">
@@ -218,8 +246,9 @@ function ListingPurposeCards({
               <span className="text-2xl" aria-hidden>
                 {opt.icon}
               </span>
-              <span className="text-xs font-bold">{opt.labelTh}</span>
-              <span className="text-[0.65rem] font-medium text-muted-foreground">{opt.labelEn}</span>
+              <span className="text-xs font-bold">
+                {pickLocalized(locale, { th: opt.labelTh, en: opt.labelEn })}
+              </span>
             </div>
           </label>
         ))}
@@ -227,7 +256,7 @@ function ListingPurposeCards({
       {error && (
         <p className="mt-1.5 flex items-center gap-1 text-xs text-red-500">
           <AlertTriangle className="size-3 shrink-0" />
-          {error}
+          {localizeFieldError(locale, error)}
         </p>
       )}
     </div>
@@ -235,24 +264,24 @@ function ListingPurposeCards({
 }
 
 function MatchmakingTrustBadge() {
+  const locale = useLocale() as Locale
+  const copy =
+    locale === "en"
+      ? "100% secure. Your information is strictly confidential (PDPA compliant). No hidden fees."
+      : "ปลอดภัย 100% ข้อมูลของคุณจะถูกเก็บเป็นความลับสูงสุดตามมาตรฐาน PDPA เราจะติดต่อกลับเพื่อพูดคุยรายละเอียด โดยไม่มีค่าใช้จ่ายแอบแฝง"
+
   return (
     <div className="flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
       <span className="text-lg" aria-hidden>
         🛡️
       </span>
-      <p className="text-xs leading-relaxed text-slate-600">
-        <strong className="text-slate-800">ปลอดภัย 100%</strong> ข้อมูลของคุณจะถูกเก็บเป็นความลับสูงสุดตามมาตรฐาน
-        PDPA เราจะติดต่อกลับเพื่อพูดคุยรายละเอียด โดยไม่มีค่าใช้จ่ายแอบแฝง
-        <span className="mt-1 block text-slate-500">
-          <strong>100% Secure.</strong> Your information is strictly confidential (PDPA compliant). No hidden
-          fees.
-        </span>
-      </p>
+      <p className="text-xs leading-relaxed text-slate-600">{copy}</p>
     </div>
   )
 }
 
 export default function RequestForm({ requestType }: { requestType: RequestTab }) {
+  const locale = useLocale() as Locale
   const labels = FIELD_LABELS[requestType]
   const placeholders = PLACEHOLDERS[requestType] ?? {}
   const isMatchmaking = requestType === "matchmaking"
@@ -291,7 +320,12 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
     const result = validateForm(`request-${requestType}`, data)
     if (!result.valid) {
       setFieldErrors(result.errors)
-      setError("กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน | Please complete the required fields")
+      setError(
+        pickLocalized(locale, {
+          th: "กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน",
+          en: "Please complete the required fields",
+        }),
+      )
       formRef.current
         ?.querySelector("[aria-invalid]")
         ?.scrollIntoView({ behavior: "smooth", block: "center" })
@@ -306,7 +340,7 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
       let imageUrls: string[] = []
       const validImages = images.filter((img) => !img.error)
       if (validImages.length > 0) {
-        imageUrls = await uploadImages(images, setImages)
+        imageUrls = await uploadImages(images, setImages, locale)
       }
 
       const payload: Record<string, unknown> = {
@@ -326,7 +360,13 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
 
       const body = await res.json()
       if (!res.ok || !body.success) {
-        setError(body.error ?? "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง | Something went wrong, please try again")
+        setError(
+          body.error ??
+            pickLocalized(locale, {
+              th: "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
+              en: "Something went wrong, please try again",
+            }),
+        )
         return
       }
 
@@ -334,9 +374,19 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
     } catch (err) {
       const msg = err instanceof Error ? err.message : ""
       if (msg.includes("Upload failed") || msg.includes("อัปโหลด")) {
-        setError("อัปโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง | Image upload failed, please try again")
+        setError(
+          pickLocalized(locale, {
+            th: "อัปโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง",
+            en: "Image upload failed, please try again",
+          }),
+        )
       } else {
-        setError("ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต | Could not submit, please check your connection")
+        setError(
+          pickLocalized(locale, {
+            th: "ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต",
+            en: "Could not submit, please check your connection",
+          }),
+        )
       }
     } finally {
       setSubmitting(false)
@@ -348,16 +398,16 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
       <div className="py-10 text-center">
         <p className="text-5xl">🎉</p>
         <h3 className="mt-4 text-lg font-bold text-primary">
-          ส่งคำขอเรียบร้อยแล้ว ขอบคุณค่ะ
-          <span className="mt-1 block text-sm font-medium text-muted-foreground">
-            Your request has been sent — thank you!
-          </span>
+          {pickLocalized(locale, {
+            th: "ส่งคำขอเรียบร้อยแล้ว ขอบคุณค่ะ",
+            en: "Your request has been sent — thank you!",
+          })}
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          ทีมงานบ้านไออุ่นจะติดต่อกลับโดยเร็วที่สุด
-          <span className="mt-0.5 block text-xs text-muted-foreground/80">
-            Our team will get back to you as soon as possible.
-          </span>
+          {pickLocalized(locale, {
+            th: "ทีมงานบ้านไออุ่นจะติดต่อกลับโดยเร็วที่สุด",
+            en: "Our team will get back to you as soon as possible.",
+          })}
         </p>
         <button
           type="button"
@@ -369,7 +419,7 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
           }}
           className="mt-6 rounded-lg border border-primary px-6 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
         >
-          ส่งคำขอใหม่ | Submit Another Request
+          {pickLocalized(locale, { th: "ส่งคำขอใหม่", en: "Submit Another Request" })}
         </button>
       </div>
     )
@@ -410,11 +460,11 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
         }`}
       >
         <option value="" disabled>
-          เลือกประเภททรัพย์ | Select property type
+          {pickLocalized(locale, { th: "เลือกประเภททรัพย์", en: "Select property type" })}
         </option>
         {PROPERTY_CATEGORY_OPTIONS.map((opt) => (
           <option key={opt.value} value={opt.value}>
-            {opt.label}
+            {pickLocalized(locale, { th: opt.labelTh, en: opt.labelEn })}
           </option>
         ))}
       </select>
@@ -431,8 +481,12 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
       <Input
         name="location"
         placeholder={
-          placeholders.location ??
-          "เช่น บ้านบึง ชลบุรี ใกล้นิคมอมตะ | e.g. Ban Bueng, Chonburi, near Amata"
+          placeholders.location
+            ? pickPipeBilingual(locale, placeholders.location)
+            : pickLocalized(locale, {
+                th: "เช่น บ้านบึง ชลบุรี ใกล้นิคมอมตะ",
+                en: "e.g. Ban Bueng, Chonburi, near Amata",
+              })
         }
         className="h-10"
         {...inputProps("location")}
@@ -444,7 +498,14 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
     <Field labelTh={labels.budget.th} labelEn={labels.budget.en} error={fieldErrors.budget}>
       <Input
         name="budget"
-        placeholder={placeholders.budget ?? "เช่น 2,500,000 บาท | e.g. 2,500,000 THB"}
+        placeholder={
+          placeholders.budget
+            ? pickPipeBilingual(locale, placeholders.budget)
+            : pickLocalized(locale, {
+                th: "เช่น 2,500,000 บาท",
+                en: "e.g. 2,500,000 THB",
+              })
+        }
         className="h-10"
         {...inputProps("budget")}
       />
@@ -456,10 +517,10 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
       <ImageUpload images={images} onChange={setImages} disabled={submitting} />
       {isMatchmaking && (
         <p className="mt-3 rounded-md bg-primary-subtle px-3 py-2.5 text-xs font-medium leading-relaxed text-primary">
-          💡 สามารถแคปหน้าจอรูปภาพบ้านจากที่อื่น ส่งมาให้เราช่วยจัดหาแบบเดียวกันในราคาที่ดีกว่าได้เลยค่ะ
-          <span className="mt-1 block text-primary/80">
-            Feel free to screenshot listings you like from other sites so we can find similar matches.
-          </span>
+          {pickLocalized(locale, {
+            th: "💡 สามารถแคปหน้าจอรูปภาพบ้านจากที่อื่น ส่งมาให้เราช่วยจัดหาแบบเดียวกันในราคาที่ดีกว่าได้เลยค่ะ",
+            en: "Feel free to screenshot listings you like from other sites so we can find similar matches.",
+          })}
         </p>
       )}
     </Field>
@@ -470,7 +531,11 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
       <Field labelTh="ชื่อ-นามสกุล" labelEn="Full Name" required error={fieldErrors.name}>
         <Input
           name="name"
-          placeholder={placeholders.name ?? "ชื่อ-นามสกุล | Full name"}
+          placeholder={
+            placeholders.name
+              ? pickPipeBilingual(locale, placeholders.name)
+              : pickLocalized(locale, { th: "ชื่อ-นามสกุล", en: "Full name" })
+          }
           className="h-10"
           {...inputProps("name")}
         />
@@ -485,8 +550,12 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
         <Input
           name="phone"
           placeholder={
-            placeholders.phone ??
-            "เช่น 0812345678 หรือ LINE ID | e.g. 0812345678 or LINE ID"
+            placeholders.phone
+              ? pickPipeBilingual(locale, placeholders.phone)
+              : pickLocalized(locale, {
+                  th: "เช่น 0812345678 หรือ LINE ID",
+                  en: "e.g. 0812345678 or LINE ID",
+                })
           }
           className="h-10"
           {...inputProps("phone")}
@@ -550,12 +619,10 @@ export default function RequestForm({ requestType }: { requestType: RequestTab }
       >
         {submitting ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
         {submitting
-          ? "กำลังส่ง... | Sending..."
+          ? pickLocalized(locale, { th: "กำลังส่ง...", en: "Sending..." })
           : isMatchmaking
-            ? "ส่งโจทย์ให้ทีมงานช่วยหา 🚀"
-            : isListProperty
-              ? "ส่งคำขอ | Submit Request 🚀"
-              : "ส่งคำขอ | Submit Request"}
+            ? pickLocalized(locale, { th: "ส่งโจทย์ให้ทีมงานช่วยหา 🚀", en: "Submit Your Brief 🚀" })
+            : pickLocalized(locale, { th: "ส่งคำขอ 🚀", en: "Submit Request 🚀" })}
       </button>
 
       {usesCardForm ? <MatchmakingTrustBadge /> : <PrivacyNotice />}

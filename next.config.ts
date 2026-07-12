@@ -34,6 +34,12 @@ const nextConfig: NextConfig = {
       { source: '/land', destination: '/find-property', permanent: true },
       // Old academy -> new agent-course
       { source: '/academy', destination: '/agent-course', permanent: true },
+      // English legacy redirects
+      { source: '/en/buy', destination: '/en/find-property', permanent: true },
+      { source: '/en/rent', destination: '/en/find-property', permanent: true },
+      { source: '/en/land', destination: '/en/find-property', permanent: true },
+      { source: '/en/owners', destination: '/en/list-property', permanent: true },
+      { source: '/en/academy', destination: '/en/agent-course', permanent: true },
     ]
   },
 }

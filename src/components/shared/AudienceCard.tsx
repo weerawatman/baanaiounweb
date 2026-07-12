@@ -1,7 +1,14 @@
-import Link from "next/link"
+"use client"
+
+import { useLocale } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import type { LucideIcon } from "lucide-react"
 import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
+
+const LEARN_MORE = { th: "อ่านรายละเอียด", en: "Learn More" } as const
 
 interface AudienceCardProps {
   href: string
@@ -14,9 +21,7 @@ interface AudienceCardProps {
   highlightTh?: string
   highlightEn?: string
   className?: string
-  /** "dark" = การ์ดพื้นเขียวเข้มแบบหน้าแรก (mockup), default = การ์ดขาว */
   variant?: "light" | "dark"
-  /** ปุ่มหลัก + ปุ่มรอง (mockup หน้าแรก) */
   ctaTh?: string
   ctaEn?: string
   secondaryHref?: string
@@ -38,6 +43,9 @@ export default function AudienceCard({
   ctaEn,
   secondaryHref,
 }: AudienceCardProps) {
+  const locale = useLocale() as Locale
+  const pick = (th: string, en: string) => pickLocalized(locale, { th, en })
+
   if (variant === "dark") {
     return (
       <div
@@ -50,30 +58,27 @@ export default function AudienceCard({
           <Icon size={30} className="text-white" />
         </div>
 
-        <h3 className="mt-4 text-base font-bold leading-snug">
-          <span className="block text-white">{titleTh}</span>
-          <span className="block text-sm font-medium text-white/70">{titleEn}</span>
+        <h3 className="mt-4 text-base font-bold leading-snug text-white">
+          {pick(titleTh, titleEn)}
         </h3>
 
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-white/90">{descTh}</p>
-        <p className="mt-1 text-xs leading-relaxed text-white/60">{descEn}</p>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-white/90">
+          {pick(descTh, descEn)}
+        </p>
 
         <div className="mt-5 flex w-full flex-col gap-2">
           <Link
             href={href}
             className="rounded-full bg-secondary px-4 py-2.5 text-sm font-bold text-secondary-foreground transition-opacity hover:opacity-90"
           >
-            {ctaTh ?? titleTh}
-            {ctaEn && (
-              <span className="mt-0.5 block text-xs font-medium opacity-90">{ctaEn}</span>
-            )}
+            {pick(ctaTh ?? titleTh, ctaEn ?? titleEn)}
           </Link>
           {secondaryHref && (
             <Link
               href={secondaryHref}
               className="rounded-full border border-white/40 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10"
             >
-              อ่านรายละเอียด | Learn More
+              {pickLocalized(locale, LEARN_MORE)}
             </Link>
           )}
         </div>
@@ -97,22 +102,19 @@ export default function AudienceCard({
         <Icon size={24} style={{ color: accentColor }} />
       </div>
 
-      <h3 className="mt-4 text-base font-bold leading-snug">
-        <span className="block text-foreground">{titleTh}</span>
-        <span className="block text-sm font-medium text-muted-foreground">{titleEn}</span>
+      <h3 className="mt-4 text-base font-bold leading-snug text-foreground">
+        {pick(titleTh, titleEn)}
       </h3>
 
       {highlightTh && (
         <p className="mt-2 text-xs font-semibold text-primary">
-          {highlightTh}
-          {highlightEn && (
-            <span className="mt-0.5 block font-normal text-muted-foreground">{highlightEn}</span>
-          )}
+          {pick(highlightTh, highlightEn ?? highlightTh)}
         </p>
       )}
 
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/90">{descTh}</p>
-      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{descEn}</p>
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/90">
+        {pick(descTh, descEn)}
+      </p>
 
       <span
         className="mt-4 inline-flex items-center gap-1 text-sm font-semibold transition-colors"

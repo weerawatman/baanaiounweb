@@ -1,7 +1,9 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import { useLocale } from "next-intl"
 import { useSearchParams } from "next/navigation"
+import { Link } from "@/i18n/navigation"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageHeroBanner from "@/components/shared/PageHeroBanner"
 import PropertyCard from "@/components/property/PropertyCard"
@@ -15,6 +17,35 @@ import {
   type PurposeTab,
 } from "@/lib/search"
 import type { PropertyCategory } from "@/content/form-options"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+
+const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
+const PROPERTIES_CRUMB = { th: "ทรัพย์ทั้งหมด", en: "All Properties" } as const
+
+const SEARCH_PLACEHOLDER = {
+  th: "ค้นหาทำเล ชื่อโครงการ หรือคำสำคัญ",
+  en: "Search area, project, or keyword",
+} as const
+const ALL_AREAS = { th: "ทุกทำเล", en: "All Areas" } as const
+
+const RESULT_COUNT = { th: "พบ", en: "Found" } as const
+const RESULT_SUFFIX = { th: "รายการ", en: "listings" } as const
+
+const EMPTY_HEADING = {
+  th: "ไม่พบทรัพย์ที่ตรงเงื่อนไข",
+  en: "No properties match your filters",
+} as const
+const EMPTY_HINT = {
+  th: "ลองเปลี่ยนตัวกรอง หรือ",
+  en: "Try adjusting the filters or",
+} as const
+const EMPTY_CONTACT = { th: "ติดต่อพิมโดยตรง", en: "contact us directly" } as const
+
+const SEARCH_ARIA = { th: "ค้นหาทรัพย์", en: "Search properties" } as const
+const DISTRICT_ARIA = { th: "เลือกทำเล", en: "Select area" } as const
+const TYPE_ARIA = { th: "เลือกประเภททรัพย์", en: "Select property type" } as const
+const PRICE_ARIA = { th: "เลือกช่วงราคา", en: "Select price range" } as const
 
 export default function PropertiesPage({
   properties,
@@ -23,6 +54,7 @@ export default function PropertiesPage({
   properties: Property[]
   heroImage?: string
 }) {
+  const locale = useLocale() as Locale
   const searchParams = useSearchParams()
   const urlFilters = useMemo(() => parseFilters(searchParams), [searchParams])
 
@@ -58,8 +90,8 @@ export default function PropertiesPage({
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <Breadcrumb
           items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "ทรัพย์ทั้งหมด" },
+            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            { label: pickLocalized(locale, PROPERTIES_CRUMB) },
           ]}
         />
       </div>
@@ -73,107 +105,95 @@ export default function PropertiesPage({
 
       <main className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
         <div className="mt-6 rounded-2xl bg-card p-5 shadow-[0_10px_30px_rgba(45,90,39,0.04)] ring-1 ring-black/5">
-          {/* Type tabs */}
           <div className="mb-3 flex overflow-hidden rounded-lg border border-border">
-          {PURPOSE_TABS.map((tab) => (
-            <button
-              key={tab.value}
-              onClick={() => setPurpose(tab.value)}
-              className={`flex-1 min-h-[44px] py-2 text-sm font-semibold transition-colors ${
-                purpose === tab.value
-                  ? "bg-primary text-white"
-                  : "text-muted-foreground hover:bg-muted"
-              }`}
+            {PURPOSE_TABS.map((tab) => (
+              <button
+                key={tab.value}
+                onClick={() => setPurpose(tab.value)}
+                className={`flex-1 min-h-[44px] py-2 text-sm font-semibold transition-colors ${
+                  purpose === tab.value
+                    ? "bg-primary text-white"
+                    : "text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                {pickLocalized(locale, tab)}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={pickLocalized(locale, SEARCH_PLACEHOLDER)}
+              className={`${selectClass} sm:col-span-2`}
+              aria-label={pickLocalized(locale, SEARCH_ARIA)}
+            />
+            <select
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+              className={selectClass}
+              aria-label={pickLocalized(locale, DISTRICT_ARIA)}
             >
-              {tab.th === tab.en ? tab.th : `${tab.th} | ${tab.en}`}
-            </button>
-          ))}
+              <option value="">{pickLocalized(locale, ALL_AREAS)}</option>
+              {districts.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+            <select
+              value={propertyType}
+              onChange={(e) => setPropertyType(e.target.value as "" | PropertyCategory)}
+              className={selectClass}
+              aria-label={pickLocalized(locale, TYPE_ARIA)}
+            >
+              {PROPERTY_TYPE_FILTER_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {pickPipeBilingual(locale, o.label)}
+                </option>
+              ))}
+            </select>
+            <select
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              className={selectClass}
+              aria-label={pickLocalized(locale, PRICE_ARIA)}
+            >
+              {PRICE_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {pickPipeBilingual(locale, o.label)}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        {/* Query + District + Type + Price */}
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="ค้นหาทำเล ชื่อโครงการ หรือคำสำคัญ | Search area, project, keyword"
-            className={`${selectClass} sm:col-span-2`}
-            aria-label="ค้นหาทรัพย์"
-          />
-          <select
-            value={district}
-            onChange={(e) => setDistrict(e.target.value)}
-            className={selectClass}
-            aria-label="เลือกทำเล"
-          >
-            <option value="">ทุกทำเล | All Areas</option>
-            {districts.map((d) => (
-              <option key={d} value={d}>
-                {d}
-              </option>
-            ))}
-          </select>
-          <select
-            value={propertyType}
-            onChange={(e) => setPropertyType(e.target.value as "" | PropertyCategory)}
-            className={selectClass}
-            aria-label="เลือกประเภททรัพย์"
-          >
-            {PROPERTY_TYPE_FILTER_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-          <select
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-            className={selectClass}
-            aria-label="เลือกช่วงราคา"
-          >
-            {PRICE_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        </div>
-
-        {/* Result count */}
         <p className="mt-4 text-sm text-muted-foreground">
-        พบ {filtered.length} รายการ | Found {filtered.length} listings
-      </p>
+          {pickLocalized(locale, RESULT_COUNT)} {filtered.length}{" "}
+          {pickLocalized(locale, RESULT_SUFFIX)}
+        </p>
 
-      {/* Property grid */}
-      {filtered.length > 0 ? (
-        <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((property) => (
-            <PropertyCard key={property.id} property={property} />
-          ))}
-        </div>
-      ) : (
-        <div className="py-20 text-center">
-          <p className="text-lg font-medium text-foreground">
-            ไม่พบทรัพย์ที่ตรงเงื่อนไข
-            <span className="mt-1 block text-base text-muted-foreground">
-              No properties match your filters
-            </span>
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            ลองเปลี่ยนตัวกรอง หรือ{" "}
-            <a href="/contact" className="text-primary underline underline-offset-2">
-              ติดต่อพิมโดยตรง
-            </a>
-            <span className="mt-0.5 block">
-              Try adjusting the filters or{" "}
-              <a href="/contact" className="text-primary underline underline-offset-2">
-                contact us directly
-              </a>
-            </span>
-          </p>
-        </div>
-      )}
+        {filtered.length > 0 ? (
+          <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </div>
+        ) : (
+          <div className="py-20 text-center">
+            <p className="text-lg font-medium text-foreground">
+              {pickLocalized(locale, EMPTY_HEADING)}
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {pickLocalized(locale, EMPTY_HINT)}{" "}
+              <Link href="/contact" className="text-primary underline underline-offset-2">
+                {pickLocalized(locale, EMPTY_CONTACT)}
+              </Link>
+            </p>
+          </div>
+        )}
       </main>
     </>
   )

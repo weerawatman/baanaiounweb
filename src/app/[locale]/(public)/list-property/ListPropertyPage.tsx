@@ -1,5 +1,6 @@
 import Image from "next/image"
 import type { Metadata } from "next"
+import { getLocale } from "next-intl/server"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
 import {
@@ -12,17 +13,33 @@ import {
   type BentoItem,
 } from "@/components/shared"
 import { LIST_PROPERTY_CONTENT } from "@/content/list-property"
+import { NAV_ITEMS } from "@/config/navigation"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { navText } from "@/lib/i18n/locale-label"
 import RequestForm from "../request/RequestForm"
 
-export function generateMetadata(): Metadata {
-  return {
-    title: LIST_PROPERTY_CONTENT.seo.title,
-    description: LIST_PROPERTY_CONTENT.seo.description.th,
-    openGraph: {
-      title: LIST_PROPERTY_CONTENT.seo.title,
-      description: LIST_PROPERTY_CONTENT.seo.description.th,
-    },
-  }
+const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
+const FAQ_TITLE = {
+  th: "คำถามที่พบบ่อยเกี่ยวกับการฝากทรัพย์ (FAQ)",
+  en: "FAQ — Listing Your Property",
+} as const
+const FAQ_SUBTITLE = {
+  th: "เปลี่ยนความกังวลให้เป็นความมั่นใจ ทุกข้อสงสัยเรามีคำตอบให้ค่ะ",
+  en: "Turn worries into confidence — we have clear answers.",
+} as const
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale
+  const { seo } = LIST_PROPERTY_CONTENT
+  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
+
+  return buildPageMetadata({
+    locale,
+    pathname: "/list-property",
+    title: pickPipeBilingual(locale, seo.title),
+    description: pickLocalized(locale, seo.description),
+  })
 }
 
 interface ListPropertyPageProps {
@@ -32,22 +49,25 @@ interface ListPropertyPageProps {
   faqs: FaqItem[]
 }
 
-export default function ListPropertyPage({
+export default async function ListPropertyPage({
   heroImage,
   quoteImage,
   bentoItems,
   faqs,
 }: ListPropertyPageProps) {
+  const locale = (await getLocale()) as Locale
   const { banner, split, steps, hook, formCard } = LIST_PROPERTY_CONTENT
+  const servicesNav = NAV_ITEMS.find((item) => item.href === "/services")!
+  const listNav = NAV_ITEMS.find((item) => item.href === "/list-property")!
 
   return (
     <>
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "บริการของเรา | Our Services", href: "/services" },
-            { label: "ฝากขาย/เช่า | List Your Property" },
+            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            { label: navText(servicesNav, locale), href: "/services" },
+            { label: navText(listNav, locale) },
           ]}
         />
       </div>
@@ -68,22 +88,28 @@ export default function ListPropertyPage({
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
           <div>
             <h2 className="text-pretty text-xl font-bold leading-snug text-foreground sm:text-2xl lg:text-[1.75rem] xl:text-3xl">
-              {split.headline.thLines.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
+              {locale === "en" ? (
+                split.headline.en
+              ) : (
+                split.headline.thLines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))
+              )}
             </h2>
-            <p className="mt-2 text-base font-medium text-secondary sm:text-lg">{split.headline.en}</p>
 
             <div className="mt-5 inline-block border-b-2 border-secondary pb-3">
-              {split.seo.thLines.map((line) => (
-                <p key={line} className="text-sm font-bold leading-snug text-primary">
-                  {line}
-                </p>
-              ))}
+              {locale === "en" ? (
+                <p className="text-sm font-bold leading-snug text-primary">{split.seo.en}</p>
+              ) : (
+                split.seo.thLines.map((line) => (
+                  <p key={line} className="text-sm font-bold leading-snug text-primary">
+                    {line}
+                  </p>
+                ))
+              )}
             </div>
-            <p className="mt-1 text-xs font-medium text-muted-foreground">{split.seo.en}</p>
 
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {split.benefits.map((item) => (
@@ -98,18 +124,21 @@ export default function ListPropertyPage({
                     {item.icon}
                   </span>
                   <div>
-                    <p className="text-sm font-bold text-foreground">{item.titleTh}</p>
-                    <p className="text-xs font-medium text-muted-foreground">{item.titleEn}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-foreground/80">{item.descTh}</p>
-                    <p className="mt-0.5 text-xs text-muted-foreground">{item.descEn}</p>
+                    <p className="text-sm font-bold text-foreground">
+                      {pickLocalized(locale, { th: item.titleTh, en: item.titleEn })}
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-foreground/80">
+                      {pickLocalized(locale, { th: item.descTh, en: item.descEn })}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="mt-8 rounded-2xl border border-primary/20 bg-primary-subtle/50 p-6">
-              <h3 className="text-lg font-bold text-primary">{split.whyUs.titleTh}</h3>
-              <p className="text-sm font-medium text-muted-foreground">{split.whyUs.titleEn}</p>
+              <h3 className="text-lg font-bold text-primary">
+                {pickLocalized(locale, { th: split.whyUs.titleTh, en: split.whyUs.titleEn })}
+              </h3>
               <ul className="mt-4 space-y-4">
                 {split.whyUs.items.map((item) => (
                   <li key={item.th} className="flex gap-3 text-sm">
@@ -117,10 +146,12 @@ export default function ListPropertyPage({
                       ✅
                     </span>
                     <div>
-                      <p className="font-bold text-foreground">{item.th}</p>
-                      <p className="text-xs font-medium text-muted-foreground">{item.en}</p>
-                      <p className="mt-1 text-sm leading-relaxed text-foreground/80">{item.descTh}</p>
-                      <p className="mt-0.5 text-xs text-muted-foreground">{item.descEn}</p>
+                      <p className="font-bold text-foreground">
+                        {pickLocalized(locale, { th: item.th, en: item.en })}
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-foreground/80">
+                        {pickLocalized(locale, { th: item.descTh, en: item.descEn })}
+                      </p>
                     </div>
                   </li>
                 ))}
@@ -150,14 +181,10 @@ export default function ListPropertyPage({
                   💛
                 </p>
                 <blockquote className="mt-2 text-lg font-bold italic text-secondary sm:text-xl">
-                  &ldquo;{hook.quote.th}&rdquo;
+                  &ldquo;{pickLocalized(locale, hook.quote)}&rdquo;
                 </blockquote>
-                <p className="mt-2 text-sm italic text-secondary/80">&ldquo;{hook.quote.en}&rdquo;</p>
                 <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
-                  {hook.message.th}
-                </p>
-                <p className="mx-auto mt-2 max-w-xl text-xs leading-relaxed text-white/65">
-                  {hook.message.en}
+                  {pickLocalized(locale, hook.message)}
                 </p>
               </div>
             </div>
@@ -170,11 +197,11 @@ export default function ListPropertyPage({
             >
               <div className="mb-6 border-b border-border pb-5 text-center">
                 <h2 className="text-xl font-bold text-primary sm:text-2xl">
-                  {formCard.title.th}
+                  {pickLocalized(locale, formCard.title)}
                 </h2>
-                <p className="mt-1 text-sm font-medium text-secondary">{formCard.title.en}</p>
-                <p className="mt-3 text-sm text-muted-foreground">{formCard.description.th}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{formCard.description.en}</p>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  {pickLocalized(locale, formCard.description)}
+                </p>
               </div>
               <RequestForm requestType="list-property" />
             </div>
@@ -182,11 +209,18 @@ export default function ListPropertyPage({
         </div>
       </PageSection>
 
-      <StepsSection headline={steps.headline} steps={steps.items} />
+      <StepsSection
+        headline={pickPipeBilingual(locale, steps.headline)}
+        steps={steps.items.map((step) => ({
+          number: step.number,
+          title: pickPipeBilingual(locale, step.title),
+          description: pickPipeBilingual(locale, step.description),
+        }))}
+      />
 
       <FaqSection
-        title="คำถามที่พบบ่อยเกี่ยวกับการฝากทรัพย์ (FAQ)"
-        subtitle="เปลี่ยนความกังวลให้เป็นความมั่นใจ ทุกข้อสงสัยเรามีคำตอบให้ค่ะ | Turn worries into confidence — we have clear answers."
+        title={pickLocalized(locale, FAQ_TITLE)}
+        subtitle={pickLocalized(locale, FAQ_SUBTITLE)}
         items={faqs}
         variant="boxed"
         layout="cards"

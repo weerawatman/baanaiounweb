@@ -33,11 +33,14 @@ export function BlogPostForm({ defaultValues, action, submitLabel = "บัน�
     resolver: zodResolver(blogSchema) as Resolver<BlogFormValues>,
     defaultValues: {
       title: defaultValues?.title ?? "",
+      title_en: defaultValues?.title_en ?? "",
       slug: defaultValues?.slug ?? "",
       category: defaultValues?.category ?? "",
       category_slug: defaultValues?.category_slug ?? "",
       excerpt: defaultValues?.excerpt ?? "",
+      excerpt_en: defaultValues?.excerpt_en ?? "",
       content: defaultValues?.content ?? "",
+      content_en: defaultValues?.content_en ?? "",
       reading_time: defaultValues?.reading_time ?? "",
       featured_image: defaultValues?.featured_image ?? "",
       published: defaultValues?.published ?? false,
@@ -69,13 +72,21 @@ export function BlogPostForm({ defaultValues, action, submitLabel = "บัน�
         <h2 className="text-foreground font-semibold">ข้อมูลพื้นฐาน</h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <FormField label="ชื่อบทความ" error={errors.title?.message} required>
+          <FormField label="ชื่อบทความ (ไทย)" error={errors.title?.message} required>
             <Input {...register("title")} placeholder="5 เหตุผลที่ควรซื้อบ้านในบ้านบึง" />
           </FormField>
-          <FormField label="Slug (URL)" error={errors.slug?.message} required>
-            <Input {...register("slug")} placeholder="5-reasons-buy-home-ban-bueng" />
+          <FormField
+            label="ชื่อบทความ (English)"
+            error={errors.title_en?.message}
+            hint="จำเป็นเมื่อเผยแพร่"
+          >
+            <Input {...register("title_en")} placeholder="5 reasons to buy in Ban Bueng" />
           </FormField>
         </div>
+
+        <FormField label="Slug (URL)" error={errors.slug?.message} required>
+          <Input {...register("slug")} placeholder="5-reasons-buy-home-ban-bueng" />
+        </FormField>
 
         <FormField label="หมวดหมู่" error={errors.category_slug?.message}>
           <Controller
@@ -148,20 +159,46 @@ export function BlogPostForm({ defaultValues, action, submitLabel = "บัน�
       {/* ─── คำย่อ ─── */}
       <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
         <h2 className="text-foreground font-semibold">คำย่อ (Excerpt)</h2>
-        <textarea
-          {...register("excerpt")}
-          rows={3}
-          placeholder="สรุปบทความสั้นๆ..."
-          className={textareaCls}
-        />
+        <FormField label="คำย่อ (ไทย)" error={errors.excerpt?.message}>
+          <textarea
+            {...register("excerpt")}
+            rows={3}
+            placeholder="สรุปบทความสั้นๆ..."
+            className={textareaCls}
+          />
+        </FormField>
+        <FormField
+          label="คำย่อ (English)"
+          error={errors.excerpt_en?.message}
+          hint="จำเป็นเมื่อเผยแพร่"
+        >
+          <textarea
+            {...register("excerpt_en")}
+            rows={3}
+            placeholder="Short summary..."
+            className={textareaCls}
+          />
+        </FormField>
       </section>
 
       {/* ─── เนื้อหา (Tiptap) ─── */}
       <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
-        <h2 className="text-foreground font-semibold">เนื้อหา</h2>
+        <h2 className="text-foreground font-semibold">เนื้อหา (ไทย)</h2>
         <Controller
           control={control}
           name="content"
+          render={({ field }) => <BlogEditor value={field.value} onChange={field.onChange} />}
+        />
+      </section>
+
+      <section className="flex flex-col gap-4 rounded-xl border bg-white p-6">
+        <h2 className="text-foreground font-semibold">เนื้อหา (English)</h2>
+        {errors.content_en && (
+          <p className="text-xs text-red-500">{errors.content_en.message}</p>
+        )}
+        <Controller
+          control={control}
+          name="content_en"
           render={({ field }) => <BlogEditor value={field.value} onChange={field.onChange} />}
         />
       </section>
@@ -188,11 +225,13 @@ function FormField({
   label,
   error,
   required,
+  hint,
   children,
 }: {
   label: string
   error?: string
   required?: boolean
+  hint?: string
   children: React.ReactNode
 }) {
   return (
@@ -202,6 +241,7 @@ function FormField({
         {required && <span className="ml-1 text-red-500">*</span>}
       </label>
       {children}
+      {hint && <p className="text-muted-foreground text-xs">{hint}</p>}
       {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   )

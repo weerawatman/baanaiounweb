@@ -7,7 +7,12 @@ export function pickLocalized(locale: Locale, pair: BilingualPair): string {
   return locale === "en" ? pair.en : pair.th
 }
 
-/** Parse legacy "ไทย | English" combined strings from content files. */
+/** Pick EN when available; otherwise fall back to Thai (for CMS fields). */
+export function localizedOrFallback(locale: Locale, th: string, en: string): string {
+  if (locale === "en" && en.trim()) return en
+  return th
+}
+
 export function pickPipeBilingual(locale: Locale, text: string): string {
   const sep = " | "
   const idx = text.indexOf(sep)

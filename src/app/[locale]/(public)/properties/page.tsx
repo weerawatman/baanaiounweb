@@ -1,16 +1,33 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
+import { getLocale } from "next-intl/server"
 import { getActiveProperties } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { mapProperty } from "@/lib/mappers"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 import PropertiesPage from "./PropertiesPage"
 
 export const revalidate = 900
 
-export const metadata: Metadata = {
+const PROPERTIES_SEO = {
   title: "ทรัพย์ทั้งหมด | All Properties — บ้านไออุ่น พร็อพเพอร์ตี้",
-  description:
-    "รายการบ้านขาย บ้านเช่า และที่ดินทั้งหมดจากบ้านไออุ่น พร็อพเพอร์ตี้ ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช EEC",
+  description: {
+    th: "รายการบ้านขาย บ้านเช่า และที่ดินทั้งหมดจากบ้านไออุ่น พร็อพเพอร์ตี้ ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช EEC",
+    en: "All homes for sale, rent, and land listings from Baan Ai Oun Property in Ban Bueng, Chonburi — near Amata, Hemaraj, and EEC zones.",
+  },
+} as const
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale
+  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
+
+  return buildPageMetadata({
+    locale,
+    pathname: "/properties",
+    title: pickPipeBilingual(locale, PROPERTIES_SEO.title),
+    description: pickLocalized(locale, PROPERTIES_SEO.description),
+  })
 }
 
 export default async function PropertiesRoute() {

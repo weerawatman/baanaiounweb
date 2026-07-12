@@ -29,15 +29,14 @@ const FAQ_SUBTITLE = {
 export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale
   const { seo } = FIND_PROPERTY_CONTENT
+  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
 
-  return {
+  return buildPageMetadata({
+    locale,
+    pathname: "/find-property",
     title: pickPipeBilingual(locale, seo.title),
     description: pickLocalized(locale, seo.description),
-    openGraph: {
-      title: pickPipeBilingual(locale, seo.title),
-      description: pickLocalized(locale, seo.description),
-    },
-  }
+  })
 }
 
 interface FindPropertyPageProps {

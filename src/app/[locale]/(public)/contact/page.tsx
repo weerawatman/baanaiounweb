@@ -1,18 +1,30 @@
 import type { Metadata } from "next"
+import { getLocale } from "next-intl/server"
 import { getProfile } from "@/lib/queries/profile"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 import ContactPage from "./ContactPage"
 
 export const revalidate = 3600
 
-export const metadata: Metadata = {
+const CONTACT_SEO = {
   title: "ติดต่อเรา | Contact Us — บ้านไออุ่น พร็อพเพอร์ตี้",
-  description:
-    "ติดต่อบ้านไออุ่น พร็อพเพอร์ตี้ ผ่าน LINE, WhatsApp, โทรศัพท์ หรืออีเมล ปรึกษาเรื่องซื้อ ขาย เช่าบ้านฟรี!",
-  openGraph: {
-    title: "ติดต่อเรา | Contact Baan Ai Oun Property",
-    description:
-      "Contact us via LINE, WhatsApp, phone or email. Free consultation on buying, selling, and renting property.",
+  description: {
+    th: "ติดต่อบ้านไออุ่น พร็อพเพอร์ตี้ ผ่าน LINE, WhatsApp, โทรศัพท์ หรืออีเมล ปรึกษาเรื่องซื้อ ขาย เช่าบ้านฟรี!",
+    en: "Contact us via LINE, WhatsApp, phone or email. Free consultation on buying, selling, and renting property.",
   },
+} as const
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale
+  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
+
+  return buildPageMetadata({
+    locale,
+    pathname: "/contact",
+    title: pickPipeBilingual(locale, CONTACT_SEO.title),
+    description: pickLocalized(locale, CONTACT_SEO.description),
+  })
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"

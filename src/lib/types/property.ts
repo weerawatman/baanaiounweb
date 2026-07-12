@@ -8,16 +8,21 @@ export interface Property {
   id: string
   slug: string
   title: string
+  title_en: string
   type: PropertyType
   sub_type: PropertyCategory | null
   price: number
   price_label: string
+  price_label_en: string
   area_sqm: number
   bedrooms: number
   bathrooms: number
   description: string
+  description_en: string
   emotional_desc: string
+  emotional_desc_en: string
   pim_insight: string
+  pim_insight_en: string
   status: PropertyStatus
   featured: boolean
   images: string[]
@@ -68,10 +73,13 @@ export interface BlogPost {
   id: string
   slug: string
   title: string
+  title_en: string
   category: string
   category_slug: string
   excerpt: string
+  excerpt_en: string
   content: string
+  content_en: string
   reading_time: string
   featured_image: string
   related_property_ids: string[]
@@ -85,6 +93,7 @@ export interface Testimonial {
   id: string
   client_name: string
   quote: string
+  quote_en: string
   property_type: string
   rating: number
   avatar_url: string
@@ -110,7 +119,9 @@ export interface SuccessStory {
 export interface Faq {
   id: string
   question: string
+  question_en: string
   answer: string
+  answer_en: string
   page_slug: string
   sort_order: number
   created_at: string
@@ -121,8 +132,11 @@ export interface AgentProfile {
   name: string
   full_name: string
   role: string
+  role_en: string
   bio: string
+  bio_en: string
   vision: string
+  vision_en: string
   avatar_url: string
   hero_image_url: string
   home_hero_image: string

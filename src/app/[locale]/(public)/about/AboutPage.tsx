@@ -1,9 +1,12 @@
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 import Image from "next/image"
+import { getLocale } from "next-intl/server"
 import { FileImage } from "lucide-react"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import { FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { cn } from "@/lib/utils"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized } from "@/lib/i18n/pick-localized"
 import type { Profile } from "@/types"
 
 interface AboutPageProps {
@@ -14,18 +17,25 @@ interface AboutPageProps {
 interface Milestone {
   year: string
   imageUrl: string
-  imageHint: string
-  titleTH: string
-  titleEN: string
+  imageHint: { th: string; en: string }
+  title: { th: string; en: string }
   descTH: React.ReactNode
   descEN: React.ReactNode
 }
 
+const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
+const ABOUT_CRUMB = { th: "เกี่ยวกับเรา", en: "About Us" } as const
+
+const STORY_HEADING = { th: "จุดเริ่มต้นของเรา", en: "Our Story" } as const
+const STORY_SUBTITLE = {
+  th: 'เรื่องราวที่หล่อหลอมให้เราเป็น "ศูนย์รวมอสังหาฯ ที่เข้าใจคุณที่สุด" ในวันนี้',
+  en: "The story that shaped us into the real estate hub that understands you best.",
+} as const
+
 const ADVANTAGES = [
   {
     icon: "🌐",
-    titleTH: "เราคือ \u201cระบบนิเวศที่มีชีวิต\u201d",
-    titleEN: "A Living Ecosystem",
+    title: { th: "เราคือ \u201cระบบนิเวศที่มีชีวิต\u201d", en: "A Living Ecosystem" },
     descTH: (
       <>
         เราไม่ใช่แค่แพลตฟอร์มเทคโนโลยีที่ให้คนมาแปะป้ายขายบ้าน แต่เราคือ{" "}
@@ -38,8 +48,7 @@ const ADVANTAGES = [
   },
   {
     icon: "👁️",
-    titleTH: "คัดกรองด้วย \u201cวิสัยทัศน์นักลงทุน\u201d",
-    titleEN: "Curated with an Investor's Vision",
+    title: { th: "คัดกรองด้วย \u201cวิสัยทัศน์นักลงทุน\u201d", en: "Curated with an Investor's Vision" },
     descTH:
       "เว็บอื่นแค่แสดงราคา แต่เราคือทีมงานที่มีประสบการณ์ตรง (Investor-Minded) จึงสามารถตรวจสอบโครงสร้าง ประเมินความคุ้มค่า และให้คำปรึกษาเพื่อเพิ่มมูลค่าทรัพย์ได้จริง",
     descEN:
@@ -47,8 +56,7 @@ const ADVANTAGES = [
   },
   {
     icon: "🤝",
-    titleTH: "บริการครบวงจรจบในที่เดียว",
-    titleEN: "End-to-End Service in One Place",
+    title: { th: "บริการครบวงจรจบในที่เดียว", en: "End-to-End Service in One Place" },
     descTH:
       "ไม่ทิ้งให้คุณเผชิญปัญหาเพียงลำพัง ทีมงานของเราพร้อมเป็นพี่เลี้ยง ดูแลตั้งแต่การตั้งราคา ทำการตลาด จัดหาสินเชื่อ คัดกรองผู้เช่า ไปจนถึงการจดทะเบียนที่กรมที่ดิน",
     descEN:
@@ -57,13 +65,55 @@ const ADVANTAGES = [
 ] as const
 
 const LOCAL_AREAS = [
-  { label: "📍 กรุงเทพมหานคร", highlight: false },
-  { label: "📍 สมุทรปราการ", highlight: false },
-  { label: "📍 ชลบุรี", highlight: false },
-  { label: "📍 ฉะเชิงเทรา", highlight: false },
-  { label: "📍 ระยอง", highlight: false },
-  { label: "⭐ โซนเศรษฐกิจพิเศษ EEC", highlight: true },
+  { th: "📍 กรุงเทพมหานคร", en: "📍 Bangkok", highlight: false },
+  { th: "📍 สมุทรปราการ", en: "📍 Samut Prakan", highlight: false },
+  { th: "📍 ชลบุรี", en: "📍 Chonburi", highlight: false },
+  { th: "📍 ฉะเชิงเทรา", en: "📍 Chachoengsao", highlight: false },
+  { th: "📍 ระยอง", en: "📍 Rayong", highlight: false },
+  { th: "⭐ โซนเศรษฐกิจพิเศษ EEC", en: "⭐ EEC Special Economic Zone", highlight: true },
 ] as const
+
+const HELP_HEADING = {
+  th: "เว็บไซต์บ้านไออุ่น ช่วยแก้ปัญหาให้คุณได้อย่างไร?",
+  en: "How Does Baan Ai Oun Platform Help You?",
+} as const
+const HELP_SUBTITLE = {
+  th: "แตกต่างจากกระดานประกาศทั่วไป เพราะเราดูแลคุณด้วยทีมงานที่มีหัวใจและประสบการณ์จริง",
+  en: "Unlike typical listing boards, we care for you with a real, experienced, heartfelt team.",
+} as const
+
+const LOCAL_HEADING = {
+  th: "ความเชี่ยวชาญเฉพาะพื้นที่ (Local Market Expertise)",
+  en: "Local Market Expertise",
+} as const
+const LOCAL_SUBTITLE = {
+  th: "เราคือผู้เชี่ยวชาญตัวจริงที่ลงพื้นที่ และมีเครือข่ายนายหน้าทำงานร่วมกัน ครอบคลุมทำเลศักยภาพสูงสุดในประเทศไทย ได้แก่:",
+  en: "Real on-the-ground experts with a collaborative agent network covering Thailand's highest-potential locations:",
+} as const
+
+const FAQ_TITLE = {
+  th: "คำถามที่พบบ่อยเกี่ยวกับ บ้านไออุ่น",
+  en: "Frequently Asked Questions About Baan Ai Oun",
+} as const
+const FAQ_SUBTITLE = {
+  th: "เรื่องที่ลูกค้ามักสอบถามเกี่ยวกับบ้านไออุ่น พร็อพเพอร์ตี้",
+  en: "Common questions about Baan Ai Oun Property.",
+} as const
+
+const CTA_HEADING = {
+  th: "ให้เราเป็นพาร์ทเนอร์ดูแลเรื่องอสังหาฯ ของคุณ",
+  en: "Let us be your trusted real estate partner.",
+} as const
+const CTA_BUTTON = { th: "💬 ติดต่อทีมงานบ้านไออุ่น", en: "💬 Contact Our Team" } as const
+
+const MID_BANNER_ALT = {
+  th: "ภาพมุมกว้างทำเลเศรษฐกิจ EEC",
+  en: "Wide-angle view of EEC economic zone",
+} as const
+const MID_BANNER_PLACEHOLDER = {
+  th: "อัปโหลดรูปแบนเนอร์กลางใน Admin > โปรไฟล์ > เกี่ยวกับเรา",
+  en: "Upload the mid-page banner in Admin > Profile > About",
+} as const
 
 function TimelineImage({ src, alt, hint }: { src: string; alt: string; hint: string }) {
   if (src) {
@@ -84,14 +134,15 @@ function TimelineImage({ src, alt, hint }: { src: string; alt: string; hint: str
   )
 }
 
-export default function AboutPage({ profile, faqs }: AboutPageProps) {
+export default async function AboutPage({ profile, faqs }: AboutPageProps) {
+  const locale = (await getLocale()) as Locale
+
   const milestones: Milestone[] = [
     {
       year: "2002",
       imageUrl: profile.aboutTimeline2002Image,
-      imageHint: "ห้องพักเริ่มต้น",
-      titleTH: "จุดเริ่มต้นจากความเข้าใจที่แท้จริง",
-      titleEN: "The Beginning of True Understanding",
+      imageHint: { th: "ห้องพักเริ่มต้น", en: "Starting point" },
+      title: { th: "จุดเริ่มต้นจากความเข้าใจที่แท้จริง", en: "The Beginning of True Understanding" },
       descTH: (
         <>
           ทีมงานของเราเริ่มต้นจากการเป็นผู้เช่าและคนหาบ้าน ทำให้{" "}
@@ -106,9 +157,8 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
     {
       year: "2016",
       imageUrl: profile.aboutTimeline2016Image,
-      imageHint: "การลงทุนอสังหาริมทรัพย์เบื้องต้น",
-      titleTH: "ก้าวแรกสู่การเป็นนักลงทุนอสังหาฯ",
-      titleEN: "First Steps as Property Investors",
+      imageHint: { th: "การลงทุนอสังหาริมทรัพย์เบื้องต้น", en: "Early property investment" },
+      title: { th: "ก้าวแรกสู่การเป็นนักลงทุนอสังหาฯ", en: "First Steps as Property Investors" },
       descTH:
         "เราเริ่มสะสมประสบการณ์จริงจากการลงพื้นที่ ซื้อ-ขาย-รีโนเวท ปล่อยเช่าในพื้นที่ชลบุรีและปริมณฑล เรียนรู้ตลาดอย่างลึกซึ้ง ลองผิดลองถูกจนเชี่ยวชาญทุกกระบวนการ",
       descEN:
@@ -117,9 +167,8 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
     {
       year: "2020",
       imageUrl: profile.aboutTimeline2020Image,
-      imageHint: "ก่อตั้งบริษัทบ้านไออุ่น",
-      titleTH: "กำเนิด \u201cบ้านไออุ่น พร็อพเพอร์ตี้\u201d",
-      titleEN: "The Birth of Baan Ai Oun Property",
+      imageHint: { th: "ก่อตั้งบริษัทบ้านไออุ่น", en: "Founding Baan Ai Oun" },
+      title: { th: "กำเนิด \u201cบ้านไออุ่น พร็อพเพอร์ตี้\u201d", en: "The Birth of Baan Ai Oun Property" },
       descTH: (
         <>
           ก่อตั้ง <strong>&apos;บ้านไออุ่น&apos;</strong> อย่างเป็นทางการ
@@ -133,9 +182,8 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
     {
       year: "2026",
       imageUrl: profile.aboutTimeline2026Image,
-      imageHint: "แพลตฟอร์มดิจิทัลบ้านไออุ่น",
-      titleTH: "ก้าวสู่ระบบนิเวศอสังหาฯ ไร้รอยต่อ",
-      titleEN: "Toward a Seamless Real Estate Ecosystem",
+      imageHint: { th: "แพลตฟอร์มดิจิทัลบ้านไออุ่น", en: "Baan Ai Oun digital platform" },
+      title: { th: "ก้าวสู่ระบบนิเวศอสังหาฯ ไร้รอยต่อ", en: "Toward a Seamless Real Estate Ecosystem" },
       descTH:
         "เปิดตัวแพลตฟอร์มออนไลน์เต็มรูปแบบ รวบรวมทรัพย์คุณภาพ ผสานการทำงานกับเครือข่าย Co-Agent ทั่วประเทศ เพื่อช่วยให้คนหาบ้านได้บ้านที่ใช่ และช่วยเจ้าของบ้านปิดดีลได้ไวที่สุด",
       descEN:
@@ -148,7 +196,12 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
   return (
     <>
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
-        <Breadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "เกี่ยวกับเรา | About Us" }]} />
+        <Breadcrumb
+          items={[
+            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            { label: pickLocalized(locale, ABOUT_CRUMB) },
+          ]}
+        />
       </div>
 
       <PageHeroBanner
@@ -160,21 +213,16 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
       />
 
       <main className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
-        {/* Our Story */}
         <section>
           <div className="mb-10 mt-14 text-center">
             <h2 className="font-heading text-3xl font-bold text-primary sm:text-[2.2rem]">
-              จุดเริ่มต้นของเรา | Our Story
+              {pickLocalized(locale, STORY_HEADING)}
             </h2>
             <p className="mt-2 text-lg text-muted-foreground">
-              เรื่องราวที่หล่อหลอมให้เราเป็น &ldquo;ศูนย์รวมอสังหาฯ ที่เข้าใจคุณที่สุด&rdquo; ในวันนี้
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              The story that shaped us into the real estate hub that understands you best.
+              {pickLocalized(locale, STORY_SUBTITLE)}
             </p>
           </div>
 
-          {/* Zigzag timeline (mockup pattern) */}
           <div className="relative mx-auto max-w-4xl py-5">
             <div
               className="absolute bottom-0 top-0 left-5 w-0.5 bg-primary md:left-1/2 md:-translate-x-1/2"
@@ -198,8 +246,8 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
                   <div className="md:w-[45%]">
                     <TimelineImage
                       src={milestone.imageUrl}
-                      alt={milestone.titleTH}
-                      hint={milestone.imageHint}
+                      alt={pickLocalized(locale, milestone.title)}
+                      hint={pickLocalized(locale, milestone.imageHint)}
                     />
                   </div>
 
@@ -208,16 +256,10 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
                       {milestone.year}
                     </span>
                     <h3 className="mt-4 text-xl font-bold text-foreground">
-                      {milestone.titleTH}
-                      <span className="mt-0.5 block text-sm font-medium text-muted-foreground">
-                        {milestone.titleEN}
-                      </span>
+                      {pickLocalized(locale, milestone.title)}
                     </h3>
                     <p className="mt-3 text-[0.95rem] leading-relaxed text-muted-foreground">
-                      {milestone.descTH}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                      {milestone.descEN}
+                      {locale === "en" ? milestone.descEN : milestone.descTH}
                     </p>
                   </div>
                 </article>
@@ -226,12 +268,11 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
           </div>
         </section>
 
-        {/* Mid-page banner */}
         <div className="relative mt-20 h-[200px] overflow-hidden rounded-[20px] shadow-[0_15px_40px_rgba(0,0,0,0.15)] sm:h-[280px] lg:h-[350px]">
           {profile.aboutMidBannerImage ? (
             <Image
               src={profile.aboutMidBannerImage}
-              alt="ภาพมุมกว้างทำเลเศรษฐกิจ EEC"
+              alt={pickLocalized(locale, MID_BANNER_ALT)}
               fill
               sizes="(max-width: 1152px) 100vw, 1152px"
               className="object-cover brightness-[0.85]"
@@ -239,62 +280,51 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
           ) : (
             <div className="flex h-full flex-col items-center justify-center gap-2 bg-muted text-muted-foreground">
               <FileImage className="size-10 opacity-40" aria-hidden />
-              <p className="text-sm">อัปโหลดรูปแบนเนอร์กลางใน Admin &gt; โปรไฟล์ &gt; เกี่ยวกับเรา</p>
+              <p className="text-sm">{pickLocalized(locale, MID_BANNER_PLACEHOLDER)}</p>
             </div>
           )}
         </div>
 
-        {/* How we help (Unfair Advantage) */}
         <section className="mt-20">
           <div className="mb-10 text-center">
             <h2 className="font-heading text-3xl font-bold text-primary sm:text-[2.2rem]">
-              เว็บไซต์บ้านไออุ่น ช่วยแก้ปัญหาให้คุณได้อย่างไร?
+              {pickLocalized(locale, HELP_HEADING)}
             </h2>
-            <p className="mt-1 text-lg font-medium text-muted-foreground sm:text-xl">
-              How Does Baan Ai Oun Platform Help You?
-            </p>
             <p className="mt-3 text-lg text-muted-foreground">
-              แตกต่างจากกระดานประกาศทั่วไป เพราะเราดูแลคุณด้วยทีมงานที่มีหัวใจและประสบการณ์จริง
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Unlike typical listing boards, we care for you with a real, experienced, heartfelt team.
+              {pickLocalized(locale, HELP_SUBTITLE)}
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
             {ADVANTAGES.map((adv) => (
               <div
-                key={adv.titleEN}
+                key={adv.title.en}
                 className="rounded-[20px] border border-border bg-card px-7 py-10 text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_15px_40px_rgba(20,83,45,0.1)]"
               >
                 <div className="mb-5 text-5xl">{adv.icon}</div>
-                <h3 className="mb-1 text-xl font-bold text-primary">{adv.titleTH}</h3>
-                <p className="mb-4 text-sm font-medium text-muted-foreground">{adv.titleEN}</p>
-                <p className="text-[0.95rem] leading-relaxed text-muted-foreground">{adv.descTH}</p>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{adv.descEN}</p>
+                <h3 className="mb-4 text-xl font-bold text-primary">
+                  {pickLocalized(locale, adv.title)}
+                </h3>
+                <p className="text-[0.95rem] leading-relaxed text-muted-foreground">
+                  {locale === "en" ? adv.descEN : adv.descTH}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Local expertise */}
         <section className="mt-20 rounded-3xl border border-border bg-card px-6 py-14 text-center shadow-[0_10px_40px_rgba(0,0,0,0.02)] sm:px-10">
           <h2 className="font-heading text-2xl font-bold text-primary sm:text-[2rem]">
-            ความเชี่ยวชาญเฉพาะพื้นที่ (Local Market Expertise)
+            {pickLocalized(locale, LOCAL_HEADING)}
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            เราคือผู้เชี่ยวชาญตัวจริงที่ลงพื้นที่ และมีเครือข่ายนายหน้าทำงานร่วมกัน
-            ครอบคลุมทำเลศักยภาพสูงสุดในประเทศไทย ได้แก่:
-          </p>
-          <p className="mx-auto mt-1 max-w-3xl text-sm text-muted-foreground">
-            Real on-the-ground experts with a collaborative agent network covering Thailand&apos;s
-            highest-potential locations:
+            {pickLocalized(locale, LOCAL_SUBTITLE)}
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
             {LOCAL_AREAS.map((area) => (
               <span
-                key={area.label}
+                key={area.en}
                 className={cn(
                   "whitespace-nowrap rounded-full border px-6 py-3 text-sm font-bold transition-colors",
                   area.highlight
@@ -302,7 +332,7 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
                     : "border-primary bg-primary-subtle text-primary hover:bg-primary hover:text-primary-foreground",
                 )}
               >
-                {area.label}
+                {pickLocalized(locale, area)}
               </span>
             ))}
           </div>
@@ -310,26 +340,22 @@ export default function AboutPage({ profile, faqs }: AboutPageProps) {
       </main>
 
       <FaqSection
-        title="คำถามที่พบบ่อยเกี่ยวกับ บ้านไออุ่น | Frequently Asked Questions"
-        subtitle="เรื่องที่ลูกค้ามักสอบถามเกี่ยวกับบ้านไออุ่น พร็อพเพอร์ตี้"
+        title={pickLocalized(locale, FAQ_TITLE)}
+        subtitle={pickLocalized(locale, FAQ_SUBTITLE)}
         items={faqs}
         variant="boxed"
       />
 
-      {/* Bottom CTA (mockup pattern) */}
       <section className="mx-auto max-w-6xl px-4 pb-16 pt-6 text-center sm:px-6">
         <h2 className="font-heading text-2xl font-bold text-foreground sm:text-[2.2rem]">
-          ให้เราเป็นพาร์ทเนอร์ดูแลเรื่องอสังหาฯ ของคุณ
+          {pickLocalized(locale, CTA_HEADING)}
         </h2>
-        <p className="mt-1 text-lg font-medium text-muted-foreground">
-          Let us be your trusted real estate partner.
-        </p>
         <div className="mt-7">
           <Link
             href="/contact"
             className="inline-flex items-center justify-center rounded-lg bg-primary px-10 py-4 text-lg font-bold text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            💬 ติดต่อทีมงานบ้านไออุ่น | Contact Our Team
+            {pickLocalized(locale, CTA_BUTTON)}
           </Link>
         </div>
       </section>

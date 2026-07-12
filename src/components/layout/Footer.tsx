@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation"
 import { getLocale } from "next-intl/server"
+import { footerLabel } from "@/lib/i18n/footer-labels"
 import { SITE_CONFIG } from "@/config/site"
 import { FOOTER_QUICK_LINKS, FOOTER_SEO_TAGS } from "@/config/navigation"
 import { navText } from "@/lib/i18n/locale-label"
@@ -66,15 +67,13 @@ export default async function Footer({ profile }: { profile: Profile }) {
     <footer className="border-t-4 border-secondary bg-primary text-white">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {/* บริษัท */}
           <div className="flex flex-col gap-1.5">
             <FooterHeading>{siteName}</FooterHeading>
             <p className="text-xs leading-snug text-white/75 sm:text-sm">{slogan}</p>
           </div>
 
-          {/* เมนูลัด */}
           <div className="flex flex-col gap-2">
-            <FooterHeading>เมนูลัด</FooterHeading>
+            <FooterHeading>{footerLabel(locale, "quickLinks")}</FooterHeading>
             <FooterList>
               {FOOTER_QUICK_LINKS.map((item) => (
                 <li key={item.href}>
@@ -89,54 +88,55 @@ export default async function Footer({ profile }: { profile: Profile }) {
             </FooterList>
           </div>
 
-          {/* ติดต่อเรา */}
           <div className="flex flex-col gap-2">
-            <FooterHeading>ติดต่อเรา</FooterHeading>
+            <FooterHeading>{footerLabel(locale, "contact")}</FooterHeading>
             <FooterList>
               <FooterRow icon="📞" href={`tel:${phone}`}>
-                โทร (Tel): {phone}
+                {footerLabel(locale, "tel")}: {phone}
               </FooterRow>
               <FooterRow icon="🟢" href={lineUrl}>
-                LINE OA: {lineId}
+                {footerLabel(locale, "lineOa")}: {lineId}
               </FooterRow>
               {linePersonalId ? (
-                <FooterRow icon="💬">LINE ส่วนตัว: {linePersonalId}</FooterRow>
+                <FooterRow icon="💬">
+                  {footerLabel(locale, "linePersonal")}: {linePersonalId}
+                </FooterRow>
               ) : null}
               <FooterRow icon="✉️" href={`mailto:${email}`}>
-                Email: {email}
+                {footerLabel(locale, "email")}: {email}
               </FooterRow>
-              <FooterRow icon="📍">สำนักงาน: {address}</FooterRow>
+              <FooterRow icon="📍">
+                {footerLabel(locale, "office")}: {address}
+              </FooterRow>
             </FooterList>
           </div>
 
-          {/* ติดตามเรา */}
           <div className="flex flex-col gap-2">
-            <FooterHeading>ติดตามเรา</FooterHeading>
+            <FooterHeading>{footerLabel(locale, "follow")}</FooterHeading>
             <FooterList>
               <FooterRow icon="🟦" href={facebook}>
-                FB Fanpage: {siteName}
+                {footerLabel(locale, "fbFanpage")}: {siteName}
               </FooterRow>
               {facebookPersonal ? (
                 <FooterRow icon="👤" href={facebookPersonal}>
-                  FB ส่วนตัว: {SITE_CONFIG.facebookPersonalLabel}
+                  {footerLabel(locale, "fbPersonal")}: {SITE_CONFIG.facebookPersonalLabel}
                 </FooterRow>
               ) : null}
               <FooterRow icon="📸" href={SITE_CONFIG.instagram}>
-                Instagram (IG): {SITE_CONFIG.instagramHandle}
+                {footerLabel(locale, "instagram")}: {SITE_CONFIG.instagramHandle}
               </FooterRow>
               <FooterRow icon="🎵" href={profile.tiktok || SITE_CONFIG.tiktok}>
-                TikTok: {SITE_CONFIG.tiktokHandle}
+                {footerLabel(locale, "tiktok")}: {SITE_CONFIG.tiktokHandle}
               </FooterRow>
               <FooterRow icon="📺" href={profile.youtube || SITE_CONFIG.youtube}>
-                YouTube: {SITE_CONFIG.youtubeLabel}
+                {footerLabel(locale, "youtube")}: {SITE_CONFIG.youtubeLabel}
               </FooterRow>
             </FooterList>
           </div>
         </div>
 
-        {/* ค้นหาทำเลยอดฮิต */}
         <div className="mt-5 border-t border-white/15 pt-4 text-center">
-          <p className="mb-2 text-xs text-white/60">ค้นหาทำเลยอดฮิต</p>
+          <p className="mb-2 text-xs text-white/60">{footerLabel(locale, "popularSearches")}</p>
           <div className="flex flex-wrap justify-center gap-2">
             {FOOTER_SEO_TAGS.map((tag) => (
               <Link
@@ -150,12 +150,11 @@ export default async function Footer({ profile }: { profile: Profile }) {
           </div>
         </div>
 
-        {/* Copyright */}
         <p className="mt-4 text-center text-xs text-white/60">
-          © {currentYear} {siteName} สงวนลิขสิทธิ์ทุกประการ{" "}
+          © {currentYear} {siteName} {footerLabel(locale, "rights")}{" "}
           <span className="text-white/30">|</span>{" "}
           <Link href="/privacy-policy" className="transition-colors hover:text-white">
-            นโยบายความเป็นส่วนตัว
+            {footerLabel(locale, "privacy")}
           </Link>
         </p>
       </div>

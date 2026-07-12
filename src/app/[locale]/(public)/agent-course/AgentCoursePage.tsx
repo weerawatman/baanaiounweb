@@ -1,21 +1,38 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import { ImageIcon } from "lucide-react"
+import { getLocale } from "next-intl/server"
 import Breadcrumb from "@/components/layout/Breadcrumb"
 import PageSection from "@/components/layout/PageSection"
 import { CTAWithForm, FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
+import { NAV_ITEMS } from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { navText } from "@/lib/i18n/locale-label"
 
-export function generateMetadata(): Metadata {
-  return {
-    title: AGENT_COURSE_CONTENT.seo.title,
-    description: AGENT_COURSE_CONTENT.seo.description.th,
-    openGraph: {
-      title: AGENT_COURSE_CONTENT.seo.title,
-      description: AGENT_COURSE_CONTENT.seo.description.en,
-    },
-  }
+const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
+const MID_BANNER_ALT = {
+  th: "ภาพบรรยากาศการทำเวิร์กชอปกลุ่มอย่างสนุกสนาน",
+  en: "Group workshop atmosphere",
+} as const
+const UPLOAD_HINT = {
+  th: "อัปโหลดรูปแบนเนอร์กลางใน Admin > โปรไฟล์ > คอร์สนายหน้า",
+  en: "Upload mid-banner image in Admin > Profile > Agent Course",
+} as const
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale
+  const { seo } = AGENT_COURSE_CONTENT
+  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
+
+  return buildPageMetadata({
+    locale,
+    pathname: "/agent-course",
+    title: pickPipeBilingual(locale, seo.title),
+    description: pickLocalized(locale, seo.description),
+  })
 }
 
 interface CurriculumDay {
@@ -31,7 +48,7 @@ interface CurriculumDay {
   }[]
 }
 
-function CurriculumDaySection({ day }: { day: CurriculumDay }) {
+function CurriculumDaySection({ day, locale }: { day: CurriculumDay; locale: Locale }) {
   const leftItems = day.items.filter((_, i) => i % 2 === 0)
   const rightItems = day.items.filter((_, i) => i % 2 === 1)
 
@@ -46,11 +63,11 @@ function CurriculumDaySection({ day }: { day: CurriculumDay }) {
             {item.number}
           </div>
           <div>
-            <h4 className="text-base font-bold text-foreground">{item.titleTh}</h4>
-            <p className="text-xs font-medium text-muted-foreground">{item.titleEn}</p>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.descTh}</p>
-            <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground/80">
-              {item.descEn}
+            <h4 className="text-base font-bold text-foreground">
+              {pickLocalized(locale, { th: item.titleTh, en: item.titleEn })}
+            </h4>
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+              {pickLocalized(locale, { th: item.descTh, en: item.descEn })}
             </p>
           </div>
         </li>
@@ -65,10 +82,7 @@ function CurriculumDaySection({ day }: { day: CurriculumDay }) {
           {day.badge}
         </span>
         <h3 className="text-lg font-bold text-primary sm:text-xl">
-          {day.titleTh}
-          <span className="mt-0.5 block text-sm font-medium text-muted-foreground">
-            {day.titleEn}
-          </span>
+          {pickLocalized(locale, { th: day.titleTh, en: day.titleEn })}
         </h3>
       </div>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -86,23 +100,26 @@ interface AgentCoursePageProps {
   faqs: FaqItem[]
 }
 
-export default function AgentCoursePage({
+export default async function AgentCoursePage({
   heroImage,
   midBannerImage,
   lineUrl,
   faqs,
 }: AgentCoursePageProps) {
+  const locale = (await getLocale()) as Locale
   const lineHref = lineUrl || SITE_CONFIG.lineUrl
   const { hero, successCards, curriculum, resultQuote, faq, cta } = AGENT_COURSE_CONTENT
+  const servicesNav = NAV_ITEMS.find((item) => item.href === "/services")!
+  const courseNav = NAV_ITEMS.find((item) => item.href === "/agent-course")!
 
   return (
     <>
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "บริการของเรา | Our Services", href: "/services" },
-            { label: "คอร์สนายหน้า | Agent Course" },
+            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            { label: navText(servicesNav, locale), href: "/services" },
+            { label: navText(courseNav, locale) },
           ]}
         />
       </div>
@@ -124,11 +141,11 @@ export default function AgentCoursePage({
               <span className="text-3xl" aria-hidden>
                 {card.icon}
               </span>
-              <h2 className="mt-3 text-sm font-bold leading-snug text-primary">{card.titleTh}</h2>
-              <p className="mt-0.5 text-xs font-medium text-muted-foreground">{card.titleEn}</p>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{card.descTh}</p>
-              <p className="mt-0.5 text-[0.7rem] leading-relaxed text-muted-foreground/80">
-                {card.descEn}
+              <h2 className="mt-3 text-sm font-bold leading-snug text-primary">
+                {pickLocalized(locale, { th: card.titleTh, en: card.titleEn })}
+              </h2>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                {pickLocalized(locale, { th: card.descTh, en: card.descEn })}
               </p>
             </article>
           ))}
@@ -136,25 +153,21 @@ export default function AgentCoursePage({
 
         <header className="mb-10 mt-16 text-center">
           <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-            {curriculum.titleTh}
+            {pickLocalized(locale, { th: curriculum.titleTh, en: curriculum.titleEn })}
           </h2>
-          <p className="mt-1 text-lg font-medium text-muted-foreground">{curriculum.titleEn}</p>
           <p className="mx-auto mt-3 max-w-2xl text-base text-foreground/90">
-            {curriculum.subtitleTh}
-          </p>
-          <p className="mx-auto mt-1 max-w-2xl text-sm text-muted-foreground">
-            {curriculum.subtitleEn}
+            {pickLocalized(locale, { th: curriculum.subtitleTh, en: curriculum.subtitleEn })}
           </p>
         </header>
 
         <div className="space-y-10">
-          <CurriculumDaySection day={curriculum.day1} />
+          <CurriculumDaySection day={curriculum.day1} locale={locale} />
 
           <div className="relative h-[180px] overflow-hidden rounded-2xl shadow-md sm:h-[250px]">
             {midBannerImage ? (
               <Image
                 src={midBannerImage}
-                alt="ภาพบรรยากาศการทำเวิร์กชอปกลุ่มอย่างสนุกสนาน"
+                alt={pickLocalized(locale, MID_BANNER_ALT)}
                 fill
                 sizes="(max-width: 768px) 100vw, 1152px"
                 className="object-cover"
@@ -162,12 +175,12 @@ export default function AgentCoursePage({
             ) : (
               <div className="flex h-full flex-col items-center justify-center gap-2 bg-muted text-muted-foreground">
                 <ImageIcon className="size-10 opacity-40" aria-hidden />
-                <p className="text-sm">อัปโหลดรูปแบนเนอร์กลางใน Admin &gt; โปรไฟล์ &gt; คอร์สนายหน้า</p>
+                <p className="text-sm">{pickLocalized(locale, UPLOAD_HINT)}</p>
               </div>
             )}
           </div>
 
-          <CurriculumDaySection day={curriculum.day2} />
+          <CurriculumDaySection day={curriculum.day2} locale={locale} />
         </div>
 
         <section className="mt-20 rounded-[20px] bg-primary px-6 py-12 text-center text-primary-foreground shadow-lg sm:px-10 sm:py-16">
@@ -175,21 +188,17 @@ export default function AgentCoursePage({
             🚀
           </p>
           <h3 className="mt-3 text-xl font-bold text-secondary sm:text-2xl">
-            {resultQuote.titleTh}
+            {pickLocalized(locale, { th: resultQuote.titleTh, en: resultQuote.titleEn })}
           </h3>
-          <p className="text-base font-medium text-secondary/90">{resultQuote.titleEn}</p>
           <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-primary-foreground/90 sm:text-lg">
-            {resultQuote.messageTh}
-          </p>
-          <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-primary-foreground/70">
-            {resultQuote.messageEn}
+            {pickLocalized(locale, { th: resultQuote.messageTh, en: resultQuote.messageEn })}
           </p>
         </section>
       </PageSection>
 
       <FaqSection
-        title={faq.title}
-        subtitle={faq.subtitle}
+        title={pickPipeBilingual(locale, faq.title)}
+        subtitle={pickPipeBilingual(locale, faq.subtitle)}
         items={faqs}
         variant="boxed"
         layout="cards"

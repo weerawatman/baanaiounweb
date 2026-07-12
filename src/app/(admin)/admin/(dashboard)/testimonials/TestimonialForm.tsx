@@ -37,6 +37,7 @@ export function TestimonialForm({
     defaultValues: {
       client_name: defaultValues?.client_name ?? "",
       quote: defaultValues?.quote ?? "",
+      quote_en: defaultValues?.quote_en ?? "",
       property_type: defaultValues?.property_type ?? "",
       rating: defaultValues?.rating ?? 5,
       avatar_url: defaultValues?.avatar_url ?? "",
@@ -89,17 +90,34 @@ export function TestimonialForm({
           </div>
         </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium">
-            คำรีวิว <span className="text-red-500">*</span>
-          </label>
-          <textarea
-            {...register("quote")}
-            rows={4}
-            placeholder="พิมดูแลอย่างดีมาก..."
-            className={textareaCls}
-          />
-          {errors.quote && <p className="text-xs text-red-500">{errors.quote.message}</p>}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-sm font-medium">
+              คำรีวิว (ไทย) <span className="text-red-500">*</span>
+            </label>
+            <textarea
+              {...register("quote")}
+              rows={4}
+              placeholder="พิมดูแลอย่างดีมาก..."
+              className={textareaCls}
+            />
+            {errors.quote && <p className="text-xs text-red-500">{errors.quote.message}</p>}
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-sm font-medium">
+              คำรีวิว (English)
+              <span className="text-muted-foreground ml-1 text-xs font-normal">
+                จำเป็นเมื่อเผยแพร่
+              </span>
+            </label>
+            <textarea
+              {...register("quote_en")}
+              rows={4}
+              placeholder="Pim took great care of us..."
+              className={textareaCls}
+            />
+            {errors.quote_en && <p className="text-xs text-red-500">{errors.quote_en.message}</p>}
+          </div>
         </div>
 
         <div className="flex flex-col gap-1.5">

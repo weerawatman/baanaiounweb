@@ -14,23 +14,10 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 export const metadata: Metadata = {
   openGraph: {
     type: "website",
-    locale: "th_TH",
     siteName: "บ้านไออุ่น พร็อพเพอร์ตี้",
-    title: "บ้านไออุ่น พร็อพเพอร์ตี้ — มากกว่าที่พัก คือพลังกายพลังใจให้คุณไปต่อ",
-    description:
-      "บ้านไออุ่น คัดสรรบ้านขาย บ้านเช่า ที่ดิน ในเขตบ้านบึง ชลบุรี ใกล้นิคมอมตะ เหมราช โดยพิม นายหน้าที่ดูแลด้วยหัวใจ",
-    url: BASE_URL,
   },
   twitter: {
     card: "summary_large_image",
-  },
-  alternates: {
-    canonical: BASE_URL,
-    languages: {
-      th: BASE_URL,
-      en: BASE_URL,
-      "x-default": BASE_URL,
-    },
   },
 }
 

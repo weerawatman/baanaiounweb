@@ -1,8 +1,12 @@
 import type { Metadata } from "next"
+import { getLocale } from "next-intl/server"
 import { getPropertyBySlug } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { createServerSupabase } from "@/lib/supabase"
 import { mapProperty } from "@/lib/mappers"
+import type { Locale } from "@/i18n/routing"
+import { buildPageMetadata } from "@/lib/i18n/metadata"
+import { localizedOrFallback, pickLocalized } from "@/lib/i18n/pick-localized"
 import PropertyDetailClient from "./PropertyDetailClient"
 
 export const revalidate = 3600
@@ -24,22 +28,48 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale
   const { slug } = await params
   const row = await getPropertyBySlug(slug)
-  if (!row) return { title: "ทรัพย์สิน | บ้านไออุ่น" }
+  const notFoundTitle = pickLocalized(locale, {
+    th: "ทรัพย์สิน | บ้านไออุ่น",
+    en: "Property | Baan Ai Oun",
+  })
+  if (!row) return { title: notFoundTitle }
+
   const property = mapProperty(row)
+  const title = localizedOrFallback(locale, property.title, property.titleEn)
+  const locationLabel =
+    property.location.subdistrict || property.location.district
+      ? pickLocalized(locale, {
+          th: `ย่าน ${property.location.subdistrict}, ${property.location.district}`,
+          en: `${property.location.subdistrict}, ${property.location.district}`,
+        })
+      : ""
   const description = [
-    property.title,
-    property.location ? `ย่าน ${property.location}` : "",
-    "— บ้านไออุ่น อสังหาริมทรัพย์",
+    title,
+    locationLabel,
+    pickLocalized(locale, {
+      th: "— บ้านไออุ่น อสังหาริมทรัพย์",
+      en: "— Baan Ai Oun Property",
+    }),
   ]
     .filter(Boolean)
     .join(" ")
+  const pageTitle = pickLocalized(locale, {
+    th: `${title} | บ้านไออุ่น`,
+    en: `${title} | Baan Ai Oun`,
+  })
+
   return {
-    title: `${property.title} | บ้านไออุ่น`,
-    description,
+    ...buildPageMetadata({
+      locale,
+      pathname: `/property/${slug}`,
+      title: pageTitle,
+      description,
+    }),
     openGraph: {
-      title: `${property.title} | บ้านไออุ่น`,
+      title: pageTitle,
       description,
       images: property.images?.[0] ? [{ url: property.images[0] }] : [],
     },

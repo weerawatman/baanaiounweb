@@ -9,7 +9,7 @@ export const getTestimonials = unstable_cache(
   async (): Promise<Testimonial[]> => {
     const { data, error } = await publicClient
       .from("testimonials")
-      .select("id, client_name, quote, property_type, rating, avatar_url, sort_order")
+      .select("id, client_name, quote, quote_en, property_type, rating, avatar_url, sort_order")
       .eq("published", true)
       .order("sort_order", { ascending: true })
     if (error) throw new Error(error.message)

@@ -1,26 +1,32 @@
 import type { Metadata } from "next"
+import { getLocale } from "next-intl/server"
 import { getProfile } from "@/lib/queries/profile"
 import { getFaqsByPage } from "@/lib/queries/faqs"
 import { mapFaq } from "@/lib/mappers"
-import { mapFaqsToItems } from "@/lib/faq-items"
+import { getLocalizedFaqItems } from "@/lib/faq-items"
+import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
+import type { Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 import ServicesHubPage from "./ServicesHubPage"
 
 export const revalidate = 3600
 
-export const metadata: Metadata = {
-  title: "บริการของเรา | Our Services — บ้านไออุ่น พร็อพเพอร์ตี้",
-  description:
-    "ศูนย์รวมทางลัดความสำเร็จในโลกอสังหาฯ ฝากขาย ค้นหาทรัพย์ Co-Agent คอร์สนายหน้า กรุงเทพฯ ชลบุรี EEC",
-  openGraph: {
-    title: "บริการของเรา | Our Real Estate Services — Baan Ai Oun Property",
-    description:
-      "Your shortcut to real estate success — listing, matchmaking, co-agent network, and agent training across Bangkok, Chonburi, and EEC.",
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale
+  const { seo } = SERVICES_HUB_CONTENT
+  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
+
+  return buildPageMetadata({
+    locale,
+    pathname: "/services",
+    title: pickPipeBilingual(locale, seo.title),
+    description: pickLocalized(locale, seo.description),
+  })
 }
 
 export default async function ServicesRoute() {
   const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("services")])
-  const faqs = mapFaqsToItems(faqRows.map(mapFaq))
+  const faqs = await getLocalizedFaqItems(faqRows.map(mapFaq))
 
   const serviceJsonLd = {
     "@context": "https://schema.org",

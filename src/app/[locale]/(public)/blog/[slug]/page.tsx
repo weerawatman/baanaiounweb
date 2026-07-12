@@ -1,10 +1,14 @@
 import type { Metadata } from "next"
+import { getLocale } from "next-intl/server"
 import { getBlogPostBySlug } from "@/lib/queries/blog"
 import { getRelatedProperties } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { createServerSupabase } from "@/lib/supabase"
 import { mapBlogPost, mapProperty } from "@/lib/mappers"
 import { SITE_CONFIG } from "@/config/site"
+import type { Locale } from "@/i18n/routing"
+import { buildPageMetadata } from "@/lib/i18n/metadata"
+import { localizedOrFallback, pickLocalized } from "@/lib/i18n/pick-localized"
 import BlogPostClient from "./BlogPostClient"
 
 export const revalidate = 86400
@@ -23,16 +27,37 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale
   const { slug } = await params
   const row = await getBlogPostBySlug(slug)
-  if (!row) return { title: "บทความ | บ้านไออุ่น" }
+  const notFoundTitle = pickLocalized(locale, {
+    th: "บทความ | บ้านไออุ่น",
+    en: "Article | Baan Ai Oun",
+  })
+  if (!row) return { title: notFoundTitle }
+
   const post = mapBlogPost(row)
-  const description = post.excerpt || `${post.title} — บทความอสังหาริมทรัพย์จาก บ้านไออุ่น`
+  const title = localizedOrFallback(locale, post.title, post.titleEn)
+  const excerpt = localizedOrFallback(locale, post.excerpt, post.excerptEn)
+  const fallbackDesc = pickLocalized(locale, {
+    th: `${title} — บทความอสังหาริมทรัพย์จาก บ้านไออุ่น`,
+    en: `${title} — Real estate insights from Baan Ai Oun`,
+  })
+  const description = excerpt || fallbackDesc
+  const pageTitle = pickLocalized(locale, {
+    th: `${title} | บ้านไออุ่น`,
+    en: `${title} | Baan Ai Oun`,
+  })
+
   return {
-    title: `${post.title} | บ้านไออุ่น`,
-    description,
+    ...buildPageMetadata({
+      locale,
+      pathname: `/blog/${slug}`,
+      title: pageTitle,
+      description,
+    }),
     openGraph: {
-      title: `${post.title} | บ้านไออุ่น`,
+      title: pageTitle,
       description,
       images: post.featuredImage ? [{ url: post.featuredImage }] : [],
     },
