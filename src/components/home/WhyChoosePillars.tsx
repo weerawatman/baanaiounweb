@@ -4,6 +4,7 @@ import SectionTitle from "@/components/layout/SectionTitle"
 import { HOME_WHY_CHOOSE } from "@/content/homepage"
 import type { Locale } from "@/i18n/routing"
 import { pickLocalized } from "@/lib/i18n/pick-localized"
+import { ThaiText } from "@/lib/thai-wrap"
 
 const iconBg = ["bg-primary", "bg-secondary", "bg-accent"] as const
 
@@ -30,7 +31,7 @@ export default async function WhyChoosePillars() {
               {pickLocalized(locale, { th: pillar.titleTh, en: pillar.titleEn })}
             </h3>
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-              {pickLocalized(locale, { th: pillar.descTh, en: pillar.descEn })}
+              <ThaiText text={pickLocalized(locale, { th: pillar.descTh, en: pillar.descEn })} />
             </p>
           </div>
         ))}

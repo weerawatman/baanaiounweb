@@ -42,7 +42,7 @@ export default function SuccessStoriesSection({ stories }: SuccessStoriesSection
   if (displayableStories.length === 0) return null
 
   return (
-    <section className="bg-muted py-16" data-testid="success-stories-section">
+    <section className="bg-muted py-8 lg:py-10" data-testid="success-stories-section">
       <div className="container mx-auto max-w-5xl px-4">
         <div className="mb-10 text-center">
           <h2 className="font-heading text-2xl font-bold text-primary md:text-3xl">

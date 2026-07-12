@@ -2,6 +2,7 @@ import { Link } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
 import type { Locale } from "@/i18n/routing"
 import { pickLocalized, type BilingualPair } from "@/lib/i18n/pick-localized"
+import { ThaiText } from "@/lib/thai-wrap"
 
 interface ServiceHubCardProps {
   href: string
@@ -41,11 +42,11 @@ export default function ServiceHubCard({
       </div>
 
       <h3 className="text-lg font-bold leading-snug text-foreground">
-        {pickLocalized(locale, title)}
+        <ThaiText text={pickLocalized(locale, title)} />
       </h3>
 
       <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-        {pickLocalized(locale, description)}
+        <ThaiText text={pickLocalized(locale, description)} />
       </p>
 
       <span className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary transition-colors group-hover:text-secondary">

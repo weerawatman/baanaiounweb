@@ -12,7 +12,7 @@ interface StepsSectionProps {
 
 export default function StepsSection({ headline, steps, className }: StepsSectionProps) {
   return (
-    <section className={`bg-primary/5 py-16 sm:py-24 ${className ?? ""}`}>
+    <section className={`bg-primary/5 py-8 lg:py-10 ${className ?? ""}`}>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2
           className="font-heading mb-12 text-center text-2xl font-bold tracking-tight text-primary sm:text-3xl"

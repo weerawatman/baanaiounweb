@@ -75,6 +75,14 @@ body {
   font-family: var(--font-sans), "Noto Sans Thai", system-ui, sans-serif;
 }
 
+/* Safety net for Thai text: if a no-break phrase (see lib/thai-wrap.tsx)
+   is still wider than its container on a narrow screen, break it rather
+   than overflow. Note `word-break: keep-all` does NOT affect Thai (spec
+   limits it to CJK), so phrase wrapping is done structurally in ThaiText. */
+:lang(th) {
+  overflow-wrap: break-word;
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;

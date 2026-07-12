@@ -5,6 +5,7 @@ import SectionTitle from "@/components/layout/SectionTitle"
 import { SERVICES_HEADING, SERVICE_CARDS } from "@/content/homepage"
 import type { Locale } from "@/i18n/routing"
 import { pickLocalized } from "@/lib/i18n/pick-localized"
+import { ThaiText } from "@/lib/thai-wrap"
 
 const LEARN_MORE = { th: "อ่านรายละเอียด", en: "Learn More" } as const
 
@@ -16,10 +17,14 @@ export default async function ServiceShortcuts() {
       <SectionTitle
         variant="plain"
         title={pickLocalized(locale, SERVICES_HEADING)}
-        subtitle={pickLocalized(locale, {
-          th: SERVICES_HEADING.subtitleTh,
-          en: SERVICES_HEADING.subtitleEn,
-        })}
+        subtitle={
+          <ThaiText
+            text={pickLocalized(locale, {
+              th: SERVICES_HEADING.subtitleTh,
+              en: SERVICES_HEADING.subtitleEn,
+            })}
+          />
+        }
       />
 
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -40,7 +45,7 @@ export default async function ServiceShortcuts() {
             </h3>
 
             <p className="mb-6 flex-1 text-sm leading-relaxed text-muted-foreground">
-              {pickLocalized(locale, { th: card.descTh, en: card.descEn })}
+              <ThaiText text={pickLocalized(locale, { th: card.descTh, en: card.descEn })} />
             </p>
 
             <div className="mt-auto flex flex-col gap-2.5">

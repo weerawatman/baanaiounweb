@@ -16,7 +16,7 @@ export default function EmotionalHook({
   className,
 }: EmotionalHookProps) {
   return (
-    <section className={`bg-muted py-16 sm:py-20 ${className ?? ""}`}>
+    <section className={`bg-muted py-8 lg:py-10 ${className ?? ""}`}>
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div
           className="flex flex-col items-center gap-6 text-center"

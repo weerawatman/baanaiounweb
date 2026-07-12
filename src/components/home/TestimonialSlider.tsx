@@ -43,7 +43,7 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
   )
 
   return (
-    <section className="bg-background py-16">
+    <section className="bg-background py-8 lg:py-10">
       <div className="container mx-auto max-w-4xl px-4">
         <div className="mb-10 text-center">
           <h2 className="font-heading text-2xl font-bold text-primary md:text-3xl">

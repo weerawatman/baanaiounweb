@@ -27,7 +27,9 @@ export default function PageSection({
     <section
       id={id}
       data-testid={testId}
-      className={cn("py-16 lg:py-20", variantClasses[variant], className)}
+      // py-8/py-10 so two adjacent sections total ~80px — the site-wide
+      // section rhythm (matches the About page's mt-20 reference gap).
+      className={cn("py-8 lg:py-10", variantClasses[variant], className)}
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">{children}</div>
     </section>

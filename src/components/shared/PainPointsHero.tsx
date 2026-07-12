@@ -20,7 +20,7 @@ export default function PainPointsHero({
 }: PainPointsHeroProps) {
   return (
     <section
-      className={`bg-gradient-to-b from-muted to-background py-16 sm:py-24 ${className ?? ""}`}
+      className={`bg-gradient-to-b from-muted to-background py-8 lg:py-10 ${className ?? ""}`}
     >
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="text-center" style={{ animation: "fade-up 0.5s ease both" }}>

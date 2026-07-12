@@ -26,7 +26,7 @@ export default function SolutionsSection({
   className,
 }: SolutionsSectionProps) {
   return (
-    <section className={`py-16 sm:py-24 ${className ?? ""}`}>
+    <section className={`py-8 lg:py-10 ${className ?? ""}`}>
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
           {/* Text content */}

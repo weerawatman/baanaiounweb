@@ -31,7 +31,7 @@ export default function CTAWithForm({
   const [showForm, setShowForm] = useState(false)
 
   return (
-    <section id="cta-form" className={`py-16 sm:py-24 ${className ?? ""}`}>
+    <section id="cta-form" className={`py-8 lg:py-10 ${className ?? ""}`}>
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {!showForm ? (
           <motion.div
@@ -56,7 +56,7 @@ export default function CTAWithForm({
             <div className="flex flex-wrap items-center justify-center gap-4">
               {primary.action === "form" ? (
                 <Button
-                  className="gap-2 bg-primary px-8 py-2.5 text-white hover:bg-primary/90"
+                  className="h-auto max-w-full gap-2 whitespace-normal bg-primary px-8 py-2.5 text-white hover:bg-primary/90"
                   size="lg"
                   onClick={() => setShowForm(true)}
                 >
@@ -64,9 +64,9 @@ export default function CTAWithForm({
                   {primary.label}
                 </Button>
               ) : (
-                <Link href={primary.href ?? "#"}>
+                <Link href={primary.href ?? "#"} className="max-w-full">
                   <Button
-                    className="gap-2 bg-primary px-8 py-2.5 text-white hover:bg-primary/90"
+                    className="h-auto max-w-full gap-2 whitespace-normal bg-primary px-8 py-2.5 text-white hover:bg-primary/90"
                     size="lg"
                   >
                     {primary.label}
@@ -75,10 +75,10 @@ export default function CTAWithForm({
               )}
 
               {secondary.href && (
-                <Link href={secondary.href}>
+                <Link href={secondary.href} className="max-w-full">
                   <Button
                     variant="outline"
-                    className="gap-2 border-secondary px-8 py-2.5 text-secondary hover:bg-secondary hover:text-secondary-foreground"
+                    className="h-auto max-w-full gap-2 whitespace-normal border-secondary px-8 py-2.5 text-secondary hover:bg-secondary hover:text-secondary-foreground"
                     size="lg"
                   >
                     {secondary.label}

@@ -5,6 +5,7 @@ import PageSection from "@/components/layout/PageSection"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
 import type { Locale } from "@/i18n/routing"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { ThaiText } from "@/lib/thai-wrap"
 
 interface ServicesWhyChooseProps {
   imageUrl?: string
@@ -22,7 +23,7 @@ export default async function ServicesWhyChoose({ imageUrl }: ServicesWhyChooseP
             {pickPipeBilingual(locale, title)}
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
-            {pickPipeBilingual(locale, subtitle)}
+            <ThaiText text={pickPipeBilingual(locale, subtitle)} />
           </p>
         </div>
 
@@ -66,7 +67,7 @@ export default async function ServicesWhyChoose({ imageUrl }: ServicesWhyChooseP
                     {pickLocalized(locale, item.title)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-foreground/90">
-                    {pickLocalized(locale, item.description)}
+                    <ThaiText text={pickLocalized(locale, item.description)} />
                   </p>
                 </div>
               </article>

@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils"
 
 interface SectionTitleProps {
-  title: string
-  subtitle?: string
+  title: React.ReactNode
+  subtitle?: React.ReactNode
   subtitleClassName?: string
   /** ใช้ "h1" เมื่อเป็นหัวข้อหลักของหน้า (SEO: หนึ่ง h1 ต่อหน้า) */
   as?: "h1" | "h2"

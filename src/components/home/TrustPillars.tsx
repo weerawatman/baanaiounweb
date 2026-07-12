@@ -6,6 +6,7 @@ import SectionTitle from "@/components/layout/SectionTitle"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
 import type { Locale } from "@/i18n/routing"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { ThaiText } from "@/lib/thai-wrap"
 
 export interface TrustPillarImages {
   renovation: string
@@ -81,7 +82,7 @@ export default async function TrustPillars({ images }: TrustPillarsProps) {
     <PageSection variant="default">
       <SectionTitle
         title={pickPipeBilingual(locale, trust.title)}
-        subtitle={pickPipeBilingual(locale, trust.subtitle)}
+        subtitle={<ThaiText text={pickPipeBilingual(locale, trust.subtitle)} />}
       />
 
       <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -115,7 +116,7 @@ export default async function TrustPillars({ images }: TrustPillarsProps) {
                   {pillar.emoji} {pickLocalized(locale, { th: pillar.titleTh, en: pillar.titleEn })}
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-foreground/90">
-                  {pickLocalized(locale, { th: pillar.descTh, en: pillar.descEn })}
+                  <ThaiText text={pickLocalized(locale, { th: pillar.descTh, en: pillar.descEn })} />
                 </p>
               </div>
             </article>

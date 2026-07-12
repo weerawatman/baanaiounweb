@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import type { Locale } from "@/i18n/routing"
 import { homeCrumb, localizedCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized } from "@/lib/i18n/pick-localized"
+import { ThaiText } from "@/lib/thai-wrap"
 import type { Profile } from "@/types"
 
 interface AboutPageProps {
@@ -306,7 +307,7 @@ export default async function AboutPage({ profile, faqs }: AboutPageProps) {
                   {pickLocalized(locale, adv.title)}
                 </h3>
                 <p className="text-[0.95rem] leading-relaxed text-muted-foreground">
-                  {locale === "en" ? adv.descEN : adv.descTH}
+                  <ThaiText text={locale === "en" ? adv.descEN : adv.descTH} />
                 </p>
               </div>
             ))}
@@ -318,7 +319,7 @@ export default async function AboutPage({ profile, faqs }: AboutPageProps) {
             {pickLocalized(locale, LOCAL_HEADING)}
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            {pickLocalized(locale, LOCAL_SUBTITLE)}
+            <ThaiText text={pickLocalized(locale, LOCAL_SUBTITLE)} />
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
