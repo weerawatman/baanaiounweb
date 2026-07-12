@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
+import { setRequestLocale } from "next-intl/server"
+import type { Locale } from "@/i18n/routing"
 import { getActiveProperties } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { mapProperty } from "@/lib/mappers"
@@ -16,15 +18,27 @@ const PROPERTIES_SEO = {
   },
 } as const
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
   return createPageMetadata({
+    locale,
     pathname: "/properties",
     title: PROPERTIES_SEO.title,
     description: PROPERTIES_SEO.description,
   })
 }
 
-export default async function PropertiesRoute() {
+export default async function PropertiesRoute({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const [rows, profile] = await Promise.all([getActiveProperties(), getProfile()])
   const properties = rows.map(mapProperty)
   return (

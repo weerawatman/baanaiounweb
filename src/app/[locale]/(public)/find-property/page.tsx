@@ -1,4 +1,6 @@
 export { generateMetadata } from "./FindPropertyPage"
+import { setRequestLocale } from "next-intl/server"
+import type { Locale } from "@/i18n/routing"
 import { getProfile } from "@/lib/queries/profile"
 import { getPageFaqs } from "@/lib/faq-items"
 import { buildBentoItems, pickHeroImage } from "@/lib/page-images"
@@ -7,7 +9,13 @@ import FindPropertyPage from "./FindPropertyPage"
 
 export const revalidate = 1800
 
-export default async function FindPropertyRoute() {
+export default async function FindPropertyRoute({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const [profile, faqs] = await Promise.all([getProfile(), getPageFaqs("find-property")])
   const bentoItems = buildBentoItems(
     [

@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { getLocale } from "next-intl/server"
+import { setRequestLocale } from "next-intl/server"
 import { getPropertyBySlug } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { createServerSupabase } from "@/lib/supabase"
@@ -26,10 +26,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: Locale; slug: string }>
 }): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
-  const { slug } = await params
+  const { locale, slug } = await params
   const row = await getPropertyBySlug(slug)
   const notFoundTitle = pickLocalized(locale, {
     th: "ทรัพย์สิน | บ้านไออุ่น",
@@ -76,8 +75,13 @@ export async function generateMetadata({
   }
 }
 
-export default async function PropertyPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+export default async function PropertyPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale; slug: string }>
+}) {
+  const { locale, slug } = await params
+  setRequestLocale(locale)
   const [row, profile] = await Promise.all([getPropertyBySlug(slug), getProfile()])
   const property = row ? mapProperty(row) : null
 

@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { setRequestLocale } from "next-intl/server"
+import type { Locale } from "@/i18n/routing"
 import { createPageMetadata } from "@/lib/i18n/metadata"
 import RequestPage from "./RequestPage"
 import { isRequestTab, type RequestTab } from "./tabs"
@@ -11,8 +13,14 @@ const REQUEST_SEO = {
   },
 } as const
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
   return createPageMetadata({
+    locale,
     pathname: "/request",
     title: REQUEST_SEO.title,
     description: REQUEST_SEO.description,
@@ -20,10 +28,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: Locale }>
   searchParams: Promise<{ tab?: string }>
 }) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const { tab } = await searchParams
   const initialTab: RequestTab = isRequestTab(tab) ? tab : "list-property"
 

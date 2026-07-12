@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { setRequestLocale } from "next-intl/server"
+import type { Locale } from "@/i18n/routing"
 import { createPageMetadata } from "@/lib/i18n/metadata"
 import PrivacyPolicyPage from "./PrivacyPolicyPage"
 
@@ -10,14 +12,22 @@ const PRIVACY_SEO = {
   },
 } as const
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
   return createPageMetadata({
+    locale,
     pathname: "/privacy-policy",
     title: PRIVACY_SEO.title,
     description: PRIVACY_SEO.description,
   })
 }
 
-export default function Page() {
+export default async function Page({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
   return <PrivacyPolicyPage />
 }

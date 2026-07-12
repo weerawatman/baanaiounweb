@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { setRequestLocale } from "next-intl/server"
+import type { Locale } from "@/i18n/routing"
 import { getPublishedBlogPosts } from "@/lib/queries/blog"
 import { getProfile } from "@/lib/queries/profile"
 import { getPageFaqs } from "@/lib/faq-items"
@@ -16,8 +18,14 @@ const BLOG_SEO = {
   },
 } as const
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
   return createPageMetadata({
+    locale,
     pathname: "/blog",
     title: BLOG_SEO.title,
     description: BLOG_SEO.description,
@@ -38,7 +46,9 @@ const blogJsonLd = {
   },
 }
 
-export default async function BlogRoute() {
+export default async function BlogRoute({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const [rows, profile, faqs] = await Promise.all([
     getPublishedBlogPosts(),
     getProfile(),

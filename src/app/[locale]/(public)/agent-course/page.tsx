@@ -1,3 +1,5 @@
+import { setRequestLocale } from "next-intl/server"
+import type { Locale } from "@/i18n/routing"
 import { SITE_CONFIG } from "@/config/site"
 import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
 import { getProfile } from "@/lib/queries/profile"
@@ -46,7 +48,13 @@ const courseJsonLd = {
   },
 }
 
-export default async function AgentCourseRoute() {
+export default async function AgentCourseRoute({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const [profile, faqs] = await Promise.all([getProfile(), getPageFaqs("agent-course")])
 
   return (

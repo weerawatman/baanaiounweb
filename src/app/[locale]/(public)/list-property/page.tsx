@@ -1,3 +1,5 @@
+import { setRequestLocale } from "next-intl/server"
+import type { Locale } from "@/i18n/routing"
 import { getPageFaqs } from "@/lib/faq-items"
 import { getProfile } from "@/lib/queries/profile"
 import { buildBentoItems, pickHeroImage } from "@/lib/page-images"
@@ -7,7 +9,13 @@ import ListPropertyPage, { generateMetadata } from "./ListPropertyPage"
 export { generateMetadata }
 export const revalidate = 1800
 
-export default async function ListPropertyRoute() {
+export default async function ListPropertyRoute({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const [profile, faqs] = await Promise.all([getProfile(), getPageFaqs("list-property")])
   const bentoItems = buildBentoItems(
     [

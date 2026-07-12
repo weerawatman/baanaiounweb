@@ -29,9 +29,15 @@ const FAQ_SUBTITLE = {
   en: "Turn worries into confidence — we have clear answers.",
 } as const
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
   const { seo } = LIST_PROPERTY_CONTENT
   return createPageMetadata({
+    locale,
     pathname: "/list-property",
     title: seo.title,
     description: seo.description,

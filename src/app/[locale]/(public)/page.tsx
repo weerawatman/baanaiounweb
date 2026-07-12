@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { setRequestLocale } from "next-intl/server"
+import type { Locale } from "@/i18n/routing"
 import { getActiveProperties } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { getPageFaqs } from "@/lib/faq-items"
@@ -22,15 +24,23 @@ const HOME_META = {
   },
 } as const
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
   return createPageMetadata({
+    locale,
     pathname: "/",
     title: HOME_META.title,
     description: HOME_META.description,
   })
 }
 
-export default async function HomeRoute() {
+export default async function HomeRoute({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const [propertyRows, profile, faqs, testimonialRows, storyRows] = await Promise.all([
     getActiveProperties(),
     getProfile(),

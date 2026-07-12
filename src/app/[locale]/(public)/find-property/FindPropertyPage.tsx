@@ -26,9 +26,15 @@ const FAQ_SUBTITLE = {
   en: "Clear answers about our property match service.",
 } as const
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
   const { seo } = FIND_PROPERTY_CONTENT
   return createPageMetadata({
+    locale,
     pathname: "/find-property",
     title: seo.title,
     description: seo.description,

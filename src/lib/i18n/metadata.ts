@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { getLocale } from "next-intl/server"
 import { routing, type Locale } from "@/i18n/routing"
 import { pickLocalized, pickPipeBilingual, type BilingualPair } from "./pick-localized"
 
@@ -58,17 +57,23 @@ export function buildPageMetadata({
   }
 }
 
-/** Resolve locale from the current request and build hreflang metadata for a static page. */
-export async function createPageMetadata({
+/**
+ * Build hreflang metadata for a static page in the given locale.
+ * Locale must come from route params (not getLocale()) so generateMetadata
+ * stays statically renderable — getLocale() without setRequestLocale reads
+ * request headers and opts the whole route into dynamic rendering.
+ */
+export function createPageMetadata({
+  locale,
   pathname,
   title,
   description,
 }: {
+  locale: Locale
   pathname: string
   title: PageTitle
   description: BilingualPair
-}): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
+}): Metadata {
   return buildPageMetadata({
     locale,
     pathname,

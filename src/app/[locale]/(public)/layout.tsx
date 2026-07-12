@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { setRequestLocale } from "next-intl/server"
 
 export const revalidate = 3600
 
@@ -23,9 +24,13 @@ export const metadata: Metadata = {
 
 export default async function PublicLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode
+  params: Promise<{ locale: string }>
 }>) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const profile = await getProfile()
 
   const jsonLd = {

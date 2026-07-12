@@ -22,9 +22,15 @@ const UPLOAD_HINT = {
   en: "Upload mid-banner image in Admin > Profile > Agent Course",
 } as const
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
   const { seo } = AGENT_COURSE_CONTENT
   return createPageMetadata({
+    locale,
     pathname: "/agent-course",
     title: seo.title,
     description: seo.description,
