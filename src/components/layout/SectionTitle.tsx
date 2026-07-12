@@ -1,6 +1,9 @@
+import { cn } from "@/lib/utils"
+
 interface SectionTitleProps {
   title: string
   subtitle?: string
+  subtitleClassName?: string
   /** ใช้ "h1" เมื่อเป็นหัวข้อหลักของหน้า (SEO: หนึ่ง h1 ต่อหน้า) */
   as?: "h1" | "h2"
   /** plain = หัวข้อแบบ mockup ไม่มีเส้นตกแต่ง */
@@ -10,6 +13,7 @@ interface SectionTitleProps {
 export default function SectionTitle({
   title,
   subtitle,
+  subtitleClassName,
   as: Heading = "h2",
   variant = "default",
 }: SectionTitleProps) {
@@ -33,11 +37,10 @@ export default function SectionTitle({
       )}
       {subtitle && (
         <p
-          className={
-            variant === "plain"
-              ? "max-w-2xl text-base leading-relaxed text-muted-foreground"
-              : "text-muted-foreground max-w-2xl text-base leading-relaxed"
-          }
+          className={cn(
+            "max-w-2xl text-base leading-relaxed text-muted-foreground",
+            subtitleClassName,
+          )}
         >
           {subtitle}
         </p>

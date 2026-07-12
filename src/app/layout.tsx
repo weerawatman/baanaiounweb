@@ -46,7 +46,11 @@ export default async function RootLayout({
   const locale = await getLocale()
 
   return (
-    <html lang={locale} className={`${prompt.variable} ${notoSansThai.variable} h-full antialiased`}>
+    <html
+      lang={locale}
+      data-scroll-behavior="smooth"
+      className={`${prompt.variable} ${notoSansThai.variable} h-full antialiased`}
+    >
       <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   )

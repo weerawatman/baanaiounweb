@@ -6,8 +6,8 @@ test.describe("smoke", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "th")
     await expect(page.getByRole("link", { name: "หน้าแรก" }).first()).toBeVisible()
     await expect(page.getByRole("link", { name: "งานหาทรัพย์" }).first()).toBeVisible()
-    await expect(page.getByRole("button", { name: "ภาษาไทย", pressed: true })).toBeVisible()
-    await expect(page.getByRole("button", { name: "English" })).toBeVisible()
+    await expect(page.getByRole("link", { name: "ภาษาไทย" })).toHaveAttribute("aria-current", "page")
+    await expect(page.getByRole("link", { name: "English" })).toBeVisible()
     // Banner exception: hero still shows both languages
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/ครบจบเรื่องอสังหาฯ|Your All-in-One/)
   })
@@ -17,8 +17,8 @@ test.describe("smoke", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "en")
     await expect(page.getByRole("link", { name: "Home" }).first()).toBeVisible()
     await expect(page.getByRole("link", { name: "Property Match" }).first()).toBeVisible()
-    await expect(page.getByRole("button", { name: "English", pressed: true })).toBeVisible()
-    await expect(page.getByRole("button", { name: "ภาษาไทย" })).toBeVisible()
+    await expect(page.getByRole("link", { name: "English" })).toHaveAttribute("aria-current", "page")
+    await expect(page.getByRole("link", { name: "ภาษาไทย" })).toBeVisible()
   })
 
   test("key public pages respond 200", async ({ page }) => {
@@ -52,10 +52,10 @@ test.describe("smoke", () => {
 
   test("language switcher preserves path", async ({ page }) => {
     await page.goto("/services")
-    await page.getByRole("button", { name: "English" }).click()
+    await page.getByRole("link", { name: "English" }).click()
     await expect(page).toHaveURL(/\/en\/services$/)
 
-    await page.getByRole("button", { name: "ภาษาไทย" }).click()
+    await page.getByRole("link", { name: "ภาษาไทย" }).click()
     await expect(page).toHaveURL(/\/services$/)
   })
 

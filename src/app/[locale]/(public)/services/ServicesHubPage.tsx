@@ -81,10 +81,11 @@ export default async function ServicesHubPage({
       </PageHeroBanner>
 
       <PageSection variant="default">
-        <SectionTitle title={pickPipeBilingual(locale, servicesSection.title)} />
-        <p className="mx-auto -mt-4 max-w-3xl text-center text-base font-bold leading-relaxed text-primary sm:text-lg">
-          {pickLocalized(locale, servicesSection.seoSubtitle)}
-        </p>
+        <SectionTitle
+          title={pickPipeBilingual(locale, servicesSection.title)}
+          subtitle={pickLocalized(locale, servicesSection.seoSubtitle)}
+          subtitleClassName="text-primary font-bold sm:text-lg"
+        />
 
         <div
           className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
