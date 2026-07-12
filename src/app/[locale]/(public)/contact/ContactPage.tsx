@@ -178,9 +178,9 @@ export default function ContactPage({ profile }: { profile: Profile }) {
         subtitleEn="Send us a message or add us on LINE — we reply to every message."
       />
 
-      <main className="mx-auto max-w-7xl px-4 pb-16 sm:px-6">
-        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-10">
-          <div className="rounded-2xl border border-border bg-card p-8 shadow-[0_10px_30px_rgba(0,0,0,0.03)] sm:p-10">
+      <main className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 sm:pt-12">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-10">
+          <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-8 shadow-[0_10px_30px_rgba(0,0,0,0.03)] sm:p-10">
             <h2 className="mb-6 border-b-2 border-border pb-4 text-xl font-semibold text-primary">
               {pickLocalized(locale, FORM_HEADING)}
             </h2>
@@ -320,22 +320,21 @@ export default function ContactPage({ profile }: { profile: Profile }) {
             )}
           </div>
 
-          <div className="flex flex-col gap-6">
-            <div className="h-[250px] overflow-hidden rounded-xl border border-border shadow-sm">
+          <div className="flex h-full min-h-0 flex-col gap-6">
+            <div className="min-h-[220px] flex-1 overflow-hidden rounded-xl border border-border shadow-sm">
               <iframe
                 src={mapEmbed}
                 width="100%"
-                height="250"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title={pickLocalized(locale, MAP_TITLE)}
-                className="h-full w-full"
+                className="h-full min-h-[220px] w-full"
               />
             </div>
 
-            <div className="rounded-2xl border border-primary/20 bg-primary-subtle p-8 text-center">
+            <div className="shrink-0 rounded-2xl border border-primary/20 bg-primary-subtle p-8 text-center">
               <h3 className="text-lg font-semibold text-primary">
                 {pickLocalized(locale, FAST_REPLY_HEADING)}
               </h3>
@@ -363,7 +362,7 @@ export default function ContactPage({ profile }: { profile: Profile }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid shrink-0 grid-cols-1 gap-4 sm:grid-cols-2">
               <a
                 href={`tel:${phone.replace(/-/g, "")}`}
                 className="flex flex-col gap-2.5 rounded-xl border border-border bg-card p-5 shadow-[0_4px_6px_rgba(0,0,0,0.02)] transition-shadow hover:shadow-md"
