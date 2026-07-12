@@ -10,9 +10,9 @@ import PageHeroBanner from "@/components/shared/PageHeroBanner"
 import RequestForm from "./RequestForm"
 import { REQUEST_TABS, type RequestTab } from "./tabs"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb, localizedCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized } from "@/lib/i18n/pick-localized"
 
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const REQUEST_CRUMB = { th: "ส่งคำขอบริการ", en: "Service Request" } as const
 
 const TAB_META: Record<
@@ -61,8 +61,8 @@ export default function RequestPage({ initialTab }: { initialTab: RequestTab }) 
       <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6 lg:px-8">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
-            { label: pickLocalized(locale, REQUEST_CRUMB) },
+            homeCrumb(locale),
+            localizedCrumb(locale, REQUEST_CRUMB),
           ]}
         />
       </div>

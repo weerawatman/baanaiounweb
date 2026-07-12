@@ -18,9 +18,9 @@ import {
 } from "@/lib/search"
 import type { PropertyCategory } from "@/content/form-options"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb, localizedCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const PROPERTIES_CRUMB = { th: "ทรัพย์ทั้งหมด", en: "All Properties" } as const
 
 const SEARCH_PLACEHOLDER = {
@@ -90,8 +90,8 @@ export default function PropertiesPage({
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
-            { label: pickLocalized(locale, PROPERTIES_CRUMB) },
+            homeCrumb(locale),
+            localizedCrumb(locale, PROPERTIES_CRUMB),
           ]}
         />
       </div>

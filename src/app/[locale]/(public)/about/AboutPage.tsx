@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/layout/Breadcrumb"
 import { FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { cn } from "@/lib/utils"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb, localizedCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized } from "@/lib/i18n/pick-localized"
 import type { Profile } from "@/types"
 
@@ -23,7 +24,6 @@ interface Milestone {
   descEN: React.ReactNode
 }
 
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const ABOUT_CRUMB = { th: "เกี่ยวกับเรา", en: "About Us" } as const
 
 const STORY_HEADING = { th: "จุดเริ่มต้นของเรา", en: "Our Story" } as const
@@ -198,8 +198,8 @@ export default async function AboutPage({ profile, faqs }: AboutPageProps) {
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
-            { label: pickLocalized(locale, ABOUT_CRUMB) },
+            homeCrumb(locale),
+            localizedCrumb(locale, ABOUT_CRUMB),
           ]}
         />
       </div>

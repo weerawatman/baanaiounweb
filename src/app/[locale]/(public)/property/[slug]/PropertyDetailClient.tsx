@@ -15,6 +15,7 @@ import PimInsight from "@/components/property/PimInsight"
 import FinancialCalculator from "@/components/property/FinancialCalculator"
 import { Badge } from "@/components/ui/badge"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb, localizedCrumb } from "@/lib/i18n/breadcrumbs"
 import { localizedOrFallback, pickLocalized } from "@/lib/i18n/pick-localized"
 
 interface PropertyDetailClientProps {
@@ -24,8 +25,6 @@ interface PropertyDetailClientProps {
   lineUrl?: string
   phone?: string
 }
-
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 
 const TYPE_LABEL: Record<Property["type"], { th: string; en: string }> = {
   SALE: { th: "ขาย", en: "Sale" },
@@ -124,8 +123,8 @@ export default function PropertyDetailClient({
         >
           <Breadcrumb
             items={[
-              { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
-              { label: pickLocalized(locale, breadcrumbParent.label), href: breadcrumbParent.href },
+              homeCrumb(locale),
+              localizedCrumb(locale, breadcrumbParent.label, breadcrumbParent.href),
               { label: title },
             ]}
           />

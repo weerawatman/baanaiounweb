@@ -8,10 +8,9 @@ import { COAGENT_CONTENT } from "@/content/co-agent"
 import { NAV_ITEMS } from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 import { navText } from "@/lib/i18n/locale-label"
-
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const UPLOAD_HINT = {
   th: "อัปโหลดรูปใน Admin > โปรไฟล์ > Co-Agent",
   en: "Upload an image in Admin > Profile > Co-Agent",
@@ -45,7 +44,7 @@ export default async function CoAgentPage({
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            homeCrumb(locale),
             { label: navText(servicesNav, locale), href: "/services" },
             { label: navText(coAgentNav, locale) },
           ]}

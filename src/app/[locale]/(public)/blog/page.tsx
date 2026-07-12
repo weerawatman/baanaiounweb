@@ -1,12 +1,9 @@
 import type { Metadata } from "next"
-import { getLocale } from "next-intl/server"
 import { getPublishedBlogPosts } from "@/lib/queries/blog"
 import { getProfile } from "@/lib/queries/profile"
-import { getFaqsByPage } from "@/lib/queries/faqs"
-import { mapBlogPost, mapFaq } from "@/lib/mappers"
-import { getLocalizedFaqItems } from "@/lib/faq-items"
-import type { Locale } from "@/i18n/routing"
-import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { getPageFaqs } from "@/lib/faq-items"
+import { mapBlogPost } from "@/lib/mappers"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import BlogPage from "./BlogPage"
 
 export const revalidate = 1800
@@ -20,14 +17,10 @@ const BLOG_SEO = {
 } as const
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
-  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
-
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/blog",
-    title: pickPipeBilingual(locale, BLOG_SEO.title),
-    description: pickLocalized(locale, BLOG_SEO.description),
+    title: BLOG_SEO.title,
+    description: BLOG_SEO.description,
   })
 }
 
@@ -46,13 +39,12 @@ const blogJsonLd = {
 }
 
 export default async function BlogRoute() {
-  const [rows, profile, faqRows] = await Promise.all([
+  const [rows, profile, faqs] = await Promise.all([
     getPublishedBlogPosts(),
     getProfile(),
-    getFaqsByPage("blog"),
+    getPageFaqs("blog"),
   ])
   const posts = rows.map(mapBlogPost)
-  const faqs = await getLocalizedFaqItems(faqRows.map(mapFaq))
 
   return (
     <>

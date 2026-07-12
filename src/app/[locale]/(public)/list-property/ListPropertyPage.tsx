@@ -15,11 +15,11 @@ import {
 import { LIST_PROPERTY_CONTENT } from "@/content/list-property"
 import { NAV_ITEMS } from "@/config/navigation"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import { navText } from "@/lib/i18n/locale-label"
 import RequestForm from "../request/RequestForm"
-
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const FAQ_TITLE = {
   th: "คำถามที่พบบ่อยเกี่ยวกับการฝากทรัพย์ (FAQ)",
   en: "FAQ — Listing Your Property",
@@ -30,15 +30,11 @@ const FAQ_SUBTITLE = {
 } as const
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
   const { seo } = LIST_PROPERTY_CONTENT
-  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
-
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/list-property",
-    title: pickPipeBilingual(locale, seo.title),
-    description: pickLocalized(locale, seo.description),
+    title: seo.title,
+    description: seo.description,
   })
 }
 
@@ -65,7 +61,7 @@ export default async function ListPropertyPage({
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            homeCrumb(locale),
             { label: navText(servicesNav, locale), href: "/services" },
             { label: navText(listNav, locale) },
           ]}

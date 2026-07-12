@@ -1,12 +1,8 @@
 import type { Metadata } from "next"
-import { getLocale } from "next-intl/server"
 import { getProfile } from "@/lib/queries/profile"
-import { getFaqsByPage } from "@/lib/queries/faqs"
-import { mapFaq } from "@/lib/mappers"
-import { getLocalizedFaqItems } from "@/lib/faq-items"
+import { getPageFaqs } from "@/lib/faq-items"
 import { SITE_CONFIG } from "@/config/site"
-import type { Locale } from "@/i18n/routing"
-import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import AboutPage from "./AboutPage"
 
 export const revalidate = 3600
@@ -20,14 +16,10 @@ const ABOUT_SEO = {
 } as const
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
-  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
-
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/about",
-    title: pickPipeBilingual(locale, ABOUT_SEO.title),
-    description: pickLocalized(locale, ABOUT_SEO.description),
+    title: ABOUT_SEO.title,
+    description: ABOUT_SEO.description,
   })
 }
 
@@ -82,8 +74,7 @@ const localBusinessJsonLd = {
 }
 
 export default async function Page() {
-  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("about")])
-  const faqs = await getLocalizedFaqItems(faqRows.map(mapFaq))
+  const [profile, faqs] = await Promise.all([getProfile(), getPageFaqs("about")])
 
   return (
     <>

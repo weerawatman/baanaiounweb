@@ -9,10 +9,10 @@ import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
 import { NAV_ITEMS } from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import { navText } from "@/lib/i18n/locale-label"
-
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const MID_BANNER_ALT = {
   th: "ภาพบรรยากาศการทำเวิร์กชอปกลุ่มอย่างสนุกสนาน",
   en: "Group workshop atmosphere",
@@ -23,15 +23,11 @@ const UPLOAD_HINT = {
 } as const
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
   const { seo } = AGENT_COURSE_CONTENT
-  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
-
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/agent-course",
-    title: pickPipeBilingual(locale, seo.title),
-    description: pickLocalized(locale, seo.description),
+    title: seo.title,
+    description: seo.description,
   })
 }
 
@@ -117,7 +113,7 @@ export default async function AgentCoursePage({
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            homeCrumb(locale),
             { label: navText(servicesNav, locale), href: "/services" },
             { label: navText(courseNav, locale) },
           ]}

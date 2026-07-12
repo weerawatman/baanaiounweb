@@ -8,9 +8,9 @@ import {
   type PolicyBlock,
 } from "@/content/privacy-policy"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb, localizedCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized } from "@/lib/i18n/pick-localized"
 
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const PRIVACY_CRUMB = { th: "นโยบายความเป็นส่วนตัว", en: "Privacy Policy" } as const
 
 /** Renders `**bold**` segments within a plain-text string as <strong>. */
@@ -68,8 +68,8 @@ export default async function PrivacyPolicyPage() {
       <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6 lg:px-8">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
-            { label: pickLocalized(locale, PRIVACY_CRUMB) },
+            homeCrumb(locale),
+            localizedCrumb(locale, PRIVACY_CRUMB),
           ]}
         />
       </div>

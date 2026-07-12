@@ -1,11 +1,9 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
-import { getLocale } from "next-intl/server"
 import { getActiveProperties } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { mapProperty } from "@/lib/mappers"
-import type { Locale } from "@/i18n/routing"
-import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import PropertiesPage from "./PropertiesPage"
 
 export const revalidate = 900
@@ -19,14 +17,10 @@ const PROPERTIES_SEO = {
 } as const
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
-  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
-
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/properties",
-    title: pickPipeBilingual(locale, PROPERTIES_SEO.title),
-    description: pickLocalized(locale, PROPERTIES_SEO.description),
+    title: PROPERTIES_SEO.title,
+    description: PROPERTIES_SEO.description,
   })
 }
 

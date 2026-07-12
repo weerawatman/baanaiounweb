@@ -1,9 +1,7 @@
 import { SITE_CONFIG } from "@/config/site"
 import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
 import { getProfile } from "@/lib/queries/profile"
-import { getFaqsByPage } from "@/lib/queries/faqs"
-import { mapFaq } from "@/lib/mappers"
-import { getLocalizedFaqItems } from "@/lib/faq-items"
+import { getPageFaqs } from "@/lib/faq-items"
 
 export { generateMetadata } from "./AgentCoursePage"
 import AgentCoursePage from "./AgentCoursePage"
@@ -49,8 +47,7 @@ const courseJsonLd = {
 }
 
 export default async function AgentCourseRoute() {
-  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("agent-course")])
-  const faqs = await getLocalizedFaqItems(faqRows.map(mapFaq))
+  const [profile, faqs] = await Promise.all([getProfile(), getPageFaqs("agent-course")])
 
   return (
     <>

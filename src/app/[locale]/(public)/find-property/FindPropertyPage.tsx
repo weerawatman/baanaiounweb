@@ -15,11 +15,11 @@ import {
 import { FIND_PROPERTY_CONTENT } from "@/content/find-property"
 import { NAV_ITEMS } from "@/config/navigation"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import { navText } from "@/lib/i18n/locale-label"
 import RequestForm from "../request/RequestForm"
-
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const FAQ_TITLE = { th: "คำถามที่พบบ่อย (FAQ)", en: "Frequently Asked Questions" } as const
 const FAQ_SUBTITLE = {
   th: "ทุกข้อสงสัยเกี่ยวกับบริการจัดหาบ้าน เรามีคำตอบที่ชัดเจนให้ค่ะ",
@@ -27,15 +27,11 @@ const FAQ_SUBTITLE = {
 } as const
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
   const { seo } = FIND_PROPERTY_CONTENT
-  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
-
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/find-property",
-    title: pickPipeBilingual(locale, seo.title),
-    description: pickLocalized(locale, seo.description),
+    title: seo.title,
+    description: seo.description,
   })
 }
 
@@ -62,7 +58,7 @@ export default async function FindPropertyPage({
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
+            homeCrumb(locale),
             { label: navText(servicesNav, locale), href: "/services" },
             { label: navText(matchNav, locale) },
           ]}
@@ -106,11 +102,11 @@ export default async function FindPropertyPage({
               </p>
             </div>
 
-            <ul className="mt-6 flex min-h-0 flex-1 flex-col gap-4 lg:justify-between">
+            <ul className="mt-6 flex shrink-0 flex-col gap-4">
               {split.benefits.map((item) => (
                 <li
                   key={item.titleTh}
-                  className="flex flex-1 items-start gap-4 rounded-xl border border-border bg-card p-5 shadow-sm"
+                  className="flex items-start gap-4 rounded-xl border border-border bg-card p-5 shadow-sm"
                 >
                   <span
                     className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-xl"
@@ -129,11 +125,15 @@ export default async function FindPropertyPage({
                 </li>
               ))}
             </ul>
+
+            <div className="mt-6 min-h-0 flex-1">
+              <PortfolioBento items={bentoItems} variant="inline" locale={locale} className="h-full" />
+            </div>
           </div>
 
-          <div className="lg:sticky lg:top-24 lg:self-start">
+          <div className="flex h-full flex-col lg:sticky lg:top-24">
             <div
-              className="h-full rounded-3xl border border-border bg-card p-6 shadow-lg sm:p-8"
+              className="flex h-full flex-col rounded-3xl border border-border bg-card p-6 shadow-lg sm:p-8"
               data-testid="property-match-form"
             >
               <div className="mb-6 border-b border-border pb-5 text-center">
@@ -148,8 +148,6 @@ export default async function FindPropertyPage({
             </div>
           </div>
         </div>
-
-        <PortfolioBento items={bentoItems} />
 
         <div className="relative isolate mt-8 overflow-hidden rounded-2xl px-6 py-12 text-center shadow-lg sm:px-10">
           {teamImage ? (

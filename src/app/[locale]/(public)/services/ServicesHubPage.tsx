@@ -10,6 +10,7 @@ import { FaqSection, PageHeroBanner, type FaqItem } from "@/components/shared"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
 import { SITE_CONFIG } from "@/config/site"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb, localizedCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 
 interface ServicesHubPageProps {
@@ -21,7 +22,6 @@ interface ServicesHubPageProps {
   faqs: FaqItem[]
 }
 
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const SERVICES_CRUMB = { th: "บริการของเรา", en: "Our Services" } as const
 const FAQ_TITLE = { th: "คำถามที่พบบ่อย", en: "FAQ" } as const
 const FAQ_SUBTITLE = {
@@ -50,8 +50,8 @@ export default async function ServicesHubPage({
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
-            { label: pickLocalized(locale, SERVICES_CRUMB) },
+            homeCrumb(locale),
+            localizedCrumb(locale, SERVICES_CRUMB),
           ]}
         />
       </div>

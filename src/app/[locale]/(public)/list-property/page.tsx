@@ -1,7 +1,5 @@
-import { getFaqsByPage } from "@/lib/queries/faqs"
+import { getPageFaqs } from "@/lib/faq-items"
 import { getProfile } from "@/lib/queries/profile"
-import { mapFaq } from "@/lib/mappers"
-import { getLocalizedFaqItems } from "@/lib/faq-items"
 import { buildBentoItems, pickHeroImage } from "@/lib/page-images"
 import { LIST_PROPERTY_CONTENT } from "@/content/list-property"
 import ListPropertyPage, { generateMetadata } from "./ListPropertyPage"
@@ -10,8 +8,7 @@ export { generateMetadata }
 export const revalidate = 1800
 
 export default async function ListPropertyRoute() {
-  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("list-property")])
-  const faqs = await getLocalizedFaqItems(faqRows.map(mapFaq))
+  const [profile, faqs] = await Promise.all([getProfile(), getPageFaqs("list-property")])
   const bentoItems = buildBentoItems(
     [
       profile.listPropertyBento1Image,

@@ -1,32 +1,23 @@
 import type { Metadata } from "next"
-import { getLocale } from "next-intl/server"
 import { getProfile } from "@/lib/queries/profile"
-import { getFaqsByPage } from "@/lib/queries/faqs"
-import { mapFaq } from "@/lib/mappers"
-import { getLocalizedFaqItems } from "@/lib/faq-items"
+import { getPageFaqs } from "@/lib/faq-items"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
-import type { Locale } from "@/i18n/routing"
-import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import ServicesHubPage from "./ServicesHubPage"
 
 export const revalidate = 3600
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
   const { seo } = SERVICES_HUB_CONTENT
-  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
-
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/services",
-    title: pickPipeBilingual(locale, seo.title),
-    description: pickLocalized(locale, seo.description),
+    title: seo.title,
+    description: seo.description,
   })
 }
 
 export default async function ServicesRoute() {
-  const [profile, faqRows] = await Promise.all([getProfile(), getFaqsByPage("services")])
-  const faqs = await getLocalizedFaqItems(faqRows.map(mapFaq))
+  const [profile, faqs] = await Promise.all([getProfile(), getPageFaqs("services")])
 
   const serviceJsonLd = {
     "@context": "https://schema.org",

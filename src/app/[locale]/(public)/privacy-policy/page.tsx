@@ -1,7 +1,5 @@
 import type { Metadata } from "next"
-import { getLocale } from "next-intl/server"
-import type { Locale } from "@/i18n/routing"
-import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import PrivacyPolicyPage from "./PrivacyPolicyPage"
 
 const PRIVACY_SEO = {
@@ -13,14 +11,10 @@ const PRIVACY_SEO = {
 } as const
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
-  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
-
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/privacy-policy",
-    title: pickPipeBilingual(locale, PRIVACY_SEO.title),
-    description: pickLocalized(locale, PRIVACY_SEO.description),
+    title: PRIVACY_SEO.title,
+    description: PRIVACY_SEO.description,
   })
 }
 

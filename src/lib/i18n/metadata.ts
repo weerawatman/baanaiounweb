@@ -1,7 +1,18 @@
 import type { Metadata } from "next"
+import { getLocale } from "next-intl/server"
 import { routing, type Locale } from "@/i18n/routing"
+import { pickLocalized, pickPipeBilingual, type BilingualPair } from "./pick-localized"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
+
+type PageTitle = string | BilingualPair
+
+function resolvePageTitle(locale: Locale, title: PageTitle): string {
+  if (typeof title === "string") {
+    return title.includes(" | ") ? pickPipeBilingual(locale, title) : title
+  }
+  return pickLocalized(locale, title)
+}
 
 function localePath(locale: Locale, pathname: string): string {
   if (locale === routing.defaultLocale) {
@@ -45,4 +56,23 @@ export function buildPageMetadata({
       },
     },
   }
+}
+
+/** Resolve locale from the current request and build hreflang metadata for a static page. */
+export async function createPageMetadata({
+  pathname,
+  title,
+  description,
+}: {
+  pathname: string
+  title: PageTitle
+  description: BilingualPair
+}): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale
+  return buildPageMetadata({
+    locale,
+    pathname,
+    title: resolvePageTitle(locale, title),
+    description: pickLocalized(locale, description),
+  })
 }

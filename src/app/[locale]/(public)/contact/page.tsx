@@ -1,8 +1,6 @@
 import type { Metadata } from "next"
-import { getLocale } from "next-intl/server"
 import { getProfile } from "@/lib/queries/profile"
-import type { Locale } from "@/i18n/routing"
-import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import ContactPage from "./ContactPage"
 
 export const revalidate = 3600
@@ -16,14 +14,10 @@ const CONTACT_SEO = {
 } as const
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
-  const { buildPageMetadata } = await import("@/lib/i18n/metadata")
-
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/contact",
-    title: pickPipeBilingual(locale, CONTACT_SEO.title),
-    description: pickLocalized(locale, CONTACT_SEO.description),
+    title: CONTACT_SEO.title,
+    description: CONTACT_SEO.description,
   })
 }
 

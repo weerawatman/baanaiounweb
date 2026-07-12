@@ -1,15 +1,12 @@
 import type { Metadata } from "next"
-import { getLocale } from "next-intl/server"
 import { getActiveProperties } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
-import { getFaqsByPage } from "@/lib/queries/faqs"
+import { getPageFaqs } from "@/lib/faq-items"
 import { getTestimonials } from "@/lib/queries/testimonials"
 import { getPublishedSuccessStories } from "@/lib/queries/success-stories"
-import { mapProperty, mapFaq, mapTestimonial, mapSuccessStory } from "@/lib/mappers"
+import { mapProperty, mapTestimonial, mapSuccessStory } from "@/lib/mappers"
 import { filterDisplayableSuccessStoryViews } from "@/lib/success-stories-display"
-import { getLocalizedFaqItems } from "@/lib/faq-items"
-import type { Locale } from "@/i18n/routing"
-import { buildPageMetadata } from "@/lib/i18n/metadata"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import HomePage from "./HomePage"
 
 export const revalidate = 900
@@ -26,27 +23,23 @@ const HOME_META = {
 } as const
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale
-  const { pickLocalized } = await import("@/lib/i18n/pick-localized")
-  return buildPageMetadata({
-    locale,
+  return createPageMetadata({
     pathname: "/",
-    title: pickLocalized(locale, HOME_META.title),
-    description: pickLocalized(locale, HOME_META.description),
+    title: HOME_META.title,
+    description: HOME_META.description,
   })
 }
 
 export default async function HomeRoute() {
-  const [propertyRows, profile, faqRows, testimonialRows, storyRows] = await Promise.all([
+  const [propertyRows, profile, faqs, testimonialRows, storyRows] = await Promise.all([
     getActiveProperties(),
     getProfile(),
-    getFaqsByPage("home"),
+    getPageFaqs("home"),
     getTestimonials(),
     getPublishedSuccessStories(),
   ])
 
   const properties = propertyRows.map(mapProperty)
-  const faqs = await getLocalizedFaqItems(faqRows.map(mapFaq))
   const testimonials = testimonialRows.map(mapTestimonial)
   const successStories = filterDisplayableSuccessStoryViews(storyRows.map(mapSuccessStory))
 

@@ -12,6 +12,7 @@ import PropertyCard from "@/components/property/PropertyCard"
 import ArticleCTA from "@/components/blog/ArticleCTA"
 import { type BlogPost, type Property } from "@/types"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb, localizedCrumb } from "@/lib/i18n/breadcrumbs"
 import { localizedOrFallback, pickLocalized } from "@/lib/i18n/pick-localized"
 
 interface BlogPostClientProps {
@@ -20,7 +21,6 @@ interface BlogPostClientProps {
   lineUrl?: string
 }
 
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const BLOG_CRUMB = { th: "บทความ", en: "Blog" } as const
 const NOT_FOUND = { th: "ไม่พบบทความ", en: "Article not found" } as const
 const BACK_TO_BLOG = { th: "กลับไปหน้าบทความทั้งหมด", en: "Back to all articles" } as const
@@ -60,8 +60,8 @@ export default function BlogPostClient({ post, relatedProperties, lineUrl }: Blo
     <main className="container mx-auto max-w-4xl space-y-10 px-4 py-10">
       <Breadcrumb
         items={[
-          { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
-          { label: pickLocalized(locale, BLOG_CRUMB), href: "/blog" },
+          homeCrumb(locale),
+          localizedCrumb(locale, BLOG_CRUMB, "/blog"),
           { label: title },
         ]}
       />

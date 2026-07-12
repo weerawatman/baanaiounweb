@@ -16,6 +16,7 @@ import { SITE_CONFIG } from "@/config/site"
 import { buildGoogleMapsEmbedUrl } from "@/lib/google-maps"
 import { mapContactSubjectToFormTag } from "@/lib/form-validation"
 import type { Locale } from "@/i18n/routing"
+import { homeCrumb, localizedCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized } from "@/lib/i18n/pick-localized"
 import type { Profile } from "@/types"
 
@@ -27,7 +28,6 @@ interface FormState {
   message: string
 }
 
-const HOME_CRUMB = { th: "หน้าแรก", en: "Home" } as const
 const CONTACT_CRUMB = { th: "ติดต่อเรา", en: "Contact Us" } as const
 
 const FORM_HEADING = { th: "✉️ ส่งข้อความหาเรา", en: "✉️ Send Us a Message" } as const
@@ -164,8 +164,8 @@ export default function ContactPage({ profile }: { profile: Profile }) {
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
         <Breadcrumb
           items={[
-            { label: pickLocalized(locale, HOME_CRUMB), href: "/" },
-            { label: pickLocalized(locale, CONTACT_CRUMB) },
+            homeCrumb(locale),
+            localizedCrumb(locale, CONTACT_CRUMB),
           ]}
         />
       </div>
