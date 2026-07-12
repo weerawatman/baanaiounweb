@@ -24,16 +24,19 @@ dashboard manages listings, blog, leads, and testimonials.
 ## Directory map
 
 ```
-src/app/[locale]/(public)/*  Public site pages (TH root, EN /en/…)
-src/app/(admin)/admin/* Admin dashboard, Supabase-auth gated
-src/app/api/*           2 routes: submit-form, upload-images
+src/app/[locale]/*      Public ROOT layout (html/fonts) + (public)/ pages (TH root, EN /en/…)
+src/app/(admin)/*       Admin ROOT layout + admin/ dashboard, Supabase-auth gated
+                        (two root layouts by design — see ARCHITECTURE.md §1)
+src/app/api/*           3 routes: submit-form, service-request, upload-images
 src/components/         home/ shared/ property/ blog/ layout/ ui/ admin/
 src/content/*           Page copy (bilingual objects, not a CMS)
 src/config/*            navigation.ts, site.ts
 src/lib/queries/*       Supabase read queries (blog, properties, leads, ...)
 src/lib/supabase/*      client.ts / server.ts / public-client.ts / proxy.ts
 src/lib/validations/*   Zod schemas for admin forms
-supabase/migrations/*   SQL migrations (applied via Supabase MCP, no local Docker)
+supabase/migrations/*   SQL migrations — applied with the Supabase CLI (npx supabase db push,
+                        no Docker). NEVER via the Supabase MCP: it's signed into the wrong
+                        account and shows a stale duplicate project. See docs/DATABASE.md.
 testsprite_tests/*      Curated E2E scripts + production_audit.py (no unit tests exist)
 docs/mockups/*          HTML reference mockups per public page (design source of truth)
 docs/archive/*          Completed plans/reports — history only, may be stale
@@ -64,6 +67,21 @@ Panel → System → Advanced → Performance → Virtual Memory) and reboot.
 
 ## Conventions to preserve
 
+- **Keep public pages static (the #1 perf rule):** every layout/page under
+  `[locale]` awaits `LocaleParams` (`src/i18n/routing.ts`) and calls
+  `setRequestLocale(locale)` before any next-intl usage; `generateMetadata`
+  takes locale from params (never `getLocale()`); public code never touches
+  `cookies()`/`headers()`. One violation flips the whole route to per-request
+  rendering (`X-Vercel-Cache: MISS`). Full rules + history: ARCHITECTURE.md §1.
+- **Thai line wrapping:** long Thai marketing copy renders through
+  `<ThaiText>` (`src/lib/thai-wrap.tsx`) so lines break at phrase boundaries,
+  not ICU word fragments. Server components only (hydration risk in client
+  components). Details: ARCHITECTURE.md §6.
+- **Section spacing standard:** `PageSection` and ad-hoc sections use
+  `py-8 lg:py-10` (~80 px between adjacent sections). Don't reintroduce
+  `py-16`/`py-24` section padding.
+- **`BASE_URL`** comes from `src/config/site.ts` — don't re-declare the
+  `NEXT_PUBLIC_SITE_URL` fallback locally.
 - **i18n routing with banner exception:** Thai content at root (`/about`),
   English at `/en/about` (`localePrefix: "as-needed"`,
   `localeDetection: false` — `/` is always Thai regardless of browser language).
@@ -96,6 +114,11 @@ Panel → System → Advanced → Performance → Virtual Memory) and reboot.
   nav, key `/en/*` pages return 200, language switcher, legacy redirects, and
   banner bilingual exception on hero.
 - No Jest/Vitest unit/component test suite exists.
+- **TestSprite (AI E2E via MCP):** full visitor-scope run 2026-07-12 — 19/23
+  passed, 0 code defects; committed report at
+  `testsprite_tests/testsprite-mcp-test-report.md`, operating manual in
+  `docs/INTEGRATIONS.md#testsprite-mcp` (credits are limited; form tests create
+  real leads + LINE/email alerts — prefix names with "TestSprite" and clean up).
 - **Production audit:** `python testsprite_tests/production_audit.py` runs
   ~37 checks (status codes, redirects, SEO basics, forms, API probes, load
   timings) against the live site (`TESTSPRITE_BASE_URL` env var, defaults

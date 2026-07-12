@@ -1,14 +1,19 @@
 # TODO — Baan Ai Oun Property
 
-> Single source of truth สำหรับงานที่เหลือ — อัปเดตล่าสุด: 2026-07-08
+> Single source of truth สำหรับงานที่เหลือ — อัปเดตล่าสุด: 2026-07-12
 > ข้อเท็จจริงของโปรเจกต์ (stack, conventions, commands) ดู `AGENTS.md`
+> สถาปัตยกรรม/integration/migration ดู `ARCHITECTURE.md`, `docs/`
 > ประวัติงานที่จบแล้ว ดู `docs/archive/`
 
 ## สถานะปัจจุบัน
 
 เว็บ deploy อยู่ที่ **baanaiounweb.vercel.app** (ยังไม่ custom domain)
-ตรวจ production-readiness รอบเต็มแล้ว (2026-07-07): โค้ด/build/SEO/redirect/ฟอร์ม/security ผ่าน —
-รายละเอียดรันซ้ำได้ด้วย `python testsprite_tests/production_audit.py`
+ตรวจ production-readiness รอบเต็มแล้ว (2026-07-07) และรัน TestSprite E2E รอบเต็ม
+(2026-07-12: ผ่าน 19/23, ไม่พบบั๊กใน code — รายงานที่
+`testsprite_tests/testsprite-mcp-test-report.md`)
+งานใหญ่ 2026-07-12: แก้ static/ISR rendering ทั้งเว็บ (TTFB ~800ms → ~180ms,
+cache MISS → HIT), เพิ่ม bedroom filter, ตัดคำไทยแบบวลี (ThaiText),
+มาตรฐานระยะ section ~80px, เอกสารครบชุด (README/ARCHITECTURE/docs)
 
 ## ก่อน Go-Live (เรียงตามความสำคัญ)
 
@@ -45,5 +50,7 @@
 
 - ก่อน commit ใหญ่: `npm run validate` ต้องผ่าน
 - Commit message: Conventional Commits (`feat:` / `fix:` / `chore:` / `docs:`)
-- DB changes: เพิ่มไฟล์ใหม่ใน `supabase/migrations/` เท่านั้น (ห้ามแก้ไฟล์เก่า) — apply ผ่าน Supabase MCP
+- DB changes: เพิ่มไฟล์ใหม่ใน `supabase/migrations/` เท่านั้น (ห้ามแก้ไฟล์เก่า) —
+  apply ด้วย Supabase CLI (`npx supabase db push`) **ห้ามใช้ Supabase MCP** (ผิดบัญชี)
+  ดูคู่มือละเอียดที่ `docs/DATABASE.md`
 - ห้าม commit: `.env.local`, secrets

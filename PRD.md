@@ -40,7 +40,7 @@ Site-wide UI: sticky header with dropdown nav + language switcher, footer with c
 2. **Language switching**: TH ⇄ EN from any page keeps the equivalent page; `<html lang>`, titles, and content change locale; URLs use `/en` prefix for English only.
 3. **Property browsing**: filter properties by type/price/bedrooms/keyword; filters reflect in URL query params; property cards open the detail page; detail page shows gallery, specs, and contact CTAs.
 4. **Lead forms** (list-property / find-property / co-agent / contact / request tabs): required-field validation (name, phone), Thai phone format accepted, success state (toast) after submit; submissions are stored via `/api/submit-form` or `/api/service-request` (Supabase `leads` / `service_requests` tables) and trigger LINE/email notifications.
-5. **Blog**: list renders published posts; detail page renders rich text content and related properties.
+5. **Blog**: list renders published posts; detail page renders rich text content and related properties. (Requires published articles in the database — until content is entered, the list shows a friendly empty state and detail-flow tests cannot run.)
 6. **FAQ accordions** expand/collapse on home and service pages.
 7. **404 handling**: unknown URLs render the custom Thai 404 page with links back home.
 8. **Performance/UX**: public pages are statically rendered (ISR) — navigation should feel instant; no console errors; images lazy-load with proper aspect ratios.
