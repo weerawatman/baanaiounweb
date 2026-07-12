@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { setRequestLocale } from "next-intl/server"
-import type { Locale } from "@/i18n/routing"
+import type { LocaleParams } from "@/i18n/routing"
 import { createPageMetadata } from "@/lib/i18n/metadata"
 import RequestPage from "./RequestPage"
 import { isRequestTab, type RequestTab } from "./tabs"
@@ -16,7 +16,7 @@ const REQUEST_SEO = {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
 }): Promise<Metadata> {
   const { locale } = await params
   return createPageMetadata({
@@ -31,7 +31,7 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
   searchParams: Promise<{ tab?: string }>
 }) {
   const { locale } = await params

@@ -8,7 +8,7 @@ import { CTAWithForm, FaqSection, PageHeroBanner, type FaqItem } from "@/compone
 import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
 import { NAV_ITEMS } from "@/config/navigation"
 import { SITE_CONFIG } from "@/config/site"
-import type { Locale } from "@/i18n/routing"
+import type { Locale, LocaleParams } from "@/i18n/routing"
 import { homeCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 import { createPageMetadata } from "@/lib/i18n/metadata"
@@ -25,7 +25,7 @@ const UPLOAD_HINT = {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
 }): Promise<Metadata> {
   const { locale } = await params
   const { seo } = AGENT_COURSE_CONTENT

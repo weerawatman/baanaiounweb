@@ -1,9 +1,9 @@
+import { BASE_URL } from "@/config/site"
 import type { MetadataRoute } from "next"
 import { getProperties } from "@/lib/queries/properties"
 import { getBlogPosts } from "@/lib/queries/blog"
 import { routing } from "@/i18n/routing"
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
 const STATIC_PATHS = [
   "/",

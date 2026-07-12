@@ -1,6 +1,7 @@
+import { BASE_URL } from "@/config/site"
 import type { Metadata } from "next"
 import { setRequestLocale } from "next-intl/server"
-import type { Locale } from "@/i18n/routing"
+import type { LocaleParams } from "@/i18n/routing"
 import { getProfile } from "@/lib/queries/profile"
 import { createPageMetadata } from "@/lib/i18n/metadata"
 import ContactPage from "./ContactPage"
@@ -18,7 +19,7 @@ const CONTACT_SEO = {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
 }): Promise<Metadata> {
   const { locale } = await params
   return createPageMetadata({
@@ -29,7 +30,6 @@ export async function generateMetadata({
   })
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
 const contactJsonLd = {
   "@context": "https://schema.org",
@@ -38,7 +38,7 @@ const contactJsonLd = {
   url: `${BASE_URL}/contact`,
 }
 
-export default async function Page({ params }: { params: Promise<{ locale: Locale }> }) {
+export default async function Page({ params }: { params: LocaleParams }) {
   const { locale } = await params
   setRequestLocale(locale)
   const profile = await getProfile()

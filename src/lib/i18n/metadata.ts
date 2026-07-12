@@ -1,8 +1,8 @@
+import { BASE_URL } from "@/config/site"
 import type { Metadata } from "next"
 import { routing, type Locale } from "@/i18n/routing"
 import { pickLocalized, pickPipeBilingual, type BilingualPair } from "./pick-localized"
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
 type PageTitle = string | BilingualPair
 

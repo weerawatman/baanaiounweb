@@ -1,8 +1,8 @@
+import { BASE_URL } from "@/config/site"
 import type { Metadata } from "next"
 import { prompt, notoSansThai } from "@/lib/fonts"
 import "../globals.css"
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

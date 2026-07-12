@@ -4,7 +4,7 @@ import { getPropertyBySlug } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { createServerSupabase } from "@/lib/supabase"
 import { mapProperty } from "@/lib/mappers"
-import type { Locale } from "@/i18n/routing"
+import type { LocaleParams } from "@/i18n/routing"
 import { buildPageMetadata } from "@/lib/i18n/metadata"
 import { localizedOrFallback, pickLocalized } from "@/lib/i18n/pick-localized"
 import PropertyDetailClient from "./PropertyDetailClient"
@@ -26,7 +26,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale; slug: string }>
+  params: LocaleParams<{ slug: string }>
 }): Promise<Metadata> {
   const { locale, slug } = await params
   const row = await getPropertyBySlug(slug)
@@ -78,7 +78,7 @@ export async function generateMetadata({
 export default async function PropertyPage({
   params,
 }: {
-  params: Promise<{ locale: Locale; slug: string }>
+  params: LocaleParams<{ slug: string }>
 }) {
   const { locale, slug } = await params
   setRequestLocale(locale)

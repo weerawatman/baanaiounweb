@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { setRequestLocale } from "next-intl/server"
-import type { Locale } from "@/i18n/routing"
+import type { LocaleParams } from "@/i18n/routing"
 import { getProfile } from "@/lib/queries/profile"
 import { getPageFaqs } from "@/lib/faq-items"
 import { SERVICES_HUB_CONTENT } from "@/content/services-hub"
@@ -12,7 +12,7 @@ export const revalidate = 3600
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
 }): Promise<Metadata> {
   const { locale } = await params
   const { seo } = SERVICES_HUB_CONTENT
@@ -24,7 +24,7 @@ export async function generateMetadata({
   })
 }
 
-export default async function ServicesRoute({ params }: { params: Promise<{ locale: Locale }> }) {
+export default async function ServicesRoute({ params }: { params: LocaleParams }) {
   const { locale } = await params
   setRequestLocale(locale)
   const [profile, faqs] = await Promise.all([getProfile(), getPageFaqs("services")])

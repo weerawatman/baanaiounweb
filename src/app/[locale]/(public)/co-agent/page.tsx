@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { setRequestLocale } from "next-intl/server"
-import type { Locale } from "@/i18n/routing"
+import type { LocaleParams } from "@/i18n/routing"
 import { getProfile } from "@/lib/queries/profile"
 import { getPageFaqs } from "@/lib/faq-items"
 import { COAGENT_CONTENT } from "@/content/co-agent"
@@ -13,7 +13,7 @@ export const revalidate = 1800
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
 }): Promise<Metadata> {
   const { locale } = await params
   const { seo } = COAGENT_CONTENT
@@ -25,7 +25,7 @@ export async function generateMetadata({
   })
 }
 
-export default async function CoAgentRoute({ params }: { params: Promise<{ locale: Locale }> }) {
+export default async function CoAgentRoute({ params }: { params: LocaleParams }) {
   const { locale } = await params
   setRequestLocale(locale)
   const [profile, faqs] = await Promise.all([getProfile(), getPageFaqs("co-agent")])

@@ -1,6 +1,10 @@
 /**
  * Global site configuration — brand, contact info, social links.
  */
+
+/** Canonical site origin — single source for metadata, sitemap, and JSON-LD URLs. */
+export const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
+
 export const SITE_CONFIG = {
   name: "บ้านไออุ่น พร็อพเพอร์ตี้",
   nameEn: "Baan Ai Oun Property",

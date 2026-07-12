@@ -5,15 +5,14 @@ import { getRelatedProperties } from "@/lib/queries/properties"
 import { getProfile } from "@/lib/queries/profile"
 import { createServerSupabase } from "@/lib/supabase"
 import { mapBlogPost, mapProperty } from "@/lib/mappers"
-import { SITE_CONFIG } from "@/config/site"
-import type { Locale } from "@/i18n/routing"
+import { BASE_URL, SITE_CONFIG } from "@/config/site"
+import type { LocaleParams } from "@/i18n/routing"
 import { buildPageMetadata } from "@/lib/i18n/metadata"
 import { localizedOrFallback, pickLocalized } from "@/lib/i18n/pick-localized"
 import BlogPostClient from "./BlogPostClient"
 
 export const revalidate = 86400
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
 export async function generateStaticParams() {
   const supabase = createServerSupabase()
@@ -25,7 +24,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale; slug: string }>
+  params: LocaleParams<{ slug: string }>
 }): Promise<Metadata> {
   const { locale, slug } = await params
   const row = await getBlogPostBySlug(slug)
@@ -97,7 +96,7 @@ function buildBlogPostingJsonLd(
 export default async function Page({
   params,
 }: {
-  params: Promise<{ locale: Locale; slug: string }>
+  params: LocaleParams<{ slug: string }>
 }) {
   const { locale, slug } = await params
   setRequestLocale(locale)

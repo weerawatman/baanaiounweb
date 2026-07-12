@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server"
-import type { Locale } from "@/i18n/routing"
+import type { LocaleParams } from "@/i18n/routing"
 import { getPageFaqs } from "@/lib/faq-items"
 import { getProfile } from "@/lib/queries/profile"
 import { buildBentoItems, pickHeroImage } from "@/lib/page-images"
@@ -12,7 +12,7 @@ export const revalidate = 1800
 export default async function ListPropertyRoute({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
 }) {
   const { locale } = await params
   setRequestLocale(locale)

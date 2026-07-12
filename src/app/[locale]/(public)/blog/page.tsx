@@ -1,6 +1,7 @@
+import { BASE_URL } from "@/config/site"
 import type { Metadata } from "next"
 import { setRequestLocale } from "next-intl/server"
-import type { Locale } from "@/i18n/routing"
+import type { LocaleParams } from "@/i18n/routing"
 import { getPublishedBlogPosts } from "@/lib/queries/blog"
 import { getProfile } from "@/lib/queries/profile"
 import { getPageFaqs } from "@/lib/faq-items"
@@ -21,7 +22,7 @@ const BLOG_SEO = {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
 }): Promise<Metadata> {
   const { locale } = await params
   return createPageMetadata({
@@ -32,7 +33,6 @@ export async function generateMetadata({
   })
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
 const blogJsonLd = {
   "@context": "https://schema.org",
@@ -46,7 +46,7 @@ const blogJsonLd = {
   },
 }
 
-export default async function BlogRoute({ params }: { params: Promise<{ locale: Locale }> }) {
+export default async function BlogRoute({ params }: { params: LocaleParams }) {
   const { locale } = await params
   setRequestLocale(locale)
   const [rows, profile, faqs] = await Promise.all([

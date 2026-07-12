@@ -7,10 +7,9 @@ import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 import StickyCTA from "@/components/layout/StickyCTA"
 import MobileContactBar from "@/components/layout/MobileContactBar"
-import { SITE_CONFIG } from "@/config/site"
+import { BASE_URL, SITE_CONFIG } from "@/config/site"
 import { getProfile } from "@/lib/queries/profile"
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
 export const metadata: Metadata = {
   openGraph: {

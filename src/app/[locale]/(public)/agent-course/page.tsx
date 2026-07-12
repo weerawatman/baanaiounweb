@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server"
-import type { Locale } from "@/i18n/routing"
-import { SITE_CONFIG } from "@/config/site"
+import type { LocaleParams } from "@/i18n/routing"
+import { BASE_URL, SITE_CONFIG } from "@/config/site"
 import { AGENT_COURSE_CONTENT } from "@/content/agent-course"
 import { getProfile } from "@/lib/queries/profile"
 import { getPageFaqs } from "@/lib/faq-items"
@@ -8,7 +8,6 @@ import { getPageFaqs } from "@/lib/faq-items"
 export { generateMetadata } from "./AgentCoursePage"
 import AgentCoursePage from "./AgentCoursePage"
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.baanaioun.com"
 
 const courseJsonLd = {
   "@context": "https://schema.org",
@@ -51,7 +50,7 @@ const courseJsonLd = {
 export default async function AgentCourseRoute({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
 }) {
   const { locale } = await params
   setRequestLocale(locale)

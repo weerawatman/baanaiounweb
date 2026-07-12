@@ -14,7 +14,7 @@ import {
 } from "@/components/shared"
 import { LIST_PROPERTY_CONTENT } from "@/content/list-property"
 import { NAV_ITEMS } from "@/config/navigation"
-import type { Locale } from "@/i18n/routing"
+import type { Locale, LocaleParams } from "@/i18n/routing"
 import { homeCrumb } from "@/lib/i18n/breadcrumbs"
 import { pickLocalized, pickPipeBilingual } from "@/lib/i18n/pick-localized"
 import { createPageMetadata } from "@/lib/i18n/metadata"
@@ -32,7 +32,7 @@ const FAQ_SUBTITLE = {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: LocaleParams
 }): Promise<Metadata> {
   const { locale } = await params
   const { seo } = LIST_PROPERTY_CONTENT
