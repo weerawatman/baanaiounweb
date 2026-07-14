@@ -67,6 +67,11 @@ Panel → System → Advanced → Performance → Virtual Memory) and reboot.
 
 ## Conventions to preserve
 
+- **Temporary public hard gate:** `src/config/maintenance.ts` exports
+  `MAINTENANCE_MODE`. When `true`, `src/proxy.ts` rewrites public routes to
+  `/under-construction` (brand coming-soon page). `/admin` and `/api` stay
+  usable. To open the public site: set `MAINTENANCE_MODE = false`, commit, and
+  push (Vercel auto-deploys — no env vars required).
 - **Keep public pages static (the #1 perf rule):** every layout/page under
   `[locale]` awaits `LocaleParams` (`src/i18n/routing.ts`) and calls
   `setRequestLocale(locale)` before any next-intl usage; `generateMetadata`
