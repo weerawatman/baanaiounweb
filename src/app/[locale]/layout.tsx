@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
 import { prompt, notoSansThai } from "@/lib/fonts"
+import ScrollToTop from "@/components/layout/ScrollToTop"
 import "../globals.css"
 
 
@@ -50,11 +51,11 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      data-scroll-behavior="smooth"
       className={`${prompt.variable} ${notoSansThai.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <ScrollToTop />
           {children}
         </NextIntlClientProvider>
       </body>

@@ -1,6 +1,7 @@
 import { BASE_URL } from "@/config/site"
 import type { Metadata } from "next"
 import { prompt, notoSansThai } from "@/lib/fonts"
+import ScrollToTop from "@/components/layout/ScrollToTop"
 import "../globals.css"
 
 
@@ -21,10 +22,12 @@ export default function AdminRootLayout({
   return (
     <html
       lang="th"
-      data-scroll-behavior="smooth"
       className={`${prompt.variable} ${notoSansThai.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        <ScrollToTop />
+        {children}
+      </body>
     </html>
   )
 }
