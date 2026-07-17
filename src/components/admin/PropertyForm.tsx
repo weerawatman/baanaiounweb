@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ImageUploader } from "@/components/admin/ImageUploader"
 import { propertySchema, type PropertyFormValues } from "@/lib/validations/property"
-import { slugify } from "@/lib/format"
+import { slugifyWithFallback } from "@/lib/format"
 import { PROPERTY_CATEGORY_OPTIONS } from "@/content/form-options"
 import type { Property } from "@/lib/types/property"
 import type { ActionState } from "@/actions/properties"
@@ -29,6 +29,7 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
     handleSubmit,
     watch,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<PropertyFormValues>({
     resolver: zodResolver(propertySchema) as Resolver<PropertyFormValues>,
@@ -82,14 +83,30 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
 
   const images = watch("images")
   const titleValue = watch("title")
+  const titleEnValue = watch("title_en")
 
-  // slug: สร้างอัตโนมัติจากชื่อทรัพย์ จนกว่าผู้ใช้จะแก้เอง
+  // slug: สร้างอัตโนมัติจากชื่อภาษาอังกฤษ (อ่าน URL ง่ายกว่า) จนกว่าผู้ใช้จะแก้เอง
+  // ถ้ายังไม่ได้กรอกชื่อภาษาอังกฤษ จะสร้างรหัสสำรองชั่วคราวแทน — slug ต้องเป็น
+  // ASCII เสมอ ไม่งั้น revalidatePath() จะ error ตอนบันทึก (ดู lib/format.ts)
   const [slugEdited, setSlugEdited] = useState(!!defaultValues?.slug)
   useEffect(() => {
     if (!slugEdited) {
-      setValue("slug", slugify(titleValue))
+      const source = titleEnValue?.trim() || titleValue
+      setValue("slug", slugifyWithFallback(source))
     }
-  }, [titleValue, slugEdited, setValue])
+  }, [titleValue, titleEnValue, slugEdited, setValue])
+
+  // เมื่อ server action ตอบกลับ fieldErrors (server-side zod validation) ให้ผูกเข้ากับ
+  // react-hook-form เพื่อแสดงข้อความใต้ช่องที่เกี่ยวข้อง — ก่อนหน้านี้ค่านี้ไม่เคยถูก
+  // แสดงเลย ทำให้การบันทึกที่ล้มเหลวดูเหมือน "ไม่มีอะไรเกิดขึ้น"
+  useEffect(() => {
+    if (!state.fieldErrors) return
+    Object.entries(state.fieldErrors).forEach(([field, messages]) => {
+      if (messages?.[0]) {
+        setError(field as keyof PropertyFormValues, { type: "server", message: messages[0] })
+      }
+    })
+  }, [state.fieldErrors, setError])
 
   function onSubmit(data: PropertyFormValues) {
     const formData = new FormData()
@@ -134,7 +151,7 @@ export function PropertyForm({ defaultValues, action, submitLabel = "บัน�
           label="Slug (URL)"
           error={errors.slug?.message}
           required
-          hint="สร้างอัตโนมัติจากชื่อทรัพย์ — แก้ได้ถ้าต้องการ URL อื่น"
+          hint="สร้างอัตโนมัติจากชื่อทรัพย์ (English) — ถ้ายังไม่กรอกชื่อภาษาอังกฤษจะได้รหัสชั่วคราว แก้เป็นคำที่อ่านง่ายได้เอง"
         >
           <Input
             {...register("slug", {

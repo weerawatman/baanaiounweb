@@ -11,6 +11,22 @@ export interface ActionState {
   fieldErrors?: Record<string, string[]>
 }
 
+/**
+ * revalidatePath() sends the path as an HTTP header value, which can only
+ * hold Latin-1 bytes — a non-ASCII slug throws and aborts the whole action
+ * before the redirect runs (this is exactly what happened in production on
+ * 2026-07-17 with a Thai-character slug). The slug schema now rejects
+ * non-ASCII values before we get here, but this stays as a safety net so a
+ * bad path can never take down the save/redirect flow.
+ */
+function safeRevalidatePath(path: string): void {
+  try {
+    revalidatePath(path)
+  } catch (err) {
+    console.error(`[revalidatePath] Failed for "${path}":`, err)
+  }
+}
+
 export async function createProperty(_prev: ActionState, formData: FormData): Promise<ActionState> {
   await requireAdmin()
 
@@ -32,8 +48,8 @@ export async function createProperty(_prev: ActionState, formData: FormData): Pr
 
   if (error) return { error: error.message }
 
-  revalidatePath("/")
-  revalidatePath("/admin/properties")
+  safeRevalidatePath("/")
+  safeRevalidatePath("/admin/properties")
   redirect("/admin/properties")
 }
 
@@ -65,9 +81,9 @@ export async function updateProperty(
 
   if (error) return { error: error.message }
 
-  revalidatePath("/")
-  revalidatePath("/admin/properties")
-  revalidatePath(`/property/${parsed.data.slug}`)
+  safeRevalidatePath("/")
+  safeRevalidatePath("/admin/properties")
+  safeRevalidatePath(`/property/${parsed.data.slug}`)
   redirect("/admin/properties")
 }
 
@@ -82,8 +98,8 @@ export async function toggleFeaturedProperty(id: string, featured: boolean): Pro
 
   if (error) return { error: error.message }
 
-  revalidatePath("/")
-  revalidatePath("/admin/properties")
+  safeRevalidatePath("/")
+  safeRevalidatePath("/admin/properties")
   return {}
 }
 
@@ -98,8 +114,8 @@ export async function archiveProperty(id: string): Promise<ActionState> {
 
   if (error) return { error: error.message }
 
-  revalidatePath("/")
-  revalidatePath("/admin/properties")
+  safeRevalidatePath("/")
+  safeRevalidatePath("/admin/properties")
   return {}
 }
 
@@ -111,6 +127,6 @@ export async function restoreProperty(id: string): Promise<ActionState> {
 
   if (error) return { error: error.message }
 
-  revalidatePath("/admin/properties")
+  safeRevalidatePath("/admin/properties")
   return {}
 }

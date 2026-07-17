@@ -5,6 +5,20 @@ import Image from "next/image"
 import { Upload, X, Loader2, AlertTriangle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_FILE_SIZE_BYTES, MAX_IMAGE_FILE_SIZE_MB } from "@/lib/upload-config"
+
+function validateFile(file: File): string | null {
+  if (!(file.type in ACCEPTED_IMAGE_TYPES)) {
+    if (/\.heic$|\.heif$/i.test(file.name) || file.type === "image/heic") {
+      return `ไฟล์ "${file.name}" เป็น HEIC (รูปแบบ iPhone) — กรุณาแปลงเป็น JPG ก่อนอัปโหลด`
+    }
+    return `ไฟล์ "${file.name}" ไม่ใช่รูปภาพที่รองรับ (รองรับเฉพาะ JPG, PNG, WEBP)`
+  }
+  if (file.size > MAX_IMAGE_FILE_SIZE_BYTES) {
+    return `ไฟล์ "${file.name}" มีขนาดเกิน ${MAX_IMAGE_FILE_SIZE_MB} MB`
+  }
+  return null
+}
 
 interface ImageUploaderProps {
   value: string[]
@@ -34,32 +48,52 @@ export function ImageUploader({
       return
     }
 
+    // Validate every file before starting any upload — catches size/type
+    // problems immediately instead of failing partway through.
+    for (const file of files) {
+      const validationError = validateFile(file)
+      if (validationError) {
+        setError(validationError)
+        return
+      }
+    }
+
     setError(null)
     startTransition(async () => {
-      const formData = new FormData()
-      files.forEach((f) => formData.append("files", f))
-      if (uploadFolder) formData.append("folder", uploadFolder)
+      // One file per request: a combined multi-file body can exceed the
+      // platform's request-size limit and fail before our code even runs,
+      // and a single failure would otherwise lose every file in the batch.
+      const uploaded: string[] = []
+      for (const file of files) {
+        const formData = new FormData()
+        formData.append("files", file)
+        if (uploadFolder) formData.append("folder", uploadFolder)
 
-      try {
-        const res = await fetch("/api/upload-images", {
-          method: "POST",
-          body: formData,
-        })
-        const json = await res.json()
-        if (!res.ok || !json.success) {
-          throw new Error(json.error ?? "อัปโหลดล้มเหลว")
+        try {
+          const res = await fetch("/api/upload-images", {
+            method: "POST",
+            body: formData,
+          })
+          const json = await res.json()
+          if (!res.ok || !json.success) {
+            throw new Error(json.error ?? `อัปโหลด "${file.name}" ล้มเหลว`)
+          }
+          uploaded.push(...(json.urls ?? []))
+        } catch (err) {
+          setError(err instanceof Error ? err.message : `อัปโหลด "${file.name}" ล้มเหลว`)
+          break
         }
-        const urls: string[] = json.urls ?? []
-        onChange([...value, ...urls])
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "อัปโหลดล้มเหลว")
       }
+      if (uploaded.length) onChange([...value, ...uploaded])
     })
   }
 
   function handleFiles(files: FileList | null) {
     if (!files) return
-    uploadFiles(Array.from(files).filter((f) => f.type.startsWith("image/")))
+    // Don't silently drop files by MIME sniffing here — some browsers report
+    // no MIME type for HEIC photos, which would otherwise vanish with zero
+    // feedback. validateFile() below gives a clear reason for every file.
+    uploadFiles(Array.from(files))
   }
 
   function remove(url: string) {
@@ -92,6 +126,9 @@ export function ImageUploader({
         )}
         <p className="text-sm font-medium">{label}</p>
         <p className="text-muted-foreground text-xs">ลากวาง หรือคลิกเพื่อเลือกไฟล์</p>
+        <p className="text-muted-foreground text-xs">
+          JPG, PNG, WEBP ไม่เกิน {MAX_IMAGE_FILE_SIZE_MB} MB ต่อรูป — ไฟล์ HEIC จาก iPhone ต้องแปลงเป็น JPG ก่อน
+        </p>
         <input
           ref={inputRef}
           type="file"

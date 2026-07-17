@@ -6,17 +6,44 @@ export function formatNumber(value: number): string {
 }
 
 /**
- * สร้าง slug จากข้อความ (รองรับภาษาไทย)
- * เช่น "ขายด่วน บ้านแฝด 34 ตรว." → "ขายด่วน-บ้านแฝด-34-ตรว"
+ * สร้าง slug แบบ ASCII เท่านั้นจากข้อความ (a-z, 0-9, ขีด)
+ * ตัดอักขระอื่นทั้งหมดทิ้ง (รวมภาษาไทย) โดยแทนที่อักขระที่ตัดทิ้งแต่ละช่วงด้วย
+ * ขีดคั่นเดียว — ไม่ใช่การลบเฉยๆ — เพื่อไม่ให้ตัวเลข/คำที่อยู่คนละฝั่งของ
+ * เครื่องหมายวรรคตอน (เช่น "10/1") ถูกเชื่อมติดกันเป็น "101" โดยไม่ได้ตั้งใจ
+ * slug ต้องเป็น ASCII เสมอเพราะถูกใช้เป็นส่วนหนึ่งของ URL path และส่งให้
+ * revalidatePath() ซึ่งอ่านค่าเป็น HTTP header (ByteString) ที่รับได้เฉพาะ
+ * อักขระ Latin-1 — ใส่ภาษาไทยเข้าไปจะทำให้ error ทันที
  */
 export function slugify(text: string): string {
   return text
     .toLowerCase()
     .trim()
-    .replace(/[^\p{L}\p{N}\s-]/gu, "")
-    .replace(/[\s_]+/g, "-")
-    .replace(/-+/g, "-")
+    .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
+}
+
+/** Short deterministic ASCII code from arbitrary text (same input → same output). */
+function hashCode(text: string): string {
+  let hash = 0
+  for (let i = 0; i < text.length; i++) {
+    hash = (hash * 31 + text.charCodeAt(i)) | 0
+  }
+  return Math.abs(hash).toString(36)
+}
+
+/**
+ * สร้าง slug สำหรับใช้ auto-fill ในฟอร์ม — ถ้าข้อความต้นทาง (เช่น ชื่อภาษาไทยล้วน)
+ * ไม่เหลือตัวอักษร a-z เลยหลัง slugify (อาจเหลือแค่ตัวเลขที่แทรกอยู่ เช่น "34" หรือ
+ * "2" จากเลขชั้น/ซอย ซึ่งชื่อทรัพย์หลายรายการอาจมีร่วมกัน) จะแนบรหัสสำรองต่อท้าย
+ * เพื่อกันชนกัน (คงที่ตามข้อความเดิม — พิมพ์ซ้ำได้ slug เดิม) ผู้ใช้ควรแก้เป็น
+ * ชื่อที่อ่านง่ายกว่านี้เอง (เช่น กรอกชื่อภาษาอังกฤษ)
+ */
+export function slugifyWithFallback(text: string, fallbackPrefix = "property"): string {
+  const slug = slugify(text)
+  if (slug && /[a-z]/.test(slug)) return slug
+  if (!text.trim()) return ""
+  const suffix = hashCode(text)
+  return slug ? `${fallbackPrefix}-${slug}-${suffix}` : `${fallbackPrefix}-${suffix}`
 }
 
 /**

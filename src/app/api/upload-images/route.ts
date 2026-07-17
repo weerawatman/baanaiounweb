@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createServerSupabase } from "@/lib/supabase"
 import { buildStorageUploadPath } from "@/lib/upload-storage"
+import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_FILE_SIZE_BYTES } from "@/lib/upload-config"
 
 // ─── Config ──────────────────────────────────────────────────────────────
 
-const MAX_FILES = 10 // per request; admin ImageUploader allows up to 10, public ImageUpload caps itself at 5
-const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
+// Files are uploaded one at a time by the client (see ImageUploader), so this
+// caps files-per-request, not a whole batch. Kept > 1 only in case a caller
+// sends more.
+const MAX_FILES = 10
+const MAX_FILE_SIZE = MAX_IMAGE_FILE_SIZE_BYTES
 // type → file extension. Also serves as the accepted-types allowlist.
-const EXT_BY_TYPE: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-}
+const EXT_BY_TYPE = ACCEPTED_IMAGE_TYPES
 const BUCKET = "property-images"
 
 // ─── Rate limiting (in-memory, per IP) ─────────────────────────────────────
